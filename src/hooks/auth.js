@@ -2,9 +2,11 @@ import axios from "../services/axios";
 import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
+import {useDispatch} from "react-redux";
 
 export const useAuth = () => {
     const navigator = useNavigate();
+    const dispatch = useDispatch();
 
     const register = async ({ setErrors, ...props }) => {
         setErrors({});
@@ -25,12 +27,14 @@ export const useAuth = () => {
         axios
             .post('/api/auth/login', props)
             .then(response => {
-                const {token} = response.data;
-
-                console.log(response, token)
+                const { token, user } = response.data;
 
                 localStorage.setItem(general.token, token);
+                localStorage.setItem(general.currentUser, JSON.stringify(user));
                 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+                setCurrentUser(user);
+                navigator('/')
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
@@ -61,6 +65,12 @@ export const useAuth = () => {
             });
     };
 
+    const setCurrentUser = (user) => {
+        dispatch({
+            type: 'SET_USER',
+            current_user: user
+        });
+    };
 
     return {
         register,

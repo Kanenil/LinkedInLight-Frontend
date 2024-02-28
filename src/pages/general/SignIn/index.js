@@ -4,8 +4,11 @@ import {routes} from "../../../constants/routes";
 import {useAuth} from "../../../hooks/auth";
 import {RegisterSchema} from "./validation";
 import FormGroup from "../../../components/FormGroup/FormGroup";
+import {useAuthguard} from "../../../hooks/authguard";
 
 const SignIn = () => {
+    useAuthguard();
+
     const initValues = {
         email: "",
         password: "",

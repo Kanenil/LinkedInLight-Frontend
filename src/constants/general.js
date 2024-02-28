@@ -1,3 +1,4 @@
 export const general = {
-    token: 'ACCESS-TOKEN'
+    token: 'ACCESS-TOKEN',
+    currentUser: 'CURRENT-USER'
 }

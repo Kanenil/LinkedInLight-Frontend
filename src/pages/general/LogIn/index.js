@@ -7,8 +7,11 @@ import {useAuth} from "../../../hooks/auth";
 import FormGroup from "../../../components/FormGroup/FormGroup";
 import Alert from "../../../components/Alert/Alert";
 import {useEffect, useState} from "react";
+import {useAuthguard} from "../../../hooks/authguard";
 
 const LogIn = () => {
+    useAuthguard();
+
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [searchParams] = useSearchParams();
