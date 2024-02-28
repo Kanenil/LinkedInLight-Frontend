@@ -1,25 +1,27 @@
 import {useFormik} from "formik";
-import {LoginSchema} from "../LogIn/validation";
 import {Link} from "react-router-dom";
-import classNames from "classnames";
 import {routes} from "../../../constants/routes";
 import {useAuth} from "../../../hooks/auth";
+import {RegisterSchema} from "./validation";
+import FormGroup from "../../../components/FormGroup/FormGroup";
 
 const SignIn = () => {
     const initValues = {
         email: "",
         password: "",
+        firstName: "",
+        lastName: ""
     };
 
-    const { register } = useAuth();
+    const {register} = useAuth();
 
     const onSubmitFormik = async (values) => {
-        await register({...values, setErrors });
+        await register({...values, setErrors});
     }
 
     const formik = useFormik({
         initialValues: initValues,
-        validationSchema: LoginSchema,
+        validationSchema: RegisterSchema,
         onSubmit: onSubmitFormik,
     });
 
@@ -31,61 +33,17 @@ const SignIn = () => {
                 className="w-full px-6 py-8 md:px-8"
                 onSubmit={handleSubmit}
             >
-                <div className="mt-4">
-                    <label
-                        className="block mb-2 text-sm font-medium text-gray-600"
-                        htmlFor="email"
-                    >
-                        Email
-                    </label>
-                    <input
-                        id="email"
-                        onChange={handleChange}
-                        value={values.email}
-                        name="email"
-                        className={classNames(
-                            "block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300",
-                            {
-                                "focus:border-red-400 focus:ring-red-300 border-red-400":
-                                    touched.email && errors.email,
-                                "focus:border-green-400 focus:ring-green-300 border-green-400":
-                                    touched.email && !errors.email,
-                            }
-                        )}
-                        type="email"
-                    />
-                    {touched.email && errors.email && (
-                        <p className="mt-3 text-xs text-red-400">{errors.email}</p>
-                    )}
-                </div>
+                <FormGroup name="firstName" value={values.firstName} type="text" touched={touched.firstName}
+                           error={errors.firstName} title="First name" handleChange={handleChange}/>
 
-                <div className="mt-4">
-                    <label
-                        className="block mb-2 text-sm font-medium text-gray-600"
-                        htmlFor="password"
-                    >
-                        Password
-                    </label>
-                    <input
-                        id="password"
-                        onChange={handleChange}
-                        value={values.password}
-                        name="password"
-                        className={classNames(
-                            "block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300",
-                            {
-                                "focus:border-red-400 focus:ring-red-300 border-red-400":
-                                    touched.password && errors.password,
-                                "focus:border-green-400 focus:ring-green-300 border-green-400":
-                                    touched.password && !errors.password,
-                            }
-                        )}
-                        type="password"
-                    />
-                    {touched.password && errors.password && (
-                        <p className="mt-3 text-xs text-red-400">{errors.password}</p>
-                    )}
-                </div>
+                <FormGroup name="lastName" value={values.lastName} type="text" touched={touched.lastName}
+                           error={errors.lastName} title="Last name" handleChange={handleChange}/>
+
+                <FormGroup name="email" value={values.email} type="email" touched={touched.email}
+                           error={errors.email} title="Email" handleChange={handleChange}/>
+
+                <FormGroup name="password" value={values.password} type="password" touched={touched.password}
+                           error={errors.password} title="Password" handleChange={handleChange}/>
 
                 <div className="mt-6">
                     <button

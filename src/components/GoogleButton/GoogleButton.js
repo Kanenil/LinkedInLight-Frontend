@@ -1,9 +1,8 @@
-import GoogleIcon from "./GoogleIcon";
+import GoogleIcon from "../../elements/GoogleIcon/GoogleIcon";
 import {createGoogleWrapper} from "../../utils/googleWrapper";
 import {APP_ENV} from "../../env";
 
 const GoogleButton = ({title = 'Sign in with Google', googleLoginCallback, ...props}) => {
-
     window.google.accounts.id.initialize({
         client_id: APP_ENV.GOOGLE_CLIENT_ID,
         ux_mode: "popup",

@@ -1,4 +1,6 @@
 export const createGoogleWrapper = () => {
+    if(document.getElementById("google-login") !== null) return;
+
     const googleLoginWrapper = document.createElement("div");
 
     googleLoginWrapper.style.display = "none";
