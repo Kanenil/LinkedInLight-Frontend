@@ -12,7 +12,7 @@ const defaultState = {
 const CurrentUser = (state = defaultState, action) => {
     switch (action.type) {
         case 'SET_USER':
-            return { ...state, user: action.current_user };
+            return { ...state, ...action.current_user };
         default:
             return state;
     }
