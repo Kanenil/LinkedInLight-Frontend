@@ -16,5 +16,5 @@ export const useAuthorize = () => {
             navigator(routes.logIn);
 
         //Todo: Add a check from any endpoint where credentials (Bearer token) are required. For example user info end point
-    }, [])
+    }, [user, navigator])
 }

@@ -12,17 +12,14 @@ const GoogleButton = ({title = 'Sign in with Google', googleLoginCallback, ...pr
     const googleWrapper = createGoogleWrapper();
 
     return (
-        <>
-            <button onClick={() => googleWrapper.click()}
-                    className="w-full flex items-center justify-center p-3 bg-white text-[#959cb1] hover:text-[#4a6cf7] text-base font-medium rounded-md shadow-one mb-6"
-                    {...props}>
+        <button onClick={() => googleWrapper.click()}
+                className="w-full flex items-center justify-center p-3 bg-white text-[#959cb1] hover:text-[#4a6cf7] text-base font-medium rounded-md shadow-one mb-6"
+                {...props}>
             <span className="mr-3">
                 <GoogleIcon/>
             </span>
-                {title}
-            </button>
-
-        </>
+            {title}
+        </button>
     )
 }
 export default GoogleButton;

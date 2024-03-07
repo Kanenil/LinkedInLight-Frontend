@@ -14,5 +14,5 @@ export const useAuthguard = () => {
         if(token && user.userName)
             navigator('/');
 
-    }, [])
+    }, [navigator, user])
 }

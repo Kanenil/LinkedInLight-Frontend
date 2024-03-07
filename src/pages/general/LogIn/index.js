@@ -8,6 +8,7 @@ import FormGroup from "../../../components/FormGroup/FormGroup";
 import Alert from "../../../components/Alert/Alert";
 import {useEffect, useState} from "react";
 import {useAuthguard} from "../../../hooks/authguard";
+import {jwtDecode} from "jwt-decode";
 
 const LogIn = () => {
     useAuthguard();
@@ -16,14 +17,14 @@ const LogIn = () => {
     const [alertMessage, setAlertMessage] = useState('');
     const [searchParams] = useSearchParams();
 
-    const { login } = useAuth();
+    const {login, googleLogin} = useAuth();
 
     useEffect(() => {
-        if(searchParams.has("registration") && searchParams.get("registration") === "success") {
+        if (searchParams.has("registration") && searchParams.get("registration") === "success") {
             setAlertMessage("You successfully registered! Now you can login.");
             setAlertOpen(true);
         }
-    }, [])
+    }, [searchParams])
 
     const initValues = {
         email: "",
@@ -31,7 +32,7 @@ const LogIn = () => {
     };
 
     const onSubmitFormik = async (values) => {
-        await login({...values, setErrors });
+        await login({...values, setErrors});
     }
 
     const formik = useFormik({
@@ -42,8 +43,16 @@ const LogIn = () => {
 
     const {values, errors, touched, handleSubmit, handleChange, setErrors} = formik;
 
-    const googleCallback = (response) => {
-        console.log(response)
+    const googleCallback = async (response) => {
+        const {email, family_name, given_name} = jwtDecode(response.credential);
+
+        await googleLogin({
+            username: email,
+            email,
+            firstName: given_name,
+            lastName: family_name || '',
+            token: response.credential
+        });
     }
 
     return (

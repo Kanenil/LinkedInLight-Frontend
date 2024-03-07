@@ -8,6 +8,14 @@ export const useAuth = () => {
     const navigator = useNavigate();
     const dispatch = useDispatch();
 
+    const saveData = (data) => {
+        localStorage.setItem(general.token, data.token);
+        localStorage.setItem(general.currentUser, JSON.stringify(data.user));
+        axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+        setCurrentUser(data.user);
+    }
+
     const register = async ({ setErrors, ...props }) => {
         setErrors({});
 
@@ -27,14 +35,9 @@ export const useAuth = () => {
         axios
             .post('/api/auth/login', props)
             .then(response => {
-                const { token, user } = response.data;
+                saveData(response.data);
 
-                localStorage.setItem(general.token, token);
-                localStorage.setItem(general.currentUser, JSON.stringify(user));
-                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-                setCurrentUser(user);
-                navigator('/')
+                navigator('/');
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
@@ -47,21 +50,29 @@ export const useAuth = () => {
             });
     };
 
-    const googleLogin = async ({ setError, ...props }) => {
-        setError({});
-
+    const googleLogin = async (props) => {
+        console.log(props)
         axios
             .post('/api/auth/google/login', props)
             .then(response => {
-                const {token} = response;
+                saveData(response.data);
 
-                //localStorage.setItem(general.token, token);
-                //axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                //console.log(response.data.image)
 
-                console.log(response, token)
+                // if(response.data.image === undefined) {
+                //     axios
+                //         .post(`/api/Account/editImage`, {...response.data.user, image: props.image})
+                //         .then(resp => {
+                //             console.log(resp)
+                //             //setCurrentUser(resp);
+                //         })
+                //         .catch(err => console.log(err))
+                // }
+
+                navigator('/');
             })
             .catch((error) => {
-                setError(error.response.data)
+                console.log("Unhandled error: ", error)
             });
     };
 
