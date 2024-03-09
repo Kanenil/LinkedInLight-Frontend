@@ -1,35 +1,39 @@
 import classNames from "classnames";
+import EyeIcon from "../../elements/EyeIcon/EyeIcon";
+import {useState} from "react";
 
-const FormGroup = ({handleChange, value, touched, error, title, name, type, ...props}) => {
+const FormGroup = ({handleChange, value, touched, error, title, name, type, margin, ...props}) => {
+    const [showPassword, setShowPassword] = useState(false)
+
     return (
-        <div className="mt-4">
-           <label
-               className="block mb-2 text-sm font-medium text-gray-600"
-               htmlFor={name}
-           >
-              {title}
-           </label>
-           <input
-               id={name}
-               onChange={handleChange}
-               value={value}
-               name={name}
-               className={classNames(
-                   "block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300",
-                   {
-                      "focus:border-red-400 focus:ring-red-300 border-red-400":
-                          touched && error,
-                      "focus:border-green-400 focus:ring-green-300 border-green-400":
-                          touched && !error,
-                   }
-               )}
-               type={type}
-               {...props}
-           />
-           {touched && error && (
-               <p className="mt-3 text-xs text-red-400">{error}</p>
-           )}
-        </div>
+        <>
+            <div className={`${margin} relative`}>
+                <input
+                    name={name}
+                    value={value}
+                    onChange={handleChange}
+                    className={classNames("w-full rounded-xl border-[1px] border-[#B4BFDD] px-[20px] py-[10px] text-[#7D7D7D] text-xs",
+                        // {
+                        //     "focus:border-red-400 focus:ring-red-300 border-red-400": touched && error,
+                        //     "focus:border-green-400 focus:ring-green-300 border-green-400": touched && !error
+                        // }
+                    )}
+                    placeholder={title}
+                    type={showPassword? "text": type}
+                    {...props}
+                />
+                {type === "password" && (
+                    <button type="button"
+                            onClick={() => setShowPassword((val) => !val)}
+                            className="absolute inset-y-0 right-4 flex items-center text-gray-500 hover:text-gray-600">
+                        <EyeIcon className="w-5 h-5"/>
+                    </button>
+                )}
+                {/*{touched && error && (*/}
+                {/*    <p className="mt-3 text-xs text-red-400">{error}</p>*/}
+                {/*)}*/}
+            </div>
+        </>
     )
 }
 export default FormGroup;

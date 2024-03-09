@@ -22,7 +22,7 @@ export const useAuth = () => {
         axios
             .post('/api/auth/register', props)
             .then(() => {
-                navigator(routes.logIn + "?registration=success");
+                navigator(routes.signIn + "?registration=success");
             })
             .catch((error) => {
                 setErrors({email:error.response.data})
@@ -51,13 +51,13 @@ export const useAuth = () => {
     };
 
     const googleLogin = async (props) => {
-        console.log(props)
+        //console.log(props)
         axios
             .post('/api/auth/google/login', props)
             .then(response => {
                 saveData(response.data);
 
-                //console.log(response.data.image)
+                //console.log(response.data)
 
                 // if(response.data.image === undefined) {
                 //     axios

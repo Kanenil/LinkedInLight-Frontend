@@ -1,12 +1,12 @@
-import logo from "../../assets/logo.svg"
 import {Link} from "react-router-dom";
 import {routes} from "../../constants/routes";
+import Logo from "../../elements/Logo/Logo";
 
 const Header = () => {
     return (
         <header className="grid grid-cols-2 py-4">
             <div className="mx-auto pr-36">
-                <img className="pb-3 border-b-[1px]" src={logo} alt="logo"/>
+                <Logo className="pb-3 border-b-[1px] fill-white h-16"/>
             </div>
             <ul className="flex gap-[1.875rem] border-t-[1px] ml-[50px]">
                 <li className="relative group my-auto">

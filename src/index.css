@@ -13,6 +13,11 @@ body {
     @apply flex flex-col h-screen justify-between;
 }
 
+body.modal-open {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
 .container {
     @apply mx-auto px-1
 }
