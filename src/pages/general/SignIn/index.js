@@ -79,6 +79,11 @@ const SignIn = () => {
                             Forgot your password?
                         </Link>
 
+                        <button type="submit"
+                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                            Log In
+                        </button>
+
                         <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
 
                         <div
@@ -88,11 +93,11 @@ const SignIn = () => {
                             <FacebookButton/>
                         </div>
 
-                        <button type="submit"
-                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[12px] py-[10px] px-[20px] font-semibold text-base text-white">
-                            Log In
-                        </button>
+                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                            <span className="font-light">Do you have an account?</span>
 
+                            <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
+                        </div>
                     </form>
                     <div className="bg-[#24459A] w-3/4"/>
                 </div>

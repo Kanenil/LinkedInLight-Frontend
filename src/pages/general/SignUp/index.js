@@ -37,7 +37,6 @@ const SignUp = () => {
         password: "",
         firstName: "",
         lastName: "",
-        username: "",
         country: "",
         terms: false
     };
@@ -109,10 +108,6 @@ const SignUp = () => {
                                    touched={touched.email}
                                    error={errors.email} title="Email" handleChange={handleChange}/>
 
-                        <FormGroup margin="mt-[12px]" name="username" value={values.username} type="text"
-                                   touched={touched.username}
-                                   error={errors.username} title="Create a Username" handleChange={handleChange}/>
-
                         <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
                                    touched={touched.password}
                                    error={errors.password} title="Create a Password" handleChange={handleChange}/>
@@ -152,6 +147,10 @@ const SignUp = () => {
                             </label>
                         </div>
 
+                        <button type="submit"
+                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                            Sign Up
+                        </button>
 
                         <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
 
@@ -162,11 +161,11 @@ const SignUp = () => {
                             <FacebookButton/>
                         </div>
 
-                        <button type="submit"
-                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[12px] py-[10px] px-[20px] font-semibold text-base text-white">
-                            Sign Up
-                        </button>
+                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                            <span className="font-light">Already a member of <span className="font-semibold">Job for You?</span></span>
 
+                            <Link className="font-bold" to={routes.signIn}>Log In</Link>
+                        </div>
                     </form>
                     <div className="bg-[#24459A] w-3/4"/>
                 </div>
