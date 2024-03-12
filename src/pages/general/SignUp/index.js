@@ -107,7 +107,7 @@ const SignUp = () => {
 
                         <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
                                    touched={touched.email}
-                                   error={errors.email} title="Username/Email" handleChange={handleChange}/>
+                                   error={errors.email} title="Email" handleChange={handleChange}/>
 
                         <FormGroup margin="mt-[12px]" name="username" value={values.username} type="text"
                                    touched={touched.username}
