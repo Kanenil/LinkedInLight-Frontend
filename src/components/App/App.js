@@ -6,6 +6,7 @@ import Profile from "../../pages/user/Profile";
 import Home from "../../pages/general/Home";
 import Layout from "../Layout/Layout";
 import Chats from "../../pages/chat/Chats";
+import AuthLayout from "../Layout/AuthLayout";
 
 const App = () => {
   return (
@@ -19,8 +20,10 @@ const App = () => {
             <Route index element={<Home />} />
           </Route>
 
-          <Route path={routes.signUp} element={<SignUp />} />
-          <Route path={routes.signIn} element={<SignIn />} />
+          <Route path="/auth" element={<AuthLayout/>}>
+            <Route path="sign-up" element={<SignUp />} />
+            <Route path="sign-in" element={<SignIn />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
