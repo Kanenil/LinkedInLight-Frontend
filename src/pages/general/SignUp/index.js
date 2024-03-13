@@ -12,10 +12,12 @@ import FacebookButton from "../../../components/FacebookButton/FacebookButton";
 import {jwtDecode} from "jwt-decode";
 import FormSelector from "../../../components/FormSelector/FormSelector";
 import {useMemo, useState} from "react";
+import {useSelector} from "react-redux";
 
 const SignUp = () => {
     useAuthguard();
     const [countries, setCountries] = useState([]); // State to store fetched countries
+    const user = useSelector(state => state.CurrentUser);
 
     useMemo(async () => {
         if (!countries.length) {
@@ -38,20 +40,14 @@ const SignUp = () => {
         firstName: "",
         lastName: "",
         country: "",
-        terms: false
+        terms: false,
+        ...user
     };
 
-    const {register, googleLogin} = useAuth();
+    const {googleLogin, validateEmail} = useAuth();
 
     const onSubmitFormik = async (values) => {
-        const model = {
-            email: values.email,
-            password: values.password,
-            firstName: values.firstName,
-            lastname: values.lastname
-        }
-
-        await register({...model, setErrors});
+        await validateEmail({...values, setErrors})
     }
 
     const formik = useFormik({

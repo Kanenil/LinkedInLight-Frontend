@@ -2,12 +2,12 @@ import {general} from "../../constants/general";
 import axios from "../../services/axios";
 
 const token = localStorage.getItem(general.token);
-const user = JSON.parse(localStorage.getItem(general.currentUser) || "{}");
+//const user = JSON.parse(localStorage.getItem(general.currentUser) || "{}");
 
-axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+axios.defaults.headers.common.Authorization = token? `Bearer ${token}`:null;
 
 const defaultState = {
-    ...user
+    email: ""
 };
 const CurrentUser = (state = defaultState, action) => {
     switch (action.type) {

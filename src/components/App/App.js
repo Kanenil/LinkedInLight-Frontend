@@ -7,6 +7,7 @@ import Home from "../../pages/general/Home";
 import Layout from "../Layout/Layout";
 import Chats from "../../pages/chat/Chats";
 import AuthLayout from "../Layout/AuthLayout";
+import ConfirmEmail from "../../pages/general/ConfirmEmail";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/auth" element={<AuthLayout/>}>
             <Route path="sign-up" element={<SignUp />} />
             <Route path="sign-in" element={<SignIn />} />
+            <Route path="confirm-email" element={<ConfirmEmail />} />
           </Route>
         </Routes>
       </BrowserRouter>

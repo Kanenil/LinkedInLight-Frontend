@@ -26,7 +26,7 @@ const AuthFooter = () => {
                 </div>
             </div>
 
-            {links.map(link => <Link className="font-light text-[#2D2A33] text-xs" to={link.link}>{link.title}</Link>)}
+            {links.map((link, index) => <Link key={`footer-${index}`} className="font-light text-[#2D2A33] text-xs" to={link.link}>{link.title}</Link>)}
 
             <div className="flex flex-row font-light text-[#2D2A33] text-xs cursor-pointer">
                 <span className="pr-2.5">Language</span>

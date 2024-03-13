@@ -10,34 +10,64 @@ export const useAuth = () => {
 
     const saveData = (data) => {
         localStorage.setItem(general.token, data.token);
-        localStorage.setItem(general.currentUser, JSON.stringify(data.user));
+        //localStorage.setItem(general.currentUser, JSON.stringify(data.user));
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
-        setCurrentUser(data.user);
+        //setCurrentUser(data.user.email);
     }
 
-    const register = async ({ setErrors, ...props }) => {
+    const validateEmail = async ({setErrors, email, ...props}) => {
         setErrors({});
+
+        axios
+            .post('/api/auth/validate-email', null, {
+                params: {
+                    email
+                }
+            })
+            .then(() => {
+                setCurrentUser({email, ...props});
+
+                navigator(routes.confirmEmail);
+            })
+            .catch(error=>{
+                setErrors({email:error.response.data})
+            })
+    }
+
+    const sendConfirmationEmail = async ({email, ...props}) => {
+        axios
+            .post('/api/auth/send-code', {email}, {
+                params: {
+                    email
+                }
+            })
+            .then(({data}) => {
+                setCurrentUser({email, code: data, ...props});
+            })
+            .catch(()=> navigator(routes.signUp))
+    }
+
+    const register = async (props) => {
+        //setErrors({});
 
         axios
             .post('/api/auth/register', props)
             .then(() => {
-                navigator(routes.signIn + "?registration=success");
+                login({email: props.email, password: props.password}).then()
             })
-            .catch((error) => {
-                setErrors({email:error.response.data})
-            });
     };
 
     const login = async ({ setErrors, ...props }) => {
-        setErrors({});
+        if(setErrors !== undefined)
+            setErrors({});
 
         axios
             .post('/api/auth/login', props)
             .then(response => {
                 saveData(response.data);
 
-                navigator('/');
+                navigator('/in');
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
@@ -86,6 +116,8 @@ export const useAuth = () => {
     return {
         register,
         login,
-        googleLogin
+        googleLogin,
+        validateEmail,
+        sendConfirmationEmail
     };
 }
