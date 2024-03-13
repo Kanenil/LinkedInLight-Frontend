@@ -13,8 +13,6 @@ export const useAuthorize = () => {
         if(!token)
             navigator(routes.signIn);
 
-        console.log(token)
-
         profileService.profile().then()
             .catch(() => {
                 navigator(routes.signIn)

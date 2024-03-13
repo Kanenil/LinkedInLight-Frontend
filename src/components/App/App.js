@@ -20,6 +20,8 @@ const App = () => {
           </Route>
 
           <Route path="/in" element={<InLayout/>}>
+            <Route index element={<Profile/>}/>
+
             <Route path="profile" element={<Profile />} />
             <Route path="chats" element={<Chats />} />
           </Route>
