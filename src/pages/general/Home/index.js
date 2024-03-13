@@ -11,8 +11,11 @@ import Modal from "../../../components/Modal/Modal";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import {routes} from "../../../constants/routes";
+import {useAuthguard} from "../../../hooks/authguard";
 
 const Home = () => {
+    useAuthguard()
+
     const [isVisible, setIsVisible] = useState(false)
 
     const openModal = () => {

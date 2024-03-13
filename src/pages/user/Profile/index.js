@@ -15,7 +15,6 @@ const Profile = () => {
 
     const logout = () => {
         localStorage.removeItem(general.token)
-        localStorage.removeItem(general.currentUser)
         navigator('/login')
     }
 

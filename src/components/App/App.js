@@ -8,6 +8,7 @@ import Layout from "../Layout/Layout";
 import Chats from "../../pages/chat/Chats";
 import AuthLayout from "../Layout/AuthLayout";
 import ConfirmEmail from "../../pages/general/ConfirmEmail";
+import InLayout from "../Layout/InLayout";
 
 const App = () => {
   return (
@@ -15,10 +16,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path={routes.chats} element={<Chats />} />
-
             <Route index element={<Home />} />
+          </Route>
+
+          <Route path="/in" element={<InLayout/>}>
+            <Route path="profile" element={<Profile />} />
+            <Route path="chats" element={<Chats />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout/>}>
