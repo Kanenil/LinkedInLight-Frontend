@@ -51,10 +51,10 @@ const InHeader = () => {
                     </button>
 
                     <button className="flex flex-row items-end border-l-2 border-[#24459A73] pl-10">
-                        <button className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
+                        <div className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
                             <img alt="image" className="object-contain"
                                  src="https://s3-alpha-sig.figma.com/img/adf3/551d/03f8cffc7cfa03c88b9cc4e171bb507b?Expires=1711324800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=cWJWA~0U7zuLhbYZLyGEF9wbs8sNUmC3yO1638PuEsmQrtfed8TjheV0Ha0GqMf7iG~k84JJVaeLr9r~DPC~C-dV5V93n-cyoxtvykWEl2r38YEx0EHdAuWuxDUQOs7QgfcYJxoaoFy8gB14QIW9F8RzZE5Gos6WmgLlrxdZorZlSXODbL5tbjuWV93TT~F33dLXY-WiQr4vMiB5ECaSntAU8oMDnqZKo5y8qDtuSSZdPDgFx8wiambH799aeSo7ruSfSWmqPrnbMabjMDCU5m8tIwkgD5D1J7oyqa2B~7hOsYIfAGfRIsush18wrB~s1oWrLZnyKvjU1QRq8tp6~w__"/>
-                        </button>
+                        </div>
 
                         <ArrowDownIcon className="ml-1 w-3.5 fill-[#24459A]"/>
                     </button>
