@@ -1,7 +1,6 @@
 import Logo from "../../elements/Logo/Logo";
 import {Link} from "react-router-dom";
 import ArrowDownIcon from "../../elements/ArrowDownIcon/ArrowDownIcon";
-import CopyrightIcon from "../../elements/CopyrightIcon/CopyrightIcon";
 
 const links = [
     {title: "General", link: "/"},
@@ -20,9 +19,7 @@ const AuthFooter = () => {
                 <Logo className="fill-[#2D2A33] h-3.5"/>
 
                 <div className="flex flex-row gap-1 ml-2 items-center">
-                    <CopyrightIcon className="fill-[#2D2A33] w-3"/>
-
-                    <h4 className="font-light text-[#2D2A33] text-xs">2024</h4>
+                    <h4 className="font-light text-[#2D2A33] text-xs">© 2024</h4>
                 </div>
             </div>
 

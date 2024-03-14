@@ -15,6 +15,8 @@ export const useAuthorize = () => {
 
         profileService.profile().then()
             .catch(() => {
+                localStorage.removeItem(general.token);
+
                 navigator(routes.signIn)
             })
     }, [navigator])
