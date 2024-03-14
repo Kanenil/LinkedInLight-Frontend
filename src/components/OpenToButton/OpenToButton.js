@@ -12,7 +12,7 @@ const OpenToButton = () => {
             </button>
             {
                 isComponentVisible &&
-                <div className="absolute flex flex-col gap-1 bg-white left-0 rounded-r-lg rounded-b-lg top-10 py-2"
+                <div className="absolute flex flex-col gap-1 bg-white left-0 rounded-r-lg rounded-b-lg top-10 py-2 z-20"
                      style={{boxShadow: "0px 1px 6px 0px #00000040"}}>
                     <Link to="/in" className="py-1 px-5 w-[240px] font-roboto text-[#2D2A33] hover:bg-gray-500/10">
                         <h1 className="font-medium text-sm">Finding a new work</h1>

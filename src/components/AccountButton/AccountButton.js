@@ -4,10 +4,12 @@ import {useEffect, useState} from "react";
 import {profileService} from "../../services/profileService";
 import {Link} from "react-router-dom";
 import useComponentVisible from "../../hooks/componentVisible";
+import {useAuth} from "../../hooks/auth";
 
 const AccountButton = () => {
     const [user, setUser] = useState();
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
+    const {logout} = useAuth();
 
     useEffect(() => {
         profileService.profile().then(({data}) => {
@@ -28,7 +30,7 @@ const AccountButton = () => {
             </button>
             {
                 isComponentVisible &&
-                <div className="absolute flex flex-col bg-white -left-32 rounded-l-lg rounded-b-lg  top-14 p-5"
+                <div className="absolute flex flex-col bg-white -left-32 rounded-l-lg rounded-b-lg  top-14 p-5 z-20"
                      style={{boxShadow: "0px 1px 6px 0px #00000040"}}>
                     <div className="flex flex-row gap-2.5">
                         <div className="rounded-full min-w-10 overflow-hidden border-[1px] border-[#2D2A33] w-10 h-10">
@@ -72,7 +74,7 @@ const AccountButton = () => {
 
                     <div
                         className="mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
-                        <button className="hover:underline active:font-normal active:no-underline">
+                        <button onClick={logout} className="hover:underline active:font-normal active:no-underline">
                             Exit
                         </button>
                     </div>

@@ -13,7 +13,7 @@ body {
 }
 
 .App {
-    @apply flex flex-col h-screen justify-between;
+    @apply flex flex-col justify-between;
 }
 
 body.modal-open {

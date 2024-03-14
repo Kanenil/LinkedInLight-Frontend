@@ -106,6 +106,13 @@ export const useAuth = () => {
             });
     };
 
+    const logout = () => {
+        localStorage.removeItem(general.token);
+        axios.defaults.headers.common["Authorization"] = null;
+        setCurrentUser({});
+        navigator(routes.signIn);
+    }
+
     const setCurrentUser = (user) => {
         dispatch({
             type: 'SET_USER',
@@ -118,6 +125,7 @@ export const useAuth = () => {
         login,
         googleLogin,
         validateEmail,
-        sendConfirmationEmail
+        sendConfirmationEmail,
+        logout
     };
 }
