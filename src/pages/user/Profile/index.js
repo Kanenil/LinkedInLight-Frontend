@@ -7,6 +7,7 @@ import PencilIcon from "../../../elements/PencilIcon/PencilIcon";
 import PlusIcon from "../../../elements/PlusIcon/PlusIcon";
 import {Link} from "react-router-dom";
 import ArrowRightIcon from "../../../elements/ArrowRightIcon/ArrowRightIcon";
+import OpenToButton from "../../../components/OpenToButton/OpenToButton";
 
 const peopleMayKnow = [
     {
@@ -89,18 +90,16 @@ const Profile = () => {
                                         <h4 className="ml-4">*****</h4>
                                     </div>
                                     <div className="flex flex-row gap-4 mt-4">
+                                        <OpenToButton />
+
                                         <button
-                                            className="bg-[#24459A] rounded-full py-1.5 px-6 font-jost text-white text-sm hover:bg-[#112861]">Open
-                                            to
+                                            className="border-[#24459A] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#556DA9] hover:bg-[#E5F2FC] hover:border-[#24459A] hover:border-[1.5px] hover:text-[#556DA9] text-sm">
+                                            Add profile section
                                         </button>
 
                                         <button
-                                            className="border-[#24459A] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#556DA9] hover:bg-[#E5F2FC] hover:border-[#24459A] hover:border-[1.5px] hover:text-[#556DA9] text-sm">Add
-                                            profile section
-                                        </button>
-
-                                        <button
-                                            className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">More
+                                            className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">
+                                            More
                                         </button>
                                     </div>
                                 </div>
@@ -121,7 +120,8 @@ const Profile = () => {
                                 </div>
 
                                 <div className="mt-2.5 py-2.5 flex flex-row gap-5">
-                                    <div className="flex justify-center items-center p-5 bg-[#EAECF3] font-bold text-[#2D2A33]">
+                                    <div
+                                        className="flex justify-center items-center p-5 bg-[#EAECF3] font-bold text-[#2D2A33]">
                                         logo
                                     </div>
 
@@ -148,7 +148,8 @@ const Profile = () => {
                                 </div>
 
                                 <div className="mt-2.5 py-2.5 flex flex-row gap-5">
-                                    <div className="flex justify-center items-center p-5 bg-[#EAECF3] font-bold text-[#2D2A33]">
+                                    <div
+                                        className="flex justify-center items-center p-5 bg-[#EAECF3] font-bold text-[#2D2A33]">
                                         logo
                                     </div>
 
@@ -197,7 +198,8 @@ const Profile = () => {
                         <h1 className="font-jost text-xl text-[#2D2A33] font-medium">People you may know</h1>
 
                         {peopleMayKnow.map((person, index) =>
-                            <div key={`peopleMayKnow-${index}`} className="mt-2.5 py-2.5 border-[#24459A80] border-t-[0.5px]">
+                            <div key={`peopleMayKnow-${index}`}
+                                 className="mt-2.5 py-2.5 border-[#24459A80] border-t-[0.5px]">
                                 <div className="flex flex-row">
                                     <div
                                         className="rounded-full overflow-hidden w-10 h-10 border-[1px] border-[#2D2A33] bg-[#E7E7E7]">
@@ -211,8 +213,10 @@ const Profile = () => {
                                             {person.position}
                                         </h3>
 
-                                        <button className="group flex flex-row gap-2.5 items-center mt-2.5 w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF]">
-                                            <PlusIcon className="fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-2"/>
+                                        <button
+                                            className="group flex flex-row gap-2.5 items-center mt-2.5 w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF]">
+                                            <PlusIcon
+                                                className="fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-2"/>
 
                                             Connect
                                         </button>
@@ -221,7 +225,8 @@ const Profile = () => {
                             </div>
                         )}
 
-                        <Link to={'/in'} className="mt-2.5 py-3 border-[#A7ACBA] border-t-[0.5px] flex flex-row justify-center gap-4 font-jost text-[#2D2A33] font-light">
+                        <Link to={'/in'}
+                              className="mt-2.5 py-3 border-[#A7ACBA] border-t-[0.5px] flex flex-row justify-center gap-4 font-jost text-[#2D2A33] font-light">
                             Show all
 
                             <ArrowRightIcon className="fill-[#2D2A33] w-2.5"/>
