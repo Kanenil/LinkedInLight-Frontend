@@ -1,6 +1,4 @@
 import Logo from "../../elements/Logo/Logo";
-import {Link} from "react-router-dom";
-import ArrowDownIcon from "../../elements/ArrowDownIcon/ArrowDownIcon";
 import {
     businessRoutes,
     contactRoutes,
@@ -9,23 +7,25 @@ import {
     legalRoutes,
     talentRoutes
 } from "../../constants/routes";
+import {Link} from "react-router-dom";
+import ArrowDownIcon from "../../elements/ArrowDownIcon/ArrowDownIcon";
 
-const InFooter = () => {
+const Footer = () => {
     return (
-        <footer className="flex flex-col bg-[#E7E7E7]">
+        <footer className="flex flex-col" style={{background: "linear-gradient(90deg, rgba(88, 83, 89, 0.6) 0%, rgba(45, 42, 51, 0.8) 100%)"}}>
             <div className="flex flex-row justify-center gap-7 pt-2.5 pb-2">
                 <div className="py-7 ml-4">
-                    <Logo className="fill-[#606161] h-16"/>
+                    <Logo className="fill-white h-16 pb-5 border-b-[1px] border-white"/>
                 </div>
 
                 <div className="pt-8 px-4 pb-2.5 flex flex-col gap-4">
-                    <div className="text-[#606161] font-raleway">
+                    <div className="text-white font-raleway">
                         <h1 className="text-lg font-bold">About</h1>
 
                         <h3 className="mt-1">About <span className="font-medium">Job for You</span></h3>
                     </div>
 
-                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">General</h1>
 
                         {generalRoutes.map((route, index) =>
@@ -35,7 +35,7 @@ const InFooter = () => {
                 </div>
 
                 <div className="pt-8 px-4 pb-2.5 flex flex-col gap-4">
-                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Business Solutions</h1>
 
                         {businessRoutes.map((route, index) =>
@@ -43,7 +43,7 @@ const InFooter = () => {
                         )}
                     </div>
 
-                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Talent</h1>
 
                         {talentRoutes.map((route, index) =>
@@ -53,7 +53,7 @@ const InFooter = () => {
                 </div>
 
                 <div className="pt-8 px-4 pb-2.5">
-                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Business Solutions</h1>
 
                         {directoriesRoutes.map((route, index) =>
@@ -63,7 +63,7 @@ const InFooter = () => {
                 </div>
 
                 <div className="pt-8 px-4 pb-2.5 flex flex-col gap-4">
-                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Contact</h1>
 
                         {contactRoutes.map((route, index) =>
@@ -71,7 +71,7 @@ const InFooter = () => {
                         )}
                     </div>
 
-                    <div className="text-[#606161] font-roboto flex flex-col gap-1">
+                    <div className="text-white font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Legal</h1>
 
                         {legalRoutes.map((route, index) =>
@@ -79,22 +79,22 @@ const InFooter = () => {
                         )}
                     </div>
 
-                    <div className="flex flex-row text-[#606161] font-medium cursor-pointer">
+                    <div className="flex flex-row text-white font-medium cursor-pointer">
                         <span className="pr-2.5">Language</span>
 
-                        <ArrowDownIcon className="fill-[#606161] w-5"/>
+                        <ArrowDownIcon className="fill-white w-5"/>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-white">
-                <div className="flex gap-2.5 justify-center items-center my-1 py-0.5 text-[#606161] text-sm">
+            <div className="bg-[#2D2A33]">
+                <div className="flex gap-2.5 justify-center items-center my-1 py-0.5 text-white text-sm">
                     <span>©</span>
-                    <span>2024</span>
-                    <Logo className="fill-[#606161] h-4"/>
+                    <span className="font-medium">2024</span>
+                    <Logo className="fill-white h-4"/>
                 </div>
             </div>
         </footer>
     )
 }
-export default InFooter;
+export default Footer;

@@ -23,7 +23,7 @@ const Home = () => {
     };
 
     return (
-        <main className="h-full">
+        <main className="flex-grow">
             <section className="mx-auto w-[1170px] mt-36 mb-40">
                 <img src={jfy} alt="Job for you"/>
 
