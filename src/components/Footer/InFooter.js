@@ -71,7 +71,7 @@ const InFooter = () => {
                         )}
                     </div>
 
-                    <div className="text-[#606161] font-roboto flex flex-col gap-1">
+                    <div className="text-[#606161] font-raleway flex flex-col gap-1">
                         <h1 className="text-lg font-bold">Legal</h1>
 
                         {legalRoutes.map((route, index) =>

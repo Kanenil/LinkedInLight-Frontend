@@ -40,7 +40,7 @@ const Home = () => {
                     <ArrowRightIcon className="w-[16px] h-[16px] fill-white my-auto"/>
                 </button>
             </section>
-            <Modal setIsVisible={setIsVisible} isVisible={isVisible} onClose={() => console.log("Closing")}>
+            <Modal isOpen={isVisible} onClose={() => setIsVisible(false)}>
                 <div className="flex flex-col h-full pt-[40px] px-[50px] pb-[69px]">
                     <h1 className="font-bold text-4xl text-[#2D2A33]">Which are you?</h1>
 

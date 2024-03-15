@@ -1,10 +1,17 @@
-import {useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
 
-const Modal = ({ isVisible, setIsVisible, onClose, children }) => {
+const Modal = ({ isOpen = false, onClose, children }) => {
+    const [isVisible, setIsVisible] = useState(isOpen);
+
     const handleClose = () => {
         setIsVisible(false);
         onClose();
     };
+
+    useEffect(() => {
+        setIsVisible(isOpen);
+    }, [isOpen])
 
     useEffect(() => {
         if(isVisible === true) {
@@ -15,8 +22,8 @@ const Modal = ({ isVisible, setIsVisible, onClose, children }) => {
     }, [isVisible])
 
     return (
-        isVisible && (
-            <>
+        <ConditionalWrapper condition={isVisible}>
+            <React.Fragment>
                 <div
                     className="bg-[#1A44ADCC]/50 fixed top-0 right-0 left-0 bottom-0 z-50"
                 />
@@ -27,8 +34,8 @@ const Modal = ({ isVisible, setIsVisible, onClose, children }) => {
                         {children}
                     </div>
                 </div>
-            </>
-        )
+            </React.Fragment>
+        </ConditionalWrapper>
     );
 }
 export default Modal;

@@ -1,10 +1,11 @@
 import ArrowDownIcon from "../../elements/ArrowDownIcon/ArrowDownIcon";
 import defaultImage from '../../assets/default-image.jpg'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {profileService} from "../../services/profileService";
 import {Link} from "react-router-dom";
 import useComponentVisible from "../../hooks/componentVisible";
 import {useAuth} from "../../hooks/auth";
+import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
 
 const AccountButton = () => {
     const [user, setUser] = useState();
@@ -17,6 +18,38 @@ const AccountButton = () => {
         })
     }, []);
 
+    const defaultRoutes = [
+        {
+            to: '/in',
+            title: 'Settings & Privacy'
+        },
+        {
+            to: '/in',
+            title: 'Language'
+        },
+        {
+            to: '/in',
+            title: 'Help'
+        }
+    ]
+
+    const LinkedText = ({ to, title, onClickHandler }) => {
+        return (
+            <React.Fragment>
+                <ConditionalWrapper condition={to}>
+                    <Link className="hover:underline active:font-normal active:no-underline" to={to}>
+                        {title}
+                    </Link>
+                </ConditionalWrapper>
+                <ConditionalWrapper condition={onClickHandler}>
+                    <button onClick={onClickHandler} className="hover:underline active:font-normal active:no-underline" to={to}>
+                        {title}
+                    </button>
+                </ConditionalWrapper>
+            </React.Fragment>
+        )
+    }
+
     return (
         <div ref={ref} className="relative">
             <button onClick={() => setIsComponentVisible((val) => !val)}
@@ -28,8 +61,7 @@ const AccountButton = () => {
 
                 <ArrowDownIcon className="ml-1 w-3.5 fill-[#24459A]"/>
             </button>
-            {
-                isComponentVisible &&
+            <ConditionalWrapper condition={isComponentVisible}>
                 <div className="absolute flex flex-col bg-white -left-32 rounded-l-lg rounded-b-lg  top-14 p-5 z-20"
                      style={{boxShadow: "0px 1px 6px 0px #00000040"}}>
                     <div className="flex flex-row gap-2.5">
@@ -52,34 +84,22 @@ const AccountButton = () => {
 
                     <div
                         className="flex flex-col gap-1 mt-1 mb-1 pb-1 pt-2.5 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
-                        <Link className="hover:underline active:font-normal active:no-underline" to={'/in'}>
-                            Settings & Privacy
-                        </Link>
-
-                        <Link className="hover:underline active:font-normal active:no-underline" to={'/in'}>
-                            Language
-                        </Link>
-
-                        <Link className="hover:underline active:font-normal active:no-underline" to={'/in'}>
-                            Help
-                        </Link>
+                        {defaultRoutes.map((route, index) =>
+                            <LinkedText key={`accountDefaultRoute-${index}`} {...route}/>
+                        )}
                     </div>
 
                     <div
                         className="mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
-                        <Link className="hover:underline active:font-normal active:no-underline" to={'/in'}>
-                            Posts & Activity
-                        </Link>
+                        <LinkedText to="/in" title="Posts & Activity"/>
                     </div>
 
                     <div
                         className="mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
-                        <button onClick={logout} className="hover:underline active:font-normal active:no-underline">
-                            Exit
-                        </button>
+                        <LinkedText onClickHandler={logout} title="Exit" />
                     </div>
                 </div>
-            }
+            </ConditionalWrapper>
         </div>
     )
 }
