@@ -46,7 +46,7 @@ const Profile = () => {
     useEffect(() => {
         profileService.profile().then(({data}) => {
             setUser(data)
-        })
+        }).catch()
     }, [])
 
     return (
@@ -83,7 +83,7 @@ const Profile = () => {
                                     <div className="flex flex-row mt-1.5 font-jost text-sm">
                                         <h3 className="text-[#7F7F7F]">Ternopil City, Ukraine</h3>
 
-                                        <button className="ml-6 text-[#24459A] font-medium">
+                                        <button className="ml-6 text-[#24459A] font-medium hover:underline">
                                             Contact information
                                         </button>
                                     </div>
@@ -441,7 +441,7 @@ const Profile = () => {
                                             <PlusIcon
                                                 className="fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-2"/>
 
-                                            Connect
+                                            Add contact
                                         </button>
                                     </div>
                                 </div>

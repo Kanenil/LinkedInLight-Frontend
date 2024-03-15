@@ -46,7 +46,7 @@ const SignIn = () => {
     }
 
     return (
-        <div className="flex flex-col bg-[#E7E7E7] h-screen w-screen py-[90px]">
+        <div className="flex-grow flex flex-col bg-[#E7E7E7]">
             <div
                 className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
                 style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
@@ -93,7 +93,7 @@ const SignIn = () => {
                             <FacebookButton/>
                         </div>
 
-                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[160px]">
                             <span className="font-light">Do you have an account?</span>
 
                             <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
