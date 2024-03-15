@@ -16,7 +16,7 @@ const Slider = ({initialIndex = 0, perPage, children, className, containerClass}
         return currentIndex * -width - (currentIndex > 0 ? 25 + (currentIndex - 1) * 25 : 0)
     }
 
-    const width = getWithFromChild(children[0]);
+    const width = children[0].props.width;
     const items = children.length;
     const leftLimit = 0;
     const rightLimit = items - perPage;
