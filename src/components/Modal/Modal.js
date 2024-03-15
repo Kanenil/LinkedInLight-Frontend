@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
 
-const Modal = ({ isOpen = false, onClose, children }) => {
+const Modal = ({ isOpen = false, onClose, position = "my-auto mx-auto", children }) => {
     const [isVisible, setIsVisible] = useState(isOpen);
 
     const handleClose = () => {
@@ -30,7 +30,7 @@ const Modal = ({ isOpen = false, onClose, children }) => {
 
                 <div className="fixed top-0 right-0 left-0 h-screen w-screen z-50 flex justify-content-center" onClick={handleClose}>
                     <div
-                        className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-[342px] w-[840px]" onClick={(e) => e.stopPropagation()}>
+                        className={`${position} items-center bg-white min-w-2xl rounded-lg overflow-hidden h-fit w-fit`} onClick={(e) => e.stopPropagation()}>
                         {children}
                     </div>
                 </div>
