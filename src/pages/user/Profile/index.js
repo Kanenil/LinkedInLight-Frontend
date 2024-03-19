@@ -1,4 +1,3 @@
-import defaultImage from '../../../assets/default-image.jpg'
 import {useEffect, useState} from "react";
 import {profileService} from "../../../services/profileService";
 import UserProfile from "../../../components/UserProfile/UserProfile";
@@ -8,68 +7,63 @@ import ExperienceSection from "../../../components/ExperienceSection/ExperienceS
 import ActivitySection from "../../../components/ActivitySection/ActivitySection";
 import PeopleMayKnow from "../../../components/PeopleMayKnow/PeopleMayKnow";
 import RightEditSection from "../../../components/RightEditSection/RightEditSection";
+import {useDispatch, useSelector} from "react-redux";
+import ConditionalWrapper from "../../../elements/ConditionalWrapper/ConditionalWrapper";
+import {peopleMayKnow} from "./mock";
+import {useLocation, useParams} from "react-router";
+
+// {
+//     "firstName": "Oleksandr",
+//     "lastName": "Burda",
+//     "additionalName": null,
+//     "email": "oleksandrburda2004@gmail.com",
+//     "headline": null,
+//     "currentPosition": null,
+//     "industry": null,
+//     "country": null,
+//     "city": null,
+//     "about": null,
+//     "image": null,
+//     "background": null,
+//     "isBanned": false,
+//     "openToWork": false,
+//     "openToHire": false,
+//     "profileUrl": "",
+//     "birthday": "0001-01-01T00:00:00",
+//     "isRecruiter": false,
+//     "experiences": [],
+//     "educations": [],
+//     "skills": [],
+//     "languages": [],
+//     "posts": []
+// }
 
 const Profile = () => {
     const [user, setUser] = useState();
+    const [editModal, setEditModal] = useState("");
+    const currentUser = useSelector(state => state.CurrentUser);
+    const dispatch = useDispatch();
+    const {blockId} = useParams();
+    const location = useLocation();
+
 
     useEffect(() => {
-        profileService.profile().then(({data}) => {
-            setUser(data)
-        }).catch()
+        if (!currentUser || !currentUser.email) {
+            profileService.profile().then(({data}) => {
+                dispatch({
+                    type: 'SET_USER',
+                    current_user: data
+                });
+                setUser(data);
+            }).catch()
+        } else {
+            setUser(currentUser);
+        }
     }, [])
 
-    const experience = [
-        { logo: 'logo', companyName: 'Company Name', period: '2021 - 2024' },
-    ]
-
-    const education = [
-        { logo: 'logo', companyName: 'IT STEP Academy', period: '2021 - 2024' },
-    ]
-
-    const blocks = [
-        {name: 'Posts', content: [
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-            ]
-        },
-        {name: 'Images', content: [
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-                {published:'published', when: 'when', privacy: 'privacy'},
-            ]
-        }
-    ]
-
-    const peopleMayKnow = [
-        {
-            username: 'User Name_01',
-            position: 'Position - Company Name',
-            image: defaultImage
-        },
-        {
-            username: 'User Name_02',
-            position: 'Position - Company Name',
-            image: defaultImage
-        },
-        {
-            username: 'User Name_03',
-            position: 'Position - Company Name',
-            image: defaultImage
-        },
-        {
-            username: 'User Name_04',
-            position: 'Position - Company Name',
-            image: defaultImage
-        },
-        {
-            username: 'User Name_05',
-            position: 'Position - Company Name',
-            image: defaultImage
-        }
-    ]
+    useEffect(() => {
+        setEditModal(location.pathname.includes("edit") ? blockId : "");
+    }, [blockId, location])
 
     return (
         <main className='bg-[#E7E7E7]'>
@@ -77,32 +71,49 @@ const Profile = () => {
                 <div className="w-8/12">
                     <div className="rounded-t-lg overflow-hidden">
                         <div className="flex flex-col gap-2.5">
-                            <UserProfile user={user} />
-                            <ProfileStatus user={user} />
-                            <Analytics user={user} />
-                            <ActivitySection
-                                title="Activity"
-                                buttonTitle="Create a post"
-                                blocks={blocks}
-                                activeBlock={blocks[0].name}
-                            />
-                            <ExperienceSection
-                                title="Education"
-                                addButtonTitle="Add education"
-                                companies={education}
-                            />
-                            <ExperienceSection
-                                title="Experience"
-                                addButtonTitle="Add experience"
-                                companies={experience}
-                            />
+                            <UserProfile user={user} isEditImage={editModal === "image"}/>
+                            <ProfileStatus user={user}/>
+                            <Analytics user={user}/>
+                            <ConditionalWrapper condition={user?.posts.length > 0}>
+                                <ActivitySection
+                                    title="Activity"
+                                    buttonTitle="Create a post"
+                                    blocks={[
+                                        {
+                                            name: 'Posts', content: user?.posts
+                                        }
+                                    ]}
+                                    activeBlock={'Posts'}
+                                />
+                            </ConditionalWrapper>
+                            <ConditionalWrapper condition={user?.educations.length > 0}>
+                                <ExperienceSection
+                                    title="Education"
+                                    addButtonTitle="Add education"
+                                    companies={user?.educations}
+                                />
+                            </ConditionalWrapper>
+                            <ConditionalWrapper condition={user?.experiences.length > 0}>
+                                <ExperienceSection
+                                    title="Experience"
+                                    addButtonTitle="Add experience"
+                                    companies={user?.experiences}
+                                />
+                            </ConditionalWrapper>
+                            <ConditionalWrapper condition={user?.skills.length > 0}>
+                                <ExperienceSection
+                                    title="Skills"
+                                    addButtonTitle="Add skill"
+                                    companies={user?.skills}
+                                />
+                            </ConditionalWrapper>
                         </div>
                     </div>
                 </div>
                 <div className="w-4/12 ml-10">
-                    <RightEditSection />
+                    <RightEditSection/>
 
-                    <PeopleMayKnow peopleMayKnow={peopleMayKnow} />
+                    <PeopleMayKnow peopleMayKnow={peopleMayKnow}/>
                 </div>
             </div>
         </main>

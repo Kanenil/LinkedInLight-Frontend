@@ -73,7 +73,9 @@ const AccountButton = () => {
                         <div className="font-jost">
                             <h1 className="font-medium">{user?.firstName} {user?.lastName}</h1>
 
-                            <h3 className="font-light text-sm">student - IT STEP Academy</h3>
+                            <ConditionalWrapper condition={user?.headline}>
+                                <h3 className="font-light text-sm">{user?.headline}</h3>
+                            </ConditionalWrapper>
                         </div>
                     </div>
                     <Link
@@ -96,7 +98,7 @@ const AccountButton = () => {
 
                     <div
                         className="mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
-                        <LinkedText onClickHandler={logout} title="Exit" />
+                        <LinkedText onClickHandler={() => logout()} title="Exit" />
                     </div>
                 </div>
             </ConditionalWrapper>

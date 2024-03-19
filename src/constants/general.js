@@ -1,4 +1,5 @@
 export const general = {
     token: 'ACCESS-TOKEN',
-    currentUser: 'CURRENT-USER'
+    code: '__hashed',
+    user: 'PRE-REGISTERED-USER',
 }

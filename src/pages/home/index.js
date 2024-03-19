@@ -1,21 +1,18 @@
-import bg from "../../../assets/home-background.png";
-import jfy from "../../../assets/job-for-you.png";
-import ArrowRightIcon from "../../../elements/ArrowRightIcon/ArrowRightIcon";
-import CertificateIcon from "../../../elements/CertificateIcon/CertificateIcon";
-import GroupIcon from "../../../elements/GroupIcon/GroupIcon";
-import LightIcon from "../../../elements/LightIcon/LightIcon";
-import LikeIcon from "../../../elements/LikeIcon/LikeIcon";
-import FramedClickableText from "../../../elements/FramedClickableText/FramedClickableText";
-import HiddenContent from "../../../elements/HiddenContent/HiddenContent";
-import Modal from "../../../components/Modal/Modal";
+import bg from "../../assets/home-background.png";
+import jfy from "../../assets/job-for-you.png";
+import ArrowRightIcon from "../../elements/ArrowRightIcon/ArrowRightIcon";
+import CertificateIcon from "../../elements/CertificateIcon/CertificateIcon";
+import GroupIcon from "../../elements/GroupIcon/GroupIcon";
+import LightIcon from "../../elements/LightIcon/LightIcon";
+import LikeIcon from "../../elements/LikeIcon/LikeIcon";
+import FramedClickableText from "../../elements/FramedClickableText/FramedClickableText";
+import HiddenContent from "../../elements/HiddenContent/HiddenContent";
+import Modal from "../../components/Modal/Modal";
 import {useState} from "react";
 import {Link} from "react-router-dom";
-import {routes} from "../../../constants/routes";
-import {useAuthguard} from "../../../hooks/authguard";
+import {routes} from "../../constants/routes";
 
 const Home = () => {
-    useAuthguard()
-
     const [isVisible, setIsVisible] = useState(false)
 
     const openModal = () => {

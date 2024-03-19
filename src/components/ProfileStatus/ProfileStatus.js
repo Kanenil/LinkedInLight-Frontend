@@ -7,44 +7,49 @@ const suggestions = [
         title: "Where do you currently work?",
         description: "Add at least one position and become more visible to potential employers on <span className=\"font-medium\">Job for You!</span>",
         buttonTitle: "Add position",
+        to: "/in",
         width: 220
     },
     {
         title: "What is your field of work?",
         description: "By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
         buttonTitle: "Add field of work",
+        to: "/in",
         width: 220
     },
     {
         title: "Add a profile picture",
         description: "Add a photo and make your profile more visible to employers on <span className=\"font-medium\">Job for You!</span>\n",
         buttonTitle: "Add photo",
+        to: "/in/edit/image",
         width: 220
     },
     {
         title: "Add skills",
         description: "Highlight your key competencies and unique abilities, catching the attention of potential employers",
         buttonTitle: "Add skills",
+        to: "/in",
         width: 220
     },
     {
         title: "Highlight your uniqueness",
         description: "Add a short description to highlight your personality or work experience",
         buttonTitle: "Add description",
+        to: "/in",
         width: 220
     }
 ]
 
-const SliderItem = ({title, description, buttonTitle, onButtonClick}) => {
+const SliderItem = ({title, description, buttonTitle, to}) => {
     return (
         <div
             className="bg-[#F3F5F9] border-[1px] border-[#24459A33] w-[220px] h-[160px] font-jost text-black py-4 px-2.5 rounded-lg">
             <h1 className="font-medium text-sm">{title}</h1>
 
-            <h3 dangerouslySetInnerHTML={{__html: description}} className="mt-2.5 text-xs font-light"/>
+            <h3 dangerouslySetInnerHTML={{__html: description}} className="min-h-[48px] mt-2.5 text-xs font-light"/>
 
             <div className="flex justify-center mt-4 mb-4">
-                <ProfileButton title={buttonTitle} onClickHandler={onButtonClick}/>
+                <ProfileButton title={buttonTitle} to={to}/>
             </div>
         </div>
     )

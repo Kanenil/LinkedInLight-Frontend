@@ -5,15 +5,13 @@ import {routes} from "../../../constants/routes";
 import GoogleButton from "../../../components/GoogleButton/GoogleButton";
 import {useAuth} from "../../../hooks/auth";
 import FormGroup from "../../../components/FormGroup/FormGroup";
-import {useAuthguard} from "../../../hooks/authguard";
 import {jwtDecode} from "jwt-decode";
 import Logo from "../../../elements/Logo/Logo";
 import AppleButton from "../../../components/AppleButton/AppleButton";
 import FacebookButton from "../../../components/FacebookButton/FacebookButton";
+import illustration from "../../../assets/login-illustration.jpg";
 
 const SignIn = () => {
-    useAuthguard();
-
     const {login, googleLogin} = useAuth();
 
     const initValues = {
@@ -93,13 +91,15 @@ const SignIn = () => {
                             <FacebookButton/>
                         </div>
 
-                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[160px]">
+                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]">
                             <span className="font-light">Do you have an account?</span>
 
                             <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
                         </div>
                     </form>
-                    <div className="bg-[#24459A] w-3/4"/>
+                    <div className="w-3/4 flex justify-center items-center">
+                        <img src={illustration} alt="illustration" />
+                    </div>
                 </div>
             </div>
         </div>

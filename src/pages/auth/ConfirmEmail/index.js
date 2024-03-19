@@ -1,4 +1,3 @@
-import {useAuthguard} from "../../../hooks/authguard";
 import {useSelector} from "react-redux";
 import Logo from "../../../elements/Logo/Logo";
 import {Link} from "react-router-dom";
@@ -6,13 +5,13 @@ import {routes} from "../../../constants/routes";
 import {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../hooks/auth";
 import {useNavigate} from "react-router";
+import hash from "../../../utils/hash";
+import {general} from "../../../constants/general";
 
 const ConfirmEmail = () => {
-    useAuthguard();
-
     const navigator = useNavigate();
 
-    const user = useSelector(state => state.CurrentUser);
+    const user = JSON.parse(localStorage.getItem(general.user) || '{}');
 
     const inputRef = useRef(null);
 
@@ -21,11 +20,13 @@ const ConfirmEmail = () => {
     const {sendConfirmationEmail, register} = useAuth();
 
     useEffect(() => {
-        reSend();
-    }, [])
+        if(!localStorage.getItem(general.user) || !localStorage.getItem(general.code)) {
+            navigator(routes.signUp)
+        }
+    }, [navigator])
 
     const reSend = () => {
-        if (user.email.length < 0)
+        if (user?.email?.length < 0)
             navigator(routes.signUp)
 
         sendConfirmationEmail({...user}).then();
@@ -37,14 +38,23 @@ const ConfirmEmail = () => {
         if (code.search(/_/g) !== -1)
             return;
 
-        if (+code !== user.code) return;
+        const hashedCode = await hash(code);
+
+        if (hashedCode !== localStorage.getItem(general.code)) return;
 
         const model = {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
-            password: user.password
+            password: user.password,
+            country: user.country,
+            city: user.city
         }
+
+        console.log(model)
+
+        localStorage.removeItem(general.code);
+        localStorage.removeItem(general.user);
 
         await register({...model});
     }

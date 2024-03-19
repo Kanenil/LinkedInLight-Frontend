@@ -4,33 +4,34 @@ import {routes} from "../../../constants/routes";
 import {useAuth} from "../../../hooks/auth";
 import {RegisterSchema} from "./validation";
 import FormGroup from "../../../components/FormGroup/FormGroup";
-import {useAuthguard} from "../../../hooks/authguard";
 import Logo from "../../../elements/Logo/Logo";
 import GoogleButton from "../../../components/GoogleButton/GoogleButton";
 import AppleButton from "../../../components/AppleButton/AppleButton";
 import FacebookButton from "../../../components/FacebookButton/FacebookButton";
 import {jwtDecode} from "jwt-decode";
 import FormSelector from "../../../components/FormSelector/FormSelector";
-import {useMemo, useState} from "react";
-import {useSelector} from "react-redux";
+import {useEffect, useMemo, useState} from "react";
+import illustration from "../../../assets/signup-illustration.jpg"
+import {authService} from "../../../services/authService";
+import {general} from "../../../constants/general";
 
 const SignUp = () => {
-    useAuthguard();
-    const [countries, setCountries] = useState([]); // State to store fetched countries
-    const user = useSelector(state => state.CurrentUser);
+    const [countries, setCountries] = useState([]);
+    const [cities, setCities] = useState([]);
+    const user = JSON.parse(localStorage.getItem(general.user) || '{}');
 
     useMemo(async () => {
         if (!countries.length) {
-            const response = await fetch("https://restcountries.com/v3.1/all");
-            const fetchedCountries = await response.json();
+            const response = await authService.countries()
 
-            setCountries(fetchedCountries.sort((a, b) => a.name.common.localeCompare(b.name.common)));
+            setCountries(response.data);
         }
     }, [countries]);
 
-    const options = useMemo(() => {
+
+    const countryOptions = useMemo(() => {
         return countries.map(country => (
-            country.name.common
+            country
         ));
     }, [countries]);
 
@@ -40,6 +41,7 @@ const SignUp = () => {
         firstName: "",
         lastName: "",
         country: "",
+        city: "",
         terms: false,
         ...user
     };
@@ -69,6 +71,14 @@ const SignUp = () => {
             token: response.credential
         });
     }
+
+    useEffect( () => {
+        if(values.country.length > 0) {
+            authService.cities(values.country).then(({data})=> {
+                setCities(data);
+            });
+        }
+    }, [values.country]);
 
     return (
         <div className="flex-grow flex flex-col bg-[#E7E7E7]">
@@ -110,8 +120,15 @@ const SignUp = () => {
 
                         <FormSelector margin="mt-[12px]" name="country" value={values.country}
                                       touched={touched.country}
-                                      options={options}
+                                      options={countryOptions}
                                       error={errors.country} title="Select your country ..."
+                                      handleChange={handleChange}/>
+
+                        <FormSelector margin="mt-[12px]" name="city" value={values.city}
+                                      touched={touched.city}
+                                      defaultOption="Firstly select country"
+                                      options={cities}
+                                      error={errors.city} title="Select your city ..."
                                       handleChange={handleChange}/>
 
                         <div className="mt-[12px]">
@@ -164,7 +181,9 @@ const SignUp = () => {
                             <Link className="font-bold" to={routes.signIn}>Log In</Link>
                         </div>
                     </form>
-                    <div className="bg-[#24459A] w-3/4"/>
+                    <div className="w-3/4 flex justify-center items-center">
+                        <img src={illustration} alt="illustration" />
+                    </div>
                 </div>
             </div>
         </div>

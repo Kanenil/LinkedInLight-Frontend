@@ -3,6 +3,7 @@ import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
 import {useDispatch} from "react-redux";
+import hash from "../utils/hash";
 
 export const useAuth = () => {
     const navigator = useNavigate();
@@ -25,10 +26,10 @@ export const useAuth = () => {
                     email
                 }
             })
-            .then(() => {
-                setCurrentUser({email, ...props});
+            .then(async () => {
+                localStorage.setItem(general.user, JSON.stringify({email, ...props}))
 
-                navigator(routes.confirmEmail);
+                await sendConfirmationEmail({email, props})
             })
             .catch(error=>{
                 setErrors({email:error.response.data})
@@ -43,7 +44,10 @@ export const useAuth = () => {
                 }
             })
             .then(({data}) => {
-                setCurrentUser({email, code: data, ...props});
+                hash(data).then((data) => {
+                    localStorage.setItem(general.code, data);
+                    navigator(routes.confirmEmail);
+                })
             })
             .catch(()=> navigator(routes.signUp))
     }
@@ -99,7 +103,7 @@ export const useAuth = () => {
                 //         .catch(err => console.log(err))
                 // }
 
-                navigator('/');
+                navigator('/in');
             })
             .catch((error) => {
                 console.log("Unhandled error: ", error)
@@ -109,7 +113,7 @@ export const useAuth = () => {
     const logout = () => {
         localStorage.removeItem(general.token);
         axios.defaults.headers.common["Authorization"] = null;
-        setCurrentUser({});
+        setCurrentUser(null);
         navigator(routes.signIn);
     }
 

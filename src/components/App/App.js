@@ -1,13 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { routes } from "../../constants/routes";
-import SignUp from "../../pages/general/SignUp";
-import SignIn from "../../pages/general/SignIn";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import SignUp from "../../pages/auth/SignUp";
+import SignIn from "../../pages/auth/SignIn";
 import Profile from "../../pages/user/Profile";
-import Home from "../../pages/general/Home";
+import Home from "../../pages/home";
 import Layout from "../Layout/Layout";
 import Chats from "../../pages/chat/Chats";
 import AuthLayout from "../Layout/AuthLayout";
-import ConfirmEmail from "../../pages/general/ConfirmEmail";
+import ConfirmEmail from "../../pages/auth/ConfirmEmail";
 import InLayout from "../Layout/InLayout";
 
 const App = () => {
@@ -21,6 +20,7 @@ const App = () => {
 
           <Route path="/in" element={<InLayout/>}>
             <Route index element={<Profile/>}/>
+            <Route path="edit/:blockId" element={<Profile />} />
 
             <Route path="profile" element={<Profile />} />
             <Route path="chats" element={<Chats />} />

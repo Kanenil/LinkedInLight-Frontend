@@ -10,7 +10,7 @@ const AddToProfile = ({onClose}) => {
     const blocks = [
         {
             id: 0, title: 'Main information', content: [
-                {title: 'Add profile image', to: '/in'},
+                {title: 'Add profile image', to: '/in/edit/image'},
                 {title: 'Add general information', to: '/in'},
                 {title: 'Add education', to: '/in'},
                 {title: 'Add experience', to: '/in'},
@@ -40,7 +40,7 @@ const AddToProfile = ({onClose}) => {
         },
     ]
 
-    const SectionItem = ({title, content, isOpened, onClickHandler}) => {
+    const SectionItem = ({title, content, isOpened, onClickHandler, onLinkClick}) => {
         return (
             <React.Fragment>
                 <button onClick={onClickHandler}
@@ -52,7 +52,8 @@ const AddToProfile = ({onClose}) => {
                 </button>
                 <ConditionalWrapper condition={isOpened}>
                     {content.map((data, index) =>
-                        <UnderlinedLink key={`${title}-content-${index}`} to={data.to} className="mb-2">
+                        <UnderlinedLink key={`${title}-content-${index}`} to={data.to} onClick={onLinkClick}
+                                        className="mb-2">
                             {data.title}
                         </UnderlinedLink>
                     )}
@@ -62,7 +63,7 @@ const AddToProfile = ({onClose}) => {
     }
 
     const onChangeSelected = (id) => {
-        setSelected((val) => val === id? -1: id);
+        setSelected((val) => val === id ? -1 : id);
     }
 
     return (
@@ -79,7 +80,9 @@ const AddToProfile = ({onClose}) => {
             {blocks.map((block, index) =>
                 <SectionItem onClickHandler={() => onChangeSelected(block.id)}
                              isOpened={selected === block.id}
-                             key={`blockSectionItem-${index}`} {...block}
+                             key={`blockSectionItem-${index}`}
+                             onLinkClick={onClose}
+                             {...block}
                 />
             )}
         </div>

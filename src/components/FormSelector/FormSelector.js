@@ -1,6 +1,7 @@
 import classNames from "classnames";
+import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
 
-const FormSelector = ({handleChange, value, touched, error, title, name, options, margin, ...props}) => {
+const FormSelector = ({handleChange, value, touched, error, title, name, options, margin, defaultOption = "", ...props}) => {
     return (
         <>
             <div className={margin}>
@@ -17,8 +18,11 @@ const FormSelector = ({handleChange, value, touched, error, title, name, options
                     {...props}
                 >
                     <option value="" hidden>{title}</option>
-                    {options.map((val) => (
-                        <option key={val} value={val}>{val}</option>
+                    <ConditionalWrapper condition={defaultOption.length > 0}>
+                        <option value="dis" disabled>{defaultOption}</option>
+                    </ConditionalWrapper>
+                    {options.map((val, index) => (
+                        <option key={`${name}-${val}-${index}`} value={val}>{val}</option>
                     ))}
                 </select>
                 {/*{touched && error && (*/}

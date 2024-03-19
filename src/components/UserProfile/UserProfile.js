@@ -6,12 +6,21 @@ import OpenToButton from "../OpenToButton/OpenToButton";
 import ProfileButton from "../ProfileButton/ProfileButton";
 import React, {useState} from "react";
 import Modal from "../Modal/Modal";
-import {Link} from "react-router-dom";
 import AddToProfile from "../AddToProfile/AddToProfile";
+import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
+import AddImage from "../AddImage/AddImage";
+import {useNavigate} from "react-router";
+import {Link} from "react-router-dom";
 
-const ImageSector = ({user}) => {
+const ImageSector = ({ user, isEditImage  }) => {
     const background = user?.background ? user?.background : defaultBg;
     const image = user?.image ? user?.image : defaultImage;
+
+    const navigator = useNavigate();
+
+    const closeModal = () => {
+        navigator('/in')
+    }
 
     return (
         <div className="relative w-full h-48" style={{background: `url(${background})`}}>
@@ -20,10 +29,13 @@ const ImageSector = ({user}) => {
                 <CameraIcon/>
             </button>
 
-            <button
+            <Link to="/in/edit/image"
                 className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                 <img className="object-contain" src={image} alt="image"/>
-            </button>
+            </Link>
+            <Modal isOpen={isEditImage} onClose={closeModal} position="mt-10 mx-auto">
+                <AddImage onClose={closeModal}/>
+            </Modal>
         </div>
     )
 }
@@ -49,13 +61,17 @@ const InformationSector = ({ user }) => {
                         <PencilIcon className="fill-[#24459A] stroke-[#24459A] w-5"/>
                     </button>
 
-                    <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">Company</h1>
+                    <ConditionalWrapper condition={user?.company}>
+                        <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">{user?.company}</h1>
+                    </ConditionalWrapper>
                 </div>
-                <h1 className="font-jost font-light text-[#2D2A33] mt-1">
-                    student at IT STEP Academy
-                </h1>
+                <ConditionalWrapper condition={user?.headline}>
+                    <h1 className="font-jost font-light text-[#2D2A33] mt-1">
+                        {user?.headline}
+                    </h1>
+                </ConditionalWrapper>
                 <div className="flex flex-row mt-1.5 font-jost text-sm">
-                    <h3 className="text-[#7F7F7F]">Ternopil City, Ukraine</h3>
+                    <h3 className="text-[#7F7F7F]">{user?.city}, {user?.country}</h3>
 
                     <button className="ml-6 text-[#24459A] font-medium hover:underline">
                         Contact information
@@ -79,14 +95,13 @@ const InformationSector = ({ user }) => {
                 <AddToProfile onClose={closeModal} />
             </Modal>
         </React.Fragment>
-
     )
 }
 
-const UserProfile = ({user}) => {
+const UserProfile = ({user, isEditImage}) => {
     return (
         <div className="flex flex-col bg-white rounded-b-lg">
-            <ImageSector user={user} />
+            <ImageSector user={user} isEditImage={isEditImage} />
 
             <InformationSector user={user} />
         </div>
