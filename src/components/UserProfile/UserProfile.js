@@ -4,7 +4,7 @@ import defaultImage from "../../assets/default-image.jpg";
 import PencilIcon from "../../elements/PencilIcon/PencilIcon";
 import OpenToButton from "../OpenToButton/OpenToButton";
 import ProfileButton from "../ProfileButton/ProfileButton";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "../Modal/Modal";
 import AddToProfile from "../AddToProfile/AddToProfile";
 import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
@@ -13,16 +13,34 @@ import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
 import ConfirmChanges from "../ConfirmChanges/ConfirmChanges";
 import ImageCropProvider, {useImageCropContext} from "../../providers/ImageCropProvider";
+import {APP_ENV} from "../../env";
+import {imageUrlToBase64} from "../../utils/converters";
 
-const ImageSector = ({ user, isEditImage, isEditBackground }) => {
+const ImageSector = ({user, isEditImage, isEditBackground}) => {
     const [isClosing, setIsClosing] = useState(false);
     const [isClose, setIsClose] = useState(false);
-    const { image, setImage } = useImageCropContext();
+    const {image, setImage} = useImageCropContext();
 
-    const backgroundUrl = user?.background ? user?.background : defaultBg;
-    const imageUrl = user?.image ? user?.image : defaultImage;
+    const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
+    const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
 
     const navigator = useNavigate();
+
+    useEffect(() => {
+        if (isEditImage && user?.image) {
+            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image)
+                .then(data => {
+                    setImage(data)
+                })
+                .catch(err => console.log(err))
+        } else if (isEditBackground && user?.background) {
+            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.background)
+                .then(data => {
+                    setImage(data)
+                })
+                .catch(err => console.log(err))
+        }
+    }, [isEditImage, isEditBackground])
 
     const onConfirm = () => {
         navigator('/in');
@@ -35,7 +53,7 @@ const ImageSector = ({ user, isEditImage, isEditBackground }) => {
     }
 
     const closeModal = () => {
-        if(image) {
+        if (image) {
             setIsClosing(true);
         } else {
             setIsClose(true);
@@ -44,35 +62,37 @@ const ImageSector = ({ user, isEditImage, isEditBackground }) => {
     }
 
     return (
-        <ImageCropProvider>
-            <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
-                <Link to="edit/background"
-                      className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
-                    <CameraIcon/>
-                </Link>
-                <Modal isOpen={isEditBackground} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
-                    <AddImage isBackground={true} onClose={closeModal} />
-                    <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                        <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
-                    </Modal>
-                </Modal>
 
-                <Link to="edit/image"
-                      className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
-                    <img className="object-contain" src={imageUrl} alt="image"/>
-                </Link>
-                <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
-                    <AddImage onClose={closeModal} />
-                    <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                        <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
-                    </Modal>
+        <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
+            <Link to="edit/background"
+                  className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
+                <CameraIcon/>
+            </Link>
+            <Modal isOpen={isEditBackground} closeModal={isClose} hideOnClose={false} onClose={closeModal}
+                   position="mt-10 mx-auto">
+                <AddImage isBackground={true} onClose={closeModal}/>
+                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
                 </Modal>
-            </div>
-        </ImageCropProvider>
+            </Modal>
+
+            <Link to="edit/image"
+                  className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                <img className="object-contain" src={imageUrl} alt="image"/>
+            </Link>
+            <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal}
+                   position="mt-10 mx-auto">
+                <AddImage onClose={closeModal}/>
+                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
+                </Modal>
+            </Modal>
+        </div>
+
     )
 }
 
-const InformationSector = ({ user }) => {
+const InformationSector = ({user}) => {
     const [isVisible, setIsVisible] = useState(false)
 
     const openModal = () => {
@@ -124,7 +144,7 @@ const InformationSector = ({ user }) => {
                 </div>
             </div>
             <Modal isOpen={isVisible} onClose={closeModal} position="mt-10 mx-auto">
-                <AddToProfile onClose={closeModal} />
+                <AddToProfile onClose={closeModal}/>
             </Modal>
         </React.Fragment>
     )
@@ -132,11 +152,13 @@ const InformationSector = ({ user }) => {
 
 const UserProfile = ({user, isEditImage, isEditBackground}) => {
     return (
-        <div className="flex flex-col bg-white rounded-b-lg">
-            <ImageSector user={user} isEditImage={isEditImage} isEditBackground={isEditBackground} />
+        <ImageCropProvider>
+            <div className="flex flex-col bg-white rounded-b-lg">
+                <ImageSector user={user} isEditImage={isEditImage} isEditBackground={isEditBackground}/>
 
-            <InformationSector user={user} />
-        </div>
+                <InformationSector user={user}/>
+            </div>
+        </ImageCropProvider>
     )
 }
 export default UserProfile;

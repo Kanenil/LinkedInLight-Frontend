@@ -46,7 +46,6 @@ const Profile = () => {
     const {blockId} = useParams();
     const location = useLocation();
 
-
     useEffect(() => {
         if (!currentUser || !currentUser.email) {
             profileService.profile().then(({data}) => {
@@ -59,7 +58,7 @@ const Profile = () => {
         } else {
             setUser(currentUser);
         }
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         setEditModal(location.pathname.includes("edit") ? blockId : "");

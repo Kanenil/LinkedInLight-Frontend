@@ -38,6 +38,7 @@ const AddImage = ({onClose, isBackground = false}) => {
                         type: 'SET_USER',
                         current_user: data
                     });
+                    setImage(undefined);
                     navigator('/in');
                 })
         };

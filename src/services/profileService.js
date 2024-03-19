@@ -5,6 +5,10 @@ export const profileService = {
         return axios.get('api/profile');
     },
     changeImage: (data, isBackground = false) => {
-        return axios.post('api/profile/editImage')
+        return axios.putForm('api/profile/editImage', {newImage: data}, {
+            params: {
+                background: isBackground
+            }
+        })
     }
 };

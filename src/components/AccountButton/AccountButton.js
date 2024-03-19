@@ -6,17 +6,21 @@ import {Link} from "react-router-dom";
 import useComponentVisible from "../../hooks/componentVisible";
 import {useAuth} from "../../hooks/auth";
 import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWrapper";
+import {APP_ENV} from "../../env";
+import {useSelector} from "react-redux";
 
 const AccountButton = () => {
     const [user, setUser] = useState();
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const {logout} = useAuth();
 
+    const currentUser = useSelector(state => state.CurrentUser);
+
     useEffect(() => {
         profileService.profile().then(({data}) => {
             setUser(data)
         })
-    }, []);
+    }, [currentUser]);
 
     const defaultRoutes = [
         {
@@ -32,6 +36,8 @@ const AccountButton = () => {
             title: 'Help'
         }
     ]
+
+    const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
 
     const LinkedText = ({ to, title, onClickHandler }) => {
         return (
@@ -56,7 +62,7 @@ const AccountButton = () => {
                     className="flex flex-row items-end border-l-2 border-[#24459A73] pl-10">
                 <div className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
                     <img alt="image" className="object-contain"
-                         src={defaultImage}/>
+                         src={imageUrl}/>
                 </div>
 
                 <ArrowDownIcon className="ml-1 w-3.5 fill-[#24459A]"/>
@@ -67,7 +73,7 @@ const AccountButton = () => {
                     <div className="flex flex-row gap-2.5">
                         <div className="rounded-full min-w-10 overflow-hidden border-[1px] border-[#2D2A33] w-10 h-10">
                             <img alt="image" className="object-contain"
-                                 src={defaultImage}/>
+                                 src={imageUrl}/>
                         </div>
 
                         <div className="font-jost">
