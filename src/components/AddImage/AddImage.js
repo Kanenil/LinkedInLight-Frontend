@@ -15,7 +15,7 @@ import {useNavigate} from "react-router";
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
-const AddImage = ({onClose}) => {
+const AddImage = ({onClose, onImageSelect}) => {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [imgSrc, setImgSrc] = useState("");
@@ -43,6 +43,7 @@ const AddImage = ({onClose}) => {
                 }
             });
             setImgSrc(imageUrl);
+            onImageSelect();
         });
         reader.readAsDataURL(file);
     };
@@ -202,7 +203,6 @@ const AddImage = ({onClose}) => {
                 </ConditionalWrapper>
             </div>
         </React.Fragment>
-
     )
 }
 export default AddImage;

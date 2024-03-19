@@ -11,15 +11,35 @@ import ConditionalWrapper from "../../elements/ConditionalWrapper/ConditionalWra
 import AddImage from "../AddImage/AddImage";
 import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
+import ConfirmChanges from "../ConfirmChanges/ConfirmChanges";
 
 const ImageSector = ({ user, isEditImage  }) => {
+    const [isClosing, setIsClosing] = useState(false);
+    const [isClose, setIsClose] = useState(false);
+    const [isImageSelected, setIsImageSelected] = useState(false);
+
     const background = user?.background ? user?.background : defaultBg;
     const image = user?.image ? user?.image : defaultImage;
 
     const navigator = useNavigate();
 
+    const onConfirm = () => {
+        navigator('/in');
+        setIsClosing(false);
+        setIsImageSelected(false);
+    }
+
+    const onCloseConfirm = () => {
+        setIsClosing(false);
+    }
+
     const closeModal = () => {
-        navigator('/in')
+        if(isImageSelected) {
+            setIsClosing(true);
+        } else {
+            setIsClose(true);
+            navigator('/in');
+        }
     }
 
     return (
@@ -33,8 +53,11 @@ const ImageSector = ({ user, isEditImage  }) => {
                 className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                 <img className="object-contain" src={image} alt="image"/>
             </Link>
-            <Modal isOpen={isEditImage} onClose={closeModal} position="mt-10 mx-auto">
-                <AddImage onClose={closeModal}/>
+            <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
+                <AddImage onClose={closeModal} onImageSelect={() => setIsImageSelected(true)} />
+                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
+                </Modal>
             </Modal>
         </div>
     )
