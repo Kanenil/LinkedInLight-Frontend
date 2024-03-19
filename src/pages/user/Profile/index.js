@@ -71,7 +71,7 @@ const Profile = () => {
                 <div className="w-8/12">
                     <div className="rounded-t-lg overflow-hidden">
                         <div className="flex flex-col gap-2.5">
-                            <UserProfile user={user} isEditImage={editModal === "image"}/>
+                            <UserProfile user={user} isEditBackground={editModal === "background"} isEditImage={editModal === "image"} />
                             <ProfileStatus user={user}/>
                             <Analytics user={user}/>
                             <ConditionalWrapper condition={user?.posts.length > 0}>

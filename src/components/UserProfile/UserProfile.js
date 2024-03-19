@@ -12,21 +12,22 @@ import AddImage from "../AddImage/AddImage";
 import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
 import ConfirmChanges from "../ConfirmChanges/ConfirmChanges";
+import ImageCropProvider, {useImageCropContext} from "../../providers/ImageCropProvider";
 
-const ImageSector = ({ user, isEditImage  }) => {
+const ImageSector = ({ user, isEditImage, isEditBackground }) => {
     const [isClosing, setIsClosing] = useState(false);
     const [isClose, setIsClose] = useState(false);
-    const [isImageSelected, setIsImageSelected] = useState(false);
+    const { image, setImage } = useImageCropContext();
 
-    const background = user?.background ? user?.background : defaultBg;
-    const image = user?.image ? user?.image : defaultImage;
+    const backgroundUrl = user?.background ? user?.background : defaultBg;
+    const imageUrl = user?.image ? user?.image : defaultImage;
 
     const navigator = useNavigate();
 
     const onConfirm = () => {
         navigator('/in');
         setIsClosing(false);
-        setIsImageSelected(false);
+        setImage(undefined);
     }
 
     const onCloseConfirm = () => {
@@ -34,7 +35,7 @@ const ImageSector = ({ user, isEditImage  }) => {
     }
 
     const closeModal = () => {
-        if(isImageSelected) {
+        if(image) {
             setIsClosing(true);
         } else {
             setIsClose(true);
@@ -43,23 +44,31 @@ const ImageSector = ({ user, isEditImage  }) => {
     }
 
     return (
-        <div className="relative w-full h-48" style={{background: `url(${background})`}}>
-            <button
-                className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
-                <CameraIcon/>
-            </button>
-
-            <Link to="/in/edit/image"
-                className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
-                <img className="object-contain" src={image} alt="image"/>
-            </Link>
-            <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
-                <AddImage onClose={closeModal} onImageSelect={() => setIsImageSelected(true)} />
-                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
+        <ImageCropProvider>
+            <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
+                <Link to="edit/background"
+                      className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
+                    <CameraIcon/>
+                </Link>
+                <Modal isOpen={isEditBackground} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
+                    <AddImage isBackground={true} onClose={closeModal} />
+                    <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                        <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
+                    </Modal>
                 </Modal>
-            </Modal>
-        </div>
+
+                <Link to="edit/image"
+                      className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                    <img className="object-contain" src={imageUrl} alt="image"/>
+                </Link>
+                <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal} position="mt-10 mx-auto">
+                    <AddImage onClose={closeModal} />
+                    <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                        <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm} />
+                    </Modal>
+                </Modal>
+            </div>
+        </ImageCropProvider>
     )
 }
 
@@ -121,10 +130,10 @@ const InformationSector = ({ user }) => {
     )
 }
 
-const UserProfile = ({user, isEditImage}) => {
+const UserProfile = ({user, isEditImage, isEditBackground}) => {
     return (
         <div className="flex flex-col bg-white rounded-b-lg">
-            <ImageSector user={user} isEditImage={isEditImage} />
+            <ImageSector user={user} isEditImage={isEditImage} isEditBackground={isEditBackground} />
 
             <InformationSector user={user} />
         </div>
