@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import Logo from "../../../elements/Logo/Logo";
+import Logo from "../../../elements/shared/Logo";
 import {Link} from "react-router-dom";
 import {routes} from "../../../constants/routes";
 import {useEffect, useRef, useState} from "react";

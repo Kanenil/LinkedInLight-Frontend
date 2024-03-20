@@ -2,13 +2,13 @@ import {useFormik} from "formik";
 import {LoginSchema} from "./validation";
 import {Link} from "react-router-dom";
 import {routes} from "../../../constants/routes";
-import GoogleButton from "../../../components/GoogleButton/GoogleButton";
+import GoogleButton from "../../../elements/buttons/GoogleButton";
 import {useAuth} from "../../../hooks/auth";
-import FormGroup from "../../../components/FormGroup/FormGroup";
+import FormGroup from "../../../components/shared/forms/FormGroup";
 import {jwtDecode} from "jwt-decode";
-import Logo from "../../../elements/Logo/Logo";
-import AppleButton from "../../../components/AppleButton/AppleButton";
-import FacebookButton from "../../../components/FacebookButton/FacebookButton";
+import Logo from "../../../elements/shared/Logo";
+import AppleButton from "../../../elements/buttons/AppleButton";
+import FacebookButton from "../../../elements/buttons/FacebookButton";
 import illustration from "../../../assets/login-illustration.jpg";
 
 const SignIn = () => {

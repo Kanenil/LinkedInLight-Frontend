@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import {profileService} from "../../../services/profileService";
-import UserProfile from "../../../components/UserProfile/UserProfile";
-import ProfileStatus from "../../../components/ProfileStatus/ProfileStatus";
-import Analytics from "../../../components/Analytics/Analytics";
-import ExperienceSection from "../../../components/ExperienceSection/ExperienceSection";
-import ActivitySection from "../../../components/ActivitySection/ActivitySection";
-import PeopleMayKnow from "../../../components/PeopleMayKnow/PeopleMayKnow";
-import RightEditSection from "../../../components/RightEditSection/RightEditSection";
+import UserProfileSection from "../../../components/profile/UserProfileSection";
+import ProfileStatus from "../../../components/profile/ProfileStatus";
+import AnalyticsSection from "../../../components/profile/AnalyticsSection";
+import ExperienceSection from "../../../components/profile/ExperienceSection";
+import ActivitySection from "../../../components/profile/ActivitySection";
+import PeopleMayKnow from "../../../components/profile/PeopleMayKnow";
+import RightEditSection from "../../../components/profile/RightEditSection";
 import {useDispatch, useSelector} from "react-redux";
-import ConditionalWrapper from "../../../elements/ConditionalWrapper/ConditionalWrapper";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {peopleMayKnow} from "./mock";
 import {useLocation, useParams} from "react-router";
 
@@ -70,9 +70,9 @@ const Profile = () => {
                 <div className="w-8/12">
                     <div className="rounded-t-lg overflow-hidden">
                         <div className="flex flex-col gap-2.5">
-                            <UserProfile user={user} isEditBackground={editModal === "background"} isEditImage={editModal === "image"} />
+                            <UserProfileSection user={user} isEditBackground={editModal === "background"} isEditImage={editModal === "image"} />
                             <ProfileStatus user={user}/>
-                            <Analytics user={user}/>
+                            <AnalyticsSection user={user}/>
                             <ConditionalWrapper condition={user?.posts.length > 0}>
                                 <ActivitySection
                                     title="Activity"
