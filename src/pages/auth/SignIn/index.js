@@ -10,6 +10,8 @@ import Logo from "../../../elements/shared/Logo";
 import AppleButton from "../../../elements/buttons/AppleButton";
 import FacebookButton from "../../../elements/buttons/FacebookButton";
 import illustration from "../../../assets/login-illustration.jpg";
+import {Helmet} from "react-helmet-async";
+import React from "react";
 
 const SignIn = () => {
     const {login, googleLogin} = useAuth();
@@ -43,66 +45,74 @@ const SignIn = () => {
         });
     }
 
+
     return (
-        <div className="flex-grow flex flex-col bg-[#E7E7E7]">
-            <div
-                className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
-                style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
-                <div className="flex flex-row h-full">
-                    <form onSubmit={handleSubmit} className="w-1/2 p-11">
-                        <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+        <React.Fragment>
+            <Helmet>
+                <title>Sign In</title>
+            </Helmet>
+            <div className="flex-grow flex flex-col bg-[#E7E7E7]">
+                <div
+                    className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
+                    style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
+                    <div className="flex flex-row h-full">
+                        <form onSubmit={handleSubmit} className="w-1/2 p-11">
+                            <Link to='/'>
+                                <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+                            </Link>
 
-                        <div className="flex flex-row mt-5">
-                            <div className="flex w-full border-b-[1px] border-[#585359]">
-                                <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                    Log in
-                                </Link>
+                            <div className="flex flex-row mt-5">
+                                <div className="flex w-full border-b-[1px] border-[#585359]">
+                                    <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                        Log in
+                                    </Link>
+                                </div>
+                                <div className="flex w-full">
+                                    <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                        Sign up
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="flex w-full">
-                                <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                    Sign up
-                                </Link>
+
+                            <FormGroup margin="mt-[30px]" name="email" value={values.email} type="email"
+                                       touched={touched.email}
+                                       error={errors.email} title="Username/Email" handleChange={handleChange}/>
+
+                            <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
+                                       touched={touched.password}
+                                       error={errors.password} title="Password" handleChange={handleChange}/>
+
+                            <Link to={routes.forgetPassword} className="text-xs text-[#7D7D7D] hover:text-[#24459A]">
+                                Forgot your password?
+                            </Link>
+
+                            <button type="submit"
+                                    className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                                Log In
+                            </button>
+
+                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
+
+                            <div
+                                className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
+                                <GoogleButton googleLoginCallback={googleCallback}/>
+                                <AppleButton/>
+                                <FacebookButton/>
                             </div>
+
+                            <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]">
+                                <span className="font-light">Do you have an account?</span>
+
+                                <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
+                            </div>
+                        </form>
+                        <div className="w-3/4 flex justify-center items-center">
+                            <img src={illustration} alt="illustration" />
                         </div>
-
-                        <FormGroup margin="mt-[30px]" name="email" value={values.email} type="email"
-                                   touched={touched.email}
-                                   error={errors.email} title="Username/Email" handleChange={handleChange}/>
-
-                        <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
-                                   touched={touched.password}
-                                   error={errors.password} title="Password" handleChange={handleChange}/>
-
-                        <Link to={routes.forgetPassword} className="text-xs text-[#7D7D7D]">
-                            Forgot your password?
-                        </Link>
-
-                        <button type="submit"
-                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                            Log In
-                        </button>
-
-                        <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
-
-                        <div
-                            className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
-                            <GoogleButton googleLoginCallback={googleCallback}/>
-                            <AppleButton/>
-                            <FacebookButton/>
-                        </div>
-
-                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]">
-                            <span className="font-light">Do you have an account?</span>
-
-                            <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
-                        </div>
-                    </form>
-                    <div className="w-3/4 flex justify-center items-center">
-                        <img src={illustration} alt="illustration" />
                     </div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 export default SignIn;

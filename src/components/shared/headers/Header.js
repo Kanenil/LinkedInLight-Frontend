@@ -6,7 +6,9 @@ const Header = () => {
     return (
         <header className="grid grid-cols-2 py-4">
             <div className="mx-auto pr-36">
-                <Logo className="pb-3 border-b-[1px] fill-white h-16"/>
+                <Link to='/'>
+                    <Logo className="pb-3 border-b-[1px] fill-white h-16"/>
+                </Link>
             </div>
             <ul className="flex gap-[1.875rem] border-t-[1px] ml-[50px]">
                 <li className="relative group my-auto">
@@ -30,7 +32,7 @@ const Header = () => {
                     </Link>
                 </li>
                 <li className="relative group my-auto">
-                    <Link className="text-white text-lg font-bold rounded-full bg-[#2D2A33] py-[8px] px-[15px]" to={routes.signUp}>
+                    <Link className="text-white text-lg font-bold rounded-full bg-[#2D2A33] hover:bg-[#24459A] py-[8px] px-[15px]" to={routes.signUp}>
                         Sign Up
                     </Link>
                 </li>

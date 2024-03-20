@@ -10,10 +10,11 @@ import AppleButton from "../../../elements/buttons/AppleButton";
 import FacebookButton from "../../../elements/buttons/FacebookButton";
 import {jwtDecode} from "jwt-decode";
 import FormSelector from "../../../components/shared/forms/FormSelector";
-import {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import illustration from "../../../assets/signup-illustration.jpg"
 import {authService} from "../../../services/authService";
 import {general} from "../../../constants/general";
+import {Helmet} from "react-helmet-async";
 
 const SignUp = () => {
     const [countries, setCountries] = useState([]);
@@ -81,69 +82,73 @@ const SignUp = () => {
     }, [values.country]);
 
     return (
-        <div className="flex-grow flex flex-col bg-[#E7E7E7]">
-            <div
-                className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
-                style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
-                <div className="flex flex-row h-full">
-                    <form onSubmit={handleSubmit} className="w-1/2 p-11">
-                        <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+        <React.Fragment>
+            <Helmet>
+                <title>Sign Up</title>
+            </Helmet>
+            <div className="flex-grow flex flex-col bg-[#E7E7E7]">
+                <div
+                    className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
+                    style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
+                    <div className="flex flex-row h-full">
+                        <form onSubmit={handleSubmit} className="w-1/2 p-11">
+                            <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
 
-                        <div className="flex flex-row mt-5">
-                            <div className="flex w-full">
-                                <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                    Log in
-                                </Link>
+                            <div className="flex flex-row mt-5">
+                                <div className="flex w-full">
+                                    <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                        Log in
+                                    </Link>
+                                </div>
+                                <div className="flex w-full border-b-[1px] border-[#585359]">
+                                    <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                        Sign up
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="flex w-full border-b-[1px] border-[#585359]">
-                                <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                    Sign up
-                                </Link>
-                            </div>
-                        </div>
 
-                        <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
-                                   touched={touched.firstName}
-                                   error={errors.firstName} title="First Name" handleChange={handleChange}/>
+                            <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
+                                       touched={touched.firstName}
+                                       error={errors.firstName} title="First Name" handleChange={handleChange}/>
 
-                        <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
-                                   touched={touched.lastName}
-                                   error={errors.lastName} title="Last Name" handleChange={handleChange}/>
+                            <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
+                                       touched={touched.lastName}
+                                       error={errors.lastName} title="Last Name" handleChange={handleChange}/>
 
-                        <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
-                                   touched={touched.email}
-                                   error={errors.email} title="Email" handleChange={handleChange}/>
+                            <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
+                                       touched={touched.email}
+                                       error={errors.email} title="Email" handleChange={handleChange}/>
 
-                        <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
-                                   touched={touched.password}
-                                   error={errors.password} title="Create a Password" handleChange={handleChange}/>
+                            <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
+                                       touched={touched.password}
+                                       error={errors.password} title="Create a Password" handleChange={handleChange}/>
 
-                        <FormSelector margin="mt-[12px]" name="country" value={values.country}
-                                      touched={touched.country}
-                                      options={countryOptions}
-                                      error={errors.country} title="Select your country ..."
-                                      handleChange={handleChange}/>
+                            <FormSelector margin="mt-[12px]" name="country" value={values.country}
+                                          touched={touched.country}
+                                          options={countryOptions}
+                                          error={errors.country} title="Select your country ..."
+                                          handleChange={handleChange}/>
 
-                        <FormSelector margin="mt-[12px]" name="city" value={values.city}
-                                      touched={touched.city}
-                                      defaultOption="Firstly select country"
-                                      options={cities}
-                                      error={errors.city} title="Select your city ..."
-                                      handleChange={handleChange}/>
+                            <FormSelector margin="mt-[12px]" name="city" value={values.city}
+                                          touched={touched.city}
+                                          defaultOption="Firstly select country"
+                                          options={cities}
+                                          error={errors.city} title="Select your city ..."
+                                          handleChange={handleChange}/>
 
-                        <div className="mt-[12px]">
-                            <label
-                                className="flex items-center cursor-pointer select-none"
-                                htmlFor="terms">
-                                <div className="relative">
-                                    <input name="terms"
-                                           value={values.terms}
-                                           onChange={handleChange}
-                                           className="hidden"
-                                           type="checkbox"
-                                           id="terms"/>
-                                    <div
-                                        className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
+                            <div className="mt-[12px]">
+                                <label
+                                    className="flex items-center cursor-pointer select-none"
+                                    htmlFor="terms">
+                                    <div className="relative">
+                                        <input name="terms"
+                                               value={values.terms}
+                                               onChange={handleChange}
+                                               className="hidden"
+                                               type="checkbox"
+                                               id="terms"/>
+                                        <div
+                                            className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
                                         <span className={values.terms === false ? "opacity-0" : ""}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16"
                                                  className="ml-1 mb-1"
@@ -153,40 +158,41 @@ const SignUp = () => {
                                                     fill="#24459A"/>
                                             </svg>
                                         </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <span className="text-xs text-[#7D7D7D]">
+                                    <span className="text-xs text-[#7D7D7D]">
                                     Yes, I understand and agree to the Privacy Policy and Terms of <strong>Job for You</strong>.
                                 </span>
-                            </label>
+                                </label>
+                            </div>
+
+                            <button type="submit"
+                                    className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                                Sign Up
+                            </button>
+
+                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
+
+                            <div
+                                className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
+                                <GoogleButton googleLoginCallback={googleCallback}/>
+                                <AppleButton/>
+                                <FacebookButton/>
+                            </div>
+
+                            <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                                <span className="font-light">Already a member of <span className="font-semibold">Job for You?</span></span>
+
+                                <Link className="font-bold" to={routes.signIn}>Log In</Link>
+                            </div>
+                        </form>
+                        <div className="w-3/4 flex justify-center items-center">
+                            <img src={illustration} alt="illustration" />
                         </div>
-
-                        <button type="submit"
-                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                            Sign Up
-                        </button>
-
-                        <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
-
-                        <div
-                            className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
-                            <GoogleButton googleLoginCallback={googleCallback}/>
-                            <AppleButton/>
-                            <FacebookButton/>
-                        </div>
-
-                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
-                            <span className="font-light">Already a member of <span className="font-semibold">Job for You?</span></span>
-
-                            <Link className="font-bold" to={routes.signIn}>Log In</Link>
-                        </div>
-                    </form>
-                    <div className="w-3/4 flex justify-center items-center">
-                        <img src={illustration} alt="illustration" />
                     </div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 export default SignUp;

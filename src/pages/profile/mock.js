@@ -1,4 +1,4 @@
-import defaultImage from "../../../assets/default-image.jpg";
+import defaultImage from "../../assets/default-image.jpg";
 
 const peopleMayKnow = [
     {
