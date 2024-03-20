@@ -92,7 +92,9 @@ const SignUp = () => {
                     style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
                     <div className="flex flex-row h-full">
                         <form onSubmit={handleSubmit} className="w-1/2 p-11">
-                            <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+                            <Link to='/'>
+                                <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+                            </Link>
 
                             <div className="flex flex-row mt-5">
                                 <div className="flex w-full">

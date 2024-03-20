@@ -62,7 +62,6 @@ const ImageSector = ({user, isEditImage, isEditBackground}) => {
     }
 
     return (
-
         <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
             <Link to="edit/background"
                   className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">

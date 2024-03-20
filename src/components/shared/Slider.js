@@ -1,12 +1,13 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import ChevronLeftIcon from "../../elements/icons/ChevronLeftIcon";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 
-const Slider = ({initialIndex = 0, perPage, children, className, containerClass}) => {
+const Slider = ({initialIndex = 0, perPage = 1, children, className, containerClass, isNewDesignStyle = false}) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     const calculateWidth = () => {
-        return currentIndex * -width - (currentIndex > 0 ? 25 + (currentIndex - 1) * 25 : 0)
+        const additionMinus = (currentIndex > 0 ? 25 + (currentIndex - 1) * 25 : 0);
+        return currentIndex * -width - additionMinus;
     }
 
     const width = children[0].props.width;
@@ -26,9 +27,17 @@ const Slider = ({initialIndex = 0, perPage, children, className, containerClass}
     return (
         <div className="relative">
             <ConditionalWrapper condition={currentIndex !== leftLimit}>
-                <ManipulateButton onClickHandler={() => setCurrentIndex(val => val - 1)}
-                                  position="-left-6 top-16"
-                />
+                <ConditionalWrapper condition={isNewDesignStyle}>
+                    <button onClick={() => setCurrentIndex(val => val - 1)} className="z-10 absolute left-7 -bottom-5 flex flex-row items-center pt-[5px] py-[25px] gap-2.5 font-light text-lg text-[#615E64] text-center hover:underline transition duration-500 ease-in-out">
+                        <ChevronLeftIcon className="h-3 fill-[#615E64]" style={{transform: "rotate(360deg)"}}/>
+                        <span>Back</span>
+                    </button>
+                </ConditionalWrapper>
+                <ConditionalWrapper condition={!isNewDesignStyle}>
+                    <ManipulateButton onClickHandler={() => setCurrentIndex(val => val - 1)}
+                                      position="-left-6 top-16"
+                    />
+                </ConditionalWrapper>
             </ConditionalWrapper>
             <div className={className}
                  style={{transform: `translateX(${calculateWidth()}px)`, transition: "transform 0.6s ease-in-out"}}>
@@ -37,10 +46,18 @@ const Slider = ({initialIndex = 0, perPage, children, className, containerClass}
                 </div>
             </div>
             <ConditionalWrapper condition={currentIndex !== rightLimit}>
-                <ManipulateButton onClickHandler={() => setCurrentIndex(val => val + 1)}
-                                  position="-right-8 top-16"
-                                  rotate={180}
-                />
+                <ConditionalWrapper condition={isNewDesignStyle}>
+                    <button onClick={() => setCurrentIndex(val => val + 1)} className="z-10 absolute right-1 -bottom-5 flex items-center flex-row pt-[5px] py-[25px] gap-2.5 font-light text-lg text-[#615E64] text-center hover:underline transition duration-500 ease-in-out">
+                        <span>Next</span>
+                        <ChevronLeftIcon className="h-3 fill-[#615E64]" style={{transform: "rotate(180deg)"}}/>
+                    </button>
+                </ConditionalWrapper>
+                <ConditionalWrapper condition={!isNewDesignStyle}>
+                    <ManipulateButton onClickHandler={() => setCurrentIndex(val => val + 1)}
+                                      position="-right-8 top-16"
+                                      rotate={180}
+                    />
+                </ConditionalWrapper>
             </ConditionalWrapper>
         </div>
 
