@@ -1,5 +1,7 @@
 import XMarkIcon from "../../../../elements/icons/XMarkIcon";
 import React from "react";
+import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
+import SecondaryButton from "../../../../elements/buttons/SecondaryButton";
 
 const ConfirmChanges = ({ onClose, onConfirm }) => {
 
@@ -19,15 +21,13 @@ const ConfirmChanges = ({ onClose, onConfirm }) => {
             </h3>
 
             <div className="flex justify-end pt-2.5 pb-1 gap-2">
-                <button onClick={onClose}
-                       className="font-jost py-1 px-5 rounded-full border-[1px] border-[#24459A] text-[#556DA9] text-sm">
+                <SecondaryButton onClick={onClose}>
                     Cancel
-                </button>
+                </SecondaryButton>
 
-                <button onClick={onConfirm}
-                        className="font-jost py-1 px-5 rounded-full bg-[#24459A] text-white text-sm">
+                <PrimaryButton onClick={onConfirm}>
                     Discard
-                </button>
+                </PrimaryButton>
             </div>
         </div>
     )

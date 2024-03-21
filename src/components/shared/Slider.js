@@ -45,7 +45,7 @@ const Slider = ({initialIndex = 0, perPage = 1, children, className, containerCl
                     {children}
                 </div>
             </div>
-            <ConditionalWrapper condition={currentIndex !== rightLimit}>
+            <ConditionalWrapper condition={currentIndex !== rightLimit && rightLimit > 0}>
                 <ConditionalWrapper condition={isNewDesignStyle}>
                     <button onClick={() => setCurrentIndex(val => val + 1)} className="z-10 absolute right-1 -bottom-5 flex items-center flex-row pt-[5px] py-[25px] gap-2.5 font-light text-lg text-[#615E64] text-center hover:underline transition duration-500 ease-in-out">
                         <span>Next</span>

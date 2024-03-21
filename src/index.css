@@ -7,6 +7,46 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    input.test[type='text']:focus,
+    input.test:where(:not([type])):focus,
+    input.test[type='email']:focus,
+    input.test[type='url']:focus,
+    input.test[type='password']:focus,
+    input.test[type='number']:focus,
+    input.test[type='date']:focus,
+    input.test[type='datetime-local']:focus,
+    input.test[type='month']:focus,
+    input.test[type='search']:focus,
+    input.test[type='tel']:focus,
+    input.test[type='time']:focus,
+    input.test[type='week']:focus,
+    input.test[multiple]:focus,
+    select.test:focus {
+        --tw-ring-color: 0;
+        border-color: var(--tw-ring-color);
+    }
+
+}
+
+#container::-webkit-scrollbar {
+    width: 5px;
+}
+
+#container::-webkit-scrollbar-track {
+    background-color: #ECEAEA;
+}
+
+#container::-webkit-scrollbar-thumb {
+    background-color: #C6CCDA;
+    border-radius: 5px;
+}
+
+#container::-webkit-scrollbar-thumb:hover {
+    background: #a0a5b0;
+}
+
+
 body {
     font-family: "Plus Jakarta Sans", sans-serif;
     @apply text-base text-black
@@ -70,5 +110,4 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]:focus::-webkit-slider-thumb {
     background-color: #24459A;
 }
-
 

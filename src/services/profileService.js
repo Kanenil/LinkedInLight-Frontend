@@ -10,5 +10,23 @@ export const profileService = {
                 background: isBackground
             }
         })
-    }
+    },
+    getAbout: () => {
+        return axios.get('api/profile/edit/about')
+    },
+    editAbout: (newAbout) => {
+        return axios.put('api/profile/edit/about', newAbout)
+    },
+    getSkills: () => {
+        return axios.get('api/profile/userSkills')
+    },
+    addSkill: (skill) => {
+        return axios.post('api/profile/newSkill', {
+            name: skill,
+            id: 0
+        })
+    },
+    removeSkill: (skillId) => {
+        return axios.delete(`api/profile/skill/remove/${skillId}`)
+    },
 };

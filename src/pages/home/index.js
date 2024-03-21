@@ -205,7 +205,7 @@ const Home = () => {
                     <div
                         className="relative flex flex-col bg-white w-[360px] h-[460px] rounded-tl-[100px] rounded-bl-[10px]"
                         style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute top-0 left-1/4 -top-20 w-fit h-fit" src={home4} alt="sign-up"/>
+                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home4} alt="sign-up"/>
 
                         <h1 className="mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
                             Sign Up
@@ -227,7 +227,7 @@ const Home = () => {
 
                     <div className="relative bg-white w-[360px] h-[460px]"
                          style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute top-0 left-1/4 -top-20 w-fit h-fit" src={home5}
+                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home5}
                              alt="complete-profile"/>
 
                         <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
@@ -251,7 +251,7 @@ const Home = () => {
 
                     <div className="relative bg-white w-[360px] h-[460px] rounded-tr-[100px] rounded-br-[10px]"
                          style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute top-0 left-1/4 -top-20 w-fit h-fit" src={home6}
+                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home6}
                              alt="land-your-dream-job"/>
 
                         <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">

@@ -11,7 +11,7 @@ const AddToProfile = ({onClose}) => {
         {
             id: 0, title: 'Main information', content: [
                 {title: 'Add profile image', to: '/in/edit/image'},
-                {title: 'Add general information', to: '/in'},
+                {title: 'Add general information', to: '/in/edit/general-information'},
                 {title: 'Add education', to: '/in'},
                 {title: 'Add experience', to: '/in'},
                 {title: 'Add services', to: ''},

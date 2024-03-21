@@ -14,7 +14,7 @@ import {Link} from "react-router-dom";
 import ConfirmChanges from "../shared/modals/shared/ConfirmChanges";
 import ImageCropProvider, {useImageCropContext} from "../../providers/ImageCropProvider";
 import {APP_ENV} from "../../env";
-import {imageUrlToBase64} from "../../utils/converters";
+import {imageTo64, imageToBase64, imageUrlToBase64} from "../../utils/converters";
 
 const ImageSector = ({user, isEditImage, isEditBackground}) => {
     const [isClosing, setIsClosing] = useState(false);
@@ -28,17 +28,13 @@ const ImageSector = ({user, isEditImage, isEditBackground}) => {
 
     useEffect(() => {
         if (isEditImage && user?.image) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image)
-                .then(data => {
-                    setImage(data)
-                })
-                .catch(err => console.log(err))
+            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image, (resp) => {
+                setImage(resp)
+            })
         } else if (isEditBackground && user?.background) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.background)
-                .then(data => {
-                    setImage(data)
-                })
-                .catch(err => console.log(err))
+            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.background, (resp) => {
+                setImage(resp)
+            })
         }
     }, [isEditImage, isEditBackground])
 
@@ -108,9 +104,9 @@ const InformationSector = ({user}) => {
                 <div className="flex flex-row">
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>
 
-                    <button className="ml-6">
+                    <Link to='edit/general-information' className="ml-6">
                         <PencilIcon className="fill-[#24459A] stroke-[#24459A] w-5"/>
-                    </button>
+                    </Link>
 
                     <ConditionalWrapper condition={user?.company}>
                         <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">{user?.company}</h1>

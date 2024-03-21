@@ -1,15 +1,18 @@
-const imageUrlToBase64 = async (url) => {
-    const data = await fetch(url);
-    const blob = await data.blob();
-    return new Promise((resolve, reject) => {
+function imageUrlToBase64(
+    url,
+    callback
+) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader("Pragma","no-cache");
+    xhr.send();
+
+    xhr.onload = ()=> {
         const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-            const base64data = reader.result;
-            resolve(base64data);
-        };
-        reader.onerror = reject;
-    });
-};
+        reader.readAsDataURL(xhr.response);
+        reader.onloadend = () => callback(reader.result);
+    }
+}
 
 export {imageUrlToBase64}

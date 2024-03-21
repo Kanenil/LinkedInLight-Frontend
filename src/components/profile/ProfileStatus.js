@@ -33,7 +33,7 @@ const suggestions = [
         title: "Add skills",
         description: "Highlight your key competencies and unique abilities, catching the attention of potential employers",
         buttonTitle: "Add skills",
-        to: "/in",
+        to: "/in/edit/general-information",
         width: 220,
         condition: 'skills'
     },
@@ -41,7 +41,7 @@ const suggestions = [
         title: "Highlight your uniqueness",
         description: "Add a short description to highlight your personality or work experience",
         buttonTitle: "Add description",
-        to: "/in",
+        to: "/in/edit/general-information",
         width: 220,
         condition: 'about'
     }
@@ -76,51 +76,53 @@ const ProfileStatus = ({ user }) => {
 
 
     return (
-        <div className="rounded-lg bg-white overflow-hidden px-10 py-8">
-            <div>
-                <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Profile status</h1>
+        <ConditionalWrapper condition={5 - filteredSuggestions.length > 0}>
+            <div className="rounded-lg bg-white overflow-hidden px-10 py-8">
+                <div>
+                    <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Profile status</h1>
 
-                <div className="flex flex-row items-center gap-2.5 mt-2">
-                    <EyeIcon className="h-4"/>
+                    <div className="flex flex-row items-center gap-2.5 mt-2">
+                        <EyeIcon className="h-4"/>
 
-                    <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">This section is
-                        only visible to you</h3>
-                </div>
-
-                <div className="pt-4">
-                    <div className="flex flex-row font-roboto font-medium ">
-                        <h1 className="text-[#2D2A33]">Level:</h1>
-
-                        <h3 className="ml-6 text-[#24459A]">{5 - filteredSuggestions.length}</h3>
-
-                        <h3 className="ml-auto text-[#24459A]">{5 - filteredSuggestions.length}/5</h3>
+                        <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">This section is
+                            only visible to you</h3>
                     </div>
 
-                    <div className="mt-2.5 flex flex-row gap-4">
-                        {Array.from(Array(5 - filteredSuggestions.length).keys()).map(val =>
-                            <div key={`fill-level-${val}`} className="h-2 w-full bg-[#24459A]"/>
-                        )}
-                        {Array.from(Array(5 - (5 - filteredSuggestions.length)).keys()).map(value =>
-                            <div key={`level-${value}`}
-                                 className="h-2 w-full bg-[#E5E9F4]"/>
-                        )}
-                    </div>
+                    <div className="pt-4">
+                        <div className="flex flex-row font-roboto font-medium ">
+                            <h1 className="text-[#2D2A33]">Level:</h1>
 
-                    <h3 className="mt-2.5 font-jost font-light">
-                        Level up your <span className="font-medium">Job For You</span> experience by filling in all your
-                        details and find the perfect job for you
-                    </h3>
+                            <h3 className="ml-6 text-[#24459A]">{5 - filteredSuggestions.length}</h3>
+
+                            <h3 className="ml-auto text-[#24459A]">{5 - filteredSuggestions.length}/5</h3>
+                        </div>
+
+                        <div className="mt-2.5 flex flex-row gap-4">
+                            {Array.from(Array(5 - filteredSuggestions.length).keys()).map(val =>
+                                <div key={`fill-level-${val}`} className="h-2 w-full bg-[#24459A]"/>
+                            )}
+                            {Array.from(Array(5 - (5 - filteredSuggestions.length)).keys()).map(value =>
+                                <div key={`level-${value}`}
+                                     className="h-2 w-full bg-[#E5E9F4]"/>
+                            )}
+                        </div>
+
+                        <h3 className="mt-2.5 font-jost font-light">
+                            Level up your <span className="font-medium">Job For You</span> experience by filling in all your
+                            details and find the perfect job for you
+                        </h3>
+                    </div>
                 </div>
+
+                <ConditionalWrapper condition={filteredSuggestions.length > 0}>
+                    <Slider className="mt-2.5" initialIndex={filteredSuggestions.length === 5? 1: 0} perPage={3} containerClass="flex flex-row gap-6 w-fit">
+                        {filteredSuggestions.map((suggestion, index) =>
+                            <SliderItem key={`suggestion-${index}`} {...suggestion}/>
+                        )}
+                    </Slider>
+                </ConditionalWrapper>
             </div>
-
-            <ConditionalWrapper condition={filteredSuggestions.length > 0}>
-                <Slider className="mt-2.5" initialIndex={filteredSuggestions.length === 5? 1: 0} perPage={3} containerClass="flex flex-row gap-6 w-fit">
-                    {filteredSuggestions.map((suggestion, index) =>
-                        <SliderItem key={`suggestion-${index}`} {...suggestion}/>
-                    )}
-                </Slider>
-            </ConditionalWrapper>
-        </div>
+        </ConditionalWrapper>
     )
 }
 export default ProfileStatus;
