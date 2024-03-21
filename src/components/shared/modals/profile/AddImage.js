@@ -1,7 +1,6 @@
-import XMarkIcon from "../../../../elements/icons/XMarkIcon";
 import illustration from "../../../../assets/image-add-illustration.svg"
 import Dropzone from "../../Dropzone";
-import React from "react";
+import React, {useState} from "react";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
 import CircularArrowIcon from "../../../../elements/icons/CircularArrowIcon";
 import {profileService} from "../../../../services/profileService";
@@ -13,18 +12,33 @@ import {readFile} from "../../../../utils/cropImage";
 import {RotationSlider, ZoomSlider} from "../../cropper/CropperSliders";
 import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
 import SecondaryButton from "../../../../elements/buttons/SecondaryButton";
+import ModalHeader from "../ModalHeader";
 
 const AddImage = ({onClose, isBackground = false}) => {
     const dispatch = useDispatch();
     const navigator = useNavigate();
+    const [error, setError] = useState("");
 
     const {image, setImage, rotation, setRotation, getProcessedImage} = useImageCropContext();
 
     const handleFileChange = async ({target: {files}}) => {
         const file = files && files[0];
         if (!file) return;
+
         const imageDataUrl = await readFile(file);
-        setImage(imageDataUrl);
+
+        const img = new Image();
+        img.src = imageDataUrl;
+        img.onload = () => {
+            setError("");
+
+            if(isBackground && img.width < 800) {
+                setError("Background width must be at least 800px!")
+                return;
+            }
+
+            setImage(imageDataUrl);
+        };
     };
 
     const handleDone = async () => {
@@ -49,15 +63,12 @@ const AddImage = ({onClose, isBackground = false}) => {
     return (
         <div className="flex flex-col gap-2.5 py-5 px-8 w-[750px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
-            <div className="flex flex-row pt-2.5 pb-5">
-                <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">
-                    {image ? isBackground ? "Edit background" : "Edit image " : isBackground ? "Add background" : "Add image"}
-                </h1>
 
-                <button onClick={onClose} className="ml-auto">
-                    <XMarkIcon className="fill-[#7D7D7D] h-4"/>
-                </button>
-            </div>
+            <ModalHeader
+                title={image ? isBackground ? "Edit background" : "Edit image " : isBackground ? "Add background" : "Add image"}
+                onClose={onClose}
+                withBorder={false}
+            />
 
             <ConditionalWrapper condition={!image}>
                 <Dropzone onFileSelect={handleFileChange}
@@ -74,12 +85,17 @@ const AddImage = ({onClose, isBackground = false}) => {
                 </Dropzone>
 
                 <div className="flex justify-end pt-2.5 pb-1">
-                    <label htmlFor="upload"
-                           className="cursor-pointer font-jost py-1 px-5 rounded-full bg-[#24459A] text-white text-sm">
-                        <input id="upload" className="hidden" onChange={handleFileChange}
-                               accept="image/png, image/jpg, image/jpeg" type="file" multiple={false}/>
-                        Upload image
-                    </label>
+                    <div className="flex flex-col items-end gap-2.5">
+                        <label htmlFor="upload"
+                               className="cursor-pointer font-jost py-1 px-5 w-fit rounded-full bg-[#24459A] text-white text-sm">
+                            <input id="upload" className="hidden" onChange={handleFileChange}
+                                   accept="image/png, image/jpg, image/jpeg" type="file" multiple={false}/>
+                            Upload image
+                        </label>
+                        <ConditionalWrapper condition={error}>
+                            <h3 className="text-red-500 text-sm">{error}</h3>
+                        </ConditionalWrapper>
+                    </div>
                 </div>
             </ConditionalWrapper>
             <ConditionalWrapper condition={image}>
@@ -105,17 +121,25 @@ const AddImage = ({onClose, isBackground = false}) => {
                     <RotationSlider/>
                 </div>
 
-                <div className="flex justify-end pt-2.5 pb-1 gap-5">
-                    <SecondaryButton onClick={() => document.querySelector('#changeImage').click()}>
-                        Change image
-                    </SecondaryButton>
-                    <input id="changeImage" className="hidden" onChange={handleFileChange}
-                           accept="image/png, image/jpg, image/jpeg" type="file" multiple={false}/>
+                <div className="flex flex-col items-end pt-2.5 pb-1 gap-2.5">
+                    <div className="flex justify-end items-start gap-5">
+                        <SecondaryButton onClick={() => document.querySelector('#changeImage').click()}>
+                            Change image
+                        </SecondaryButton>
+                        <input id="changeImage" className="hidden" onChange={handleFileChange}
+                               accept="image/png, image/jpg, image/jpeg" type="file" multiple={false}/>
 
-                    <PrimaryButton onClick={handleDone}>
-                        Save image
-                    </PrimaryButton>
+                        <PrimaryButton onClick={handleDone}>
+                            Save image
+                        </PrimaryButton>
+                    </div>
+
+                    <ConditionalWrapper condition={error}>
+                        <h3 className="text-red-500 text-sm">{error}</h3>
+                    </ConditionalWrapper>
                 </div>
+
+
             </ConditionalWrapper>
         </div>
     )

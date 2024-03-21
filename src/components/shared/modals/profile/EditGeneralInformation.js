@@ -6,14 +6,17 @@ import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
 import TextDown from "../../../../elements/shared/TextDown";
 import useOverflow from "../../../../hooks/overflow";
 import {profileService} from "../../../../services/profileService";
+import ModalHeader from "../ModalHeader";
 
 const SKILLS_STORE = "SAVED-SKILLS"
 
 const EditGeneralInformation = ({onClose, onSave, onChange}) => {
+    const initValues = JSON.parse(localStorage.getItem(SKILLS_STORE) || '[]');
+
     const { isOverflow, containerRef, contentRef } = useOverflow();
     const [about, setAbout] = useState("");
     const [isAddSkill, setIsAddSkill] = useState(false);
-    const [options, setOptions] = useState(JSON.parse(localStorage.getItem(SKILLS_STORE) || '[]'))
+    const [options, setOptions] = useState(initValues)
     const [skills, setSkills] = useState([]);
     const [userSkills, setUserSkills] = useState([]);
     const [userAbout, setUserAbout] = useState("");
@@ -29,37 +32,41 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
             .then(({data}) => {
                 setUserSkills(data);
                 setSkills(data.map(skill => skill.name))
+                setOptions([...options.filter(opt => !data.map(v => v.name).includes(opt.label))])
             })
     }, [])
 
     const handleChangeSelect = (e) => {
         if(skills.map(skill => skill.toLowerCase()).indexOf(e.label.toLowerCase()) === -1) {
-            setSkills([...skills, e.label]);
+            const newArray = [...skills, e.label];
+
+            setSkills(newArray);
             setIsAddSkill(false);
+            setOptions([...initValues.filter(opt => !newArray.includes(opt.label))])
 
             onChange();
         }
 
         const saveInStorage = (arr) => {
             localStorage.setItem(SKILLS_STORE, JSON.stringify(arr));
-            setOptions(arr)
         }
 
         if(options.length === 0) {
             saveInStorage([e]);
         }
 
-        if (options.length > 0 && options.filter(
+        if (initValues.length > 0 && initValues.filter(
             (option) =>
                 option.label.toLowerCase() === e.label.toLowerCase()).length === 0) {
-            saveInStorage([...options, e]);
+            saveInStorage([...initValues, e]);
         }
     }
 
     const onRemoveItem = (skill) => {
-        setSkills([
-            ...skills.filter(val => val !== skill)
-        ])
+        const newArray = skills.filter(val => val !== skill);
+
+        setSkills(newArray)
+        setOptions(initValues.filter(opt => !newArray.includes(opt.label)))
 
         onChange();
     }
@@ -84,15 +91,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
     return (
         <div className="flex flex-col gap-2.5 py-5 px-8 w-[750px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
-            <div className="flex flex-row pt-2.5 pb-5 border-b-[0.5px] border-[#24459A80]">
-                <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">
-                    Edit general information
-                </h1>
-
-                <button onClick={onClose} className="ml-auto">
-                    <XMarkIcon className="fill-[#7D7D7D] h-4"/>
-                </button>
-            </div>
+            <ModalHeader title="Edit general information" onClose={onClose}/>
 
             <div id="container" ref={containerRef} className={`max-h-[456px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                 <div ref={contentRef}>

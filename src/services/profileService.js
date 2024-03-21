@@ -29,4 +29,13 @@ export const profileService = {
     removeSkill: (skillId) => {
         return axios.delete(`api/profile/skill/remove/${skillId}`)
     },
+    getLanguages: () => {
+        return axios.get('api/profile/userLanguages')
+    },
+    addLanguage: (data) => {
+        return axios.post('api/profile/newLanguage', {
+            id: 0,
+            ...data
+        })
+    },
 };

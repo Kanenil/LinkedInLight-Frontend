@@ -16,6 +16,8 @@ import Modal from "../../components/shared/modals/Modal";
 import ConfirmChanges from "../../components/shared/modals/shared/ConfirmChanges";
 import EditGeneralInformation from "../../components/shared/modals/profile/EditGeneralInformation";
 import AboutMeSection from "../../components/profile/AboutMeSection";
+import AddNewLanguage from "../../components/shared/modals/profile/AddNewLanguage";
+import LanguagesSection from "../../components/profile/LanguagesSection";
 
 // {
 //     "firstName": "Oleksandr",
@@ -130,6 +132,7 @@ const Profile = () => {
                                         activeBlock={'Posts'}
                                     />
                                 </ConditionalWrapper>
+                                <LanguagesSection user={user}/>
                                 <ConditionalWrapper condition={user?.educations.length > 0}>
                                     <ExperienceSection
                                         title="Education"
@@ -157,6 +160,13 @@ const Profile = () => {
             <Modal isOpen={editModal === "general-information"} closeModal={isClose} hideOnClose={false} onClose={closeModal}
                    position="mt-10 mx-auto">
                 <EditGeneralInformation onClose={closeModal} onSave={onSave} onChange={() => setIsChanged(true)}/>
+                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
+                </Modal>
+            </Modal>
+            <Modal isOpen={editModal === "new-language"} closeModal={isClose} hideOnClose={false} onClose={closeModal}
+                   position="mt-10 mx-auto">
+                <AddNewLanguage onClose={closeModal} onSave={onSave} onChange={() => setIsChanged(true)}/>
                 <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
                     <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
                 </Modal>

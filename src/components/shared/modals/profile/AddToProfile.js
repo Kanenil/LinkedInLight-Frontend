@@ -10,12 +10,12 @@ const AddToProfile = ({onClose}) => {
     const blocks = [
         {
             id: 0, title: 'Main information', content: [
-                {title: 'Add profile image', to: '/in/edit/image'},
-                {title: 'Add general information', to: '/in/edit/general-information'},
+                {title: 'Add profile image', to: 'edit/image'},
+                {title: 'Add general information', to: 'edit/general-information'},
                 {title: 'Add education', to: '/in'},
                 {title: 'Add experience', to: '/in'},
                 {title: 'Add services', to: ''},
-                {title: 'Add skills', to: ''},
+                {title: 'Add skills', to: 'edit/general-information'},
             ]
         },
         {
@@ -33,7 +33,7 @@ const AddToProfile = ({onClose}) => {
                 {title: 'Add patents', to: '/in'},
                 {title: 'Add honors and awards', to: '/in'},
                 {title: 'Add publications', to: '/in'},
-                {title: 'Add languages', to: '/in'},
+                {title: 'Add languages', to: 'edit/new-language'},
                 {title: 'Add organizations', to: '/in'},
                 {title: 'Add contact information', to: '/in'},
             ]

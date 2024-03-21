@@ -1,11 +1,10 @@
 import EyeIcon from "../../elements/icons/EyeIcon";
 import React, {useEffect, useState} from "react";
-import PencilIcon from "../../elements/icons/PencilIcon";
 import InformationIcon from "../../elements/icons/InformationIcon";
 import PuzzlesIcon from "../../elements/icons/PuzzlesIcon";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {profileService} from "../../services/profileService";
-import {Link} from "react-router-dom";
+import PencilButton from "../../elements/buttons/PencilButton";
 
 const AboutMeSection = ({ user }) => {
     const [skills, setSkills] = useState([]);
@@ -43,9 +42,7 @@ const AboutMeSection = ({ user }) => {
 
                                     <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General information</h1>
 
-                                    <Link to='edit/general-information' className="ml-auto">
-                                        <PencilIcon className="h-6 stroke-[#24459A] fill-[#24459A]"/>
-                                    </Link>
+                                    <PencilButton to='edit/general-information' className="ml-auto"/>
                                 </div>
 
                                 <h3 className="text-[#2D2A33] font-jost font-light text-sm">
@@ -62,9 +59,7 @@ const AboutMeSection = ({ user }) => {
 
                                     <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General skills</h1>
 
-                                    <Link to='edit/general-information' className="ml-auto">
-                                        <PencilIcon className="h-6 stroke-[#24459A] fill-[#24459A]"/>
-                                    </Link>
+                                    <PencilButton to='edit/general-information' className="ml-auto"/>
                                 </div>
 
 

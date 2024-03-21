@@ -14,7 +14,7 @@ import {Link} from "react-router-dom";
 import ConfirmChanges from "../shared/modals/shared/ConfirmChanges";
 import ImageCropProvider, {useImageCropContext} from "../../providers/ImageCropProvider";
 import {APP_ENV} from "../../env";
-import {imageTo64, imageToBase64, imageUrlToBase64} from "../../utils/converters";
+import {imageUrlToBase64} from "../../utils/converters";
 
 const ImageSector = ({user, isEditImage, isEditBackground}) => {
     const [isClosing, setIsClosing] = useState(false);
@@ -83,7 +83,6 @@ const ImageSector = ({user, isEditImage, isEditBackground}) => {
                 </Modal>
             </Modal>
         </div>
-
     )
 }
 
@@ -104,7 +103,7 @@ const InformationSector = ({user}) => {
                 <div className="flex flex-row">
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>
 
-                    <Link to='edit/general-information' className="ml-6">
+                    <Link to='' className="ml-6">
                         <PencilIcon className="fill-[#24459A] stroke-[#24459A] w-5"/>
                     </Link>
 
