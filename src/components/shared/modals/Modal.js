@@ -24,8 +24,11 @@ const Modal = ({ isOpen = false, closeModal = false, hideOnClose = true, childMo
     }, [isVisible, childModal])
 
     useEffect(() => {
-        if(closeModal)
+        if(closeModal) {
+            document.body.classList.remove("modal-open");
             setIsVisible(false);
+        }
+
     }, [closeModal])
 
     return (

@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import Modal from "./Modal";
 import ConfirmChanges from "./shared/ConfirmChanges";
 import {useNavigate} from "react-router";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
 const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
     const [modalState, setModalState] = useState({
-        editModal: "",
         isClosing: false,
         isModalClosed: false,
         hasUserInformationChanged: false,
@@ -17,14 +17,15 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
         setModalState({
             ...modalState,
             isClosing: false,
-            hasUserInformationChanged: false
+            hasUserInformationChanged: false,
+            isModalClosed: true
         })
     }
 
     const onCloseConfirm = () => {
         setModalState({
             ...modalState,
-            isClosing: false
+            isClosing: false,
         })
     }
 
@@ -32,7 +33,7 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
         setModalState({
             ...modalState,
             ...(modalState.hasUserInformationChanged ? {isClosing: true} : {
-                isClose: true,
+                isModalClosed: true,
                 hasUserInformationChanged: false
             })
         })
@@ -45,7 +46,8 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
         setModalState({
             ...modalState,
             isClosing: false,
-            hasUserInformationChanged: false
+            hasUserInformationChanged: false,
+            isModalClosed: true
         })
         navigator('/in');
         onSaveCallback();
@@ -62,13 +64,15 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} closeModal={modalState.isClose} hideOnClose={false} onClose={closeModal}
-               position="mt-10 mx-auto">
-            {React.cloneElement(children, eventHandlers)}
-            <Modal childModal={true} isOpen={modalState.isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
+        <ConditionalWrapper condition={isOpen}>
+            <Modal isOpen={isOpen} closeModal={modalState.isModalClosed} hideOnClose={false} onClose={closeModal}
+                   position="mt-10 mx-auto">
+                {React.cloneElement(children, eventHandlers)}
+                <Modal childModal={true} isOpen={modalState.isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
+                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
+                </Modal>
             </Modal>
-        </Modal>
+        </ConditionalWrapper>
     )
 }
 export default ConfirmationModal;
