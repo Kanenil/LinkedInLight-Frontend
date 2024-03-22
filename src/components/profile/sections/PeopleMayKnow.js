@@ -1,10 +1,10 @@
-import PlusIcon from "../../elements/icons/PlusIcon";
+import PlusIcon from "../../../elements/icons/PlusIcon";
 import {Link} from "react-router-dom";
-import ArrowRightIcon from "../../elements/icons/ArrowRightIcon";
+import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
 
-const PeopleMayKnow = ({peopleMayKnow}) => {
+const PeopleMayKnow = ({peopleMayKnow, margin = "mt-2.5"}) => {
     return (
-        <div className="flex flex-col mt-2.5 bg-white rounded-lg px-5 pt-5">
+        <div className={`flex flex-col bg-white rounded-lg px-5 pt-5 ${margin}`}>
             <h1 className="font-jost text-xl text-[#2D2A33] font-medium">People you may know</h1>
 
             {peopleMayKnow.map((person, index) => <div key={`peopleMayKnow-${index}`}

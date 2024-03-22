@@ -1,8 +1,8 @@
 import React from "react"
-import EyeIcon from "../../elements/icons/EyeIcon";
-import PeopleIcon from "../../elements/icons/PeopleIcon";
-import AnalyticIcon from "../../elements/icons/AnalyticIcon";
-import ShowAllLink from "../../elements/links/ShowAllLink";
+import EyeIcon from "../../../elements/icons/EyeIcon";
+import PeopleIcon from "../../../elements/icons/PeopleIcon";
+import AnalyticIcon from "../../../elements/icons/AnalyticIcon";
+import ShowAllLink from "../../../elements/links/ShowAllLink";
 
 const analyticsItems = [
     {icon: <PeopleIcon />, title: "1 profile views", description: "Discover who's viewed your profile"},

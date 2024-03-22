@@ -4,13 +4,17 @@ import useComponentVisible from "../../hooks/componentVisible";
 import useOverflow from "../../hooks/overflow";
 import ConditionalWrapper from "./ConditionalWrapper";
 
-const TextDown = ({placeHolder, options, clearOnSelect = true, isAbsolute = false, onEnterSelect = true, className = "", containerSizing = "py-[5px] px-2.5", containerClass = "rounded-[4px] border-[0.5px] border-[#556DA9] ", onChange, error = false, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
+const TextDown = ({placeHolder, value = null, options, clearOnSelect = true, isAbsolute = false, onEnterSelect = true, className = "", containerSizing = "py-[5px] px-2.5", containerClass = "rounded-[4px] border-[0.5px] border-[#556DA9] ", onChange, error = false, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
-    const [selectedValue, setSelectedValue] = useState(null);
+    const [selectedValue, setSelectedValue] = useState();
     const [searchValue, setSearchValue] = useState("");
     const {isOverflow, containerRef, contentRef} = useOverflow();
     const searchRef = useRef();
     const inputRef = useRef();
+
+    useEffect(() => {
+        setSelectedValue( value?{value, label:value}:null)
+    }, [value])
 
     useEffect(() => {
         if(!placeHolder)

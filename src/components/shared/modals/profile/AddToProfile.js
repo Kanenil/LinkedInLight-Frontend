@@ -33,7 +33,7 @@ const AddToProfile = ({onClose}) => {
                 {title: 'Add patents', to: '/in'},
                 {title: 'Add honors and awards', to: '/in'},
                 {title: 'Add publications', to: '/in'},
-                {title: 'Add languages', to: 'edit/new-language'},
+                {title: 'Add languages', to: 'edit/language'},
                 {title: 'Add organizations', to: '/in'},
                 {title: 'Add contact information', to: '/in'},
             ]

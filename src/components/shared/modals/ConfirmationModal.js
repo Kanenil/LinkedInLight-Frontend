@@ -13,7 +13,7 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
     const navigator = useNavigate();
 
     const onConfirm = () => {
-        navigator('/in');
+        navigator(-1);
         setModalState({
             ...modalState,
             isClosing: false,
@@ -39,7 +39,7 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
         })
 
         if (!modalState.hasUserInformationChanged)
-            navigator('/in');
+            navigator(-1);
     }
 
     const onSave = () => {
@@ -49,7 +49,7 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
             hasUserInformationChanged: false,
             isModalClosed: true
         })
-        navigator('/in');
+        navigator(-1);
         onSaveCallback();
     }
 

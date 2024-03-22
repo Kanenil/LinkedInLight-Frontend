@@ -14,7 +14,9 @@ const InHeader = () => {
     return (
         <header className="absolute top-0 left-0 z-40 w-full sticky" style={{boxShadow: "0px 2px 6px 0px #24459A33"}}>
             <div className="bg-white flex flex-row justify-center py-2.5">
-                <Logo className="fill-[#2D2A33] h-10"/>
+                <Link to="/in">
+                    <Logo className="fill-[#2D2A33] h-10"/>
+                </Link>
 
                 <div className="ml-10 my-auto relative">
                     <input type="text" placeholder="Search"

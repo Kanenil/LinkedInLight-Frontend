@@ -1,10 +1,10 @@
-import EyeIcon from "../../elements/icons/EyeIcon";
+import EyeIcon from "../../../elements/icons/EyeIcon";
 import React, {useEffect, useState} from "react";
-import InformationIcon from "../../elements/icons/InformationIcon";
-import PuzzlesIcon from "../../elements/icons/PuzzlesIcon";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import {profileService} from "../../services/profileService";
-import PencilButton from "../../elements/buttons/PencilButton";
+import InformationIcon from "../../../elements/icons/InformationIcon";
+import PuzzlesIcon from "../../../elements/icons/PuzzlesIcon";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {profileService} from "../../../services/profileService";
+import PencilButton from "../../../elements/buttons/PencilButton";
 
 const AboutMeSection = ({ user }) => {
     const [skills, setSkills] = useState([]);

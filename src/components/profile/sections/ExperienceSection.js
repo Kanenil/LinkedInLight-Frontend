@@ -1,4 +1,4 @@
-import SectionHeaderBlock from "./SectionHeaderBlock";
+import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 
 const ExperienceSection = ({ title, addButtonTitle, companies, onPencilClick, onAddClick }) => {
 

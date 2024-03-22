@@ -1,15 +1,15 @@
-import defaultBg from "../../assets/default-background.jpg";
-import CameraIcon from "../../elements/icons/CameraIcon";
-import defaultImage from "../../assets/default-image.jpg";
-import PencilIcon from "../../elements/icons/PencilIcon";
-import OpenToButton from "../../elements/buttons/OpenToButton";
-import ProfileButton from "../../elements/buttons/ProfileButton";
+import defaultBg from "../../../assets/default-background.jpg";
+import CameraIcon from "../../../elements/icons/CameraIcon";
+import defaultImage from "../../../assets/default-image.jpg";
+import PencilIcon from "../../../elements/icons/PencilIcon";
+import OpenToButton from "../../../elements/buttons/OpenToButton";
+import ProfileButton from "../../../elements/buttons/ProfileButton";
 import React, {useState} from "react";
-import Modal from "../shared/modals/Modal";
-import AddToProfile from "../shared/modals/profile/AddToProfile";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import Modal from "../../shared/modals/Modal";
+import AddToProfile from "../../shared/modals/profile/AddToProfile";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {Link} from "react-router-dom";
-import {APP_ENV} from "../../env";
+import {APP_ENV} from "../../../env";
 
 const ImageSector = ({user}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;

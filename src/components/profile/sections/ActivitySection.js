@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
-import ArrowRightIcon from "../../elements/icons/ArrowRightIcon";
-import SectionHeaderBlock from "./SectionHeaderBlock";
+import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
+import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import classNames from "classnames";
 import {useState} from "react";
 

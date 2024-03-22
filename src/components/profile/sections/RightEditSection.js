@@ -1,5 +1,5 @@
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import PencilButton from "../../elements/buttons/PencilButton";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import PencilButton from "../../../elements/buttons/PencilButton";
 import React from "react";
 
 const RightEditSection = () => {

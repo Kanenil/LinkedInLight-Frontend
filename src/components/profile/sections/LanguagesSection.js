@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {profileService} from "../../services/profileService";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import EyeIcon from "../../elements/icons/EyeIcon";
-import PencilIcon from "../../elements/icons/PencilIcon";
-import {Link} from "react-router-dom";
-import PencilButton from "../../elements/buttons/PencilButton";
+import {profileService} from "../../../services/profileService";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import EyeIcon from "../../../elements/icons/EyeIcon";
+import PencilButton from "../../../elements/buttons/PencilButton";
 
 const LanguagesSection = ({ user }) => {
     const [languages, setLanguages] = useState([]);
@@ -26,7 +24,7 @@ const LanguagesSection = ({ user }) => {
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Languages</h1>
 
-                        <PencilButton to=' '/>
+                        <PencilButton to='details/languages'/>
                     </div>
 
                     <div className="flex flex-row items-center gap-2.5 mt-2">

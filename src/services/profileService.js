@@ -39,4 +39,12 @@ export const profileService = {
             ...data
         })
     },
+    removeLanguage: (id) => {
+        return axios.delete(`api/profile/language/remove/${id}`)
+    },
+    updateLanguage: (data, id) => {
+        return axios.put(`api/profile/language/edit/${id}`, {
+            ...data
+        })
+    },
 };

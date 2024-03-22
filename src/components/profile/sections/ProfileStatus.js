@@ -1,8 +1,8 @@
-import EyeIcon from "../../elements/icons/EyeIcon";
-import Slider from "../shared/Slider";
-import ProfileButton from "../../elements/buttons/ProfileButton";
+import EyeIcon from "../../../elements/icons/EyeIcon";
+import Slider from "../../shared/Slider";
+import ProfileButton from "../../../elements/buttons/ProfileButton";
 import {useEffect, useState} from "react";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
 const suggestions = [
     {

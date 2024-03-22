@@ -1,14 +1,36 @@
 import React, {useEffect} from 'react'
 import ConfirmationModal from "../shared/modals/ConfirmationModal";
 import EditGeneralInformation from "../shared/modals/profile/EditGeneralInformation";
-import AddNewLanguage from "../shared/modals/profile/AddNewLanguage";
+import AddLanguage from "../shared/modals/profile/AddLanguage";
 import AddImage from "../shared/modals/profile/AddImage";
 import {useImageCropContext} from "../../providers/ImageCropProvider";
 import {imageUrlToBase64} from "../../utils/converters";
 import {APP_ENV} from "../../env";
 
-const EditModalPage = ({user, editModal, onSaveCallback}) => {
+const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
+
+    const modals = [
+        {
+            route: ["general-information"],
+            children: <EditGeneralInformation/>,
+            props: {}
+        },
+        {
+            route: ["language"],
+            children: <AddLanguage/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["background", "image"],
+            children: <AddImage/>,
+            props: {
+                isBackground: editModal === "background"
+            }
+        },
+    ]
 
     useEffect(() => {
         if (editModal === "image" && user?.image) {
@@ -24,22 +46,19 @@ const EditModalPage = ({user, editModal, onSaveCallback}) => {
 
     return (
         <React.Fragment>
-            <ConfirmationModal
-                isOpen={editModal === "general-information"}
-                onSaveCallback={onSaveCallback}
-                children={<EditGeneralInformation/>}
-            />
-            <ConfirmationModal
-                isOpen={editModal === "new-language"}
-                onSaveCallback={onSaveCallback}
-                children={<AddNewLanguage/>}
-            />
-            <ConfirmationModal
-                isOpen={['background', 'image'].includes(editModal)}
-                onSaveCallback={onSaveCallback}
-                children={<AddImage/>}
-                isBackground={editModal === "background"}
-            />
+            {
+                modals
+                    .filter(modal => modal.route.includes(editModal))
+                    .map(modal =>
+                        <ConfirmationModal
+                            key={`modal-${modal.route[0]}`}
+                            isOpen={true}
+                            onSaveCallback={onSaveCallback}
+                            children={modal.children}
+                            {...modal.props}
+                        />
+                    )
+            }
         </React.Fragment>
     )
 }

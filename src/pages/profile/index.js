@@ -7,13 +7,17 @@ import {Helmet} from "react-helmet-async";
 import StandardProfilePage from "../../components/profile/StandardProfilePage";
 import EditModalPage from "../../components/profile/EditModalPage";
 import ImageCropProvider from "../../providers/ImageCropProvider";
+import DetailsPage from "../../components/profile/DetailsPage";
 
 const Profile = () => {
     const [user, setUser] = useState();
-    const [editModal, setEditModal] = useState("");
+    const [pageStates, setPageStates] = useState({
+        edit: "",
+        details: ""
+    })
     const currentUser = useSelector(state => state.CurrentUser);
     const dispatch = useDispatch();
-    const {blockId} = useParams();
+    const {blockId, id} = useParams();
     const location = useLocation();
 
     const getAndSaveUserState = () => {
@@ -34,8 +38,19 @@ const Profile = () => {
         }
     }, [currentUser])
 
+    const getBlockId = () => {
+        if(location.pathname.includes("edit") && location.pathname.includes("details")) {
+            const startIndex = location.pathname.indexOf("details") + "details/".length;
+            return location.pathname.substring(startIndex, location.pathname.indexOf('/', startIndex));
+        }
+        return blockId;
+    }
+
     useEffect(() => {
-        setEditModal(location.pathname.includes("edit") ? blockId : "");
+        setPageStates({
+            details: location.pathname.includes("details") ? getBlockId() : "",
+            edit: location.pathname.includes("edit") ? blockId : ""
+        })
     }, [blockId, location]);
 
     return (
@@ -44,13 +59,19 @@ const Profile = () => {
                 <title>Profile</title>
             </Helmet>
 
-            <ConditionalWrapper condition={editModal}>
+            <ConditionalWrapper condition={pageStates.edit}>
                 <ImageCropProvider>
-                    <EditModalPage editModal={editModal} user={user} onSaveCallback={getAndSaveUserState}/>
+                    <EditModalPage editModal={pageStates.edit} user={user} id={id} onSaveCallback={getAndSaveUserState}/>
                 </ImageCropProvider>
             </ConditionalWrapper>
 
-            <StandardProfilePage user={user} />
+            <ConditionalWrapper condition={pageStates.details}>
+                <DetailsPage detail={pageStates.details} user={user} onSaveCallback={getAndSaveUserState}/>
+            </ConditionalWrapper>
+
+            <ConditionalWrapper condition={!pageStates.details}>
+                <StandardProfilePage user={user} />
+            </ConditionalWrapper>
         </React.Fragment>
     )
 }

@@ -1,13 +1,13 @@
-import UserProfileSection from "./UserProfileSection";
-import ProfileStatus from "./ProfileStatus";
-import AnalyticsSection from "./AnalyticsSection";
-import AboutMeSection from "./AboutMeSection";
+import UserProfileSection from "./sections/UserProfileSection";
+import ProfileStatus from "./sections/ProfileStatus";
+import AnalyticsSection from "./sections/AnalyticsSection";
+import AboutMeSection from "./sections/AboutMeSection";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import ActivitySection from "./ActivitySection";
-import LanguagesSection from "./LanguagesSection";
-import ExperienceSection from "./ExperienceSection";
-import RightEditSection from "./RightEditSection";
-import PeopleMayKnow from "./PeopleMayKnow";
+import ActivitySection from "./sections/ActivitySection";
+import LanguagesSection from "./sections/LanguagesSection";
+import ExperienceSection from "./sections/ExperienceSection";
+import RightEditSection from "./sections/RightEditSection";
+import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import React from "react";
 
@@ -55,7 +55,7 @@ const StandardProfilePage = ({ user }) => {
                 <div className="w-4/12 ml-10">
                     <RightEditSection/>
 
-                    <PeopleMayKnow peopleMayKnow={peopleMayKnow}/>
+                    <PeopleMayKnow peopleMayKnow={peopleMayKnow.slice(0, 5)}/>
                 </div>
             </div>
         </main>

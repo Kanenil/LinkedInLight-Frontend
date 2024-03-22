@@ -25,6 +25,11 @@ const peopleMayKnow = [
         username: 'User Name_05',
         position: 'Position - Company Name',
         image: defaultImage
+    },
+    {
+        username: 'User Name_06',
+        position: 'Position - Company Name',
+        image: defaultImage
     }
 ]
 
