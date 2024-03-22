@@ -23,6 +23,7 @@ export const profileService = {
     addSkill: (skill) => {
         return axios.post('api/profile/newSkill', {
             name: skill,
+            applicationUserId: '',
             id: 0
         })
     },

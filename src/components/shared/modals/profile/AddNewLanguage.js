@@ -75,12 +75,12 @@ const AddNewLanguage = ({onClose, onSave, onChange}) => {
                     placeHolder=''
                     error={isSubmitted && errors['language']}
                     hasTools={false}
+                    clearOnSelect={false}
                     onChange={(e) => handleChangeSelect(e)}
                 />
                 <ConditionalWrapper condition={isSubmitted && errors['language']}>
                     <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required. Choose the language you speak</h3>
                 </ConditionalWrapper>
-
             </div>
 
             <div className="pt-[5px] pb-[15px] pr-[20px] gap-[5px]">

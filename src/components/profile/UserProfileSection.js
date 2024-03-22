@@ -4,58 +4,16 @@ import defaultImage from "../../assets/default-image.jpg";
 import PencilIcon from "../../elements/icons/PencilIcon";
 import OpenToButton from "../../elements/buttons/OpenToButton";
 import ProfileButton from "../../elements/buttons/ProfileButton";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Modal from "../shared/modals/Modal";
 import AddToProfile from "../shared/modals/profile/AddToProfile";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import AddImage from "../shared/modals/profile/AddImage";
-import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
-import ConfirmChanges from "../shared/modals/shared/ConfirmChanges";
-import ImageCropProvider, {useImageCropContext} from "../../providers/ImageCropProvider";
 import {APP_ENV} from "../../env";
-import {imageUrlToBase64} from "../../utils/converters";
 
-const ImageSector = ({user, isEditImage, isEditBackground}) => {
-    const [isClosing, setIsClosing] = useState(false);
-    const [isClose, setIsClose] = useState(false);
-    const {image, setImage} = useImageCropContext();
-
+const ImageSector = ({user}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
-
-    const navigator = useNavigate();
-
-    useEffect(() => {
-        if (isEditImage && user?.image) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image, (resp) => {
-                setImage(resp)
-            })
-        } else if (isEditBackground && user?.background) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.background, (resp) => {
-                setImage(resp)
-            })
-        }
-    }, [isEditImage, isEditBackground])
-
-    const onConfirm = () => {
-        navigator('/in');
-        setIsClosing(false);
-        setImage(undefined);
-    }
-
-    const onCloseConfirm = () => {
-        setIsClosing(false);
-    }
-
-    const closeModal = () => {
-        if (image) {
-            setIsClosing(true);
-        } else {
-            setIsClose(true);
-            navigator('/in');
-        }
-    }
 
     return (
         <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
@@ -63,35 +21,17 @@ const ImageSector = ({user, isEditImage, isEditBackground}) => {
                   className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
                 <CameraIcon/>
             </Link>
-            <Modal isOpen={isEditBackground} closeModal={isClose} hideOnClose={false} onClose={closeModal}
-                   position="mt-10 mx-auto">
-                <AddImage isBackground={true} onClose={closeModal}/>
-                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
-                </Modal>
-            </Modal>
 
             <Link to="edit/image"
                   className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                 <img className="object-contain" src={imageUrl} alt="image"/>
             </Link>
-            <Modal isOpen={isEditImage} closeModal={isClose} hideOnClose={false} onClose={closeModal}
-                   position="mt-10 mx-auto">
-                <AddImage onClose={closeModal}/>
-                <Modal childModal={true} isOpen={isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
-                    <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>
-                </Modal>
-            </Modal>
         </div>
     )
 }
 
 const InformationSector = ({user}) => {
     const [isVisible, setIsVisible] = useState(false)
-
-    const openModal = () => {
-        setIsVisible(true);
-    };
 
     const closeModal = () => {
         setIsVisible(false);
@@ -130,7 +70,7 @@ const InformationSector = ({user}) => {
                 </div>
                 <div className="flex flex-row gap-4 mt-4">
                     <OpenToButton/>
-                    <ProfileButton onClickHandler={openModal} title="Add profile section"/>
+                    <ProfileButton onClickHandler={() => setIsVisible(true)} title="Add profile section"/>
                     <button
                         className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">
                         More
@@ -144,15 +84,13 @@ const InformationSector = ({user}) => {
     )
 }
 
-const UserProfileSection = ({user, isEditImage, isEditBackground}) => {
+const UserProfileSection = ({user}) => {
     return (
-        <ImageCropProvider>
-            <div className="flex flex-col bg-white rounded-b-lg">
-                <ImageSector user={user} isEditImage={isEditImage} isEditBackground={isEditBackground}/>
+        <div className="flex flex-col bg-white rounded-b-lg">
+            <ImageSector user={user}/>
 
-                <InformationSector user={user}/>
-            </div>
-        </ImageCropProvider>
+            <InformationSector user={user}/>
+        </div>
     )
 }
 export default UserProfileSection;

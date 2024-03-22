@@ -4,8 +4,6 @@ import React, {useState} from "react";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
 import CircularArrowIcon from "../../../../elements/icons/CircularArrowIcon";
 import {profileService} from "../../../../services/profileService";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router";
 import Cropper from "../../cropper/Cropper";
 import {useImageCropContext} from "../../../../providers/ImageCropProvider";
 import {readFile} from "../../../../utils/cropImage";
@@ -14,9 +12,7 @@ import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
 import SecondaryButton from "../../../../elements/buttons/SecondaryButton";
 import ModalHeader from "../ModalHeader";
 
-const AddImage = ({onClose, isBackground = false}) => {
-    const dispatch = useDispatch();
-    const navigator = useNavigate();
+const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
     const [error, setError] = useState("");
 
     const {image, setImage, rotation, setRotation, getProcessedImage} = useImageCropContext();
@@ -25,6 +21,7 @@ const AddImage = ({onClose, isBackground = false}) => {
         const file = files && files[0];
         if (!file) return;
 
+        onChange();
         const imageDataUrl = await readFile(file);
 
         const img = new Image();
@@ -49,13 +46,9 @@ const AddImage = ({onClose, isBackground = false}) => {
         reader.onloadend = () => {
             const base64data = reader.result;
             profileService.changeImage(base64data, isBackground)
-                .then(({data}) => {
-                    dispatch({
-                        type: 'SET_USER',
-                        current_user: data
-                    });
-                    setImage(undefined);
-                    navigator('/in');
+                .then(() => {
+                    onSave();
+                    setImage(null);
                 })
         };
     };

@@ -4,7 +4,7 @@ import useComponentVisible from "../../hooks/componentVisible";
 import useOverflow from "../../hooks/overflow";
 import ConditionalWrapper from "./ConditionalWrapper";
 
-const TextDown = ({placeHolder, options, isAbsolute = false, onEnterSelect = true, className = "", containerSizing = "py-[5px] px-2.5", containerClass = "rounded-[4px] border-[0.5px] border-[#556DA9] ", onChange, error = false, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
+const TextDown = ({placeHolder, options, clearOnSelect = true, isAbsolute = false, onEnterSelect = true, className = "", containerSizing = "py-[5px] px-2.5", containerClass = "rounded-[4px] border-[0.5px] border-[#556DA9] ", onChange, error = false, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const [selectedValue, setSelectedValue] = useState(null);
     const [searchValue, setSearchValue] = useState("");
@@ -35,7 +35,9 @@ const TextDown = ({placeHolder, options, isAbsolute = false, onEnterSelect = tru
         setSelectedValue(option);
         setIsComponentVisible(false)
         onChange(option);
-        setSearchValue("");
+
+        if(clearOnSelect)
+            setSearchValue("");
     };
 
     const onSearch = (e) => {
