@@ -8,6 +8,6 @@ export const authService = {
         return axios.get('api/auth/countries');
     },
     cities: (country) => {
-        return axios.get(`api/auth/countries/${country}`);
+        return axios.get(`api/auth/cities/${country}`);
     }
 };

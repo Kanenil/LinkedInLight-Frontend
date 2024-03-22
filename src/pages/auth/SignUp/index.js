@@ -9,12 +9,12 @@ import GoogleButton from "../../../elements/buttons/GoogleButton";
 import AppleButton from "../../../elements/buttons/AppleButton";
 import FacebookButton from "../../../elements/buttons/FacebookButton";
 import {jwtDecode} from "jwt-decode";
-import FormSelector from "../../../components/shared/forms/FormSelector";
 import React, {useEffect, useMemo, useState} from "react";
 import illustration from "../../../assets/signup-illustration.jpg"
 import {authService} from "../../../services/authService";
 import {general} from "../../../constants/general";
 import {Helmet} from "react-helmet-async";
+import TextDown from "../../../elements/shared/TextDown";
 
 const SignUp = () => {
     const [countries, setCountries] = useState([]);
@@ -31,9 +31,12 @@ const SignUp = () => {
 
 
     const countryOptions = useMemo(() => {
-        return countries.map(country => (
-            country
-        ));
+        return countries.map(country => {
+            return {
+                label: country.name,
+                value: country.name,
+            }
+        });
     }, [countries]);
 
     const initValues = {
@@ -59,7 +62,7 @@ const SignUp = () => {
         onSubmit: onSubmitFormik,
     });
 
-    const {values, errors, touched, handleSubmit, handleChange, setErrors} = formik;
+    const {values, errors, touched, handleSubmit, handleChange, setErrors, setValues} = formik;
 
     const googleCallback = async (response) => {
         const {email, family_name, given_name} = jwtDecode(response.credential);
@@ -75,8 +78,13 @@ const SignUp = () => {
 
     useEffect( () => {
         if(values.country.length > 0) {
-            authService.cities(values.country).then(({data})=> {
-                setCities(data);
+            authService.cities(values.country).then(({data}) => {
+                setCities(data.map(val => {
+                    return {
+                        label: val.name,
+                        value: val.name
+                    }
+                }));
             });
         }
     }, [values.country]);
@@ -125,18 +133,30 @@ const SignUp = () => {
                                        touched={touched.password}
                                        error={errors.password} title="Create a Password" handleChange={handleChange}/>
 
-                            <FormSelector margin="mt-[12px]" name="country" value={values.country}
-                                          touched={touched.country}
-                                          options={countryOptions}
-                                          error={errors.country} title="Select your country ..."
-                                          handleChange={handleChange}/>
+                            <TextDown
+                                options={countryOptions}
+                                placeHolder='Select your country ...'
+                                containerHeightMax={200}
+                                containerWidth={380}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                containerClass="rounded-xl border-[1px] border-[#B4BFDD]"
+                                containerSizing="py-2 px-[20px]"
+                                onChange={(e) => setValues({...values, country: e.label})}
+                            />
 
-                            <FormSelector margin="mt-[12px]" name="city" value={values.city}
-                                          touched={touched.city}
-                                          defaultOption="Firstly select country"
-                                          options={cities}
-                                          error={errors.city} title="Select your city ..."
-                                          handleChange={handleChange}/>
+                            <TextDown
+                                options={cities}
+                                placeHolder='Select your city ...'
+                                className="mt-[12px]"
+                                containerHeightMax={200}
+                                containerWidth={380}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                containerClass="rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]"
+                                containerSizing="py-2 px-[20px]"
+                                onChange={(e) => setValues({...values, city: e.label})}
+                            />
 
                             <div className="mt-[12px]">
                                 <label

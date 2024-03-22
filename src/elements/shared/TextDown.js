@@ -4,7 +4,7 @@ import useComponentVisible from "../../hooks/componentVisible";
 import useOverflow from "../../hooks/overflow";
 import ConditionalWrapper from "./ConditionalWrapper";
 
-const TextDown = ({placeHolder, options, className, onChange, error, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
+const TextDown = ({placeHolder, options, isAbsolute = false, onEnterSelect = true, className = "", containerSizing = "py-[5px] px-2.5", containerClass = "rounded-[4px] border-[0.5px] border-[#556DA9] ", onChange, error = false, hasTools = true, searchAble = true, containerHeightMax=100, containerWidth=272}) => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const [selectedValue, setSelectedValue] = useState(null);
     const [searchValue, setSearchValue] = useState("");
@@ -35,6 +35,7 @@ const TextDown = ({placeHolder, options, className, onChange, error, hasTools = 
         setSelectedValue(option);
         setIsComponentVisible(false)
         onChange(option);
+        setSearchValue("");
     };
 
     const onSearch = (e) => {
@@ -53,7 +54,7 @@ const TextDown = ({placeHolder, options, className, onChange, error, hasTools = 
     };
 
     const handleKeyDown = (event) => {
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && onEnterSelect) {
             onItemClick({label: searchValue, value: searchValue})
         }
     };
@@ -62,7 +63,7 @@ const TextDown = ({placeHolder, options, className, onChange, error, hasTools = 
         <div ref={ref} className={`relative ${className}`}>
             <ConditionalWrapper condition={(!isComponentVisible && (!!searchValue || !!selectedValue || !!placeHolder)) || !searchAble}>
                 <div ref={inputRef} onClick={handleInputClick}
-                     className={`flex flex-row items-center w-full py-[5px] px-2.5 rounded-[4px] border-[0.5px] ${error?'border-[#9E0F20]':'border-[#556DA9]'}`}>
+                     className={`flex flex-row items-center w-full ${containerClass} ${containerSizing} ${error?'border-[#9E0F20]':''}`}>
                     <div className="font-jost text-sm text-[#7D88A4] cursor-pointer">{getDisplay()}</div>
 
                     <ConditionalWrapper condition={hasTools}>
@@ -72,22 +73,22 @@ const TextDown = ({placeHolder, options, className, onChange, error, hasTools = 
             </ConditionalWrapper>
 
             <div ref={inputRef} onClick={e => e.stopPropagation()}
-                 className={`flex flex-row items-center w-full rounded-[4px] overflow-hidden border-[0.5px] ${error?'border-[#9E0F20]':'border-[#556DA9]'} ${(isComponentVisible && searchAble) || (!isComponentVisible && !searchValue && !placeHolder && !selectedValue && searchAble)?'':'hidden'}`}>
+                 className={`flex flex-row items-center w-full overflow-hidden ${containerClass} ${error?'border-[#9E0F20]':''} ${(isComponentVisible && searchAble) || (!isComponentVisible && !searchValue && !placeHolder && !selectedValue && searchAble)?'':'hidden'}`}>
                 <input onClick={e =>{e.stopPropagation(); setIsComponentVisible(true)}} onChange={onSearch} onKeyDown={handleKeyDown} value={searchValue} ref={searchRef}
-                       className="test w-full py-[5px] px-2.5 border-0 font-jost text-sm text-[#7D88A4]"/>
+                       className={`test w-full border-0 font-jost text-sm text-[#7D88A4] ${containerSizing}`}/>
 
                 <ConditionalWrapper condition={hasTools}>
-                    <ChevronDownIcon onClick={handleInputClick} className="ml-auto mr-2.5 w-3 fill-[#7D7D7D]"/>
+                    <ChevronDownIcon onClick={handleInputClick} className="ml-auto w-3 mr-5 fill-[#7D7D7D]"/>
                 </ConditionalWrapper>
             </div>
 
             <div id="container" ref={containerRef}
-                 className={`max-h-[${containerHeightMax}px] w-[${containerWidth}px] mt-2 py-[5px] px-[20px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
-                 style={{boxShadow: "0px 1px 6px 0px #00000040"}}>
+                 className={`${isAbsolute?'absolute z-50':''} bg-white mt-2 py-[5px] px-[20px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
+                 style={{boxShadow: "0px 1px 6px 0px #00000040", maxHeight: `${containerHeightMax}px`, width: `${containerWidth}px`}}>
                 <div ref={contentRef}>
                     {
-                        getOptions().map((option) => (
-                            <div onClick={() => onItemClick(option)} key={option.value}
+                        getOptions().map((option, index) => (
+                            <div onClick={() => onItemClick(option)} key={`${option.value}-${index}`}
                                  className="cursor-pointer active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light">
                                 {option.label}
                             </div>

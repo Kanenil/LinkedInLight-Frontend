@@ -138,7 +138,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
                         <ConditionalWrapper condition={isAddSkill}>
                             <TextDown
                                 options={options}
-                                placeHolder='Введіть навичку (н-д, управління проектами)'
+                                placeHolder='Skill (ex: Project management)'
                                 onChange={(e) => handleChangeSelect(e)}
                             />
                         </ConditionalWrapper>
