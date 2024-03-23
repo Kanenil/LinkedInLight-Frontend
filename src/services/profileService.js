@@ -47,8 +47,11 @@ export const profileService = {
             ...data
         })
     },
-    getEducation: () => {
+    getEducations: () => {
         return axios.get('api/profile/userEducations')
+    },
+    getEducation: (id) => {
+        return axios.get(`api/profile/education/${id}`)
     },
     addEducation: (data) => {
         return axios.post('api/profile/newEducation', data)
@@ -58,5 +61,20 @@ export const profileService = {
     },
     removeEducation: (id) => {
         return axios.delete(`api/profile/education/remove/${id}`)
+    },
+    getExperiences: () => {
+        return axios.get('api/profile/userExperiences')
+    },
+    getExperience: (id) => {
+        return axios.get(`api/profile/experience/${id}`)
+    },
+    addExperience: (data) => {
+        return axios.post('api/profile/newExperience', data)
+    },
+    updateExperience: (data, id) => {
+        return axios.put(`api/profile/experience/edit/${id}`, data)
+    },
+    removeExperience: (id) => {
+        return axios.delete(`api/profile/experience/remove/${id}`)
     },
 };

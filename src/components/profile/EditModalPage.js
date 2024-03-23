@@ -7,6 +7,7 @@ import {useImageCropContext} from "../../providers/ImageCropProvider";
 import {imageUrlToBase64} from "../../utils/converters";
 import {APP_ENV} from "../../env";
 import AddEducation from "../shared/modals/profile/AddEducation";
+import AddExperience from "../shared/modals/profile/AddExperience";
 
 const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
@@ -38,7 +39,16 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
                 id
             }
         },
+        {
+            route: ["experience"],
+            children: <AddExperience/>,
+            props: {
+                id
+            }
+        },
     ]
+
+    console.log(modals)
 
     useEffect(() => {
         if (editModal === "image" && user?.image) {

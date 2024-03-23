@@ -1,16 +1,16 @@
+import React, {useState} from "react";
 import {getShortMonth} from "../../../utils/date";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import PencilButton from "../../../elements/buttons/PencilButton";
-import React, {useState} from "react";
 
-const EducationItem = ({ editPath, isShowMore = true, school, startDate, endDate, degree, fieldOfStudy, currentlyStudying, grade, description }) => {
+const ExperienceItem = ({editPath, isShowMore = true, startDate, endDate, currentlyWorking, companyName, description, title}) => {
     const [showMore, setShowMore] = useState(false);
 
     const start = new Date(startDate);
     const end = new Date(endDate);
 
     const period = (
-        `${getShortMonth(start.getMonth())} ${start.getFullYear()} - ${currentlyStudying ? "Present" : `${getShortMonth(end.getMonth())} ${end.getFullYear()}`}`
+        `${getShortMonth(start.getMonth())} ${start.getFullYear()} - ${currentlyWorking ? "Present" : `${getShortMonth(end.getMonth())} ${end.getFullYear()}`}`
     )
 
     return (
@@ -21,14 +21,10 @@ const EducationItem = ({ editPath, isShowMore = true, school, startDate, endDate
             </div>
 
             <div className="pb-[5px] font-jost">
-                <h1 className="font-medium text-[#2D2A33]">{ school }</h1>
-                <h3 className="font-light font-normal text-[#2D2A33] text-sm">{ degree }, { fieldOfStudy }</h3>
+                <h1 className="font-medium text-[#2D2A33]">{ companyName }</h1>
+                <h3 className="font-light font-normal text-[#2D2A33] text-sm">{ title }</h3>
 
                 <h3 className="font-light text-[#556DA9] text-sm">{ period }</h3>
-
-                <ConditionalWrapper condition={grade}>
-                    <h3 className="font-light font-normal text-[#2D2A33] mt-2 text-sm">Grade: { grade }</h3>
-                </ConditionalWrapper>
 
                 <ConditionalWrapper condition={description}>
                     <h3 className="font-light font-normal text-[#2D2A33] mt-2.5 text-sm break-all text-wrap">
@@ -54,4 +50,4 @@ const EducationItem = ({ editPath, isShowMore = true, school, startDate, endDate
         </div>
     )
 }
-export default EducationItem;
+export default ExperienceItem;

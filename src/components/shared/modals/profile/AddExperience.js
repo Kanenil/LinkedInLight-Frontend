@@ -1,45 +1,45 @@
-import ModalHeader from "../ModalHeader";
+import {getDateTime, getLongMonth} from "../../../../utils/date";
 import React, {useEffect, useState} from "react";
+import useOverflow from "../../../../hooks/overflow";
+import {profileService} from "../../../../services/profileService";
+import ModalHeader from "../ModalHeader";
 import TextDown from "../../../../elements/shared/TextDown";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
-import useOverflow from "../../../../hooks/overflow";
-import {getDateTime, getLongMonth} from "../../../../utils/date";
 import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
-import {profileService} from "../../../../services/profileService";
 import StartEndDateForm from "../../../profile/education/StartEndDateForm";
 
-const SCHOOLS_STORE = "SAVED-SCHOOLS"
-const DEGREES_STORE = "SAVED-DEGREES"
-const FIELD_STORE = "SAVED-FIELDS"
+const TITLES_STORE = "SAVED-TITLES"
+const COMPANIES_STORE = "SAVED-COMPANIES"
+const INDUSTRIES_STORE = "SAVED-INDUSTRIES"
 
-const AddEducation = ({onClose, onSave, onChange, id}) => {
+const AddExperience = ({onClose, onSave, onChange, id}) => {
     const initValues = {
-        school: JSON.parse(localStorage.getItem(SCHOOLS_STORE) || '[]'),
-        degree: JSON.parse(localStorage.getItem(DEGREES_STORE) || '[]'),
-        fieldOfStudy: JSON.parse(localStorage.getItem(FIELD_STORE) || '[]')
+        title: JSON.parse(localStorage.getItem(TITLES_STORE) || '[]'),
+        companyName: JSON.parse(localStorage.getItem(COMPANIES_STORE) || '[]'),
+        industry: JSON.parse(localStorage.getItem(INDUSTRIES_STORE) || '[]'),
     }
 
     const [options, setOptions] = useState({
-        school: initValues.school,
-        degree: initValues.degree,
-        fieldOfStudy: initValues.fieldOfStudy,
+        title: initValues.title,
+        companyName: initValues.companyName,
+        industry: initValues.industry
     })
     const [values, setValues] = useState({
-        school: "",
-        degree: "",
-        fieldOfStudy: "",
+        title: "",
+        companyName: "",
         startDateYear: "",
         startDateMonth: "",
         endDateYear: "",
         endDateMonth: "",
-        grade: "",
         description: "",
-        currentlyStudying: false,
+        profileHeadline: "",
+        currentlyWorking: false,
+        industry: ""
     })
     const [errors, setErrors] = useState({
-        school: true,
-        degree: true,
-        fieldOfStudy: true,
+        title: true,
+        companyName: true,
+        industry: true,
         endDate: null,
         startDate: null
     });
@@ -78,24 +78,25 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            profileService.getEducation(id).then(({data}) => {
-                const education = data;
+            profileService.getExperience(id).then(({data}) => {
+                const experience = data;
 
-                const startDate = new Date(education.startDate);
-                const endDate = education.endDate?new Date(education.endDate): null;
+                const startDate = new Date(experience.startDate);
+                const endDate = experience.endDate?new Date(experience.endDate): null;
 
                 setValues({
-                    ...education,
+                    ...experience,
                     startDateMonth: getLongMonth(startDate.getMonth()),
                     startDateYear: startDate.getFullYear(),
                     endDateMonth: endDate?getLongMonth(endDate.getMonth()):"",
                     endDateYear: endDate?endDate.getFullYear(): "",
+                    industry: experience.industry.name
                 })
 
                 setErrors({
-                    school: false,
-                    fieldOfStudy: false,
-                    degree: false
+                    title: false,
+                    companyName: false,
+                    industry: false
                 })
             }).catch(() => onClose())
         }
@@ -113,34 +114,37 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
             return true;
         }
 
-        if (errors.field || errors.degree || errors.school || errors.startDate || errors.endDate || !checkStartDate()) {
+        if (errors.title || errors.companyName || errors.startDate || errors.endDate || !checkStartDate()) {
             setIsSubmitted(true);
             return;
         }
 
         const model = {
             id: id ?? 0,
-            school: values.school,
-            degree: values.degree,
-            fieldOfStudy: values.fieldOfStudy,
+            title: values.title,
+            companyName: values.companyName,
             startDate: getDateTime(1, values.startDateMonth, values.startDateYear),
             endDate: getDateTime(1, values.endDateMonth, values.endDateYear),
-            grade: values.grade,
+            currentlyWorking: getDateTime(1, values.endDateMonth, values.endDateYear)? values.currentlyStudying: true,
             description: values.description,
-            currentlyStudying: getDateTime(1, values.endDateMonth, values.endDateYear)? values.currentlyStudying: true
+            profileHeadline: values.profileHeadline,
+            industry: {
+                id: 0,
+                name: values.industry
+            }
         }
 
         if (id) {
-            await profileService.updateEducation(model, id);
+            await profileService.updateExperience(model, id);
         } else {
-            await profileService.addEducation(model);
+            await profileService.addExperience(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeEducation(id);
+        await profileService.removeExperience(id);
 
         onSave();
     }
@@ -148,98 +152,70 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
     return (
         <div className="flex flex-col gap-2.5 py-5 px-8 w-[750px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
-            <ModalHeader title={id ? "Edit education" : "Add education"} onClose={onClose}/>
+            <ModalHeader title={id ? "Edit experience" : "Add experience"} onClose={onClose}/>
 
             <div id="container" ref={containerRef} className={`max-h-[60vh] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                 <div className="flex flex-col gap-2.5" ref={contentRef}>
                     <h3 className="font-jost text-[#2D2A33] text-sm">Required fields are marked with *</h3>
 
                     <div className="pt-[5px] pb-[10px] pr-[20px] gap-[5px]">
-                        <h1 className="font-jost text-[#2D2A33]">School *</h1>
+                        <h1 className="font-jost text-[#2D2A33]">Title *</h1>
 
                         <TextDown
                             className="mt-[5px]"
-                            value={values.school}
-                            options={options.school}
+                            value={values.title}
+                            options={options.title}
                             containerWidth={665}
-                            placeHolder='ex: Boston University'
-                            error={isSubmitted && errors['school']}
+                            placeHolder='ex: Retail Sales Manager'
+                            error={isSubmitted && errors['title']}
                             hasTools={false}
                             clearOnSelect={false}
-                            onChange={(e) => handleChangeSelect(e, "school", SCHOOLS_STORE)}
+                            onChange={(e) => handleChangeSelect(e, "title", TITLES_STORE)}
                         />
-                        <ConditionalWrapper condition={isSubmitted && errors['school']}>
+                        <ConditionalWrapper condition={isSubmitted && errors['title']}>
                             <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
                         </ConditionalWrapper>
                     </div>
 
                     <div className="pb-[10px] pr-[20px] gap-[5px]">
-                        <h1 className="font-jost text-[#2D2A33]">Degree *</h1>
+                        <h1 className="font-jost text-[#2D2A33]">Company name *</h1>
 
                         <TextDown
                             className="mt-[5px]"
-                            value={values.degree}
-                            options={options.degree}
+                            value={values.companyName}
+                            options={options.companyName}
                             containerWidth={665}
-                            placeHolder="ex: Bachelor's"
-                            error={isSubmitted && errors['degree']}
+                            placeHolder="ex: Microsoft"
+                            error={isSubmitted && errors['companyName']}
                             hasTools={false}
                             clearOnSelect={false}
-                            onChange={(e) => handleChangeSelect(e, "degree", DEGREES_STORE)}
+                            onChange={(e) => handleChangeSelect(e, "companyName", COMPANIES_STORE)}
                         />
-                        <ConditionalWrapper condition={isSubmitted && errors['degree']}>
+                        <ConditionalWrapper condition={isSubmitted && errors['companyName']}>
                             <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
                         </ConditionalWrapper>
                     </div>
-
-                    <div className="pb-[10px] pr-[20px] gap-[5px]">
-                        <h1 className="font-jost text-[#2D2A33]">Field of study *</h1>
-
-                        <TextDown
-                            className="mt-[5px]"
-                            value={values.fieldOfStudy}
-                            options={options.fieldOfStudy}
-                            containerWidth={665}
-                            placeHolder="ex: Business"
-                            error={isSubmitted && errors['fieldOfStudy']}
-                            hasTools={false}
-                            clearOnSelect={false}
-                            onChange={(e) => handleChangeSelect(e, "fieldOfStudy", FIELD_STORE)}
-                        />
-                        <ConditionalWrapper condition={isSubmitted && errors['fieldOfStudy']}>
-                            <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
-                        </ConditionalWrapper>
-                    </div>
-
-                    <StartEndDateForm
-                        values={values}
-                        setValues={setValues}
-                        setErrors={setErrors}
-                        errors={errors}
-                        onChange={onChange}
-                        isEndDateDisabled={values.currentlyStudying}
-                    />
 
                     <div className="pb-[10px] pr-[20px] gap-[5px]">
                         <label
                             className="flex items-center cursor-pointer select-none"
-                            htmlFor="currentlyStudying">
+                            htmlFor="currentlyWorking">
                             <div className="relative">
-                                <input name="currentlyStudying"
-                                       checked={values.currentlyStudying}
+                                <input name="currentlyWorking"
+                                       checked={values.currentlyWorking}
                                        onChange={e => {
                                            setValues({
                                                ...values,
-                                               currentlyStudying: e.target.checked
+                                               currentlyWorking: e.target.checked
                                            })
                                            onChange();
                                        }}
                                        className="hidden"
                                        type="checkbox"
-                                       id="currentlyStudying"/>
+                                       id="currentlyWorking"/>
                                 <div
                                     className="box flex items-center justify-center w-[20px] h-[20px] rounded-sm border border-[#2D2A33] mr-2">
-                                        <span className={values.currentlyStudying === false ? "opacity-0" : ""}>
+                                        <span className={values.currentlyWorking === false ? "opacity-0" : ""}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                  className="ml-1 mb-1"
                                                  viewBox="0 0 15 16" fill="none">
@@ -251,25 +227,37 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
                                 </div>
                             </div>
                             <span className="text-sm text-[#7D7D7D]">
-                                I am currently studying
+                                I am currently working in this role
                             </span>
                         </label>
                     </div>
 
-                    <div className="pb-[10px] pr-[20px] gap-[5px]">
-                        <h1 className="font-jost text-[#2D2A33]">Grade</h1>
+                    <StartEndDateForm
+                        values={values}
+                        setValues={setValues}
+                        setErrors={setErrors}
+                        errors={errors}
+                        onChange={onChange}
+                        isEndDateDisabled={values.currentlyWorking}
+                    />
 
-                        <input
-                            value={values.grade}
-                            onChange={e => {
-                                setValues({
-                                    ...values,
-                                    grade: e.target.value
-                                })
-                                onChange();
-                            }}
-                            className="w-full rounded-[4px] border-[0.5px] border-[#556DA9] py-[5px] px-2.5 text-[#7D7D7D] text-sm"
+                    <div className="pt-[5px] pb-[10px] pr-[20px] gap-[5px]">
+                        <h1 className="font-jost text-[#2D2A33]">Industry *</h1>
+
+                        <TextDown
+                            className="mt-[5px]"
+                            value={values.industry}
+                            options={options.industry}
+                            containerWidth={665}
+                            placeHolder='ex: Software Development'
+                            error={isSubmitted && errors['industry']}
+                            hasTools={false}
+                            clearOnSelect={false}
+                            onChange={(e) => handleChangeSelect(e, "industry", INDUSTRIES_STORE)}
                         />
+                        <ConditionalWrapper condition={isSubmitted && errors['industry']}>
+                            <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
+                        </ConditionalWrapper>
                     </div>
 
                     <div className="pb-[10px] pr-[20px] gap-[5px]">
@@ -288,13 +276,30 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
                             rows={7}
                         />
                     </div>
+
+                    <div className="pb-[10px] pr-[20px] gap-[5px]">
+                        <h1 className="font-jost text-[#2D2A33]">Profile headline</h1>
+
+                        <input
+                            value={values.profileHeadline}
+                            onChange={e => {
+                                setValues({
+                                    ...values,
+                                    profileHeadline: e.target.value
+                                })
+                                onChange();
+                            }}
+                            className="w-full rounded-[4px] border-[0.5px] border-[#556DA9] py-[5px] px-2.5 text-[#7D7D7D] text-sm"
+                        />
+                        <h3 className="font-jost text-[#2D2A33] text-sm font-light">Appears below your name at the top of the profile</h3>
+                    </div>
                 </div>
             </div>
 
             <div className="flex justify-end pt-2.5 pb-1 gap-5 border-t-[0.5px] border-[#24459A80]">
                 <ConditionalWrapper condition={id}>
                     <button onClick={onRemoveClick} className="mr-auto text-[#24459A] font-medium hover:underline">
-                        Remove education
+                        Remove experience
                     </button>
                 </ConditionalWrapper>
 
@@ -305,4 +310,4 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
         </div>
     )
 }
-export default AddEducation;
+export default AddExperience;

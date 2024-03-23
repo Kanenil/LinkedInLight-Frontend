@@ -10,8 +10,13 @@ const EducationDetails = ({user, onClickBack}) => {
 
     useEffect(() => {
         profileService
-            .getEducation()
-            .then(({data}) => setEducations(data))
+            .getEducations()
+            .then(({data}) => {
+                if(data.length === 0)
+                    onClickBack();
+
+                setEducations(data)
+            })
     }, [user])
 
     useEffect(() => {

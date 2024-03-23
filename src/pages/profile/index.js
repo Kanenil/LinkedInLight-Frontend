@@ -18,8 +18,7 @@ const Profile = () => {
     const currentUser = useSelector(state => state.CurrentUser);
     const dispatch = useDispatch();
     const {blockId, id} = useParams();
-    const {state, ...location} = useLocation();
-    const { targetId } = state || {};
+    const location = useLocation();
 
     const getAndSaveUserState = () => {
         profileService.profile().then(({data}) => {
@@ -38,14 +37,6 @@ const Profile = () => {
             setUser(currentUser);
         }
     }, [currentUser])
-
-    useEffect(() => {
-        const el = document.getElementById(targetId);
-        if (el) {
-            el.scrollIntoView();
-        }
-    }, [targetId]);
-
 
     const getBlockId = () => {
         if(location.pathname.includes("edit") && location.pathname.includes("details")) {

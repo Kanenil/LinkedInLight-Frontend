@@ -1,34 +1,28 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
+import {useEffect, useState} from "react";
+import {profileService} from "../../../services/profileService";
+import ExperienceItem from "../experience/ExperienceItem";
 
-const ExperienceSection = ({ title, addButtonTitle, companies, onPencilClick, onAddClick }) => {
-    const CompanyItem = ({ logo, companyName, period }) => {
-        return (
-            <div className="mt-2.5 py-2.5 flex flex-row gap-5">
-                <div
-                    className="flex justify-center items-center p-5 bg-[#EAECF3] font-bold text-[#2D2A33]">
-                    { logo }
-                </div>
+const ExperienceSection = ({ user }) => {
+    const [experiences, setExperiences] = useState([]);
 
-                <div className="py-[5px] font-jost">
-                    <h1 className="font-medium text-[#2D2A33]">{ companyName }</h1>
-
-                    <h3 className="font-light text-[#556DA9] mt-2.5">{ period }</h3>
-                </div>
-            </div>
-        )
-    }
+    useEffect(() => {
+        profileService
+            .getExperiences()
+            .then(({data}) => setExperiences(data))
+    }, [user])
 
     return (
-        <div className="rounded-lg bg-white py-8 px-10">
+        <div id="experiences" className={`rounded-lg bg-white py-8 px-10 ${experiences.length === 0? 'hidden': ''}`}>
             <SectionHeaderBlock
-                title={title}
-                buttonTitle={addButtonTitle}
-                onPencilClick={onPencilClick}
-                onAddClick={onAddClick}
+                title="Experience"
+                buttonTitle="Add experience"
+                onPencilClickTo="details/experiences"
+                link="edit/experience"
             />
 
-            {companies.map((company, index) =>
-                <CompanyItem key={`section${title}-${index}`} {...company} />
+            {experiences.map((experience, index) =>
+                <ExperienceItem key={`sectionExperiences-${index}`} {...experience} />
             )}
         </div>
     )

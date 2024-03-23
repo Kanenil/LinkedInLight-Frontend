@@ -7,6 +7,7 @@ import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import {useNavigate} from "react-router";
 import EducationDetails from "./details/EducationDetails";
+import ExperienceDetails from "./details/ExperienceDetails";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -14,10 +15,10 @@ const DetailsPage = ({user, detail}) => {
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
 
     const onClickBack = () => {
-        navigator(-1, {state: { targetId: detail }})
+        navigator('/in', { state: detail });
     }
 
-    const modals = [
+    const pages = [
         {
             route: ["languages"],
             children: <LanguageDetails/>,
@@ -29,6 +30,14 @@ const DetailsPage = ({user, detail}) => {
         {
             route: ["educations"],
             children: <EducationDetails/>,
+            props: {
+                user,
+                onClickBack
+            }
+        },
+        {
+            route: ["experiences"],
+            children: <ExperienceDetails/>,
             props: {
                 user,
                 onClickBack
@@ -62,12 +71,12 @@ const DetailsPage = ({user, detail}) => {
                 <div className="flex flex-row my-8 mx-auto w-[1170px]">
                     <div className="w-8/12">
                         {
-                            modals
-                                .filter(modal => modal.route.includes(detail))
-                                .map(modal =>
-                                    React.cloneElement(modal.children, {
-                                        key: `details-${modal.route[0]}`,
-                                        ...modal.props
+                            pages
+                                .filter(page => page.route.includes(detail))
+                                .map(page =>
+                                    React.cloneElement(page.children, {
+                                        key: `details-${page.route[0]}`,
+                                        ...page.props
                                     })
                                 )
                         }

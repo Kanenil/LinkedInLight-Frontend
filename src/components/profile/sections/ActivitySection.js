@@ -2,10 +2,23 @@ import {Link} from "react-router-dom";
 import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import classNames from "classnames";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const ActivitySection = ({title, buttonTitle, onPencilClick, onAddClick, blocks, activeBlock}) => {
-    const [currentBlock, setCurrentBlock] = useState(activeBlock);
+const ActivitySection = ({ user }) => {
+    const [currentBlock, setCurrentBlock] = useState('Posts');
+    const [blocks, setBlocks] = useState([
+        {
+            name: 'Posts', content: []
+        }
+    ]);
+
+    useEffect(() => {
+        setBlocks([
+            {
+                name: 'Posts', content: user?.posts ?? []
+            }
+        ])
+    }, [user])
 
     const dot = (
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"
@@ -34,12 +47,12 @@ const ActivitySection = ({title, buttonTitle, onPencilClick, onAddClick, blocks,
     }
 
     return (
-        <div className="rounded-lg bg-white overflow-hidden pt-8">
+        <div className={`rounded-lg bg-white overflow-hidden pt-8 ${blocks[0].content.length === 0?'hidden' : ''}`}>
             <SectionHeaderBlock
-                title={title}
-                buttonTitle={buttonTitle}
-                onPencilClick={onPencilClick}
-                onAddClick={onAddClick}
+                title="Activity"
+                buttonTitle="Create a post"
+                onPencilClick={() => {}}
+                onAddClick={() => {}}
                 margin="mx-10"
             />
 
@@ -61,7 +74,7 @@ const ActivitySection = ({title, buttonTitle, onPencilClick, onAddClick, blocks,
             <div className="flex flex-row gap-7 py-2 mx-10 mt-2.5">
                 {
                     blocks
-                        .find(element => element.name === activeBlock)
+                        .find(element => element.name === currentBlock)
                         .content
                         .map((content, index) =>
                             <ActivityContentItem {...content} key={`ActivityContent-${index}`}/>
