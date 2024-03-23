@@ -3,16 +3,15 @@ import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
 import {Link} from "react-router-dom";
 import PlusIcon from "../../../elements/icons/PlusIcon";
 import {profileService} from "../../../services/profileService";
-import PencilButton from "../../../elements/buttons/PencilButton";
+import EducationItem from "../education/EducationItem";
 
-const LanguageDetails = ({user, onClickBack}) => {
-    const [languages, setLanguages] = useState([]);
-
+const EducationDetails = ({user, onClickBack}) => {
+    const [educations, setEducations] = useState([]);
 
     useEffect(() => {
         profileService
-            .getLanguages()
-            .then(({data}) => setLanguages(data))
+            .getEducation()
+            .then(({data}) => setEducations(data))
     }, [user])
 
     useEffect(() => {
@@ -26,25 +25,23 @@ const LanguageDetails = ({user, onClickBack}) => {
                     <ArrowRightIcon className="w-4 mr-3.5 fill-[#24459A]" style={{transform: `rotate(180deg)`}}/>
                 </button>
 
-                <h1 className="font-medium text-2xl text-[#2D2A33]">Languages</h1>
+                <h1 className="font-medium text-2xl text-[#2D2A33]">Education</h1>
 
-                <Link to='edit/language' className="ml-auto">
+                <Link to='edit/education' className="ml-auto">
                     <PlusIcon className="w-4 fill-[#556DA9]"/>
                 </Link>
             </div>
             {
-                languages.map((language, index) =>
-                    <div
-                        key={`languages-${language.name}-${index}`}
-                        className="flex flex-row items-start justify-start gap-[20px] isolate"
-                    >
-                        <h1 className="w-20 h-26 font-jost font-normal text-lg leading-26 text-gray-800 flex-none">{language.name}</h1>
-
-                        <PencilButton to={`edit/language/${language.id}`} />
-                    </div>
+                educations.map((education, index) =>
+                    <EducationItem
+                        key={`educations-${education.school}-${index}`}
+                        editPath={`edit/education/${education.id}`}
+                        isShowMore={false}
+                        {...education}
+                    />
                 )
             }
         </div>
     )
 }
-export default LanguageDetails;
+export default EducationDetails;

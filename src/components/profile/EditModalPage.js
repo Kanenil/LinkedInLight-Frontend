@@ -6,6 +6,7 @@ import AddImage from "../shared/modals/profile/AddImage";
 import {useImageCropContext} from "../../providers/ImageCropProvider";
 import {imageUrlToBase64} from "../../utils/converters";
 import {APP_ENV} from "../../env";
+import AddEducation from "../shared/modals/profile/AddEducation";
 
 const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
@@ -28,6 +29,13 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
             children: <AddImage/>,
             props: {
                 isBackground: editModal === "background"
+            }
+        },
+        {
+            route: ["education"],
+            children: <AddEducation/>,
+            props: {
+                id
             }
         },
     ]

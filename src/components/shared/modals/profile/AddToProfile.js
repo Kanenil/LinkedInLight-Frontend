@@ -12,7 +12,7 @@ const AddToProfile = ({onClose}) => {
             id: 0, title: 'Main information', content: [
                 {title: 'Add profile image', to: 'edit/image'},
                 {title: 'Add general information', to: 'edit/general-information'},
-                {title: 'Add education', to: '/in'},
+                {title: 'Add education', to: 'edit/education'},
                 {title: 'Add experience', to: '/in'},
                 {title: 'Add services', to: ''},
                 {title: 'Add skills', to: 'edit/general-information'},

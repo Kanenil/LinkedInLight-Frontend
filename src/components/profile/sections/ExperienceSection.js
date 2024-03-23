@@ -1,7 +1,6 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 
 const ExperienceSection = ({ title, addButtonTitle, companies, onPencilClick, onAddClick }) => {
-
     const CompanyItem = ({ logo, companyName, period }) => {
         return (
             <div className="mt-2.5 py-2.5 flex flex-row gap-5">

@@ -47,4 +47,16 @@ export const profileService = {
             ...data
         })
     },
+    getEducation: () => {
+        return axios.get('api/profile/userEducations')
+    },
+    addEducation: (data) => {
+        return axios.post('api/profile/newEducation', data)
+    },
+    updateEducation: (data, id) => {
+        return axios.put(`api/profile/education/edit/${id}`, data)
+    },
+    removeEducation: (id) => {
+        return axios.delete(`api/profile/education/remove/${id}`)
+    },
 };

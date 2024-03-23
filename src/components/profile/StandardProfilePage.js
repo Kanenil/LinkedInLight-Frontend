@@ -10,6 +10,7 @@ import RightEditSection from "./sections/RightEditSection";
 import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import React from "react";
+import EducationSection from "./sections/EducationSection";
 
 const StandardProfilePage = ({ user }) => {
     return (
@@ -35,13 +36,7 @@ const StandardProfilePage = ({ user }) => {
                                 />
                             </ConditionalWrapper>
                             <LanguagesSection user={user}/>
-                            <ConditionalWrapper condition={user?.educations.length > 0}>
-                                <ExperienceSection
-                                    title="Education"
-                                    addButtonTitle="Add education"
-                                    companies={user?.educations}
-                                />
-                            </ConditionalWrapper>
+                            <EducationSection user={user}/>
                             <ConditionalWrapper condition={user?.experiences.length > 0}>
                                 <ExperienceSection
                                     title="Experience"

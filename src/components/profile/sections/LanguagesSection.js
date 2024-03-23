@@ -13,13 +13,15 @@ const LanguagesSection = ({ user }) => {
             .then(({data}) => setLanguages(data))
     }, [user])
 
-    const dot = <svg xmlns="http://www.w3.org/2000/svg" width="11" height="10" viewBox="0 0 11 10" fill="none">
-        <path d="M0 5.06024C0 3.65462 0.441767 2.46988 1.3253 1.50602C2.249 0.502008 3.49398 0 5.06024 0C6.66667 0 7.93173 0.481928 8.85542 1.44578C9.77912 2.40964 10.241 3.61446 10.241 5.06024C10.241 6.4257 9.77912 7.59036 8.85542 8.55422C7.93173 9.51807 6.66667 10 5.06024 10C3.49398 10 2.249 9.51807 1.3253 8.55422C0.441767 7.59036 0 6.4257 0 5.06024Z" fill="#24459A"/>
-    </svg>
+    const dot = (
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="10" viewBox="0 0 11 10" fill="none">
+            <path d="M0 5.06024C0 3.65462 0.441767 2.46988 1.3253 1.50602C2.249 0.502008 3.49398 0 5.06024 0C6.66667 0 7.93173 0.481928 8.85542 1.44578C9.77912 2.40964 10.241 3.61446 10.241 5.06024C10.241 6.4257 9.77912 7.59036 8.85542 8.55422C7.93173 9.51807 6.66667 10 5.06024 10C3.49398 10 2.249 9.51807 1.3253 8.55422C0.441767 7.59036 0 6.4257 0 5.06024Z" fill="#24459A"/>
+        </svg>
+    )
 
     return (
         <ConditionalWrapper condition={languages.length > 0}>
-            <div className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
+            <section id="languages" className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
                 <div className="mx-10">
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Languages</h1>
@@ -50,7 +52,7 @@ const LanguagesSection = ({ user }) => {
                         }
                     </div>
                 </div>
-            </div>
+            </section>
         </ConditionalWrapper>
     )
 }

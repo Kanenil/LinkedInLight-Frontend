@@ -18,7 +18,8 @@ const Profile = () => {
     const currentUser = useSelector(state => state.CurrentUser);
     const dispatch = useDispatch();
     const {blockId, id} = useParams();
-    const location = useLocation();
+    const {state, ...location} = useLocation();
+    const { targetId } = state || {};
 
     const getAndSaveUserState = () => {
         profileService.profile().then(({data}) => {
@@ -38,6 +39,14 @@ const Profile = () => {
         }
     }, [currentUser])
 
+    useEffect(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+            el.scrollIntoView();
+        }
+    }, [targetId]);
+
+
     const getBlockId = () => {
         if(location.pathname.includes("edit") && location.pathname.includes("details")) {
             const startIndex = location.pathname.indexOf("details") + "details/".length;
@@ -51,7 +60,7 @@ const Profile = () => {
             details: location.pathname.includes("details") ? getBlockId() : "",
             edit: location.pathname.includes("edit") ? blockId : ""
         })
-    }, [blockId, location]);
+    }, [blockId]);
 
     return (
         <React.Fragment>
@@ -66,7 +75,7 @@ const Profile = () => {
             </ConditionalWrapper>
 
             <ConditionalWrapper condition={pageStates.details}>
-                <DetailsPage detail={pageStates.details} user={user} onSaveCallback={getAndSaveUserState}/>
+                <DetailsPage detail={pageStates.details} user={user} />
             </ConditionalWrapper>
 
             <ConditionalWrapper condition={!pageStates.details}>
