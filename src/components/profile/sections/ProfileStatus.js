@@ -116,7 +116,8 @@ const ProfileStatus = ({user}) => {
             </div>
 
             <ConditionalWrapper condition={filteredSuggestions.length > 0}>
-                <Slider className="mt-2.5" initialIndex={filteredSuggestions.length === maxLevel ? 1 : 0} perPage={3}
+                <Slider className="mt-2.5" perPage={3}
+                        onReset={user}
                         containerClass="flex flex-row gap-6 w-fit">
                     {filteredSuggestions.map((suggestion, index) =>
                         <SliderItem key={`suggestion-${index}`} {...suggestion}/>

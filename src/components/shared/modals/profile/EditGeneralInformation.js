@@ -73,7 +73,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
 
     const onSaveClick = async () => {
         if(userAbout !== about)
-            await profileService.editAbout(about);
+            await profileService.editAbout(about.toString());
 
         for (const skill of skills) {
             if(userSkills.filter(userSkill => userSkill.name === skill).length === 0)

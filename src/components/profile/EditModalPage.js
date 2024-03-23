@@ -48,8 +48,6 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
         },
     ]
 
-    console.log(modals)
-
     useEffect(() => {
         if (editModal === "image" && user?.image) {
             imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image, (resp) => {

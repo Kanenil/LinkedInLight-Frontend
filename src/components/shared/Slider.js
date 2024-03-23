@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ChevronLeftIcon from "../../elements/icons/ChevronLeftIcon";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 
-const Slider = ({initialIndex = 0, perPage = 1, children, className, containerClass, isNewDesignStyle = false}) => {
+const Slider = ({onReset, initialIndex = 0, perPage = 1, children, className, containerClass, isNewDesignStyle = false}) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     const calculateWidth = () => {
@@ -14,6 +14,10 @@ const Slider = ({initialIndex = 0, perPage = 1, children, className, containerCl
     const items = children.length;
     const leftLimit = 0;
     const rightLimit = items - perPage;
+
+    useEffect(() => {
+        setCurrentIndex(initialIndex);
+    }, [onReset])
 
     const ManipulateButton = ({onClickHandler, position, rotate = 0}) => {
         return (
