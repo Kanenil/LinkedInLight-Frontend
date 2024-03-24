@@ -19,10 +19,6 @@ const LanguageDetails = ({user, onClickBack}) => {
             })
     }, [user])
 
-    useEffect(() => {
-        window.scrollTo (0,0);
-    }, []);
-
     return (
         <div className="flex flex-col gap-2.5 rounded-lg bg-white py-8 px-10">
             <div className="flex flex-row items-center font-jost pb-2.5 border-b-[0.5px] border-[#24459A80]">

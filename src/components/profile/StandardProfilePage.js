@@ -2,7 +2,6 @@ import UserProfileSection from "./sections/UserProfileSection";
 import ProfileStatus from "./sections/ProfileStatus";
 import AnalyticsSection from "./sections/AnalyticsSection";
 import AboutMeSection from "./sections/AboutMeSection";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import ActivitySection from "./sections/ActivitySection";
 import LanguagesSection from "./sections/LanguagesSection";
 import ExperienceSection from "./sections/ExperienceSection";
@@ -25,7 +24,7 @@ const StandardProfilePage = ({ user }) => {
             const waitForOffsetTop = () => {
                 const el = document.getElementById(targetId);
                 if (el && el.offsetTop > 0) {
-                    el.scrollIntoView();
+                    window.scrollTo(0, el.offsetTop - 60); // 60 px - sticky header
                     iteration = 5;
                     navigator('', {state: null})
                 } else if (iteration < 5) {

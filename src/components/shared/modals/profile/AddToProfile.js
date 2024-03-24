@@ -14,13 +14,11 @@ const AddToProfile = ({onClose}) => {
                 {title: 'Add general information', to: 'edit/general-information'},
                 {title: 'Add education', to: 'edit/education'},
                 {title: 'Add experience', to: 'edit/experience'},
-                {title: 'Add services', to: ''},
                 {title: 'Add skills', to: 'edit/general-information'},
             ]
         },
         {
             id: 1, title: 'Recommended', content: [
-                {title: 'Add achievements', to: '/in'},
                 {title: 'Add certificates', to: '/in'},
                 {title: 'Add projects', to: '/in'},
                 {title: 'Add courses', to: '/in'},
@@ -30,11 +28,7 @@ const AddToProfile = ({onClose}) => {
         {
             id: 2, title: 'Additional information', content: [
                 {title: 'Add volunteer experience', to: '/in'},
-                {title: 'Add patents', to: '/in'},
-                {title: 'Add honors and awards', to: '/in'},
-                {title: 'Add publications', to: '/in'},
                 {title: 'Add languages', to: 'edit/language'},
-                {title: 'Add organizations', to: '/in'},
                 {title: 'Add contact information', to: '/in'},
             ]
         },

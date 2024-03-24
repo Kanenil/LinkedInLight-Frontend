@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import LanguageDetails from "./details/LanguageDetails";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
@@ -17,6 +17,10 @@ const DetailsPage = ({user, detail}) => {
     const onClickBack = () => {
         navigator('/in', { state: detail });
     }
+
+    useEffect(() => {
+        window.scrollTo (0,0);
+    }, []);
 
     const pages = [
         {
