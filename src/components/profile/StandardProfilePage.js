@@ -11,6 +11,7 @@ import {peopleMayKnow} from "../../pages/profile/mock";
 import React, {useEffect} from "react";
 import EducationSection from "./sections/EducationSection";
 import {useLocation, useNavigate} from "react-router";
+import CertificationsSection from "./sections/CertificationsSection";
 
 const StandardProfilePage = ({ user }) => {
     const location = useLocation();
@@ -28,7 +29,7 @@ const StandardProfilePage = ({ user }) => {
                     iteration = 5;
                     navigator('', {state: null})
                 } else if (iteration < 5) {
-                    setTimeout(waitForOffsetTop, 20);
+                    setTimeout(waitForOffsetTop, 30);
                     iteration++;
                 }
             };
@@ -82,6 +83,12 @@ const StandardProfilePage = ({ user }) => {
         },
         {
             children: <ExperienceSection />,
+            props: {
+                user
+            }
+        },
+        {
+            children: <CertificationsSection />,
             props: {
                 user
             }

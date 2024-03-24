@@ -8,6 +8,7 @@ import {imageUrlToBase64} from "../../utils/converters";
 import {APP_ENV} from "../../env";
 import AddEducation from "../shared/modals/profile/AddEducation";
 import AddExperience from "../shared/modals/profile/AddExperience";
+import AddCertification from "../shared/modals/profile/AddCertification";
 
 const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
@@ -42,6 +43,13 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
         {
             route: ["experience"],
             children: <AddExperience/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["certification"],
+            children: <AddCertification/>,
             props: {
                 id
             }

@@ -1,17 +1,14 @@
 import {getDateTime, getLongMonth} from "../../../../utils/date";
 import React, {useEffect} from "react";
 import {profileService} from "../../../../services/profileService";
-import StartEndDateForm from "../../../profile/education/StartEndDateForm";
+import StartEndDateForm from "../../forms/StartEndDateForm";
 import useForm from "../../../../hooks/useForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
-
-const TITLES_STORE = "SAVED-TITLES"
-const COMPANIES_STORE = "SAVED-COMPANIES"
-const INDUSTRIES_STORE = "SAVED-INDUSTRIES"
+import {COMPANIES_STORE, INDUSTRIES_STORE, TITLES_STORE} from "../../../../constants/stores";
 
 const AddExperience = ({onClose, onSave, onChange, id}) => {
     const initialValues = {

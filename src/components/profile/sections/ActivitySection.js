@@ -3,8 +3,9 @@ import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import classNames from "classnames";
 import {useEffect, useState} from "react";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
-const ActivitySection = ({ user }) => {
+const ActivitySection = ({user}) => {
     const [currentBlock, setCurrentBlock] = useState('Posts');
     const [blocks, setBlocks] = useState([
         {
@@ -29,7 +30,7 @@ const ActivitySection = ({ user }) => {
         </svg>
     )
 
-    const ActivityContentItem = ({ published, when, privacy }) => {
+    const ActivityContentItem = ({published, when, privacy}) => {
         return (
             <div className="flex flex-col w-[160px] gap-2.5 py-4 animate-scaleIn">
                 <div className="bg-[#D9D9D9] w-[100px] h-[100px]"/>
@@ -47,50 +48,55 @@ const ActivitySection = ({ user }) => {
     }
 
     return (
-        <div className={`rounded-lg bg-white overflow-hidden pt-8 ${blocks[0].content.length === 0?'hidden' : ''}`}>
-            <SectionHeaderBlock
-                title="Activity"
-                buttonTitle="Create a post"
-                onPencilClick={() => {}}
-                onAddClick={() => {}}
-                margin="mx-10"
-            />
+        <ConditionalWrapper condition={blocks[0].content.length > 0}>
+            <div className="rounded-lg bg-white overflow-hidden pt-8">
+                <SectionHeaderBlock
+                    title="Activity"
+                    buttonTitle="Create a post"
+                    onPencilClick={() => {
+                    }}
+                    onAddClick={() => {
+                    }}
+                    margin="mx-10"
+                />
 
-            <div className="flex flex-row gap-5 mt-4 mx-10">
-                {blocks.map((block, index) =>
-                    <button
-                        key={`block-${block.name}-${index}`}
-                        onClick={() => setCurrentBlock(block.name)}
-                        className={classNames("font-jost font-sm rounded-full py-1 px-5", {
-                            "bg-[#24459A] text-white": block.name === currentBlock,
-                            "border-[1px] border-[#24459A] text-[#556DA9]": block.name !== currentBlock
-                        })}
-                    >
-                        {block.name}
-                    </button>
-                )}
-            </div>
-
-            <div className="flex flex-row gap-7 py-2 mx-10 mt-2.5">
-                {
-                    blocks
-                        .find(element => element.name === currentBlock)
-                        .content
-                        .map((content, index) =>
-                            <ActivityContentItem {...content} key={`ActivityContent-${index}`}/>
-                        )
-                }
-            </div>
-
-            <Link to="/in"
-                  className="flex justify-center border-[#A7ACBA] border-t-[0.5px] py-2.5 hover:bg-gray-500/10">
-                <div className="flex flex-row items-center gap-2.5">
-                    <span className="font-jost text-[#2D2A33] font-light">Show all activity</span>
-
-                    <ArrowRightIcon className="h-2.5 fill-[#2D2A33]"/>
+                <div className="flex flex-row gap-5 mt-4 mx-10">
+                    {blocks.map((block, index) =>
+                        <button
+                            key={`block-${block.name}-${index}`}
+                            onClick={() => setCurrentBlock(block.name)}
+                            className={classNames("font-jost font-sm rounded-full py-1 px-5", {
+                                "bg-[#24459A] text-white": block.name === currentBlock,
+                                "border-[1px] border-[#24459A] text-[#556DA9]": block.name !== currentBlock
+                            })}
+                        >
+                            {block.name}
+                        </button>
+                    )}
                 </div>
-            </Link>
-        </div>
+
+                <div className="flex flex-row gap-7 py-2 mx-10 mt-2.5">
+                    {
+                        blocks
+                            .find(element => element.name === currentBlock)
+                            .content
+                            .map((content, index) =>
+                                <ActivityContentItem {...content} key={`ActivityContent-${index}`}/>
+                            )
+                    }
+                </div>
+
+                <Link to="/in"
+                      className="flex justify-center border-[#A7ACBA] border-t-[0.5px] py-2.5 hover:bg-gray-500/10">
+                    <div className="flex flex-row items-center gap-2.5">
+                        <span className="font-jost text-[#2D2A33] font-light">Show all activity</span>
+
+                        <ArrowRightIcon className="h-2.5 fill-[#2D2A33]"/>
+                    </div>
+                </Link>
+            </div>
+        </ConditionalWrapper>
+
     )
 }
 export default ActivitySection;

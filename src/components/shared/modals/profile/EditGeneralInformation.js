@@ -7,8 +7,7 @@ import TextDown from "../../../../elements/shared/TextDown";
 import useOverflow from "../../../../hooks/overflow";
 import {profileService} from "../../../../services/profileService";
 import ModalHeader from "../ModalHeader";
-
-const SKILLS_STORE = "SAVED-SKILLS"
+import {SKILLS_STORE} from "../../../../constants/stores";
 
 const EditGeneralInformation = ({onClose, onSave, onChange}) => {
     const initValues = JSON.parse(localStorage.getItem(SKILLS_STORE) || '[]');

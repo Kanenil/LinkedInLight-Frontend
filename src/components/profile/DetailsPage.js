@@ -1,13 +1,16 @@
 import React, {useEffect} from 'react'
-import LanguageDetails from "./details/LanguageDetails";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
 import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import {useNavigate} from "react-router";
-import EducationDetails from "./details/EducationDetails";
-import ExperienceDetails from "./details/ExperienceDetails";
+import AbstractDetails from "./AbstractDetails";
+import {profileService} from "../../services/profileService";
+import CertificationItem from "./items/CertificationItem";
+import ExperienceItem from "./items/ExperienceItem";
+import LanguageItem from "./items/LanguageItem";
+import EducationItem from "./items/EducationItem";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -22,29 +25,54 @@ const DetailsPage = ({user, detail}) => {
         window.scrollTo (0,0);
     }, []);
 
+    const commonProps = {
+        user,
+        onClickBack,
+    }
+
     const pages = [
         {
             route: ["languages"],
-            children: <LanguageDetails/>,
+            children: <AbstractDetails/>,
             props: {
-                user,
-                onClickBack
+                promise: profileService.getLanguages(),
+                detail: 'Languages',
+                edit: 'language',
+                itemComponent: <LanguageItem/>,
+                ...commonProps
             }
         },
         {
             route: ["educations"],
-            children: <EducationDetails/>,
+            children: <AbstractDetails/>,
             props: {
-                user,
-                onClickBack
+                promise: profileService.getEducations(),
+                detail: 'Educations',
+                edit: 'education',
+                itemComponent: <EducationItem/>,
+                ...commonProps
             }
         },
         {
             route: ["experiences"],
-            children: <ExperienceDetails/>,
+            children: <AbstractDetails/>,
             props: {
-                user,
-                onClickBack
+                promise: profileService.getExperiences(),
+                detail: 'Experiences',
+                edit: 'experience',
+                itemComponent: <ExperienceItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["certifications"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: profileService.getCertifications(),
+                detail: 'Certifications',
+                edit: 'certification',
+                itemComponent: <CertificationItem/>,
+                ...commonProps
             }
         }
     ]

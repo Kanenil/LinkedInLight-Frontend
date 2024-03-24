@@ -17,6 +17,7 @@ export const profileService = {
     editAbout: (newAbout) => {
         return axios.put('api/profile/edit/about', newAbout)
     },
+
     getSkills: () => {
         return axios.get('api/profile/userSkills')
     },
@@ -30,6 +31,7 @@ export const profileService = {
     removeSkill: (skillId) => {
         return axios.delete(`api/profile/skill/remove/${skillId}`)
     },
+
     getLanguages: () => {
         return axios.get('api/profile/userLanguages')
     },
@@ -47,6 +49,7 @@ export const profileService = {
             ...data
         })
     },
+
     getEducations: () => {
         return axios.get('api/profile/userEducations')
     },
@@ -62,6 +65,7 @@ export const profileService = {
     removeEducation: (id) => {
         return axios.delete(`api/profile/education/remove/${id}`)
     },
+
     getExperiences: () => {
         return axios.get('api/profile/userExperiences')
     },
@@ -76,5 +80,21 @@ export const profileService = {
     },
     removeExperience: (id) => {
         return axios.delete(`api/profile/experience/remove/${id}`)
+    },
+
+    getCertifications: () => {
+        return axios.get('api/profile/userCertifications')
+    },
+    getCertification: (id) => {
+        return axios.get(`api/profile/certification/${id}`)
+    },
+    addCertification: (data) => {
+        return axios.post('api/profile/newCertification', data)
+    },
+    updateCertification: (data, id) => {
+        return axios.put(`api/profile/certification/edit/${id}`, data)
+    },
+    removeCertification: (id) => {
+        return axios.delete(`api/profile/certification/remove/${id}`)
     },
 };

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {profileService} from "../../../services/profileService";
 import EyeIcon from "../../../elements/icons/EyeIcon";
 import PencilButton from "../../../elements/buttons/PencilButton";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
 const LanguagesSection = ({user}) => {
     const [languages, setLanguages] = useState([]);
@@ -21,40 +22,42 @@ const LanguagesSection = ({user}) => {
     )
 
     return (
-        <section id="languages"
-                 className={`rounded-lg bg-white overflow-hidden pt-8 pb-8 ${languages.length === 0 ? 'hidden' : ''}`}>
-            <div className="mx-10">
-                <div className="flex flex-row items-center gap-[20px]">
-                    <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Languages</h1>
+        <ConditionalWrapper condition={languages.length > 0}>
+            <section id="languages"
+                     className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
+                <div className="mx-10">
+                    <div className="flex flex-row items-center gap-[20px]">
+                        <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Languages</h1>
 
-                    <PencilButton to='details/languages'/>
+                        <PencilButton to='details/languages'/>
+                    </div>
+
+                    <div className="flex flex-row items-center gap-2.5 mt-2">
+                        <EyeIcon className="h-4"/>
+
+                        <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">
+                            This section can be viewed by your contacts on <span className="font-medium">Job for You</span>
+                        </h3>
+                    </div>
+
+                    <div className="flex flex-row flex-wrap justify-start items-center mt-2.5 gap-[25px] py-[5px]">
+                        {
+                            languages.map((language, index) =>
+                                <React.Fragment key={`languages-${language.name}-${index}`}>
+                                    {dot}
+                                    <div
+                                        className="flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[280px]">
+                                        <h1 className="font-jost font-medium">{language.name}</h1>
+
+                                        <h3 className="font-jost text-sm font-light">{language.proficiency}</h3>
+                                    </div>
+                                </React.Fragment>
+                            )
+                        }
+                    </div>
                 </div>
-
-                <div className="flex flex-row items-center gap-2.5 mt-2">
-                    <EyeIcon className="h-4"/>
-
-                    <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">
-                        This section can be viewed by your contacts on <span className="font-medium">Job for You</span>
-                    </h3>
-                </div>
-
-                <div className="flex flex-row flex-wrap justify-start items-center mt-2.5 gap-[25px] py-[5px]">
-                    {
-                        languages.map((language, index) =>
-                            <React.Fragment key={`languages-${language.name}-${index}`}>
-                                {dot}
-                                <div
-                                    className="flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[280px]">
-                                    <h1 className="font-jost font-medium">{language.name}</h1>
-
-                                    <h3 className="font-jost text-sm font-light">{language.proficiency}</h3>
-                                </div>
-                            </React.Fragment>
-                        )
-                    }
-                </div>
-            </div>
-        </section>
+            </section>
+        </ConditionalWrapper>
     )
 }
 export default LanguagesSection;

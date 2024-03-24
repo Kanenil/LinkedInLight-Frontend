@@ -1,17 +1,15 @@
 import React, {useEffect} from "react";
 import {getDateTime, getLongMonth} from "../../../../utils/date";
 import {profileService} from "../../../../services/profileService";
-import StartEndDateForm from "../../../profile/education/StartEndDateForm";
+import StartEndDateForm from "../../forms/StartEndDateForm";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
+import {DEGREES_STORE, FIELD_STORE, SCHOOLS_STORE} from "../../../../constants/stores";
 
-const SCHOOLS_STORE = "SAVED-SCHOOLS"
-const DEGREES_STORE = "SAVED-DEGREES"
-const FIELD_STORE = "SAVED-FIELDS"
 
 const AddEducation = ({onClose, onSave, onChange, id}) => {
     const initialValues = {

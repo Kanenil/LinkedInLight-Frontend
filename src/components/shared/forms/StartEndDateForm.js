@@ -1,15 +1,24 @@
-import FormSelector from "../../shared/forms/FormSelector";
+import FormSelector from "./FormSelector";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import React, {useEffect} from "react";
 import {getDateTime, getMonths, getYears} from "../../../utils/date";
 
-const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEndDateDisabled}) => {
+const StartEndDateForm = ({
+                              values,
+                              setValues,
+                              errors,
+                              setErrors,
+                              onChange,
+                              isEndDateDisabled,
+                              startTitle = "Start date",
+                              endTitle = "End date (or expected)"
+                          }) => {
     const months = getMonths();
     const years = getYears();
     const endYears = getYears(new Date(new Date().getFullYear() + 10, 1));
 
     useEffect(() => {
-        if(isEndDateDisabled) {
+        if (isEndDateDisabled) {
             setValues({
                 ...values,
                 endDateYear: "",
@@ -22,7 +31,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
         const startDate = getDateTime(1, values.startDateMonth, values.startDateYear)
         const endDate = getDateTime(1, values.endDateMonth, values.endDateYear)
 
-        if(startDate && endDate && startDate > endDate) {
+        if (startDate && endDate && startDate > endDate) {
             setErrors(values => {
                 return {
                     ...values,
@@ -32,7 +41,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
             return;
         }
 
-        if(!values.endDateYear && values.endDateMonth) {
+        if (!values.endDateYear && values.endDateMonth) {
             setErrors({
                 ...errors,
                 endDate: "Please enter a year"
@@ -51,7 +60,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
             })
         }
 
-        if(startDate > new Date() && !endDate) {
+        if (startDate > new Date() && !endDate) {
             setErrors(values => {
                 return {
                     ...values,
@@ -65,7 +74,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
     return (
         <React.Fragment>
             <div className="pb-[10px] pr-[20px] gap-[5px]">
-                <h1 className="font-jost text-[#2D2A33]">Start date</h1>
+                <h1 className="font-jost text-[#2D2A33]">{startTitle}</h1>
 
                 <div className="flex flex-row gap-2.5 w-full">
                     <FormSelector
@@ -80,7 +89,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
 
                             setErrors({
                                 ...errors,
-                                startDate: !values.startDateYear ?"Please enter a year": null
+                                startDate: !values.startDateYear ? "Please enter a year" : null
                             })
 
                             onChange();
@@ -101,7 +110,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
 
                             setErrors({
                                 ...errors,
-                                startDate: !values.startDateMonth ?"Please enter a month": null
+                                startDate: !values.startDateMonth ? "Please enter a month" : null
                             })
 
                             onChange();
@@ -117,7 +126,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
             </div>
 
             <div className="pb-[10px] pr-[20px] gap-[5px]">
-                <h1 className="font-jost text-[#2D2A33]">End date (or expected)</h1>
+                <h1 className="font-jost text-[#2D2A33]">{endTitle}</h1>
 
                 <div className="flex flex-row gap-2.5 w-full">
                     <FormSelector
@@ -131,7 +140,7 @@ const StartEndDateForm = ({values, setValues, errors, setErrors, onChange, isEnd
                                 endDateMonth: e.target.value
                             })
 
-                            if(!values.endDateYear) {
+                            if (!values.endDateYear) {
                                 setErrors({
                                     ...errors,
                                     endDate: "Please enter a year"

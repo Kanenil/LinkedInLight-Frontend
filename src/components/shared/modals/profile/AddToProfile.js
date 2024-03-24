@@ -19,7 +19,7 @@ const AddToProfile = ({onClose}) => {
         },
         {
             id: 1, title: 'Recommended', content: [
-                {title: 'Add certificates', to: '/in'},
+                {title: 'Add certificates', to: 'edit/certification'},
                 {title: 'Add projects', to: '/in'},
                 {title: 'Add courses', to: '/in'},
                 {title: 'Add recommendations', to: ''},

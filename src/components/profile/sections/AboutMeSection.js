@@ -22,64 +22,66 @@ const AboutMeSection = ({user}) => {
     </svg>
 
     return (
-        <div
-            className={`rounded-lg bg-white overflow-hidden pt-8 pb-8 ${user?.about || skills.length > 0 ? '' : 'hidden'}`}>
-            <div className="mx-10">
-                <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">About me</h1>
+        <ConditionalWrapper condition={user?.about || skills.length > 0}>
+            <div
+                className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
+                <div className="mx-10">
+                    <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">About me</h1>
 
-                <div className="flex flex-row items-center gap-2.5 mt-2">
-                    <EyeIcon className="h-4"/>
+                    <div className="flex flex-row items-center gap-2.5 mt-2">
+                        <EyeIcon className="h-4"/>
 
-                    <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">
-                        This section is only visible to you
-                    </h3>
-                </div>
-            </div>
-
-            <div className="mx-10 mt-2.5 flex flex-row gap-[30px] py-[5px]">
-                <div className="w-1/2 py-[5px]">
-                    <div className="flex flex-col gap-2.5">
-                        <div className="flex flex-row gap-2.5 items-center">
-                            <InformationIcon className="h-5 fill-[#24459A]"/>
-
-                            <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General information</h1>
-
-                            <PencilButton to='edit/general-information' className="ml-auto"/>
-                        </div>
-
-                        <h3 className="text-[#2D2A33] font-jost font-light text-sm">
-                            {user?.about ? user?.about : "Here your self-description will be displayed..."}
+                        <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">
+                            This section is only visible to you
                         </h3>
                     </div>
                 </div>
 
-                <ConditionalWrapper condition={skills.length > 0}>
+                <div className="mx-10 mt-2.5 flex flex-row gap-[30px] py-[5px]">
                     <div className="w-1/2 py-[5px]">
                         <div className="flex flex-col gap-2.5">
                             <div className="flex flex-row gap-2.5 items-center">
-                                <PuzzlesIcon className="h-5 fill-[#24459A]"/>
+                                <InformationIcon className="h-5 fill-[#24459A]"/>
 
-                                <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General skills</h1>
+                                <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General information</h1>
 
                                 <PencilButton to='edit/general-information' className="ml-auto"/>
                             </div>
 
-
-                            <h3 className="flex flex-row flex-wrap content-start items-center gap-1 text-[#2D2A33] font-jost font-light text-sm">
-                                {
-                                    skills.map((skill, index) =>
-                                        <React.Fragment key={skill}>
-                                            <span>{skill}</span>
-                                            {index + 1 !== skills.length ? dot : ''}
-                                        </React.Fragment>
-                                    )
-                                }
+                            <h3 className="text-[#2D2A33] font-jost font-light text-sm">
+                                {user?.about ? user?.about : "Here your self-description will be displayed..."}
                             </h3>
                         </div>
                     </div>
-                </ConditionalWrapper>
+
+                    <ConditionalWrapper condition={skills.length > 0}>
+                        <div className="w-1/2 py-[5px]">
+                            <div className="flex flex-col gap-2.5">
+                                <div className="flex flex-row gap-2.5 items-center">
+                                    <PuzzlesIcon className="h-5 fill-[#24459A]"/>
+
+                                    <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">General skills</h1>
+
+                                    <PencilButton to='edit/general-information' className="ml-auto"/>
+                                </div>
+
+
+                                <h3 className="flex flex-row flex-wrap content-start items-center gap-1 text-[#2D2A33] font-jost font-light text-sm">
+                                    {
+                                        skills.map((skill, index) =>
+                                            <React.Fragment key={skill}>
+                                                <span>{skill}</span>
+                                                {index + 1 !== skills.length ? dot : ''}
+                                            </React.Fragment>
+                                        )
+                                    }
+                                </h3>
+                            </div>
+                        </div>
+                    </ConditionalWrapper>
+                </div>
             </div>
-        </div>
+        </ConditionalWrapper>
     )
 }
 export default AboutMeSection;

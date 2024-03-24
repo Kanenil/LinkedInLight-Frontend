@@ -3,8 +3,7 @@ import {profileService} from "../../../../services/profileService";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
-
-const LANGUAGES_STORE = "SAVED-LANGUAGES"
+import {LANGUAGES_STORE} from "../../../../constants/stores";
 
 const AddLanguage = ({onClose, onSave, onChange, id}) => {
     const initialValues = {

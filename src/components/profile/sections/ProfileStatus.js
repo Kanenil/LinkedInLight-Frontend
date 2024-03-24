@@ -77,54 +77,56 @@ const ProfileStatus = ({user}) => {
     const maxLevel = suggestions.length;
 
     return (
-        <div
-            className={`rounded-lg bg-white overflow-hidden px-10 py-8 ${filteredSuggestions.length === 0 ? 'hidden' : ''}`}>
-            <div>
-                <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Profile status</h1>
+        <ConditionalWrapper condition={filteredSuggestions.length > 0}>
+            <div
+                className="rounded-lg bg-white overflow-hidden px-10 py-8">
+                <div>
+                    <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Profile status</h1>
 
-                <div className="flex flex-row items-center gap-2.5 mt-2">
-                    <EyeIcon className="h-4"/>
+                    <div className="flex flex-row items-center gap-2.5 mt-2">
+                        <EyeIcon className="h-4"/>
 
-                    <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">This section is
-                        only visible to you</h3>
-                </div>
-
-                <div className="pt-4">
-                    <div className="flex flex-row font-roboto font-medium ">
-                        <h1 className="text-[#2D2A33]">Level:</h1>
-
-                        <h3 className="ml-6 text-[#24459A]">{maxLevel - filteredSuggestions.length}</h3>
-
-                        <h3 className="ml-auto text-[#24459A]">{maxLevel - filteredSuggestions.length}/{maxLevel}</h3>
+                        <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">This section is
+                            only visible to you</h3>
                     </div>
 
-                    <div className="mt-2.5 flex flex-row gap-4">
-                        {Array.from(Array(maxLevel - filteredSuggestions.length).keys()).map(val =>
-                            <div key={`fill-level-${val}`} className="h-2 w-full bg-[#24459A]"/>
-                        )}
-                        {Array.from(Array(maxLevel - (maxLevel - filteredSuggestions.length)).keys()).map(value =>
-                            <div key={`level-${value}`}
-                                 className="h-2 w-full bg-[#E5E9F4]"/>
-                        )}
-                    </div>
+                    <div className="pt-4">
+                        <div className="flex flex-row font-roboto font-medium ">
+                            <h1 className="text-[#2D2A33]">Level:</h1>
 
-                    <h3 className="mt-2.5 font-jost font-light">
-                        Level up your <span className="font-medium">Job For You</span> experience by filling in all your
-                        details and find the perfect job for you
-                    </h3>
+                            <h3 className="ml-6 text-[#24459A]">{maxLevel - filteredSuggestions.length}</h3>
+
+                            <h3 className="ml-auto text-[#24459A]">{maxLevel - filteredSuggestions.length}/{maxLevel}</h3>
+                        </div>
+
+                        <div className="mt-2.5 flex flex-row gap-4">
+                            {Array.from(Array(maxLevel - filteredSuggestions.length).keys()).map(val =>
+                                <div key={`fill-level-${val}`} className="h-2 w-full bg-[#24459A]"/>
+                            )}
+                            {Array.from(Array(maxLevel - (maxLevel - filteredSuggestions.length)).keys()).map(value =>
+                                <div key={`level-${value}`}
+                                     className="h-2 w-full bg-[#E5E9F4]"/>
+                            )}
+                        </div>
+
+                        <h3 className="mt-2.5 font-jost font-light">
+                            Level up your <span className="font-medium">Job For You</span> experience by filling in all your
+                            details and find the perfect job for you
+                        </h3>
+                    </div>
                 </div>
+
+                <ConditionalWrapper condition={filteredSuggestions.length > 0}>
+                    <Slider className="mt-2.5" perPage={3}
+                            onReset={user}
+                            containerClass="flex flex-row gap-6 w-fit">
+                        {filteredSuggestions.map((suggestion, index) =>
+                            <SliderItem key={`suggestion-${index}`} {...suggestion}/>
+                        )}
+                    </Slider>
+                </ConditionalWrapper>
             </div>
-
-            <ConditionalWrapper condition={filteredSuggestions.length > 0}>
-                <Slider className="mt-2.5" perPage={3}
-                        onReset={user}
-                        containerClass="flex flex-row gap-6 w-fit">
-                    {filteredSuggestions.map((suggestion, index) =>
-                        <SliderItem key={`suggestion-${index}`} {...suggestion}/>
-                    )}
-                </Slider>
-            </ConditionalWrapper>
-        </div>
+        </ConditionalWrapper>
     )
 }
 export default ProfileStatus;
