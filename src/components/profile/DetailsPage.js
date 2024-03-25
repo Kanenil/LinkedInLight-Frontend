@@ -11,6 +11,8 @@ import CertificationItem from "./items/CertificationItem";
 import ExperienceItem from "./items/ExperienceItem";
 import LanguageItem from "./items/LanguageItem";
 import EducationItem from "./items/EducationItem";
+import {additionalProfileService} from "../../services/additionalProfileService";
+import {recommendedProfileService} from "../../services/recommendedProfileService";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -35,7 +37,7 @@ const DetailsPage = ({user, detail}) => {
             route: ["languages"],
             children: <AbstractDetails/>,
             props: {
-                promise: profileService.getLanguages(),
+                promise: additionalProfileService.getLanguages(),
                 detail: 'Languages',
                 edit: 'language',
                 itemComponent: <LanguageItem/>,
@@ -68,7 +70,7 @@ const DetailsPage = ({user, detail}) => {
             route: ["certifications"],
             children: <AbstractDetails/>,
             props: {
-                promise: profileService.getCertifications(),
+                promise: recommendedProfileService.getCertifications(),
                 detail: 'Certifications',
                 edit: 'certification',
                 itemComponent: <CertificationItem/>,

@@ -8,14 +8,14 @@ import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
-import {COMPANIES_STORE, INDUSTRIES_STORE, TITLES_STORE} from "../../../../constants/stores";
+import {COMPANIES_STORE, TITLES_STORE} from "../../../../constants/stores";
 
 const AddExperience = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
         options: {
             title: JSON.parse(localStorage.getItem(TITLES_STORE) || '[]'),
             companyName: JSON.parse(localStorage.getItem(COMPANIES_STORE) || '[]'),
-            industry: JSON.parse(localStorage.getItem(INDUSTRIES_STORE) || '[]'),
+            industry: []
         },
         values: {
             title: '',
@@ -47,10 +47,18 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         onSubmit,
         setErrors,
         setValues,
-        setIsSubmitted
+        setIsSubmitted,
+        setOptions
     } = useForm(initialValues, onChange);
 
     useEffect(() => {
+        profileService.getIndustries().then(({data})=>{
+            setOptions(prev => ({
+                ...prev,
+                industry: data.map(val => ({ value: val.id, label: val.name }))
+            }))
+        })
+
         if (id) {
             profileService.getExperience(id).then(({data}) => {
                 const experience = data;
@@ -96,7 +104,7 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
             description: values.description,
             profileHeadline: values.profileHeadline,
             industry: {
-                id: 0,
+                id: options.industry.find(val => val.label === values.industry).value,
                 name: values.industry
             }
         }
@@ -185,8 +193,9 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
                 placeHolder="ex: Software Development"
                 error={isSubmitted && errors['industry']}
                 hasTools={false}
+                onEnterSelect={false}
                 clearOnSelect={false}
-                onChange={(e) => handleChangeSelect(e, "industry", INDUSTRIES_STORE)}
+                onChange={(e) => handleChangeSelect(e, "industry")}
                 errorChildren={
                     <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
                 }

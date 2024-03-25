@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {profileService} from "../../../services/profileService";
 import EyeIcon from "../../../elements/icons/EyeIcon";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {additionalProfileService} from "../../../services/additionalProfileService";
 
 const LanguagesSection = ({user}) => {
     const [languages, setLanguages] = useState([]);
 
     useEffect(() => {
-        profileService
+        additionalProfileService
             .getLanguages()
             .then(({data}) => setLanguages(data))
     }, [user])
@@ -47,7 +47,7 @@ const LanguagesSection = ({user}) => {
                                     {dot}
                                     <div
                                         className="flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[280px]">
-                                        <h1 className="font-jost font-medium">{language.name}</h1>
+                                        <h1 className="font-jost font-medium">{language.language.name}</h1>
 
                                         <h3 className="font-jost text-sm font-light">{language.proficiency}</h3>
                                     </div>

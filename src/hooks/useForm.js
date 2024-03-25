@@ -75,6 +75,7 @@ const useForm = (initialValues, onChangeCallback) => {
         onSubmit,
         setErrors,
         setValues,
+        setOptions,
         setIsSubmitted
     };
 }

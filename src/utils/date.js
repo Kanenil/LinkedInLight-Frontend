@@ -27,7 +27,7 @@ const getYears = (from = new Date()) => {
 const getDateTime = (day = 1, month, year) => {
     const date = new Date(`${month} ${day}, ${year}`);
     const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-        date.getUTCDate(), date.getUTCHours() + 3,
+        date.getUTCDate(), date.getUTCHours() + (date.getTimezoneOffset() / -60),
         date.getUTCMinutes(), date.getUTCSeconds());
 
     return day && month && year ? new Date(now_utc): null;

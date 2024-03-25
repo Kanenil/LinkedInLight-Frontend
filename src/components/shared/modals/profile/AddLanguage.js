@@ -1,14 +1,13 @@
 import React, {useEffect} from "react";
-import {profileService} from "../../../../services/profileService";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
-import {LANGUAGES_STORE} from "../../../../constants/stores";
+import {additionalProfileService} from "../../../../services/additionalProfileService";
 
 const AddLanguage = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
         options: {
-            language: JSON.parse(localStorage.getItem(LANGUAGES_STORE) || '[]'),
+            language: [],
             proficiency: [
                 {label: "Elementary proficiency", value: "Elementary"},
                 {label: "Limited working proficiency", value: "Limited"},
@@ -34,20 +33,31 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
         handleChangeSelect,
         onSubmit,
         setErrors,
-        setValues
+        setValues,
+        setOptions
     } = useForm(initialValues, onChange);
 
     const onSaveClick = async () => {
+        const languageId = options.language.find(val => val.label === values.language).value;
+
         if (id) {
-            await profileService.updateLanguage({
+            await additionalProfileService.updateLanguage({
                 id,
-                proficiency: values.proficiency,
-                name: values.language
+                languageId: languageId,
+                language: {
+                    name: values.language,
+                    id: languageId
+                },
+                proficiency: values.proficiency
             });
         } else {
-            await profileService.addLanguage({
+            await additionalProfileService.addLanguage({
                 proficiency: values.proficiency,
-                name: values.language
+                languageId: languageId,
+                language: {
+                    name: values.language,
+                    id: languageId
+                }
             });
         }
 
@@ -55,14 +65,21 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeLanguage(id);
+        await additionalProfileService.removeLanguage(id);
 
         onSave();
     }
 
     useEffect(() => {
+        additionalProfileService.getAllLanguages().then(({data})=>{
+            setOptions(prev => ({
+                ...prev,
+                language: data.map(val => ({ value: val.id, label: val.name }))
+            }))
+        })
+
         if (id) {
-            profileService.getLanguages().then(({data}) => {
+            additionalProfileService.getLanguages().then(({data}) => {
                 const language = data.filter(val => val.id === +id)?.[0];
 
                 if (!language) {
@@ -104,7 +121,8 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
                 error={isSubmitted && errors['language']}
                 hasTools={false}
                 clearOnSelect={false}
-                onChange={(e) => handleChangeSelect(e, "language", LANGUAGES_STORE)}
+                onEnterSelect={false}
+                onChange={(e) => handleChangeSelect(e, "language")}
                 errorChildren={
                     <h3 className="mt-2 text-[#9E0F20] text-xs">
                         This field is required. Choose the language you speak
