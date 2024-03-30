@@ -8,7 +8,7 @@ import {
     talentRoutes
 } from "../../../constants/routes";
 import {Link} from "react-router-dom";
-import ArrowDownIcon from "../../../elements/icons/ArrowDownIcon";
+import LanguageSelector from "../../../elements/shared/LanguageSelector";
 
 const Footer = () => {
     return (
@@ -79,11 +79,7 @@ const Footer = () => {
                         )}
                     </div>
 
-                    <div className="flex flex-row text-white font-medium cursor-pointer">
-                        <span className="pr-2.5">Language</span>
-
-                        <ArrowDownIcon className="fill-white w-5"/>
-                    </div>
+                    <LanguageSelector/>
                 </div>
             </div>
 

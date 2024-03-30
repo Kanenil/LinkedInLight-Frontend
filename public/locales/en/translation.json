@@ -15,5 +15,9 @@
     "registeredCourses": "registered courses",
     "satisfiedUsers": "satisfied users",
     "dreamJob": "Choose the job of your dreams with"
+  },
+  "footer": {
+    "Ukrainian": "Українська",
+    "English": "English"
   }
 }

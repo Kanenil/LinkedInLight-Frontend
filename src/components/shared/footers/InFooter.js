@@ -1,6 +1,5 @@
 import Logo from "../../../elements/shared/Logo";
 import {Link} from "react-router-dom";
-import ArrowDownIcon from "../../../elements/icons/ArrowDownIcon";
 import {
     businessRoutes,
     contactRoutes,
@@ -9,6 +8,7 @@ import {
     legalRoutes,
     talentRoutes
 } from "../../../constants/routes";
+import LanguageSelector from "../../../elements/shared/LanguageSelector";
 
 const InFooter = () => {
     return (
@@ -79,11 +79,7 @@ const InFooter = () => {
                         )}
                     </div>
 
-                    <div className="flex flex-row text-[#606161] font-medium cursor-pointer">
-                        <span className="pr-2.5">Language</span>
-
-                        <ArrowDownIcon className="fill-[#606161] w-5"/>
-                    </div>
+                    <LanguageSelector fill="[#606161]" text="[#606161]"/>
                 </div>
             </div>
 

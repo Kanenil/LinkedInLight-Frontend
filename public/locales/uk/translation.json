@@ -1,5 +1,5 @@
 {
-  "home" : {
+  "home": {
     "title": "Головна",
     "getStarted": "Розпочати",
     "whereWe": "де",
@@ -15,5 +15,9 @@
     "registeredCourses": "зареєстрованих курсів",
     "satisfiedUsers": "задоволених користувачів",
     "dreamJob": "Оберіть роботу своєї мрії з"
+  },
+  "footer": {
+    "Ukrainian": "Українська",
+    "English": "English"
   }
 }

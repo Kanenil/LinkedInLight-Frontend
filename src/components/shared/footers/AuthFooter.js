@@ -1,6 +1,6 @@
 import Logo from "../../../elements/shared/Logo";
 import {Link} from "react-router-dom";
-import ArrowDownIcon from "../../../elements/icons/ArrowDownIcon";
+import LanguageSelector from "../../../elements/shared/LanguageSelector";
 
 const links = [
     {title: "General", link: "/"},
@@ -25,11 +25,7 @@ const AuthFooter = () => {
 
             {links.map((link, index) => <Link key={`footer-${index}`} className="font-light text-[#2D2A33] text-xs" to={link.link}>{link.title}</Link>)}
 
-            <div className="flex flex-row font-light text-[#2D2A33] text-xs cursor-pointer">
-                <span className="pr-2.5">Language</span>
-
-                <ArrowDownIcon className="fill-[#2D2A33] w-3.5"/>
-            </div>
+            <LanguageSelector fill="[#2D2A33]" text="[#2D2A33]" font="light" className="text-xs" width="3.5"/>
         </div>
     )
 }

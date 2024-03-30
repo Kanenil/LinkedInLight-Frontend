@@ -7,7 +7,7 @@ import LightIcon from "../../elements/icons/LightIcon";
 import LikeIcon from "../../elements/icons/LikeIcon";
 import FramedClickableText from "../../elements/text/FramedClickableText";
 import HiddenContent from "../../components/home/HiddenContent";
-import React, {useEffect} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 import {routes} from "../../constants/routes";
 import {Helmet} from "react-helmet-async";
@@ -34,14 +34,7 @@ const SliderItem = ({title, description}) => {
 }
 
 const Home = () => {
-    const {t, i18n} = useTranslation();
-
-    useEffect(() => {
-        i18n.changeLanguage('uk').then()
-    }, [])
-
-    if (!i18n.isInitialized)
-        return;
+    const {t} = useTranslation();
 
     return (
         <React.Fragment>
