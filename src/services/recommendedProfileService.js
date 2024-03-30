@@ -32,4 +32,20 @@ export const recommendedProfileService = {
     removeCourse: (id) => {
         return axios.delete(`api/recommendedProfile/course/remove/${id}`)
     },
+
+    getProjects: () => {
+        return axios.get('api/recommendedProfile/userProjects')
+    },
+    getProject: (id) => {
+        return axios.get(`api/recommendedProfile/project/${id}`)
+    },
+    addProject: (data) => {
+        return axios.post('api/recommendedProfile/newProject', data)
+    },
+    updateProject: (data, id) => {
+        return axios.put(`api/recommendedProfile/project/edit/${id}`, data)
+    },
+    removeProject: (id) => {
+        return axios.delete(`api/recommendedProfile/project/remove/${id}`)
+    },
 }

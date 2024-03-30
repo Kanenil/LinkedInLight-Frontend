@@ -11,10 +11,10 @@ const FormSelector = ({handleChange, value, disabled = false, touched, error, ti
                     onChange={handleChange}
                     disabled={disabled}
                     className={classNames("w-full rounded-[4px] border-[0.5px] border-[#556DA9] py-[5px] px-2.5 text-[#7D7D7D] text-sm",
-                        //{
-                            // "focus:border-red-400 focus:ring-red-300 border-red-400": touched && error,
-                            // "focus:border-green-400 focus:ring-green-300 border-green-400": touched && !error
-                        //}
+                        {
+                            "focus:border-red-400 focus:ring-red-300 border-[#9E0F20]": touched && error,
+                            "focus:border-green-400 focus:ring-green-300 border-green-400": touched && !error
+                        }
                     )}
                     {...props}
                 >

@@ -14,6 +14,7 @@ import EducationItem from "./items/EducationItem";
 import {additionalProfileService} from "../../services/additionalProfileService";
 import {recommendedProfileService} from "../../services/recommendedProfileService";
 import CourseItem from "./items/CourseItem";
+import ProjectItem from "./items/ProjectItem";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -86,6 +87,17 @@ const DetailsPage = ({user, detail}) => {
                 detail: 'Courses',
                 edit: 'course',
                 itemComponent: <CourseItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["projects"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: recommendedProfileService.getProjects(),
+                detail: 'Projects',
+                edit: 'project',
+                itemComponent: <ProjectItem/>,
                 ...commonProps
             }
         }
