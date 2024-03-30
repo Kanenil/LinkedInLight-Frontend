@@ -35,7 +35,7 @@ const suggestions = [
         buttonTitle: "Add skills",
         to: "/in/edit/general-information",
         width: 220,
-        condition: 'userSkills'
+        condition: 'skills'
     },
     {
         title: "Highlight your uniqueness",

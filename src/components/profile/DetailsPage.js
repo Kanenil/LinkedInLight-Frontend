@@ -13,6 +13,7 @@ import LanguageItem from "./items/LanguageItem";
 import EducationItem from "./items/EducationItem";
 import {additionalProfileService} from "../../services/additionalProfileService";
 import {recommendedProfileService} from "../../services/recommendedProfileService";
+import CourseItem from "./items/CourseItem";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -74,6 +75,17 @@ const DetailsPage = ({user, detail}) => {
                 detail: 'Certifications',
                 edit: 'certification',
                 itemComponent: <CertificationItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["courses"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: recommendedProfileService.getCourses(),
+                detail: 'Courses',
+                edit: 'course',
+                itemComponent: <CourseItem/>,
                 ...commonProps
             }
         }

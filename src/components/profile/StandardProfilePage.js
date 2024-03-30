@@ -12,6 +12,7 @@ import React, {useEffect} from "react";
 import EducationSection from "./sections/EducationSection";
 import {useLocation, useNavigate} from "react-router";
 import CertificationsSection from "./sections/CertificationsSection";
+import CoursesSection from "./sections/CoursesSection";
 
 const StandardProfilePage = ({ user }) => {
     const location = useLocation();
@@ -83,6 +84,12 @@ const StandardProfilePage = ({ user }) => {
         },
         {
             children: <ExperienceSection />,
+            props: {
+                user
+            }
+        },
+        {
+            children: <CoursesSection />,
             props: {
                 user
             }

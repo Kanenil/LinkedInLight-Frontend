@@ -45,12 +45,7 @@ const Home = () => {
                 <section className="mx-auto w-[1170px] mt-36 mb-40">
                     <img src={jfy} alt="Job for you"/>
 
-                    <h1 className="mt-[60px] mx-auto w-[765px] text-center text-base text-white">
-                        {t('home.whereWe')} <strong>{t('home.boost')}</strong> {t('home.potential')},{" "}
-                        <strong>{t('home.reframe')}</strong> {t('home.career')}, {t('home.and')}{" "}
-                        <strong>{t('home.unite')}</strong>{" "}
-                        {t('home.professionals')}
-                    </h1>
+                    <h1 className="mt-[60px] [&>strong]:font-bold mx-auto w-[765px] text-center text-base text-white" dangerouslySetInnerHTML={{__html: t('home.slogan')}}/>
 
                     <Link
                         to={routes.signUp}
