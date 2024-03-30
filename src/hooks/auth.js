@@ -47,7 +47,7 @@ export const useAuth = () => {
                 }
             })
             .then(() => {
-                navigator(routes.confirmEmail);
+                navigator(`${routes.confirmEmail}?email=${email}`);
             })
             .catch(()=> navigator(routes.signUp))
     }
@@ -60,8 +60,7 @@ export const useAuth = () => {
             }).catch(err => console.log('register error', err))
     };
 
-    const confirmEmail = async (email, code, emailToken) => {
-        console.log(emailToken)
+    const confirmEmail = async (email, code, emailToken = "-") => {
         axios
             .post('/api/auth/confirm-email', null, {
                 params: {
@@ -93,7 +92,8 @@ export const useAuth = () => {
                 if(error.response.data.includes('Login failed'))
                     return setErrors({password:"Email or password are incorrect!"})
 
-                console.log(error.response.data)
+                if(error.response.data.includes('Your email is not confirmed'))
+                    return navigator(`${routes.confirmEmail}?email=${props.email}`);
 
                 setErrors({password:error.response.data})
             });

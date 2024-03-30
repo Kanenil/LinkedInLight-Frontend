@@ -21,9 +21,16 @@ const ConfirmEmail = () => {
         return extractedParams;
     };
 
-    useEffect(() => {
-        if(!searchParams.has("token") || !searchParams.has("email")) {
+    useEffect( () => {
+        if(!searchParams.has("email")) {
             navigator(routes.signUp);
+        }
+        if(searchParams.has('token')) {
+            confirmEmail(searchParams.get("email"), '', parseParams(location.search).token)
+                .then(() => navigator(routes.signIn))
+                .catch(err => {
+                    console.log(err)
+                });
         }
     }, [searchParams])
 
@@ -43,7 +50,7 @@ const ConfirmEmail = () => {
         if (code.search(/_/g) !== -1)
             return;
 
-        confirmEmail(searchParams.get("email"), code, parseParams(location.search).token)
+        confirmEmail(searchParams.get("email"), code)
             .then(() => navigator(routes.signIn))
             .catch(err => {
                 console.log(err)

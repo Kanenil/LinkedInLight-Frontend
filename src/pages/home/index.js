@@ -7,7 +7,7 @@ import LightIcon from "../../elements/icons/LightIcon";
 import LikeIcon from "../../elements/icons/LikeIcon";
 import FramedClickableText from "../../elements/text/FramedClickableText";
 import HiddenContent from "../../components/home/HiddenContent";
-import React from "react";
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {routes} from "../../constants/routes";
 import {Helmet} from "react-helmet-async";
@@ -20,6 +20,7 @@ import home6 from "../../assets/home6-illustration.png";
 import ChevronLeftIcon from "../../elements/icons/ChevronDownIcon";
 import Slider from "../../components/shared/Slider";
 import {designedFor, popularSearches, whyChoose} from "./data";
+import {useTranslation} from "react-i18next";
 
 const SliderItem = ({title, description}) => {
     return (
@@ -33,25 +34,35 @@ const SliderItem = ({title, description}) => {
 }
 
 const Home = () => {
+    const {t, i18n} = useTranslation();
+
+    useEffect(() => {
+        i18n.changeLanguage('uk').then()
+    }, [])
+
+    if (!i18n.isInitialized)
+        return;
+
     return (
         <React.Fragment>
             <Helmet>
-                <title>Home</title>
+                <title>{t('home.title')}</title>
             </Helmet>
             <main className="flex-grow">
                 <section className="mx-auto w-[1170px] mt-36 mb-40">
                     <img src={jfy} alt="Job for you"/>
 
-                    <h1 className="mt-[60px] text-center text-base text-white">
-                        where we <strong>boost</strong> your potential,{" "}
-                        <strong>reframe</strong> your career, and <strong>unite</strong>{" "}
-                        professionals for unparalleled <br/> opportunities in the job market
+                    <h1 className="mt-[60px] mx-auto w-[765px] text-center text-base text-white">
+                        {t('home.whereWe')} <strong>{t('home.boost')}</strong> {t('home.potential')},{" "}
+                        <strong>{t('home.reframe')}</strong> {t('home.career')}, {t('home.and')}{" "}
+                        <strong>{t('home.unite')}</strong>{" "}
+                        {t('home.professionals')}
                     </h1>
 
                     <Link
                         to={routes.signUp}
                         className="mt-12 flex gap-4 text-3xl font-semibold text-white w-fit ml-auto px-[71px] py-[10px] bg-[#0A48DBB2] hover:bg-[#24459A] rounded-full transition duration-500 ease-in-out">
-                        Get started
+                        {t('home.getStarted')}
                         <ArrowRightIcon className="w-[16px] h-[16px] fill-white my-auto"/>
                     </Link>
                 </section>
@@ -63,7 +74,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">95 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    registered companies
+                                    {t('home.registeredCompanies')}
                                 </h3>
                             </div>
                         </div>
@@ -74,7 +85,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">450 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    job seekers
+                                    {t('home.jobSeekers')}
                                 </h3>
                             </div>
                         </div>
@@ -85,7 +96,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">17 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    registered courses
+                                    {t('home.registeredCourses')}
                                 </h3>
                             </div>
                         </div>
@@ -96,7 +107,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">98%</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    satisfied users
+                                    {t('home.satisfiedUsers')}
                                 </h3>
                             </div>
                         </div>
@@ -114,7 +125,7 @@ const Home = () => {
                 />
                 <div className="font-thin w-full bg-zinc-200 text-2xl pt-[60px] pb-[80px]">
                     <div className="text-center text-4xl py-20">
-                        Choose the job of your dreams with{" "}
+                        {t('home.dreamJob')}{" "}
                         <span className="font-medium">Job for You</span>
                     </div>
 
