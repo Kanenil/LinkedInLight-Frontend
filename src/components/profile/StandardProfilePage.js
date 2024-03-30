@@ -13,6 +13,7 @@ import EducationSection from "./sections/EducationSection";
 import {useLocation, useNavigate} from "react-router";
 import CertificationsSection from "./sections/CertificationsSection";
 import CoursesSection from "./sections/CoursesSection";
+import VolunteerExperienceSection from "./sections/VolunteerExperienceSection";
 
 const StandardProfilePage = ({ user }) => {
     const location = useLocation();
@@ -96,6 +97,12 @@ const StandardProfilePage = ({ user }) => {
         },
         {
             children: <CertificationsSection />,
+            props: {
+                user
+            }
+        },
+        {
+            children: <VolunteerExperienceSection />,
             props: {
                 user
             }

@@ -21,4 +21,20 @@ export const additionalProfileService = {
             ...data
         })
     },
+
+    getVolunteerExperiences: () => {
+        return axios.get('api/additionalProfile/userVolunteerExperiences')
+    },
+    getVolunteerExperience: (id) => {
+        return axios.get(`api/additionalProfile/volunteerExperience/${id}`)
+    },
+    addVolunteerExperience: (data) => {
+        return axios.post('api/additionalProfile/newVolunteerExperience', data)
+    },
+    updateVolunteerExperience: (data, id) => {
+        return axios.put(`api/additionalProfile/volunteerExperience/edit/${id}`, data)
+    },
+    removeVolunteerExperience: (id) => {
+        return axios.delete(`api/additionalProfile/volunteerExperience/remove/${id}`)
+    },
 }
