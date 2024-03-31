@@ -42,6 +42,9 @@ export const profileService = {
             id: 0
         })
     },
+    updateSkill: (data, id) => {
+        return axios.put(`api/profile/skill/edit/${id}`, data)
+    },
     removeSkill: (skillId) => {
         return axios.delete(`api/profile/skill/remove/${skillId}`)
     },

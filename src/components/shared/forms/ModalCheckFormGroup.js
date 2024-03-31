@@ -7,6 +7,7 @@ const ModalCheckFormGroup = ({
                                  onChange,
                                  name,
                                  title,
+                                 disabled = false,
                                  className = "pt-[5px] pb-[10px] pr-[20px] gap-[5px]",
                                  errorChildren
                              }) => {
@@ -20,6 +21,7 @@ const ModalCheckFormGroup = ({
                            checked={value}
                            onChange={onChange}
                            className="hidden"
+                           disabled={disabled}
                            type="checkbox"
                            id={name}/>
                     <div

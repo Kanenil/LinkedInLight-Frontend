@@ -24,7 +24,7 @@ const AccountButton = () => {
 
     const defaultRoutes = [
         {
-            to: '/in',
+            to: 'settings',
             title: 'Settings & Privacy'
         },
         {

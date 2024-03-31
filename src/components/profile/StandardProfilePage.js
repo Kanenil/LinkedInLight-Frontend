@@ -14,6 +14,7 @@ import {useLocation, useNavigate} from "react-router";
 import CertificationsSection from "./sections/CertificationsSection";
 import CoursesSection from "./sections/CoursesSection";
 import VolunteerExperienceSection from "./sections/VolunteerExperienceSection";
+import SkillsSection from "./sections/SkillsSection";
 
 const StandardProfilePage = ({ user }) => {
     const location = useLocation();
@@ -53,12 +54,12 @@ const StandardProfilePage = ({ user }) => {
                 user
             }
         },
-        {
-            children: <AnalyticsSection />,
-            props: {
-                user
-            }
-        },
+        // {
+        //     children: <AnalyticsSection />,
+        //     props: {
+        //         user
+        //     }
+        // },
         {
             children: <AboutMeSection />,
             props: {
@@ -85,6 +86,12 @@ const StandardProfilePage = ({ user }) => {
         },
         {
             children: <ExperienceSection />,
+            props: {
+                user
+            }
+        },
+        {
+            children: <SkillsSection />,
             props: {
                 user
             }

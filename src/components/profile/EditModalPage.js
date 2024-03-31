@@ -12,6 +12,7 @@ import AddCertification from "../shared/modals/profile/AddCertification";
 import AddCourse from "../shared/modals/profile/AddCourse";
 import AddProject from "../shared/modals/profile/AddProject";
 import AddVolunteerExperience from "../shared/modals/profile/AddVolunteerExperience";
+import AddSkill from "../shared/modals/profile/AddSkill";
 
 const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
@@ -74,6 +75,13 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
         {
             route: ["volunteerExperience"],
             children: <AddVolunteerExperience/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["skill"],
+            children: <AddSkill/>,
             props: {
                 id
             }

@@ -51,15 +51,19 @@ const useForm = (initialValues, onChangeCallback) => {
             [name]: type === "checkbox"? checked: value
         })
 
-        setErrors({
-            ...errors,
-            [name]: !(type === "checkbox"? checked: value)
-        })
+        if(errors[name]) {
+            setErrors({
+                ...errors,
+                [name]: !(type === "checkbox" ? checked : value)
+            })
+        }
 
         onChangeCallback();
     }
 
     const onSubmit = (callback) => {
+        console.log(errors)
+
         const hasErrors = Object.values(errors).some(error => error);
         
         if (hasErrors) {

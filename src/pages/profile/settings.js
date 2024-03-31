@@ -37,7 +37,7 @@ const Settings = () => {
     }
   }, [selectedSection]);
   return (
-    <div className="bg-[#E7E7E7] w-full py-24 flex justify-center">
+    <div className="bg-[#E7E7E7] py-24 flex justify-center">
       <div className="w-1/4 bg-white h-[900px] rounded-lg overflow-hidden py-8 px-6 inline-block">
         <img
           className="w-[45px] h-[45px] rounded-full  hover:opacity-45 transition duration-300 ease-in-out"
