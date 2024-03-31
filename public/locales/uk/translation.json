@@ -2,15 +2,304 @@
   "home": {
     "title": "Головна",
     "getStarted": "Розпочати",
-    "slogan": "де <strong>розвивається</strong> ваш потенціал <strong>перетворюється</strong> ваша кар'єра і <strong>об'єднуються</strong> професіонали для неперевершених можливостей на ринку праці",
+    "slogan": "де <strong>розвивається</strong> ваш потенціал <strong>перетворюється</strong> ваша карєра і <strong>обєднуються</strong> професіонали для неперевершених можливостей на ринку праці",
     "registeredCompanies": "зареєстровані компанії",
     "jobSeekers": "тих, хто шукає роботу",
     "registeredCourses": "зареєстрованих курсів",
     "satisfiedUsers": "задоволених користувачів",
-    "dreamJob": "Оберіть роботу своєї мрії з"
+    "dreamJob": "Оберіть роботу своєї мрії з",
+    "popularSearchesText": "Популярні пошуки:",
+    "popularSearches": [
+      "Фінанси",
+      "Інформаційні технології",
+      "Обслуговування клієнтів",
+      "Засоби масової інформації та медіа",
+      "Закупівлі",
+      "Військові та офоронні служби ",
+      "Нерухомість",
+      "Управління проєктами",
+      "Підприємництво",
+      "Освіта",
+      "Громадські та соціальні служби",
+      "Мистецтво та дизайн",
+      "Маркетинг",
+      "Управління персоналом",
+      "Помічник з адміністративних питань",
+      "Забезпечення якості",
+      "Продажі",
+      "Дослідження",
+      "Розвиток бізнесу",
+      "Юридична сфера",
+      "Консалтинг",
+      "Бухгалтерський облік",
+      "Інженерія",
+      "Архітектура"
+    ],
+    "whoIs": "Для кого підходить <br><strong>Job for You</strong>?",
+    "designedFor": [
+      "Для тих, хто в пошуку роботи",
+      "Для однодумців",
+      "Для тих, хто шукає курси",
+      "Для тих, хто в пошуку талантів"
+    ],
+    "whyChoose": "Чому обирають <strong>Job for You</strong> для пошуку роботи?",
+    "whyChooseSlider": [
+      {
+        "title": "Персоналізований пошук роботи",
+        "description": "Забудьте про безкінечні списки вакансій! З <span class=\"font-semibold\">Job for You</span> ваш пошук роботи стає персональним. Вкажіть ваші унікальні навички, і ми представимо тільки ті роботи, що дійсно відповідають вашому профілю.",
+        "width": 570
+      },
+      {
+        "title": "Professional profile",
+        "description": "Craft an impressive profile that stands out among other candidates. <span class=\"font-semibold\">Job for You</span> helps you showcase your uniqueness and capture the attention of potential employers.",
+        "width": 570
+      },
+      {
+        "title": "Active community",
+        "description": "Join our dynamic community of professionals, discuss crucial topics, and exchange experiences. Together, we grow and thrive!",
+        "width": 570
+      },
+      {
+        "title": "Educational resources",
+        "description": "Our educational resources section helps you keep your skills up-to-date. Stay in the loop with <span class=\"font-semibold\">Job for You</span> and remain on the cutting edge.",
+        "width": 570
+      },
+      {
+        "title": "Announcements and recruitment events",
+        "description": "Never miss important recruitment events and job announcements. With <span class=\"font-semibold\">Job for You</span>, fresh and promising opportunities are always within your reach.",
+        "width": 570
+      },
+      {
+        "title": "Resume creation tools",
+        "description": "Forget the complexity of resume creation. With our integrated editor, you'll easily craft a professional document that grabs the attention of employers.",
+        "width": 570
+      },
+      {
+        "title": "Notifications and updates",
+        "description": "Receive notifications about new job opportunities and changes in your resume status. Stay in control of your career development with <span class=\"font-semibold\">Job for You.</span>",
+        "width": 570
+      },
+      {
+        "title": "Direct employer contact",
+        "description": "With <span class=\"font-semibold\">Job for You</span>, you not only find a job but also establish direct contact with potential employers. Start conversations and build the future of your career right now!",
+        "width": 570
+      }
+    ],
+    "findJob": "Знайди роботу",
+    "dontOutHome": "не виходячи з дому",
+    "with": "з",
+    "explore": "Досліджуйте віддалені посади та міжнародні можливості з нами, з'єднуючи кваліфікованих фахівців з усім світом під час викликів. Ваша кар'єрна подорож триває, незалежно від кордонів, за нашою підтримкою.",
+    "findJobButton": "Знайти роботу",
+    "cards": {
+      "card1": {
+        "title": "Реєстрація",
+        "description": "Приєднуйтесь до <strong>Job for You</strong>, зареєструвавшись за допомогою кнопки \"Зареєструватись\" у верхньому правому куті екрана або кнопки \"Розпочати\" у верхній частині екрана. Крім того, ми підготували покроковий посібник, щоб спростити процес реєстрації для вас.",
+        "button": "Як зареєструватись"
+      },
+      "card2": {
+        "title": "Заповніть профіль",
+        "description": "Щоб покращити ваш профіль, завантажте ваше резюме. Або ж введіть вручну вашу освіту, робочий досвід та навички безпосередньо в ваш профіль. Для надання вам допомоги у наданні точної інформації перегляньте наш посібник, розроблений для допомоги вам ефективно представити ваші кваліфікації.",
+        "button": "Переглянути посібник"
+      },
+      "card3": {
+        "title": "Здійсніть свою мрію про роботу",
+        "description": "Досліджуйте наш розділ \"Вакансії\", щоб знайти можливості, які відповідають вашому досвіду та освіті. Наша платформа використовує надані вами дані, щоб підібрати вам відповідні варіанти роботи. Подавайте заявки і забезпечте свій наступний кар'єрний рух!",
+        "button": "Знайти роботу"
+      }
+    }
   },
   "footer": {
     "Ukrainian": "Українська",
-    "English": "English"
+    "English": "English",
+    "aboutUs": "Про нас",
+    "about": "Про",
+    "general": "Загальне",
+    "business": "Бізнес рішення",
+    "talent": "Шукачам роботи",
+    "directories": "Каталог",
+    "contact": "Контакти",
+    "legal": "Право",
+    "languages": "Мови",
+    "generalRoutes": [
+      {
+        "name": "Вхід",
+        "url": "/auth/sign-in"
+      },
+      {
+        "name": "Реєстрація",
+        "url": "/auth/sign-up"
+      },
+      {
+        "name": "Центр підтримки",
+        "url": "/"
+      },
+      {
+        "name": "Карєра",
+        "url": "/"
+      },
+      {
+        "name": "Розробники",
+        "url": "/"
+      },
+      {
+        "name": "Блог",
+        "url": "/"
+      }
+    ],
+    "businessRoutes": [
+      {
+        "name": "Таланти",
+        "url": "/"
+      },
+      {
+        "name": "Маркетинг",
+        "url": "/"
+      },
+      {
+        "name": "Продажі",
+        "url": "/"
+      },
+      {
+        "name": "Навчання",
+        "url": "/"
+      }
+    ],
+    "talentRoutes": [
+      {
+        "name": "Курси",
+        "url": "/"
+      },
+      {
+        "name": "Заробіток",
+        "url": "/"
+      },
+      {
+        "name": "Конкурси",
+        "url": "/"
+      },
+      {
+        "name": "Вакансії",
+        "url": "/"
+      }
+    ],
+    "directoriesRoutes": [
+      {
+        "name": "Учасники",
+        "url": "/"
+      },
+      {
+        "name": "Вакансії",
+        "url": "/"
+      },
+      {
+        "name": "Компанії",
+        "url": "/"
+      },
+      {
+        "name": "Рекомендації",
+        "url": "/"
+      },
+      {
+        "name": "Курси",
+        "url": "/"
+      },
+      {
+        "name": "Пости",
+        "url": "/"
+      },
+      {
+        "name": "Нові статті",
+        "url": "/"
+      },
+      {
+        "name": "Сервіси",
+        "url": "/"
+      },
+      {
+        "name": "Продукти",
+        "url": "/"
+      },
+      {
+        "name": "Поради",
+        "url": "/"
+      },
+      {
+        "name": "Пошук людей",
+        "url": "/"
+      }
+    ],
+    "contactRoutes": [
+      {
+        "name": "Тех. підтримка",
+        "url": "/"
+      },
+      {
+        "name": "Повідомити про помилку",
+        "url": "/"
+      }
+    ],
+    "legalRoutes": [
+      {
+        "name": "Користувацька угода",
+        "url": "/"
+      },
+      {
+        "name": "Політика конфіденційності",
+        "url": "/"
+      },
+      {
+        "name": "Політика авторських прав",
+        "url": "/"
+      },
+      {
+        "name": "Політика бренду",
+        "url": "/"
+      },
+      {
+        "name": "Правила спільноти",
+        "url": "/"
+      }
+    ],
+    "authRoutes": [
+      {
+        "name": "Загальне",
+        "url": "/"
+      },
+      {
+        "name": "Тех. підтримка",
+        "url": "/"
+      },
+      {
+        "name": "Користувацька угода",
+        "url": "/"
+      },
+      {
+        "name": "Політика бренду",
+        "url": "/"
+      },
+      {
+        "name": "Політика конфіденційності",
+        "url": "/"
+      },
+      {
+        "name": "Політика авторських прав",
+        "url": "/"
+      },
+      {
+        "name": "Правила спільноти",
+        "url": "/"
+      }
+    ]
+  },
+  "header": {
+    "People": "Люди",
+    "Learning": "Навчання",
+    "Jobs": "Вакансії",
+    "SignIn": "Вхід",
+    "SignUp": "Реєстрація"
+  },
+  "slider": {
+    "next": "Вперед",
+    "back": "Назад"
   }
 }

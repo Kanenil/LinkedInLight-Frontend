@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ChevronLeftIcon from "../../elements/icons/ChevronLeftIcon";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import {useTranslation} from "react-i18next";
 
 const Slider = ({
                     onReset,
@@ -11,6 +12,7 @@ const Slider = ({
                     containerClass,
                     isNewDesignStyle = false
                 }) => {
+    const {t} = useTranslation();
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     const calculateWidth = () => {
@@ -43,7 +45,7 @@ const Slider = ({
                     <button onClick={() => setCurrentIndex(val => val - 1)}
                             className="z-10 absolute left-7 -bottom-5 flex flex-row items-center pt-[5px] py-[25px] gap-2.5 font-light text-lg text-[#615E64] text-center hover:underline transition duration-500 ease-in-out">
                         <ChevronLeftIcon className="h-3 fill-[#615E64]" style={{transform: "rotate(360deg)"}}/>
-                        <span>Back</span>
+                        <span>{t('slider.back')}</span>
                     </button>
                 </ConditionalWrapper>
                 <ConditionalWrapper condition={!isNewDesignStyle}>
@@ -62,7 +64,7 @@ const Slider = ({
                 <ConditionalWrapper condition={isNewDesignStyle}>
                     <button onClick={() => setCurrentIndex(val => val + 1)}
                             className="z-10 absolute right-1 -bottom-5 flex items-center flex-row pt-[5px] py-[25px] gap-2.5 font-light text-lg text-[#615E64] text-center hover:underline transition duration-500 ease-in-out">
-                        <span>Next</span>
+                        <span>{t('slider.next')}</span>
                         <ChevronLeftIcon className="h-3 fill-[#615E64]" style={{transform: "rotate(180deg)"}}/>
                     </button>
                 </ConditionalWrapper>

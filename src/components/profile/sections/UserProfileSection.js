@@ -10,6 +10,7 @@ import AddToProfile from "../../shared/modals/profile/AddToProfile";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {Link} from "react-router-dom";
 import {APP_ENV} from "../../../env";
+import PencilButton from "../../../elements/buttons/PencilButton";
 
 const ImageSector = ({user}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
@@ -39,13 +40,12 @@ const InformationSector = ({user}) => {
 
     return (
         <React.Fragment>
-            <div className="ml-10 mr-8 mt-14 mb-4">
+            <div className="ml-10 mr-8 mt-5 mb-4">
+                <div className="flex justify-end mb-2">
+                    <PencilButton to=' ' className=""/>
+                </div>
                 <div className="flex flex-row">
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>
-
-                    <Link to='' className="ml-6">
-                        <PencilIcon className="fill-[#24459A] stroke-[#24459A] w-5"/>
-                    </Link>
 
                     <ConditionalWrapper condition={user?.company}>
                         <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">{user?.company}</h1>

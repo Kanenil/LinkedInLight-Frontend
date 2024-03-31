@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
-import ArrowDownIcon from "../icons/ArrowDownIcon";
 import useComponentVisible from "../../hooks/componentVisible";
 import {useTranslation} from "react-i18next";
+import ChevronDownIcon from "../icons/ChevronDownIcon";
 
 const languages = [
     {label:'Ukrainian',value:'uk'},
@@ -29,9 +29,9 @@ const LanguageSelector = ({fill = 'white', text = 'white', font = 'medium', widt
     return (
         <div className="relative" ref={ref}>
             <button className={`flex flex-row items-center text-${text} font-${font} cursor-pointer ${className}`} onClick={() => setIsComponentVisible(prev => !prev)}>
-                <span className="pr-2.5">Language</span>
+                <span className="pr-2.5">{t('footer.languages')}</span>
 
-                <ArrowDownIcon className={`fill-${fill} w-${width}`}/>
+                <ChevronDownIcon className={`fill-${fill} w-${width}`}/>
             </button>
             <div ref={dropdownContentRef}
                 className={`${
