@@ -3,7 +3,7 @@ import ArrowRightIcon from "../../elements/icons/ArrowRightIcon";
 import {Link} from "react-router-dom";
 import PlusIcon from "../../elements/icons/PlusIcon";
 
-const AbstractDetails = ({user, onClickBack, promise, detail, edit, itemComponent}) => {
+const AbstractDetails = ({user, onClickBack, promise, detail, edit, itemComponent, title = ""}) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const AbstractDetails = ({user, onClickBack, promise, detail, edit, itemComponen
                     <ArrowRightIcon className="w-4 mr-3.5 fill-[#24459A]" style={{transform: `rotate(180deg)`}}/>
                 </button>
 
-                <h1 className="font-medium text-2xl text-[#2D2A33]">{detail}</h1>
+                <h1 className="font-medium text-2xl text-[#2D2A33]">{title?title: detail}</h1>
 
                 <Link to={`edit/${edit}`} className="ml-auto">
                     <PlusIcon className="w-4 fill-[#556DA9]"/>

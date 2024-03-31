@@ -1,5 +1,6 @@
 import React from "react";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import classNames from "classnames";
 
 const ModalInputFormGroup = ({
                                  value,
@@ -22,7 +23,10 @@ const ModalInputFormGroup = ({
                 type={type}
                 value={value}
                 onChange={onChange}
-                className="w-full rounded-[4px] border-[0.5px] border-[#556DA9] py-[5px] px-2.5 text-[#7D7D7D] text-sm"
+                className={classNames("w-full rounded-[4px] border-[0.5px] py-[5px] px-2.5 text-[#7D7D7D] text-sm", {
+                    "border-[#556DA9]":!error,
+                    "border-[#9E0F20]":error
+                })}
             />
             {children}
             <ConditionalWrapper condition={error}>

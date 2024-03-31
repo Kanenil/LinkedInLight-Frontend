@@ -13,10 +13,10 @@ const FormGroup = ({handleChange, value, touched, error, title, name, type, marg
                     value={value}
                     onChange={handleChange}
                     className={classNames("w-full rounded-xl border-[1px] border-[#B4BFDD] px-[20px] py-[10px] text-[#7D7D7D] text-xs",
-                        // {
-                        //     "focus:border-red-400 focus:ring-red-300 border-red-400": touched && error,
-                        //     "focus:border-green-400 focus:ring-green-300 border-green-400": touched && !error
-                        // }
+                        {
+                            "focus:border-red-400 focus:ring-red-300 border-red-400": touched && error,
+                            "focus:border-green-400 focus:ring-green-300 border-green-400": touched && !error
+                        }
                     )}
                     placeholder={title}
                     type={showPassword? "text": type}
@@ -29,10 +29,10 @@ const FormGroup = ({handleChange, value, touched, error, title, name, type, marg
                         <EyeIcon className="w-5 h-5"/>
                     </button>
                 )}
-                {/*{touched && error && (*/}
-                {/*    <p className="mt-3 text-xs text-red-400">{error}</p>*/}
-                {/*)}*/}
             </div>
+            {touched && error && (
+                <p className="mt-3 text-xs text-red-400">{error}</p>
+            )}
         </>
     )
 }

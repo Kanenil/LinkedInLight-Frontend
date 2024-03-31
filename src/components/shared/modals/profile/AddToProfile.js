@@ -20,14 +20,14 @@ const AddToProfile = ({onClose}) => {
         {
             id: 1, title: 'Recommended', content: [
                 {title: 'Add certificates', to: 'edit/certification'},
-                {title: 'Add projects', to: '/in'},
-                {title: 'Add courses', to: '/in'},
+                {title: 'Add projects', to: 'edit/project'},
+                {title: 'Add courses', to: 'edit/course'},
                 {title: 'Add recommendations', to: ''},
             ]
         },
         {
             id: 2, title: 'Additional information', content: [
-                {title: 'Add volunteer experience', to: '/in'},
+                {title: 'Add volunteer experience', to: 'edit/volunteerExperience'},
                 {title: 'Add languages', to: 'edit/language'},
                 {title: 'Add contact information', to: '/in'},
             ]

@@ -1,12 +1,12 @@
 import {CERTIFICATIONS_STORE, COMPANIES_STORE} from "../../../../constants/stores";
 import useForm from "../../../../hooks/useForm";
 import React, {useEffect} from "react";
-import {profileService} from "../../../../services/profileService";
 import {getDateTime, getLongMonth} from "../../../../utils/date";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
+import {recommendedProfileService} from "../../../../services/recommendedProfileService";
 
 const AddCertification = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -46,7 +46,7 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            profileService.getCertification(id).then(({data}) => {
+            recommendedProfileService.getCertification(id).then(({data}) => {
                 const certification = data;
 
                 const startDate = new Date(certification.issueDate);
@@ -95,16 +95,16 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await profileService.updateCertification(model, id);
+            await recommendedProfileService.updateCertification(model, id);
         } else {
-            await profileService.addCertification(model);
+            await recommendedProfileService.addCertification(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeCertification(id);
+        await recommendedProfileService.removeCertification(id);
 
         onSave();
     }

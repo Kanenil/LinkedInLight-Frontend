@@ -11,8 +11,8 @@ const AboutMeSection = ({user}) => {
 
     useEffect(() => {
         profileService
-            .getSkills()
-            .then(({data}) => setSkills(data.map(skill => skill.name)))
+            .getMainSkills()
+            .then(({data}) => setSkills(data.map(skill => skill.skill.name)))
     }, [user])
 
     const dot = <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
@@ -69,7 +69,7 @@ const AboutMeSection = ({user}) => {
                                 <h3 className="flex flex-row flex-wrap content-start items-center gap-1 text-[#2D2A33] font-jost font-light text-sm">
                                     {
                                         skills.map((skill, index) =>
-                                            <React.Fragment key={skill}>
+                                            <React.Fragment key={`${skill}-${index}`}>
                                                 <span>{skill}</span>
                                                 {index + 1 !== skills.length ? dot : ''}
                                             </React.Fragment>

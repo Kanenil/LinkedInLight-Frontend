@@ -95,6 +95,8 @@ const StartEndDateForm = ({
                             onChange();
                         }}
                         margin="w-full"
+                        error={errors['startDate']}
+                        touched={errors['startDate']}
                         options={months}
                     />
 
@@ -116,6 +118,8 @@ const StartEndDateForm = ({
                             onChange();
                         }}
                         margin="w-full"
+                        error={errors['startDate']}
+                        touched={errors['startDate']}
                         options={years}
                     />
                 </div>
@@ -150,6 +154,8 @@ const StartEndDateForm = ({
                             onChange();
                         }}
                         margin="w-full"
+                        error={errors['endDate']}
+                        touched={errors['endDate']}
                         options={months}
                     />
 
@@ -165,6 +171,8 @@ const StartEndDateForm = ({
                             })
                         }}
                         margin="w-full"
+                        error={errors['endDate']}
+                        touched={errors['endDate']}
                         options={endYears}
                     />
                 </div>

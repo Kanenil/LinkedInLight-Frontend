@@ -11,6 +11,11 @@ import CertificationItem from "./items/CertificationItem";
 import ExperienceItem from "./items/ExperienceItem";
 import LanguageItem from "./items/LanguageItem";
 import EducationItem from "./items/EducationItem";
+import {additionalProfileService} from "../../services/additionalProfileService";
+import {recommendedProfileService} from "../../services/recommendedProfileService";
+import CourseItem from "./items/CourseItem";
+import ProjectItem from "./items/ProjectItem";
+import VolunteerExperienceItem from "./items/VolunteerExperienceItem";
 
 const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
@@ -35,7 +40,7 @@ const DetailsPage = ({user, detail}) => {
             route: ["languages"],
             children: <AbstractDetails/>,
             props: {
-                promise: profileService.getLanguages(),
+                promise: additionalProfileService.getLanguages(),
                 detail: 'Languages',
                 edit: 'language',
                 itemComponent: <LanguageItem/>,
@@ -68,10 +73,44 @@ const DetailsPage = ({user, detail}) => {
             route: ["certifications"],
             children: <AbstractDetails/>,
             props: {
-                promise: profileService.getCertifications(),
+                promise: recommendedProfileService.getCertifications(),
                 detail: 'Certifications',
                 edit: 'certification',
                 itemComponent: <CertificationItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["courses"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: recommendedProfileService.getCourses(),
+                detail: 'Courses',
+                edit: 'course',
+                itemComponent: <CourseItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["projects"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: recommendedProfileService.getProjects(),
+                detail: 'Projects',
+                edit: 'project',
+                itemComponent: <ProjectItem/>,
+                ...commonProps
+            }
+        },
+        {
+            route: ["volunteerExperience"],
+            children: <AbstractDetails/>,
+            props: {
+                promise: additionalProfileService.getVolunteerExperiences(),
+                detail: 'VolunteerExperience',
+                edit: 'volunteerExperience',
+                title: "VolunteerExperience",
+                itemComponent: <VolunteerExperienceItem/>,
                 ...commonProps
             }
         }

@@ -9,6 +9,9 @@ import {APP_ENV} from "../../env";
 import AddEducation from "../shared/modals/profile/AddEducation";
 import AddExperience from "../shared/modals/profile/AddExperience";
 import AddCertification from "../shared/modals/profile/AddCertification";
+import AddCourse from "../shared/modals/profile/AddCourse";
+import AddProject from "../shared/modals/profile/AddProject";
+import AddVolunteerExperience from "../shared/modals/profile/AddVolunteerExperience";
 
 const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
     const {setImage} = useImageCropContext();
@@ -50,6 +53,27 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
         {
             route: ["certification"],
             children: <AddCertification/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["course"],
+            children: <AddCourse/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["project"],
+            children: <AddProject/>,
+            props: {
+                id
+            }
+        },
+        {
+            route: ["volunteerExperience"],
+            children: <AddVolunteerExperience/>,
             props: {
                 id
             }

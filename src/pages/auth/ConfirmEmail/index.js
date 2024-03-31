@@ -1,35 +1,47 @@
 import Logo from "../../../elements/shared/Logo";
-import {Link} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import {routes} from "../../../constants/routes";
 import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../hooks/auth";
-import {useNavigate} from "react-router";
-import hash from "../../../utils/hash";
-import {general} from "../../../constants/general";
+import {useLocation, useNavigate} from "react-router";
 import {Helmet} from "react-helmet-async";
 
 const ConfirmEmail = () => {
+    const [searchParams] = useSearchParams();
+    const location = useLocation();
     const navigator = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem(general.user) || '{}');
+    const parseParams = (params = "") => {
+        const rawParams = params.replace("?", "").split("&");
+        const extractedParams = {};
+        rawParams.forEach((item) => {
+            item = item.split(/=(.*)/s);
+            extractedParams[item[0]] = item[1];
+        });
+        return extractedParams;
+    };
+
+    useEffect( () => {
+        if(!searchParams.has("email")) {
+            navigator(routes.signUp);
+        }
+        if(searchParams.has('token')) {
+            confirmEmail(searchParams.get("email"), '', parseParams(location.search).token)
+                .then(() => navigator(routes.signIn))
+                .catch(err => {
+                    console.log(err)
+                });
+        }
+    }, [searchParams])
 
     const inputRef = useRef(null);
 
     const [code, setCode] = useState('______'.slice(0, 6));
 
-    const {sendConfirmationEmail, register} = useAuth();
+    const {sendConfirmationEmail, confirmEmail} = useAuth();
 
-    useEffect(() => {
-        if(!localStorage.getItem(general.user) || !localStorage.getItem(general.code)) {
-            navigator(routes.signUp)
-        }
-    }, [navigator])
-
-    const reSend = () => {
-        if (user?.email?.length < 0)
-            navigator(routes.signUp)
-
-        sendConfirmationEmail({...user}).then();
+    const reSend = async () => {
+        await sendConfirmationEmail({email: searchParams.get("email")});
     }
 
     const onSubmit = async (e) => {
@@ -38,25 +50,11 @@ const ConfirmEmail = () => {
         if (code.search(/_/g) !== -1)
             return;
 
-        const hashedCode = await hash(code);
-
-        if (hashedCode !== localStorage.getItem(general.code)) return;
-
-        const model = {
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            password: user.password,
-            country: user.country,
-            city: user.city
-        }
-
-        console.log(model)
-
-        localStorage.removeItem(general.code);
-        localStorage.removeItem(general.user);
-
-        await register({...model});
+        confirmEmail(searchParams.get("email"), code)
+            .then(() => navigator(routes.signIn))
+            .catch(err => {
+                console.log(err)
+            });
     }
 
 
@@ -87,13 +85,13 @@ const ConfirmEmail = () => {
                                 address</h1>
 
                             <h3 className="text-lg text-[#2D2A33]">Enter the code we sent to your email address <span
-                                className="font-bold">{user.email}</span></h3>
+                                className="font-bold">{searchParams.get("email")}</span></h3>
 
-                            <div className="flex justify-center mt-2.5 mb-7">
-                                <Link to={routes.signUp} className="font-semibold text-lg text-[#2D2A33]">
-                                    Edit email address
-                                </Link>
-                            </div>
+                            {/*<div className="flex justify-center mt-2.5 mb-7">*/}
+                            {/*    <Link to={routes.signUp} className="font-semibold text-lg text-[#2D2A33]">*/}
+                            {/*        Edit email address*/}
+                            {/*    </Link>*/}
+                            {/*</div>*/}
 
                             <div className="mx-auto w-[344px] relative">
                                 <input ref={inputRef} value={code} onChange={onChange} type="text" name="code"

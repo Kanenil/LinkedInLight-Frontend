@@ -3,7 +3,6 @@ import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
 import {useDispatch} from "react-redux";
-import hash from "../utils/hash";
 
 export const useAuth = () => {
     const navigator = useNavigate();
@@ -11,25 +10,29 @@ export const useAuth = () => {
 
     const saveData = (data) => {
         localStorage.setItem(general.token, data.token);
-        //localStorage.setItem(general.currentUser, JSON.stringify(data.user));
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
-
-        //setCurrentUser(data.user.email);
     }
 
     const validateEmail = async ({setErrors, email, ...props}) => {
         setErrors({});
 
         axios
-            .post('/api/auth/validate-email', null, {
+            .post('/api/auth/validate-email', {email}, {
                 params: {
                     email
                 }
             })
             .then(async () => {
-                localStorage.setItem(general.user, JSON.stringify({email, ...props}))
+                const model = {
+                    email,
+                    password: props.password,
+                    firstName: props.firstName,
+                    lastName: props.lastName,
+                    country: props.country,
+                    city: props.city
+                }
 
-                await sendConfirmationEmail({email, props})
+                await register(model);
             })
             .catch(error=>{
                 setErrors({email:error.response.data})
@@ -43,23 +46,32 @@ export const useAuth = () => {
                     email
                 }
             })
-            .then(({data}) => {
-                hash(data).then((data) => {
-                    localStorage.setItem(general.code, data);
-                    navigator(routes.confirmEmail);
-                })
+            .then(() => {
+                navigator(`${routes.confirmEmail}?email=${email}`);
             })
             .catch(()=> navigator(routes.signUp))
     }
 
     const register = async (props) => {
-        //setErrors({});
-
         axios
             .post('/api/auth/register', props)
-            .then(() => {
-                login({email: props.email, password: props.password}).then()
+            .then(async () => {
+                await sendConfirmationEmail({...props});
+            }).catch(err => console.log('register error', err))
+    };
+
+    const confirmEmail = async (email, code, emailToken = "-") => {
+        axios
+            .post('/api/auth/confirm-email', null, {
+                params: {
+                    email,
+                    code,
+                    emailToken
+                }
             })
+            .then(async () => {
+                navigator(routes.signIn);
+            }).catch(err => console.log('confirmEmail error', err))
     };
 
     const login = async ({ setErrors, ...props }) => {
@@ -80,28 +92,18 @@ export const useAuth = () => {
                 if(error.response.data.includes('Login failed'))
                     return setErrors({password:"Email or password are incorrect!"})
 
+                if(error.response.data.includes('Your email is not confirmed'))
+                    return navigator(`${routes.confirmEmail}?email=${props.email}`);
+
                 setErrors({password:error.response.data})
             });
     };
 
     const googleLogin = async (props) => {
-        //console.log(props)
         axios
             .post('/api/auth/google/login', props)
             .then(response => {
                 saveData(response.data);
-
-                //console.log(response.data)
-
-                // if(response.data.image === undefined) {
-                //     axios
-                //         .post(`/api/Account/editImage`, {...response.data.user, image: props.image})
-                //         .then(resp => {
-                //             console.log(resp)
-                //             //setCurrentUser(resp);
-                //         })
-                //         .catch(err => console.log(err))
-                // }
 
                 navigator('/in');
             })
@@ -130,6 +132,7 @@ export const useAuth = () => {
         googleLogin,
         validateEmail,
         sendConfirmationEmail,
-        logout
+        logout,
+        confirmEmail
     };
 }

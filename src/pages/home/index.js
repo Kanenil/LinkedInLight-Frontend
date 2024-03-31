@@ -19,7 +19,7 @@ import home5 from "../../assets/home5-illustration.png";
 import home6 from "../../assets/home6-illustration.png";
 import ChevronLeftIcon from "../../elements/icons/ChevronDownIcon";
 import Slider from "../../components/shared/Slider";
-import {designedFor, popularSearches, whyChoose} from "./data";
+import {useTranslation} from "react-i18next";
 
 const SliderItem = ({title, description}) => {
     return (
@@ -33,25 +33,28 @@ const SliderItem = ({title, description}) => {
 }
 
 const Home = () => {
+    const {t, i18n} = useTranslation();
+    const font = i18n.language === 'uk'?'font-light font-jost':'';
+
+    const popularSearches = t("home.popularSearches", { returnObjects: true });
+    const designedFor = t("home.designedFor", { returnObjects: true });
+    const whyChoose = t("home.whyChooseSlider", { returnObjects: true });
+
     return (
         <React.Fragment>
             <Helmet>
-                <title>Home</title>
+                <title>{t('home.title')}</title>
             </Helmet>
             <main className="flex-grow">
                 <section className="mx-auto w-[1170px] mt-36 mb-40">
                     <img src={jfy} alt="Job for you"/>
 
-                    <h1 className="mt-[60px] text-center text-base text-white">
-                        where we <strong>boost</strong> your potential,{" "}
-                        <strong>reframe</strong> your career, and <strong>unite</strong>{" "}
-                        professionals for unparalleled <br/> opportunities in the job market
-                    </h1>
+                    <h1 className="mt-[60px] [&>strong]:font-bold mx-auto w-[765px] text-center text-base text-white" dangerouslySetInnerHTML={{__html: t('home.slogan')}}/>
 
                     <Link
                         to={routes.signUp}
                         className="mt-12 flex gap-4 text-3xl font-semibold text-white w-fit ml-auto px-[71px] py-[10px] bg-[#0A48DBB2] hover:bg-[#24459A] rounded-full transition duration-500 ease-in-out">
-                        Get started
+                        {t('home.getStarted')}
                         <ArrowRightIcon className="w-[16px] h-[16px] fill-white my-auto"/>
                     </Link>
                 </section>
@@ -63,7 +66,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">95 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    registered companies
+                                    {t('home.registeredCompanies')}
                                 </h3>
                             </div>
                         </div>
@@ -74,7 +77,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">450 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    job seekers
+                                    {t('home.jobSeekers')}
                                 </h3>
                             </div>
                         </div>
@@ -85,7 +88,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">17 000</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    registered courses
+                                    {t('home.registeredCourses')}
                                 </h3>
                             </div>
                         </div>
@@ -96,7 +99,7 @@ const Home = () => {
                                 <h1 className="font-bold text-3xl text-[#585359]">98%</h1>
 
                                 <h3 className="font-medium text-lg text-[#585359] text-wrap">
-                                    satisfied users
+                                    {t('home.satisfiedUsers')}
                                 </h3>
                             </div>
                         </div>
@@ -113,14 +116,14 @@ const Home = () => {
                     }}
                 />
                 <div className="font-thin w-full bg-zinc-200 text-2xl pt-[60px] pb-[80px]">
-                    <div className="text-center text-4xl py-20">
-                        Choose the job of your dreams with{" "}
+                    <div className={`text-center text-4xl py-20 ${font}`}>
+                        {t('home.dreamJob')}{" "}
                         <span className="font-medium">Job for You</span>
                     </div>
 
                     <div className="mx-auto w-[1170px]">
-                        <div className="text-lg uppercase font-light">Popular Searches:</div>
-                        <div className="mt-2.5 mx-auto">
+                        <div className={`text-lg uppercase font-light ${font}`}>{t('home.popularSearchesText')}</div>
+                        <div className={`mt-2.5 mx-auto ${font}`}>
                             {popularSearches.map((val, index) =>
                                 <FramedClickableText key={`popularSearches-${index}`}>{val}</FramedClickableText>
                             )}
@@ -130,11 +133,9 @@ const Home = () => {
                 </div>
                 <div className="flex flex-row mx-auto w-[1170px] pt-[80px] pb-[60px]">
                     <div className="flex flex-col gap-[50px] w-[568px] pr-[15px]">
-                        <h3 className="text-[#2E467E] text-5xl font-medium">
-                            Who is <span className="font-bold">Job for You</span> designed for?
-                        </h3>
+                        <h3 className="text-[#2E467E] text-5xl font-medium [&>strong]:font-bold leading-[70px]" dangerouslySetInnerHTML={{__html:t('home.whoIs')}}/>
 
-                        <div className="flex flex-col gap-[20px]">
+                        <div className={`flex flex-col gap-[20px] ${font}`}>
                             {designedFor.map((val, index) =>
                                 <div
                                     key={`designedFor-${index}`}
@@ -149,14 +150,12 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="mx-auto">
+                    <div className="mx-auto my-auto">
                         <img className="w-fit h-fit" src={home1} alt="designed-for-illustration"/>
                     </div>
                 </div>
                 <div className="flex flex-col gap-[50px] mx-auto w-[1170px] pt-[60px] pb-[80px]">
-                    <h1 className="text-[#2D2A33] font-light text-4xl text-center">
-                        Why choose <span className="font-bold">Job for You</span> for your job search?
-                    </h1>
+                    <h1 className={`text-[#2D2A33] font-light text-4xl text-center [&>strong]:font-bold ${font}`} dangerouslySetInnerHTML={{__html:t('home.whyChoose')}}/>
 
                     <div className="flex flex-row items-center gap-[30px] ">
                         <div className="mx-auto">
@@ -181,21 +180,18 @@ const Home = () => {
 
                     <div className="flex flex-col items-center gap-[60px]">
                         <div className="flex flex-col mr-auto gap-[5px] text-[#2E467E]">
-                            <h1 className="font-semibold text-[50px] leading-[80px]">Find a Job</h1>
-                            <h3 className="font-light text-[44px] leading-[70.4px]">without leaving Home</h3>
-                            <h3 className="font-light text-[44px] leading-[70.4px]">with <span className="font-medium">Job for You</span>
-                            </h3>
+                            <h1 className="font-semibold text-[50px] leading-[80px]">{t('home.findJob')}</h1>
+                            <h3 className="font-light text-[44px] leading-[70.4px]">{t('home.dontOutHome')}</h3>
+                            <h3 className="font-light text-[44px] leading-[70.4px]">{t('home.with')} <span className="font-medium">Job for You</span></h3>
                         </div>
 
-                        <h3 className="text-[#2D2A33] font-light text-[30px] w-[570px] leading-[48px]">
-                            Explore remote positions and international opportunities with us, connecting skilled
-                            individuals with the world during challenging times. Your career journey continues,
-                            regardless of borders, with our support.
+                        <h3 className={`text-[#2D2A33] font-light text-[30px] w-[570px] leading-[48px] ${font}`}>
+                            {t('home.explore')}
                         </h3>
 
                         <Link to={routes.signUp}
                               className="mt-[20px] ml-auto flex flex-row gap-[20px] items-center border-[1px] border-[#0A48DB] py-2 px-7 rounded-full text-[#2E467E] text-xl font-semibold">
-                            <span>Find a Job</span>
+                            <span>{t('home.findJobButton')}</span>
                             <ArrowRightIcon className="w-5 fill-[#2E467E]"/>
                         </Link>
                     </div>
@@ -208,21 +204,19 @@ const Home = () => {
                         <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home4} alt="sign-up"/>
 
                         <h1 className="mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
-                            Sign Up
+                            {t('home.cards.card1.title')}
                         </h1>
 
-                        <h3 className="text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center">
-                            Join Job for You by registering through the 'Sign Up' button in the top right corner of the
-                            screen or the 'Get started' button in the top of the screen. Additionally, we've prepared a
-                            step-by-step guide to make the registration process smoother for you.
-                        </h3>
+                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center [&>strong]:font-bold ${font}`} dangerouslySetInnerHTML={{__html:t('home.cards.card1.description')}}/>
 
-                        <Link to="/"
-                              className="flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                            <span>How to sign up</span>
-                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                             style={{transform: "rotate(-90deg)"}}/>
-                        </Link>
+                        <div className="absolute bottom-0 w-full">
+                            <Link to="/"
+                                  className="flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
+                                <span>{t('home.cards.card1.button')}</span>
+                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                                 style={{transform: "rotate(-90deg)"}}/>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="relative bg-white w-[360px] h-[460px]"
@@ -231,22 +225,21 @@ const Home = () => {
                              alt="complete-profile"/>
 
                         <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
-                            Complete profile
+                            {t('home.cards.card2.title')}
                         </h1>
 
-                        <h3 className="text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center">
-                            To enhance your profile, upload your CV or resume. Alternatively, manually input your
-                            education, work experience, and skills directly into your profile. For guidance on providing
-                            accurate information, check out our tutorial crafted to assist you in presenting your
-                            qualifications effectively.
+                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center ${font}`}>
+                            {t('home.cards.card2.description')}
                         </h3>
 
-                        <Link to="/"
-                              className="flex flex-row items-center justify-center mt-[30px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                            <span>Watch tutorial</span>
-                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                             style={{transform: "rotate(-90deg)"}}/>
-                        </Link>
+                        <div className="absolute bottom-5 w-full">
+                            <Link to="/"
+                                  className="flex flex-row items-center justify-center mt-[30px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
+                                <span>{t('home.cards.card2.button')}</span>
+                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                                 style={{transform: "rotate(-90deg)"}}/>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="relative bg-white w-[360px] h-[460px] rounded-tr-[100px] rounded-br-[10px]"
@@ -255,21 +248,21 @@ const Home = () => {
                              alt="land-your-dream-job"/>
 
                         <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
-                            Land your dream job
+                            {t('home.cards.card1.title')}
                         </h1>
 
-                        <h3 className="text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center">
-                            Explore our Jobs section to discover opportunities tailored to your experience and
-                            education. Our platform uses the details you provide to match you with suitable job options.
-                            Submit applications and secure your next career move!
+                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center ${font}`}>
+                            {t('home.cards.card3.description')}
                         </h3>
 
-                        <Link to="/"
-                              className="flex flex-row items-center justify-center mt-[82px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                            <span>Find a Job</span>
-                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                             style={{transform: "rotate(-90deg)"}}/>
-                        </Link>
+                        <div className="absolute bottom-5 w-full">
+                            <Link to="/"
+                                  className="flex flex-row items-center justify-center mt-[82px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
+                                <span>{t('home.cards.card3.button')}</span>
+                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                                 style={{transform: "rotate(-90deg)"}}/>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -7,6 +7,8 @@ import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
 import {rootReducer} from "./store/rootReducer";
 
+import './utils/i18n'
+
 const store = configureStore({
     reducer: rootReducer
 });

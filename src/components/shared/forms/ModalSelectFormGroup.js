@@ -8,6 +8,7 @@ const ModalSelectFormGroup = ({
                                   error,
                                   hasTools = false,
                                   clearOnSelect = false,
+                                  onEnterSelect = true,
                                   placeHolder,
                                   onChange,
                                   searchAble = true,
@@ -29,6 +30,7 @@ const ModalSelectFormGroup = ({
                 containerHeightMax={containerHeightMax}
                 placeHolder={placeHolder}
                 error={error}
+                onEnterSelect={onEnterSelect}
                 searchAble={searchAble}
                 hasTools={hasTools}
                 clearOnSelect={clearOnSelect}

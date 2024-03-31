@@ -1,0 +1,299 @@
+{
+  "home" : {
+    "title": "Home",
+    "getStarted": "Get started",
+    "slogan": "where we <strong>boost</strong> your potential <strong>reframe</strong> your career and <strong>unite</strong> professionals for unparalleled opportunities in the job market",
+    "registeredCompanies": "registered companies",
+    "jobSeekers": "job seekers",
+    "registeredCourses": "registered courses",
+    "satisfiedUsers": "satisfied users",
+    "dreamJob": "Choose the job of your dreams with",
+    "popularSearchesText": "Popular Searches:",
+    "popularSearches": [
+      "Finance",
+      "Information Technology",
+      "Customer Service",
+      "Media and Communications",
+      "Purchasing",
+      "Military and Protective Services",
+      "Real Estate",
+      "Product Management",
+      "Entrepreneurship",
+      "Education",
+      "Community and Social Services",
+      "Arts and Design",
+      "Marketing",
+      "Human Resources",
+      "Administrative Assistant",
+      "Business Development",
+      "Engineering",
+      "Program and Project Management"
+    ],
+    "whoIs": "Who is <strong>Job for You</strong> designed for?",
+    "designedFor": [
+      "For those seeking employment",
+      "For like-minded seekers",
+      "For those on the lookout for courses",
+      "For those scouting for talent"
+    ],
+    "whyChoose": "Why choose <strong>Job for You</strong> for your job search?",
+    "whyChooseSlider": [
+      {
+        "title": "Personalized job search",
+        "description": "Forget endless job listings! With <span class=\"font-semibold\">Job for You</span>, your job search becomes personal. Specify your unique skills, and we'll present only those jobs that truly match your profile",
+        "width": 570
+      },
+      {
+        "title": "Professional profile",
+        "description": "Craft an impressive profile that stands out among other candidates. <span class=\"font-semibold\">Job for You</span> helps you showcase your uniqueness and capture the attention of potential employers.",
+        "width": 570
+      },
+      {
+        "title": "Active community",
+        "description": "Join our dynamic community of professionals, discuss crucial topics, and exchange experiences. Together, we grow and thrive!",
+        "width": 570
+      },
+      {
+        "title": "Educational resources",
+        "description": "Our educational resources section helps you keep your skills up-to-date. Stay in the loop with <span class=\"font-semibold\">Job for You</span> and remain on the cutting edge.",
+        "width": 570
+      },
+      {
+        "title": "Announcements and recruitment events",
+        "description": "Never miss important recruitment events and job announcements. With <span class=\"font-semibold\">Job for You</span>, fresh and promising opportunities are always within your reach.",
+        "width": 570
+      },
+      {
+        "title": "Resume creation tools",
+        "description": "Forget the complexity of resume creation. With our integrated editor, you'll easily craft a professional document that grabs the attention of employers.",
+        "width": 570
+      },
+      {
+        "title": "Notifications and updates",
+        "description": "Receive notifications about new job opportunities and changes in your resume status. Stay in control of your career development with <span class=\"font-semibold\">Job for You.</span>",
+        "width": 570
+      },
+      {
+        "title": "Direct employer contact",
+        "description": "With <span class=\"font-semibold\">Job for You</span>, you not only find a job but also establish direct contact with potential employers. Start conversations and build the future of your career right now!",
+        "width": 570
+      }
+    ],
+    "findJob": "Find a Job",
+    "dontOutHome": "without leaving Home",
+    "with": "with",
+    "explore":"Explore remote positions and international opportunities with us, connecting skilled individuals with the world during challenging times. Your career journey continues, regardless of borders, with our support.",
+    "findJobButton": "Find a Job",
+    "cards": {
+      "card1": {
+        "title": "Sign Up",
+        "description": "Join <strong>Job for You</strong>  by registering through the 'Sign Up' button in the top right corner of the screen or the 'Get started' button in the top of the screen. Additionally, we've prepared a step-by-step guide to make the registration process smoother for you.",
+        "button": "How to sign up"
+      },
+      "card2": {
+        "title": "Complete profile",
+        "description": "To enhance your profile, upload your CV or resume. Alternatively, manually input your education, work experience, and skills directly into your profile. For guidance on providing accurate information, check out our tutorial crafted to assist you in presenting your qualifications effectively.",
+        "button": "Watch tutorial"
+      },
+      "card3": {
+        "title": "Land your dream job",
+        "description": "Explore our Jobs section to discover opportunities tailored to your experience and education. Our platform uses the details you provide to match you with suitable job options. Submit applications and secure your next career move!",
+        "button": "Find a Job"
+      }
+    }
+  },
+  "footer": {
+    "Ukrainian": "Українська",
+    "English": "English",
+    "aboutUs": "About us",
+    "about": "About",
+    "general": "General",
+    "business": "Business Solutions",
+    "talent": "Talent",
+    "directories": "Directories",
+    "contact": "Contact",
+    "legal": "Legal",
+    "languages": "Languages",
+    "generalRoutes": [
+      {
+        "name": "Sign In",
+        "url": "/auth/sign-in"
+      },
+      {
+        "name": "Sign Up",
+        "url": "/auth/sign-up"
+      },
+      {
+        "name": "Help Center",
+        "url": "/"
+      },
+      {
+        "name": "Careers",
+        "url": "/"
+      },
+      {
+        "name": "Developers",
+        "url": "/"
+      },
+      {
+        "name": "Blog",
+        "url": "/"
+      }
+    ],
+    "businessRoutes": [
+      {
+        "name": "Talent",
+        "url": "/"
+      },
+      {
+        "name": "Marketing",
+        "url": "/"
+      },
+      {
+        "name": "Sales",
+        "url": "/"
+      },
+      {
+        "name": "Learning",
+        "url": "/"
+      }
+    ],
+    "talentRoutes": [
+      {
+        "name": "Learn",
+        "url": "/"
+      },
+      {
+        "name": "Earn",
+        "url": "/"
+      },
+      {
+        "name": "Compete",
+        "url": "/"
+      },
+      {
+        "name": "Job",
+        "url": "/"
+      }
+    ],
+    "directoriesRoutes": [
+      {
+        "name": "Members",
+        "url": "/"
+      },
+      {
+        "name": "Jobs",
+        "url": "/"
+      },
+      {
+        "name": "Companies",
+        "url": "/"
+      },
+      {
+        "name": "Featured",
+        "url": "/"
+      },
+      {
+        "name": "Learning",
+        "url": "/"
+      },
+      {
+        "name": "Posts",
+        "url": "/"
+      },
+      {
+        "name": "News Letters",
+        "url": "/"
+      },
+      {
+        "name": "Services",
+        "url": "/"
+      },
+      {
+        "name": "Products",
+        "url": "/"
+      },
+      {
+        "name": "Advice",
+        "url": "/"
+      },
+      {
+        "name": "People Search",
+        "url": "/"
+      }
+    ],
+    "contactRoutes": [
+      {
+        "name": "Support",
+        "url": "/"
+      },
+      {
+        "name": "Report a Bug",
+        "url": "/"
+      }
+    ],
+    "legalRoutes": [
+      {
+        "name": "User Agreement",
+        "url": "/"
+      },
+      {
+        "name": "Privacy Policy",
+        "url": "/"
+      },
+      {
+        "name": "Copyright Policy",
+        "url": "/"
+      },
+      {
+        "name": "Brand Policy",
+        "url": "/"
+      },
+      {
+        "name": "Community Guidelines",
+        "url": "/"
+      }
+    ],
+    "authRoutes": [
+      {
+        "name": "General",
+        "url": "/"
+      },
+      {
+        "name": "Support",
+        "url": "/"
+      },
+      {
+        "name": "User Agreement",
+        "url": "/"
+      },
+      {
+        "name": "Brand Policy",
+        "url": "/"
+      },
+      {
+        "name": "Privacy Policy",
+        "url": "/"
+      },
+      {
+        "name": "Copyright Policy",
+        "url": "/"
+      },
+      {
+        "name": "Community Guidelines",
+        "url": "/"
+      }
+    ]
+  },
+  "header": {
+    "People": "People",
+    "Learning": "Learning",
+    "Jobs": "Jobs",
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up"
+  },
+  "slider": {
+    "next": "Next",
+    "back": "Back"
+  }
+}

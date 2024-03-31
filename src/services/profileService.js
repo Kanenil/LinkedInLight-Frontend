@@ -4,6 +4,7 @@ export const profileService = {
     profile: () => {
         return axios.get('api/profile');
     },
+
     changeImage: (data, isBackground = false) => {
         return axios.putForm('api/profile/editImage', {newImage: data}, {
             params: {
@@ -11,6 +12,7 @@ export const profileService = {
             }
         })
     },
+
     getAbout: () => {
         return axios.get('api/profile/edit/about')
     },
@@ -18,13 +20,25 @@ export const profileService = {
         return axios.put('api/profile/edit/about', newAbout)
     },
 
+    getIndustries: () => {
+        return axios.get('api/profile/allIndustries')
+    },
+    getAllSkills: () => {
+        return axios.get('api/profile/allSkills')
+    },
+
     getSkills: () => {
         return axios.get('api/profile/userSkills')
     },
-    addSkill: (skill) => {
+    getMainSkills: () => {
+        return axios.get('api/profile/mainSkills')
+    },
+    addSkill: (skill, isMainSkill = true) => {
         return axios.post('api/profile/newSkill', {
-            name: skill,
+            skill,
+            skillId: skill.value,
             applicationUserId: '',
+            isMainSkill: isMainSkill,
             id: 0
         })
     },
@@ -32,23 +46,6 @@ export const profileService = {
         return axios.delete(`api/profile/skill/remove/${skillId}`)
     },
 
-    getLanguages: () => {
-        return axios.get('api/profile/userLanguages')
-    },
-    addLanguage: (data) => {
-        return axios.post('api/profile/newLanguage', {
-            id: 0,
-            ...data
-        })
-    },
-    removeLanguage: (id) => {
-        return axios.delete(`api/profile/language/remove/${id}`)
-    },
-    updateLanguage: (data, id) => {
-        return axios.put(`api/profile/language/edit/${id}`, {
-            ...data
-        })
-    },
 
     getEducations: () => {
         return axios.get('api/profile/userEducations')
@@ -80,21 +77,5 @@ export const profileService = {
     },
     removeExperience: (id) => {
         return axios.delete(`api/profile/experience/remove/${id}`)
-    },
-
-    getCertifications: () => {
-        return axios.get('api/profile/userCertifications')
-    },
-    getCertification: (id) => {
-        return axios.get(`api/profile/certification/${id}`)
-    },
-    addCertification: (data) => {
-        return axios.post('api/profile/newCertification', data)
-    },
-    updateCertification: (data, id) => {
-        return axios.put(`api/profile/certification/edit/${id}`, data)
-    },
-    removeCertification: (id) => {
-        return axios.delete(`api/profile/certification/remove/${id}`)
     },
 };
