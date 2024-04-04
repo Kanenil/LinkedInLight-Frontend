@@ -62,8 +62,6 @@ const useForm = (initialValues, onChangeCallback) => {
     }
 
     const onSubmit = (callback) => {
-        console.log(errors)
-
         const hasErrors = Object.values(errors).some(error => error);
         
         if (hasErrors) {

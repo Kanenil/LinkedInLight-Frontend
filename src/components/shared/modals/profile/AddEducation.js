@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {getDateTime, getLongMonth} from "../../../../utils/date";
-import {profileService} from "../../../../services/profileService";
+import ProfileService from "../../../../services/profileService";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
@@ -53,7 +53,7 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            profileService.getEducation(id).then(({data}) => {
+            ProfileService.getEducation(id).then(({data}) => {
                 const education = data;
 
                 const startDate = new Date(education.startDate);
@@ -99,16 +99,16 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await profileService.updateEducation(model, id);
+            await ProfileService.updateEducation(model, id);
         } else {
-            await profileService.addEducation(model);
+            await ProfileService.addEducation(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeEducation(id);
+        await ProfileService.removeEducation(id);
 
         onSave();
     }

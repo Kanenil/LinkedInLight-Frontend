@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {recommendedProfileService} from "../../../services/recommendedProfileService";
+import RecommendedProfileService from "../../../services/recommendedProfileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CourseItem from "../items/CourseItem";
@@ -8,7 +8,7 @@ const CoursesSection = ({user}) => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        recommendedProfileService
+        RecommendedProfileService
             .getCourses()
             .then(({data}) => setCourses(data))
     }, [user])

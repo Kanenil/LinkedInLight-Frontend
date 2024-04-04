@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import PlusIcon from "../../../../elements/icons/PlusIcon";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
 import TextDown from "../../../../elements/shared/TextDown";
-import {profileService} from "../../../../services/profileService";
+import ProfileService from "../../../../services/profileService";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 
@@ -35,7 +35,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
     } = useForm(initialValues, onChange);
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getAllSkills()
             .then(({data}) => {
                 const mapped = data.map(val => ({
@@ -53,7 +53,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
             })
 
 
-        profileService.getAbout()
+        ProfileService.getAbout()
             .then(({data}) => {
                 setValues(prev => ({
                     ...prev,
@@ -62,7 +62,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
                 }))
             })
 
-        profileService.getMainSkills()
+        ProfileService.getMainSkills()
             .then(({data}) => {
                 const mapped = data.map(val => ({
                     label: val.skill.name,
@@ -115,11 +115,11 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
 
     const onSaveClick = async () => {
         if(values.userAbout !== values.about)
-            await profileService.editAbout(String(values.about));
+            await ProfileService.editAbout(String(values.about));
 
         for (const skill of values.skills) {
             if(values.userSkills.filter(userSkill => userSkill.skill.name === skill.label).length === 0)
-                await profileService.addSkill({
+                await ProfileService.addSkill({
                     name: skill.label,
                     id: skill.value
                 });
@@ -127,7 +127,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
 
         for (const userSkill of values.userSkills) {
             if(values.skills.filter(skill => skill.label === userSkill.skill.name).length === 0)
-                await profileService.removeSkill(userSkill.id);
+                await ProfileService.removeSkill(userSkill.id);
         }
 
         onSave();

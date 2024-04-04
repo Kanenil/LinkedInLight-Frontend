@@ -38,7 +38,7 @@ const InHeader = () => {
                         <JobsIcon/>
                     </Link>
 
-                    <Link to='/in' className="p-2">
+                    <Link to='/in/chats' className="p-2">
                         <MessagesIcon number={1}/>
                     </Link>
 

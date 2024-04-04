@@ -1,6 +1,6 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import {useEffect, useState} from "react";
-import {profileService} from "../../../services/profileService";
+import ProfileService from "../../../services/profileService";
 import EducationItem from "../items/EducationItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
@@ -8,7 +8,7 @@ const EducationSection = ({user}) => {
     const [educations, setEducations] = useState([]);
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getEducations()
             .then(({data}) => setEducations(data))
     }, [user])

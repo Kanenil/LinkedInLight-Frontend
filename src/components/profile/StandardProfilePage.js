@@ -1,120 +1,12 @@
-import UserProfileSection from "./sections/UserProfileSection";
-import ProfileStatus from "./sections/ProfileStatus";
-import AnalyticsSection from "./sections/AnalyticsSection";
-import AboutMeSection from "./sections/AboutMeSection";
-import ActivitySection from "./sections/ActivitySection";
-import LanguagesSection from "./sections/LanguagesSection";
-import ExperienceSection from "./sections/ExperienceSection";
+import React from "react";
 import RightEditSection from "./sections/RightEditSection";
 import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
-import React, {useEffect} from "react";
-import EducationSection from "./sections/EducationSection";
-import {useLocation, useNavigate} from "react-router";
-import CertificationsSection from "./sections/CertificationsSection";
-import CoursesSection from "./sections/CoursesSection";
-import VolunteerExperienceSection from "./sections/VolunteerExperienceSection";
-import SkillsSection from "./sections/SkillsSection";
+import {sections} from "../../constants/sections";
+import {useScrollToLocation} from "../../hooks/useScrollToLocation";
 
 const StandardProfilePage = ({ user }) => {
-    const location = useLocation();
-    const navigator = useNavigate();
-
-    useEffect(() => {
-        if (location.state && location.state) {
-            const targetId = location.state;
-            let iteration = 0;
-
-            const waitForOffsetTop = () => {
-                const el = document.getElementById(targetId);
-                if (el && el.offsetTop > 0) {
-                    window.scrollTo(0, el.offsetTop - 60); // 60 px - sticky header
-                    iteration = 5;
-                    navigator('', {state: null})
-                } else if (iteration < 5) {
-                    setTimeout(waitForOffsetTop, 30);
-                    iteration++;
-                }
-            };
-
-            waitForOffsetTop();
-        }
-    }, [location])
-
-    const sections = [
-        {
-            children: <UserProfileSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <ProfileStatus />,
-            props: {
-                user
-            }
-        },
-        // {
-        //     children: <AnalyticsSection />,
-        //     props: {
-        //         user
-        //     }
-        // },
-        {
-            children: <AboutMeSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <ActivitySection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <LanguagesSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <EducationSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <ExperienceSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <SkillsSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <CoursesSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <CertificationsSection />,
-            props: {
-                user
-            }
-        },
-        {
-            children: <VolunteerExperienceSection />,
-            props: {
-                user
-            }
-        },
-    ]
+    useScrollToLocation();
 
     return (
         <main className='bg-[#E7E7E7]'>
@@ -126,7 +18,7 @@ const StandardProfilePage = ({ user }) => {
                                 sections.map((section, index) =>
                                     React.cloneElement(section.children, {
                                         key: `sections-${index}`,
-                                        ...section.props
+                                        user
                                     })
                                 )
                             }

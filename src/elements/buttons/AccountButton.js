@@ -1,43 +1,39 @@
 import ArrowDownIcon from "../icons/ArrowDownIcon";
 import defaultImage from '../../assets/default-image.jpg'
-import React, {useEffect, useState} from "react";
-import {profileService} from "../../services/profileService";
+import React from "react";
+import ProfileService from "../../services/profileService";
 import {Link} from "react-router-dom";
 import useComponentVisible from "../../hooks/componentVisible";
 import {useAuth} from "../../hooks/auth";
 import ConditionalWrapper from "../shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
-import {useSelector} from "react-redux";
+import {useQuery} from "@tanstack/react-query";
+
+const defaultRoutes = [
+    {
+        to: 'settings',
+        title: 'Settings & Privacy'
+    },
+    {
+        to: '/in',
+        title: 'Language'
+    },
+    {
+        to: '/in',
+        title: 'Help'
+    }
+]
 
 const AccountButton = () => {
-    const [user, setUser] = useState();
+    const { data } = useQuery({
+        queryFn: () => ProfileService.getProfile(),
+        queryKey: ['profile'],
+        select: ({data}) => data,
+    })
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const {logout} = useAuth();
 
-    const currentUser = useSelector(state => state.CurrentUser);
-
-    useEffect(() => {
-        profileService.profile().then(({data}) => {
-            setUser(data)
-        })
-    }, [currentUser]);
-
-    const defaultRoutes = [
-        {
-            to: 'settings',
-            title: 'Settings & Privacy'
-        },
-        {
-            to: '/in',
-            title: 'Language'
-        },
-        {
-            to: '/in',
-            title: 'Help'
-        }
-    ]
-
-    const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
+    const imageUrl = data?.image ? APP_ENV.UPLOADS_URL + "/" + data?.image : defaultImage;
 
     const LinkedText = ({ to, title, onClickHandler }) => {
         return (
@@ -77,10 +73,10 @@ const AccountButton = () => {
                         </div>
 
                         <div className="font-jost">
-                            <h1 className="font-medium">{user?.firstName} {user?.lastName}</h1>
+                            <h1 className="font-medium">{data?.firstName} {data?.lastName}</h1>
 
-                            <ConditionalWrapper condition={user?.headline}>
-                                <h3 className="font-light text-sm">{user?.headline}</h3>
+                            <ConditionalWrapper condition={data?.headline}>
+                                <h3 className="font-light text-sm">{data?.headline}</h3>
                             </ConditionalWrapper>
                         </div>
                     </div>

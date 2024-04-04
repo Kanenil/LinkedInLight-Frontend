@@ -2,13 +2,13 @@ import {useEffect, useState} from "react";
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CertificationItem from "../items/CertificationItem";
-import {recommendedProfileService} from "../../../services/recommendedProfileService";
+import RecommendedProfileService from "../../../services/recommendedProfileService";
 
 const CertificationsSection = ({ user }) => {
     const [certificates, setCertificates] = useState([]);
 
     useEffect(() => {
-        recommendedProfileService
+        RecommendedProfileService
             .getCertifications()
             .then(({data}) => setCertificates(data))
     }, [user])

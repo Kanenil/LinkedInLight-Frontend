@@ -1,7 +1,7 @@
 import {general} from "../constants/general";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
-import {profileService} from "../services/profileService";
+import ProfileService from "../services/profileService";
 
 export const useAuthorize = () => {
     const navigator = useNavigate();
@@ -15,7 +15,7 @@ export const useAuthorize = () => {
             return;
         }
 
-        profileService.profile()
+        ProfileService.getProfile()
             .then(() => {
                 setIsAuthorized(true);
             })

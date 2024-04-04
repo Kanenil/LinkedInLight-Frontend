@@ -6,22 +6,12 @@ import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import {useNavigate} from "react-router";
 import AbstractDetails from "./AbstractDetails";
-import {profileService} from "../../services/profileService";
-import CertificationItem from "./items/CertificationItem";
-import ExperienceItem from "./items/ExperienceItem";
-import LanguageItem from "./items/LanguageItem";
-import EducationItem from "./items/EducationItem";
-import {additionalProfileService} from "../../services/additionalProfileService";
-import {recommendedProfileService} from "../../services/recommendedProfileService";
-import CourseItem from "./items/CourseItem";
-import ProjectItem from "./items/ProjectItem";
-import VolunteerExperienceItem from "./items/VolunteerExperienceItem";
-import SkillItem from "./items/SkillItem";
+import {details} from "../../constants/details";
 
 const DetailsPage = ({user, detail}) => {
-    const navigator = useNavigate();
-
+    const selected = details.find(page => page.route.includes(detail));
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
+    const navigator = useNavigate();
 
     const onClickBack = () => {
         navigator('/in', { state: detail });
@@ -35,98 +25,6 @@ const DetailsPage = ({user, detail}) => {
         user,
         onClickBack,
     }
-
-    const pages = [
-        {
-            route: ["languages"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: additionalProfileService.getLanguages(),
-                detail: 'Languages',
-                edit: 'language',
-                itemComponent: <LanguageItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["educations"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: profileService.getEducations(),
-                detail: 'Educations',
-                edit: 'education',
-                itemComponent: <EducationItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["experiences"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: profileService.getExperiences(),
-                detail: 'Experiences',
-                edit: 'experience',
-                itemComponent: <ExperienceItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["certifications"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: recommendedProfileService.getCertifications(),
-                detail: 'Certifications',
-                edit: 'certification',
-                itemComponent: <CertificationItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["courses"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: recommendedProfileService.getCourses(),
-                detail: 'Courses',
-                edit: 'course',
-                itemComponent: <CourseItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["projects"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: recommendedProfileService.getProjects(),
-                detail: 'Projects',
-                edit: 'project',
-                itemComponent: <ProjectItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["volunteerExperience"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: additionalProfileService.getVolunteerExperiences(),
-                detail: 'VolunteerExperience',
-                edit: 'volunteerExperience',
-                title: "VolunteerExperience",
-                itemComponent: <VolunteerExperienceItem/>,
-                ...commonProps
-            }
-        },
-        {
-            route: ["skills"],
-            children: <AbstractDetails/>,
-            props: {
-                promise: profileService.getSkills(),
-                detail: 'Skills',
-                edit: 'skill',
-                itemComponent: <SkillItem/>,
-                ...commonProps
-            }
-        }
-    ]
 
     return (
         <React.Fragment>
@@ -154,14 +52,10 @@ const DetailsPage = ({user, detail}) => {
                 <div className="flex flex-row my-8 mx-auto w-[1170px]">
                     <div className="w-8/12">
                         {
-                            pages
-                                .filter(page => page.route.includes(detail))
-                                .map(page =>
-                                    React.cloneElement(page.children, {
-                                        key: `details-${page.route[0]}`,
-                                        ...page.props
-                                    })
-                                )
+                            React.cloneElement(<AbstractDetails/>, {
+                                key: `details-${selected.route[0]}`,
+                                ...{...selected.props, ...commonProps}
+                            })
                         }
                     </div>
 

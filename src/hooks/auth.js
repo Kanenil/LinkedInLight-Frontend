@@ -2,11 +2,9 @@ import axios from "../services/axios";
 import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
-import {useDispatch} from "react-redux";
 
 export const useAuth = () => {
     const navigator = useNavigate();
-    const dispatch = useDispatch();
 
     const saveData = (data) => {
         localStorage.setItem(general.token, data.token);
@@ -115,16 +113,8 @@ export const useAuth = () => {
     const logout = () => {
         localStorage.removeItem(general.token);
         axios.defaults.headers.common["Authorization"] = null;
-        setCurrentUser(null);
         navigator(routes.signIn);
     }
-
-    const setCurrentUser = (user) => {
-        dispatch({
-            type: 'SET_USER',
-            current_user: user
-        });
-    };
 
     return {
         register,

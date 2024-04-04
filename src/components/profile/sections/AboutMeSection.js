@@ -3,14 +3,14 @@ import React, {useEffect, useState} from "react";
 import InformationIcon from "../../../elements/icons/InformationIcon";
 import PuzzlesIcon from "../../../elements/icons/PuzzlesIcon";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
-import {profileService} from "../../../services/profileService";
+import ProfileService from "../../../services/profileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 
 const AboutMeSection = ({user}) => {
     const [skills, setSkills] = useState([]);
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getMainSkills()
             .then(({data}) => setSkills(data.map(skill => skill.skill.name)))
     }, [user])

@@ -1,7 +1,6 @@
 import defaultBg from "../../../assets/default-background.jpg";
 import CameraIcon from "../../../elements/icons/CameraIcon";
 import defaultImage from "../../../assets/default-image.jpg";
-import PencilIcon from "../../../elements/icons/PencilIcon";
 import OpenToButton from "../../../elements/buttons/OpenToButton";
 import ProfileButton from "../../../elements/buttons/ProfileButton";
 import React, {useState} from "react";

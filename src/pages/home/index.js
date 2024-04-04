@@ -34,7 +34,7 @@ const SliderItem = ({title, description}) => {
 
 const Home = () => {
     const {t, i18n} = useTranslation();
-    const font = i18n.language === 'uk'?'font-light font-jost':'';
+    const font = i18n.language.includes('uk')?'font-light font-jost':'';
 
     const popularSearches = t("home.popularSearches", { returnObjects: true });
     const designedFor = t("home.designedFor", { returnObjects: true });

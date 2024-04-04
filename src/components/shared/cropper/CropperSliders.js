@@ -11,7 +11,7 @@ export const ZoomSlider = () => {
         <div className="flex flex-col gap-2.5 p-2.5 w-full">
             <h1 className="font-jost font-light text-black">Zoom</h1>
 
-            <div className="flex flex-row p-2.5 gap-2.5">
+            <div className="flex flex-row p-2.5 gap-2.5 items-center">
                 <button onClick={handleZoomOut}>
                     <MinusIcon className="w-5 fill-[#7D88A4]" />
                 </button>
@@ -50,7 +50,7 @@ export const RotationSlider = () => {
         <div className="flex flex-col gap-2.5 p-2.5 w-full">
             <h1 className="font-jost font-light text-black">Straighten</h1>
 
-            <div className="flex flex-row p-2.5 gap-2.5">
+            <div className="flex flex-row p-2.5 gap-2.5 items-center">
                 <button onClick={handleRotateAntiCw}>
                     <MinusIcon className="w-5 fill-[#7D88A4]" />
                 </button>

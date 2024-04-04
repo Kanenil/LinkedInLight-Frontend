@@ -6,7 +6,7 @@ import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
-import {recommendedProfileService} from "../../../../services/recommendedProfileService";
+import RecommendedProfileService from "../../../../services/recommendedProfileService";
 
 const AddCertification = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -46,7 +46,7 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            recommendedProfileService.getCertification(id).then(({data}) => {
+            RecommendedProfileService.getCertification(id).then(({data}) => {
                 const certification = data;
 
                 const startDate = new Date(certification.issueDate);
@@ -95,16 +95,16 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await recommendedProfileService.updateCertification(model, id);
+            await RecommendedProfileService.updateCertification(model, id);
         } else {
-            await recommendedProfileService.addCertification(model);
+            await RecommendedProfileService.addCertification(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await recommendedProfileService.removeCertification(id);
+        await RecommendedProfileService.removeCertification(id);
 
         onSave();
     }

@@ -1,6 +1,6 @@
 import useForm from "../../../../hooks/useForm";
 import React, {useEffect} from "react";
-import {recommendedProfileService} from "../../../../services/recommendedProfileService";
+import RecommendedProfileService from "../../../../services/recommendedProfileService";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
 
@@ -28,7 +28,7 @@ const AddCourse = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            recommendedProfileService.getCourse(id).then(({data}) => {
+            RecommendedProfileService.getCourse(id).then(({data}) => {
                 setValues({
                     ...data
                 })
@@ -49,16 +49,16 @@ const AddCourse = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await recommendedProfileService.updateCourse(model, id);
+            await RecommendedProfileService.updateCourse(model, id);
         } else {
-            await recommendedProfileService.addCourse(model);
+            await RecommendedProfileService.addCourse(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await recommendedProfileService.removeCourse(id);
+        await RecommendedProfileService.removeCourse(id);
 
         onSave();
     }

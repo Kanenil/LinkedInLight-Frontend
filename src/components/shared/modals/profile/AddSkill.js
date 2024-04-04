@@ -1,6 +1,6 @@
 import useForm from "../../../../hooks/useForm";
 import React, {useEffect, useState} from "react";
-import {profileService} from "../../../../services/profileService";
+import ProfileService from "../../../../services/profileService";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
@@ -33,7 +33,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     } = useForm(initialValues, onChange);
 
     const getSkill = (id, mapped) => {
-        profileService.getSkills()
+        ProfileService.getSkills()
             .then(({data}) => {
                 let condition = opt => opt
                 let model = {}
@@ -74,7 +74,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     }
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getAllSkills()
             .then(({data}) => {
                 const mapped = data.map(val => ({
@@ -115,7 +115,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeSkill(id);
+        await ProfileService.removeSkill(id);
 
         onSave();
     }
@@ -123,7 +123,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     const onSaveClick = async () => {
         try {
             if(id) {
-                await profileService.updateSkill({
+                await ProfileService.updateSkill({
                     id: values.modelId,
                     isMainSkill: values.isMainSkill,
                     skill: {
@@ -134,7 +134,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
                     applicationUserId: values.applicationUserId
                 }, id)
             } else {
-                await profileService.addSkill({
+                await ProfileService.addSkill({
                     name: values.name,
                     id: values.id
                 }, values.isMainSkill);

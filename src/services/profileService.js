@@ -1,84 +1,101 @@
 import axios from "./axios";
 
-export const profileService = {
-    profile: () => {
-        return axios.get('api/profile');
-    },
+class ProfileService {
+    #URL = 'api/profile';
 
-    changeImage: (data, isBackground = false) => {
-        return axios.putForm('api/profile/editImage', {newImage: data}, {
+    getProfile() {
+        return axios.get(this.#URL);
+    }
+
+    changeImage(data, isBackground = false) {
+        return axios.putForm(`${this.#URL}/editImage`, {newImage: data}, {
             params: {
                 background: isBackground
             }
         })
-    },
+    }
 
-    getAbout: () => {
-        return axios.get('api/profile/edit/about')
-    },
-    editAbout: (newAbout) => {
-        return axios.put('api/profile/edit/about', newAbout)
-    },
+    getAbout() {
+        return axios.get(`${this.#URL}/edit/about`)
+    }
 
-    getIndustries: () => {
-        return axios.get('api/profile/allIndustries')
-    },
-    getAllSkills: () => {
-        return axios.get('api/profile/allSkills')
-    },
+    editAbout(newAbout) {
+        return axios.put(`${this.#URL}/edit/about`, newAbout)
+    }
 
-    getSkills: () => {
-        return axios.get('api/profile/userSkills')
-    },
-    getMainSkills: () => {
-        return axios.get('api/profile/mainSkills')
-    },
-    addSkill: (skill, isMainSkill = true) => {
-        return axios.post('api/profile/newSkill', {
+    getIndustries() {
+        return axios.get(`${this.#URL}/allIndustries`)
+    }
+
+    getAllSkills() {
+        return axios.get(`${this.#URL}/allSkills`)
+    }
+
+    getSkills() {
+        return axios.get(`${this.#URL}/userSkills`)
+    }
+
+    getMainSkills() {
+        return axios.get(`${this.#URL}/mainSkills`)
+    }
+
+    addSkill(skill, isMainSkill = true) {
+        return axios.post(`${this.#URL}/newSkill`, {
             skill,
             skillId: skill.value,
-            applicationUserId: '',
+            applicationUserId: ``,
             isMainSkill: isMainSkill,
             id: 0
         })
-    },
-    updateSkill: (data, id) => {
-        return axios.put(`api/profile/skill/edit/${id}`, data)
-    },
-    removeSkill: (skillId) => {
-        return axios.delete(`api/profile/skill/remove/${skillId}`)
-    },
+    }
 
+    updateSkill(data, id) {
+        return axios.put(`${this.#URL}/skill/edit/${id}`, data)
+    }
 
-    getEducations: () => {
-        return axios.get('api/profile/userEducations')
-    },
-    getEducation: (id) => {
-        return axios.get(`api/profile/education/${id}`)
-    },
-    addEducation: (data) => {
-        return axios.post('api/profile/newEducation', data)
-    },
-    updateEducation: (data, id) => {
-        return axios.put(`api/profile/education/edit/${id}`, data)
-    },
-    removeEducation: (id) => {
-        return axios.delete(`api/profile/education/remove/${id}`)
-    },
+    removeSkill(skillId) {
+        return axios.delete(`${this.#URL}/skill/remove/${skillId}`)
+    }
 
-    getExperiences: () => {
-        return axios.get('api/profile/userExperiences')
-    },
-    getExperience: (id) => {
-        return axios.get(`api/profile/experience/${id}`)
-    },
-    addExperience: (data) => {
-        return axios.post('api/profile/newExperience', data)
-    },
-    updateExperience: (data, id) => {
-        return axios.put(`api/profile/experience/edit/${id}`, data)
-    },
-    removeExperience: (id) => {
-        return axios.delete(`api/profile/experience/remove/${id}`)
-    },
-};
+    getEducations() {
+        return axios.get(`${this.#URL}/userEducations`)
+    }
+
+    getEducation(id) {
+        return axios.get(`${this.#URL}/education/${id}`)
+    }
+
+    addEducation(data) {
+        return axios.post(`${this.#URL}/newEducation`, data)
+    }
+
+    updateEducation(data, id) {
+        return axios.put(`${this.#URL}/education/edit/${id}`, data)
+    }
+
+    removeEducation(id) {
+        return axios.delete(`${this.#URL}/education/remove/${id}`)
+    }
+
+    getExperiences() {
+        return axios.get(`${this.#URL}/userExperiences`)
+    }
+
+    getExperience(id) {
+        return axios.get(`${this.#URL}/experience/${id}`)
+    }
+
+    addExperience(data) {
+        return axios.post(`${this.#URL}/newExperience`, data)
+    }
+
+    updateExperience(data, id) {
+        return axios.put(`${this.#URL}/experience/edit/${id}`, data)
+    }
+
+    removeExperience(id) {
+        return axios.delete(`${this.#URL}/experience/remove/${id}`)
+    }
+}
+
+export default new ProfileService();

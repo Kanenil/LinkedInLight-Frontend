@@ -1,76 +1,42 @@
-import React, {useEffect, useState} from "react";
-import {profileService} from "../../services/profileService";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import ProfileService from "../../services/profileService";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
-import {useLocation, useParams} from "react-router";
 import {Helmet} from "react-helmet-async";
 import StandardProfilePage from "../../components/profile/StandardProfilePage";
 import EditModalPage from "../../components/profile/EditModalPage";
 import ImageCropProvider from "../../providers/ImageCropProvider";
 import DetailsPage from "../../components/profile/DetailsPage";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {usePageStatus} from "../../hooks/usePageStatus";
 
 const Profile = () => {
-    const [user, setUser] = useState();
-    const [pageStates, setPageStates] = useState({
-        edit: "",
-        details: ""
+    const { isLoading, data } = useQuery({
+        queryFn: () => ProfileService.getProfile(),
+        queryKey: ['profile'],
+        select: ({data}) => data,
     })
-    const currentUser = useSelector(state => state.CurrentUser);
-    const dispatch = useDispatch();
-    const {blockId, id} = useParams();
-    const location = useLocation();
-
-    const getAndSaveUserState = () => {
-        profileService.profile().then(({data}) => {
-            dispatch({
-                type: 'SET_USER',
-                current_user: data
-            });
-            setUser(data);
-        }).catch()
-    }
-
-    useEffect(() => {
-        if (!currentUser || !currentUser.email) {
-            getAndSaveUserState();
-        } else {
-            setUser(currentUser);
-        }
-    }, [currentUser])
-
-    const getBlockId = () => {
-        if(location.pathname.includes("edit") && location.pathname.includes("details")) {
-            const startIndex = location.pathname.indexOf("details") + "details/".length;
-            return location.pathname.substring(startIndex, location.pathname.indexOf('/', startIndex));
-        }
-        return blockId;
-    }
-
-    useEffect(() => {
-        setPageStates({
-            details: location.pathname.includes("details") ? getBlockId() : "",
-            edit: location.pathname.includes("edit") ? blockId : ""
-        })
-    }, [blockId]);
+    const { edit, details, id } = usePageStatus();
+    const queryClient = useQueryClient();
 
     return (
         <React.Fragment>
             <Helmet>
                 <title>Profile</title>
             </Helmet>
+            <ConditionalWrapper condition={!isLoading}>
+                <ConditionalWrapper condition={edit}>
+                    <ImageCropProvider>
+                        <EditModalPage editModal={edit} id={id} onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
+                    </ImageCropProvider>
+                </ConditionalWrapper>
 
-            <ConditionalWrapper condition={pageStates.edit}>
-                <ImageCropProvider>
-                    <EditModalPage editModal={pageStates.edit} user={user} id={id} onSaveCallback={getAndSaveUserState}/>
-                </ImageCropProvider>
-            </ConditionalWrapper>
+                <ConditionalWrapper condition={details}>
+                    <DetailsPage detail={details} user={data} />
+                </ConditionalWrapper>
 
-            <ConditionalWrapper condition={pageStates.details}>
-                <DetailsPage detail={pageStates.details} user={user} />
-            </ConditionalWrapper>
-
-            <ConditionalWrapper condition={!pageStates.details}>
-                <StandardProfilePage user={user} />
+                <ConditionalWrapper condition={!details}>
+                    <StandardProfilePage user={data} />
+                </ConditionalWrapper>
             </ConditionalWrapper>
         </React.Fragment>
     )

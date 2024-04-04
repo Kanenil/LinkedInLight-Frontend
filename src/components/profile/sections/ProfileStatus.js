@@ -33,7 +33,7 @@ const suggestions = [
         title: "Add skills",
         description: "Highlight your key competencies and unique abilities, catching the attention of potential employers",
         buttonTitle: "Add skills",
-        to: "/in/edit/general-information",
+        to: "/in/edit/skill",
         width: 220,
         condition: 'skills'
     },

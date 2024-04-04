@@ -1,9 +1,9 @@
 import illustration from "../../../../assets/image-add-illustration.svg"
 import Dropzone from "../../Dropzone";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
 import CircularArrowIcon from "../../../../elements/icons/CircularArrowIcon";
-import {profileService} from "../../../../services/profileService";
+import ProfileService from "../../../../services/profileService";
 import Cropper from "../../cropper/Cropper";
 import {useImageCropContext} from "../../../../providers/ImageCropProvider";
 import {readFile} from "../../../../utils/cropImage";
@@ -11,11 +11,18 @@ import {RotationSlider, ZoomSlider} from "../../cropper/CropperSliders";
 import PrimaryButton from "../../../../elements/buttons/PrimaryButton";
 import SecondaryButton from "../../../../elements/buttons/SecondaryButton";
 import ModalHeader from "../ModalHeader";
+import {imageUrlToBase64} from "../../../../utils/converters";
+import {APP_ENV} from "../../../../env";
+import {useQuery} from "@tanstack/react-query";
 
 const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
-    const [error, setError] = useState("");
-
+    const { data } = useQuery({
+        queryFn: () => ProfileService.getProfile(),
+        queryKey: ['profile'],
+        select: ({data}) => data,
+    })
     const {image, setImage, rotation, setRotation, getProcessedImage} = useImageCropContext();
+    const [error, setError] = useState("");
 
     const handleFileChange = async ({target: {files}}) => {
         const file = files && files[0];
@@ -45,13 +52,29 @@ const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
         reader.readAsDataURL(avatar);
         reader.onloadend = () => {
             const base64data = reader.result;
-            profileService.changeImage(base64data, isBackground)
+            ProfileService.changeImage(base64data, isBackground)
                 .then(() => {
                     onSave();
                     setImage(null);
                 })
         };
     };
+
+    useEffect(() => {
+        const handleImageResponse = (imageURL) => {
+            imageUrlToBase64(imageURL, (resp) => {
+                setImage(resp);
+            });
+        };
+
+        const { image, background } = data || {};
+
+        if (!isBackground && image) {
+            handleImageResponse(`${APP_ENV.UPLOADS_URL}/${image}`);
+        } else if (isBackground && background) {
+            handleImageResponse(`${APP_ENV.UPLOADS_URL}/${background}`);
+        }
+    }, [data, isBackground])
 
     return (
         <div className="flex flex-col gap-2.5 py-5 px-8 w-[750px]"

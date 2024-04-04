@@ -1,6 +1,6 @@
 import {getDateTime, getLongMonth} from "../../../../utils/date";
 import React, {useEffect} from "react";
-import {profileService} from "../../../../services/profileService";
+import ProfileService from "../../../../services/profileService";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import useForm from "../../../../hooks/useForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
@@ -52,7 +52,7 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
     } = useForm(initialValues, onChange);
 
     useEffect(() => {
-        profileService.getIndustries().then(({data})=>{
+        ProfileService.getIndustries().then(({data})=>{
             setOptions(prev => ({
                 ...prev,
                 industry: data.map(val => ({ value: val.id, label: val.name }))
@@ -60,7 +60,7 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         })
 
         if (id) {
-            profileService.getExperience(id).then(({data}) => {
+            ProfileService.getExperience(id).then(({data}) => {
                 const experience = data;
 
                 const startDate = new Date(experience.startDate);
@@ -110,16 +110,16 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await profileService.updateExperience(model, id);
+            await ProfileService.updateExperience(model, id);
         } else {
-            await profileService.addExperience(model);
+            await ProfileService.addExperience(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await profileService.removeExperience(id);
+        await ProfileService.removeExperience(id);
 
         onSave();
     }

@@ -1,6 +1,6 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import {useEffect, useState} from "react";
-import {profileService} from "../../../services/profileService";
+import ProfileService from "../../../services/profileService";
 import ExperienceItem from "../items/ExperienceItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
@@ -8,7 +8,7 @@ const ExperienceSection = ({ user }) => {
     const [experiences, setExperiences] = useState([]);
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getExperiences()
             .then(({data}) => setExperiences(data))
     }, [user])

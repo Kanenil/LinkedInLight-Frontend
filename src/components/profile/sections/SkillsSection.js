@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {profileService} from "../../../services/profileService";
+import ProfileService from "../../../services/profileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import SkillItem from "../items/SkillItem";
@@ -9,7 +9,7 @@ const SkillsSection = ({user}) => {
     const [skills, setSkills] = useState([]);
 
     useEffect(() => {
-        profileService
+        ProfileService
             .getSkills()
             .then(({data}) => setSkills(data))
     }, [user])

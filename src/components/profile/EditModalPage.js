@@ -1,104 +1,10 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import ConfirmationModal from "../shared/modals/ConfirmationModal";
-import EditGeneralInformation from "../shared/modals/profile/EditGeneralInformation";
-import AddLanguage from "../shared/modals/profile/AddLanguage";
-import AddImage from "../shared/modals/profile/AddImage";
-import {useImageCropContext} from "../../providers/ImageCropProvider";
-import {imageUrlToBase64} from "../../utils/converters";
-import {APP_ENV} from "../../env";
-import AddEducation from "../shared/modals/profile/AddEducation";
-import AddExperience from "../shared/modals/profile/AddExperience";
-import AddCertification from "../shared/modals/profile/AddCertification";
-import AddCourse from "../shared/modals/profile/AddCourse";
-import AddProject from "../shared/modals/profile/AddProject";
-import AddVolunteerExperience from "../shared/modals/profile/AddVolunteerExperience";
-import AddSkill from "../shared/modals/profile/AddSkill";
+import {useQueryClient} from "@tanstack/react-query";
+import {modals} from "../../constants/modals";
 
-const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
-    const {setImage} = useImageCropContext();
-
-    const modals = [
-        {
-            route: ["general-information"],
-            children: <EditGeneralInformation/>,
-            props: {}
-        },
-        {
-            route: ["language"],
-            children: <AddLanguage/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["background", "image"],
-            children: <AddImage/>,
-            props: {
-                isBackground: editModal === "background"
-            }
-        },
-        {
-            route: ["education"],
-            children: <AddEducation/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["experience"],
-            children: <AddExperience/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["certification"],
-            children: <AddCertification/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["course"],
-            children: <AddCourse/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["project"],
-            children: <AddProject/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["volunteerExperience"],
-            children: <AddVolunteerExperience/>,
-            props: {
-                id
-            }
-        },
-        {
-            route: ["skill"],
-            children: <AddSkill/>,
-            props: {
-                id
-            }
-        },
-    ]
-
-    useEffect(() => {
-        if (editModal === "image" && user?.image) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.image, (resp) => {
-                setImage(resp)
-            })
-        } else if (editModal === "background" && user?.background) {
-            imageUrlToBase64(APP_ENV.UPLOADS_URL + "/" + user?.background, (resp) => {
-                setImage(resp)
-            })
-        }
-    }, [editModal, user?.background, user?.image])
+const EditModalPage = ({editModal, id}) => {
+    const queryClient = useQueryClient();
 
     return (
         <React.Fragment>
@@ -109,9 +15,10 @@ const EditModalPage = ({user, editModal, id, onSaveCallback}) => {
                         <ConfirmationModal
                             key={`modal-${modal.route[0]}`}
                             isOpen={true}
-                            onSaveCallback={onSaveCallback}
+                            onSaveCallback={() => queryClient.invalidateQueries(modal.route)}
                             children={modal.children}
-                            {...modal.props}
+                            id={id}
+                            isBackground={editModal === "background"}
                         />
                     )
             }

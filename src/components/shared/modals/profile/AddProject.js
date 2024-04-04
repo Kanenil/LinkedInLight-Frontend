@@ -1,7 +1,7 @@
 import useForm from "../../../../hooks/useForm";
 import React, {useEffect} from "react";
 import {getDateTime, getLongMonth} from "../../../../utils/date";
-import {recommendedProfileService} from "../../../../services/recommendedProfileService";
+import RecommendedProfileService from "../../../../services/recommendedProfileService";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
@@ -41,7 +41,7 @@ const AddProject = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            recommendedProfileService.getProject(id).then(({data}) => {
+            RecommendedProfileService.getProject(id).then(({data}) => {
                 const startDate = new Date(data.startDate);
                 const endDate = data.endDate ? new Date(data.endDate) : null;
 
@@ -88,16 +88,16 @@ const AddProject = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await recommendedProfileService.updateProject(model, id);
+            await RecommendedProfileService.updateProject(model, id);
         } else {
-            await recommendedProfileService.addProject(model);
+            await RecommendedProfileService.addProject(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await recommendedProfileService.removeProject(id);
+        await RecommendedProfileService.removeProject(id);
 
         onSave();
     }
