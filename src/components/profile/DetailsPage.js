@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
@@ -9,7 +9,7 @@ import AbstractDetails from "./AbstractDetails";
 import {details} from "../../constants/details";
 
 const DetailsPage = ({user, detail}) => {
-    const selected = details.find(page => page.route.includes(detail));
+    const [selected, setSelected] = useState(null);
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
     const navigator = useNavigate();
 
@@ -20,6 +20,10 @@ const DetailsPage = ({user, detail}) => {
     useEffect(() => {
         window.scrollTo (0,0);
     }, []);
+
+    useEffect(() => {
+        setSelected(details.find(page => page.route.includes(detail)))
+    }, [detail])
 
     const commonProps = {
         user,
@@ -52,9 +56,11 @@ const DetailsPage = ({user, detail}) => {
                 <div className="flex flex-row my-8 mx-auto w-[1170px]">
                     <div className="w-8/12">
                         {
+                            selected &&
                             React.cloneElement(<AbstractDetails/>, {
                                 key: `details-${selected.route[0]}`,
-                                ...{...selected.props, ...commonProps}
+                                ...selected.props,
+                                ...commonProps
                             })
                         }
                     </div>

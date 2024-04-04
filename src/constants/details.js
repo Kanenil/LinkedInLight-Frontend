@@ -15,7 +15,7 @@ export const details = [
     {
         route: ["languages"],
         props: {
-            promise: additionalProfileService.getLanguages,
+            promise: async () => await additionalProfileService.getLanguages(),
             detail: 'Languages',
             edit: 'language',
             itemComponent: <LanguageItem/>
@@ -24,7 +24,7 @@ export const details = [
     {
         route: ["educations"],
         props: {
-            promise: ProfileService.getEducations,
+            promise: async () => await ProfileService.getEducations(),
             detail: 'Educations',
             edit: 'education',
             itemComponent: <EducationItem/>
@@ -33,7 +33,7 @@ export const details = [
     {
         route: ["experiences"],
         props: {
-            promise: ProfileService.getExperiences,
+            promise: async () => await ProfileService.getExperiences(),
             detail: 'Experiences',
             edit: 'experience',
             itemComponent: <ExperienceItem/>
@@ -42,7 +42,7 @@ export const details = [
     {
         route: ["certifications"],
         props: {
-            promise: RecommendedProfileService.getCertifications,
+            promise: async () => await RecommendedProfileService.getCertifications(),
             detail: 'Certifications',
             edit: 'certification',
             itemComponent: <CertificationItem/>
@@ -51,7 +51,7 @@ export const details = [
     {
         route: ["courses"],
         props: {
-            promise: RecommendedProfileService.getCourses,
+            promise: async () => await RecommendedProfileService.getCourses(),
             detail: 'Courses',
             edit: 'course',
             itemComponent: <CourseItem/>
@@ -60,7 +60,7 @@ export const details = [
     {
         route: ["projects"],
         props: {
-            promise: RecommendedProfileService.getProjects,
+            promise: async () => await RecommendedProfileService.getProjects(),
             detail: 'Projects',
             edit: 'project',
             itemComponent: <ProjectItem/>
@@ -69,7 +69,7 @@ export const details = [
     {
         route: ["volunteerExperience"],
         props: {
-            promise: additionalProfileService.getVolunteerExperiences,
+            promise: async () => await additionalProfileService.getVolunteerExperiences(),
             detail: 'VolunteerExperience',
             edit: 'volunteerExperience',
             title: "VolunteerExperience",
@@ -79,7 +79,7 @@ export const details = [
     {
         route: ["skills"],
         props: {
-            promise: ProfileService.getSkills,
+            promise: async () => await ProfileService.getSkills(),
             detail: 'Skills',
             edit: 'skill',
             itemComponent: <SkillItem/>
