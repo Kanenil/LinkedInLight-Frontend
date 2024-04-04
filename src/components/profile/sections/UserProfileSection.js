@@ -41,7 +41,7 @@ const InformationSector = ({user}) => {
         <React.Fragment>
             <div className="ml-10 mr-8 mt-5 mb-4">
                 <div className="flex justify-end mb-2">
-                    <PencilButton to=' ' className=""/>
+                    <PencilButton to='edit/intro'/>
                 </div>
                 <div className="flex flex-row">
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>

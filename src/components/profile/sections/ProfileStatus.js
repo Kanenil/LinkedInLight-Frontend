@@ -17,9 +17,9 @@ const suggestions = [
         title: "What is your field of work?",
         description: "By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
         buttonTitle: "Add field of work",
-        to: "/in",
+        to: "edit/intro",
         width: 220,
-        condition: 'currentPosition'
+        condition: 'industry'
     },
     {
         title: "Add a profile picture",
