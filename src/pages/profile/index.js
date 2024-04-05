@@ -42,7 +42,7 @@ const Profile = () => {
             </ConditionalWrapper>
 
             <Show>
-                <Show.When isTrue={details}>
+                <Show.When isTrue={!!details}>
                     <DetailsPage detail={details} user={profile.data}/>
                 </Show.When>
 

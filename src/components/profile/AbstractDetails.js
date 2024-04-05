@@ -22,7 +22,7 @@ const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, tit
 
                     <h1 className="font-medium text-2xl text-[#2D2A33]">{title?title: detail}</h1>
 
-                    <Link to={`edit/${edit}`} className="ml-auto">
+                    <Link to={`details/${detail.toLowerCase()}/edit/${edit}`} className="ml-auto">
                         <PlusIcon className="w-4 fill-[#556DA9]"/>
                     </Link>
                 </div>
@@ -30,7 +30,7 @@ const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, tit
                     data?.map((item, index) =>
                         React.cloneElement(itemComponent, {
                             key: `abstractDetail-${index}`,
-                            editPath: `edit/${edit}/${item.id}`,
+                            editPath: `details/${detail.toLowerCase()}/edit/${edit}/${item.id}`,
                             ...item
                         })
                     )

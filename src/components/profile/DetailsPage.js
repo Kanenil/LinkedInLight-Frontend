@@ -14,7 +14,7 @@ const DetailsPage = ({user, detail}) => {
     const navigator = useNavigate();
 
     const onClickBack = () => {
-        navigator('/in', { state: detail });
+        navigator(`/in/${user.profileUrl}`, { state: detail });
     }
 
     useEffect(() => {
