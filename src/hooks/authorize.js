@@ -1,10 +1,8 @@
 import {general} from "../constants/general";
-import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 import ProfileService from "../services/profileService";
 
 export const useAuthorize = () => {
-    const navigator = useNavigate();
     const [isAuthorized, setIsAuthorized] = useState(false);
 
     useEffect(() => {
@@ -24,7 +22,7 @@ export const useAuthorize = () => {
                 localStorage.removeItem(general.token);
                 setIsAuthorized(false);
             });
-    }, [navigator])
+    }, [])
 
     return isAuthorized;
 }

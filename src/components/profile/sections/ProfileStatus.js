@@ -25,7 +25,7 @@ const suggestions = [
         title: "Add a profile picture",
         description: "Add a photo and make your profile more visible to employers on <span className=\"font-medium\">Job for You!</span>\n",
         buttonTitle: "Add photo",
-        to: "/in/edit/image",
+        to: "edit/image",
         width: 220,
         condition: 'image'
     },
@@ -33,7 +33,7 @@ const suggestions = [
         title: "Add skills",
         description: "Highlight your key competencies and unique abilities, catching the attention of potential employers",
         buttonTitle: "Add skills",
-        to: "/in/edit/skill",
+        to: "edit/skill",
         width: 220,
         condition: 'skills'
     },
@@ -41,7 +41,7 @@ const suggestions = [
         title: "Highlight your uniqueness",
         description: "Add a short description to highlight your personality or work experience",
         buttonTitle: "Add description",
-        to: "/in/edit/general-information",
+        to: "edit/general-information",
         width: 220,
         condition: 'about'
     }

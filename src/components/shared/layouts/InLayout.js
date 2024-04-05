@@ -7,6 +7,7 @@ import {general} from "../../../constants/general";
 import {routes} from "../../../constants/routes";
 import {useNavigate} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import MinimizedChat from "../../chats/MinimizedChat";
 
 const InLayout = () => {
     const navigator = useNavigate();
@@ -24,6 +25,7 @@ const InLayout = () => {
                 <InHeader/>
                 <Outlet/>
                 <InFooter/>
+                <MinimizedChat/>
             </React.Fragment>
         </ConditionalWrapper>
     )

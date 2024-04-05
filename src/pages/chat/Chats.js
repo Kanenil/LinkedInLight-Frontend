@@ -1,6 +1,5 @@
 import {useState} from "react";
 import WriteInIcon from "../../elements/icons/WriteInIcon";
-import noDataImage from "../../assets/empty-chat.png";
 import {
     AdjustmentsHorizontalIcon,
     FaceSmileIcon,
@@ -10,6 +9,7 @@ import {
     PhotoIcon
 } from "@heroicons/react/24/outline";
 import ChatsSection from "../../components/chats/ChatsSection";
+import MessagesSection from "../../components/chats/MessagesSection";
 
 // Test data for chat, delete after adding API methods
 let todayDate = new Date();
@@ -21,8 +21,6 @@ const chatMessagesUser1 = [];
 
 const chatMessagesUser2 = [];
 
-const testChatsList = [];
-/////
 const getSendingTime = (date) => {
     const today = new Date();
 
@@ -40,7 +38,6 @@ const getSendingTime = (date) => {
 
 const Chats = () => {
     const [selectedChat, setSelectedChat] = useState();
-    const [allChats, setAllChats] = useState(testChatsList);
 
     const messages = (chat) => {
         if (!chat) {
@@ -95,41 +92,50 @@ const Chats = () => {
 
 
     return (
-        <div className="flex-grow my-8 mx-auto w-[1170px]">
+        <div className="flex-grow flex flex-col mt-8 mb-2 mx-auto w-[1170px]">
             <div className="flex relative border-[1px] border-gray rounded-t-3xl overflow-hidden h-[70px]">
-                <div className="w-1/3 h-screen inline-block border-r-gray border-r-[1px] overflow-hidden relative">
+                <div className="w-1/3 inline-block border-r-gray border-r-[1px] overflow-hidden relative">
                     <div className="inline-block absolute left-10 top-6">Messages</div>
                     <div className="inline-block absolute text-3xl font-mono inline-flex right-24 top-3">
                         ...
                     </div>
                     <WriteInIcon className="fill-black w-16 h-16 inline-block absolute right-0 top-6"/>
                 </div>
-                <div className="w-2/3 h-screen inline-block relative">
-                    <input
-                        className="pl-[50px] relative absolute h-[50px] w-75 border-gray-300 border-[1px] top-[10px] left-10 rounded-2xl"
-                        placeholder="Search messages"
-                    ></input>
-                    <MagnifyingGlassIcon
-                        className="w-[23px] h-[23px] absolute top-[23px] left-[60px] text-gray-500"/>
-                    <AdjustmentsHorizontalIcon
-                        className="w-[28px] h-[28px] absolute top-[22px] left-[250px] text-gray-500"/>
+                <div className="flex flex-row items-center w-2/3 px-[30px] py-[13px]">
+                    <div className="inline-block relative">
+                        <input
+                            className="relative absolute w-75 font-light border-gray-300 border-[1px] pl-[50px] rounded-2xl"
+                            placeholder="Search messages"
+                        />
+                        <MagnifyingGlassIcon
+                            className="w-5 h-5 absolute top-2.5 left-4 text-gray-500"/>
+                        <AdjustmentsHorizontalIcon
+                            className="w-5 h-5 absolute top-3 right-5 text-gray-500"/>
+                    </div>
+
+                    <div className="ml-auto flex flex-row gap-4 items-center">
+                        <h1 className="text-lg font-medium">New message</h1>
+                        <input
+                            className="rounded-xl font-light"
+                            placeholder="Enter name or few names"
+                        />
+                    </div>
                 </div>
             </div>
-            <div className="flex relative border-[1px] border-gray rounded-b-3xl overflow-hidden">
-                <div className="w-1/3 h-screen inline-block border-r-gray border-r-[1px]">
+            <div className="flex relative flex-grow border-[1px] border-gray rounded-b-3xl overflow-hidden">
+                <div className="w-1/3 inline-block border-r-gray border-r-[1px]">
                     <ChatsSection/>
                 </div>
-                <div className="w-2/3 h-screen inline-block relative">
-                    <div className="text-lg m-3">New message</div>
-                    <input
-                        className="mx-3 rounded-xl"
-                        placeholder="Enter name or few names"
-                    ></input>
-                    <div className="w-full border-t-[1px] border-t-gray h-40 absolute bottom-0">
+                <div className="w-2/3 flex flex-col">
+                    <div className="h-full flex-shrink">
+                        <MessagesSection chat={selectedChat}/>
+                    </div>
+
+                    <div className="w-full border-t-[1px] border-t-gray h-40 relative">
                           <textarea
                               className="w-[65%] my-5 mx-7 h-[120px] rounded-xl border-gray-300 border-[1px] resize-none inline block"
                               placeholder="Type message"
-                          ></textarea>
+                          />
                         <div className="absolute top-5 left-[75%]">
                             <FaceSmileIcon className="text-gray w-[25px] h-[25px] inline-block"/>
                             <div className="transform rotate-90 inline-block mx-5">

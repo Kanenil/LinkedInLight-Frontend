@@ -82,7 +82,9 @@ const AccountButton = () => {
                     </div>
                     <Link
                         className="border-[#24459A] w-[172px] mt-2.5 mb-1 text-center border-[1px] rounded-full py-1.5 px-6 font-jost text-[#556DA9] hover:bg-[#E5F2FC] hover:border-[#24459A] hover:border-[1.5px] hover:text-[#556DA9] text-sm"
-                        to={`/in/${data?.profileUrl}`}>
+                        to={`/in/${data?.profileUrl}`}
+                        onClick={() => setIsComponentVisible(false)}
+                    >
                         View Profile
                     </Link>
 

@@ -7,13 +7,14 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import InHeader from "../headers/InHeader";
 import {Outlet} from "react-router-dom";
 import AuthFooter from "../footers/AuthFooter";
+import MinimizedChat from "../../chats/MinimizedChat";
 
 const ChatsLayout = () => {
     const navigator = useNavigate();
     const isAuth = useAuthorize();
 
     useEffect(() => {
-        if(!isAuth && !localStorage.getItem(general.token)) {
+        if (!isAuth && !localStorage.getItem(general.token)) {
             navigator(routes.signIn);
         }
     }, [navigator, isAuth])
@@ -24,6 +25,7 @@ const ChatsLayout = () => {
                 <InHeader/>
                 <Outlet/>
                 <AuthFooter/>
+                <MinimizedChat/>
             </React.Fragment>
         </ConditionalWrapper>
     )
