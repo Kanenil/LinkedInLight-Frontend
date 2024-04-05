@@ -7,6 +7,14 @@ class ProfileService {
         return axios.get(this.#URL);
     }
 
+    getProfileUrl(url) {
+        return axios.get(`${this.#URL}/profileUrl`, {
+            params: {
+                profileUrl: url
+            }
+        });
+    }
+
     changeImage(data, isBackground = false) {
         return axios.putForm(`${this.#URL}/editImage`, {newImage: data}, {
             params: {

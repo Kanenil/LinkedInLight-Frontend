@@ -39,11 +39,11 @@ const AccountButton = () => {
         return (
             <React.Fragment>
                 <ConditionalWrapper condition={to}>
-                    <Link className="hover:underline active:font-normal active:no-underline" to={to}>
+                    <Link onClick={onClickHandler} className="hover:underline active:font-normal active:no-underline" to={to}>
                         {title}
                     </Link>
                 </ConditionalWrapper>
-                <ConditionalWrapper condition={onClickHandler}>
+                <ConditionalWrapper condition={onClickHandler && !to}>
                     <button onClick={onClickHandler} className="hover:underline active:font-normal active:no-underline" to={to}>
                         {title}
                     </button>
@@ -82,14 +82,14 @@ const AccountButton = () => {
                     </div>
                     <Link
                         className="border-[#24459A] w-[172px] mt-2.5 mb-1 text-center border-[1px] rounded-full py-1.5 px-6 font-jost text-[#556DA9] hover:bg-[#E5F2FC] hover:border-[#24459A] hover:border-[1.5px] hover:text-[#556DA9] text-sm"
-                        to={'/in/profile'}>
+                        to={`/in/${data?.profileUrl}`}>
                         View Profile
                     </Link>
 
                     <div
                         className="flex flex-col gap-1 mt-1 mb-1 pb-1 pt-2.5 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]">
                         {defaultRoutes.map((route, index) =>
-                            <LinkedText key={`accountDefaultRoute-${index}`} {...route}/>
+                            <LinkedText onClickHandler={() => setIsComponentVisible(false)} key={`accountDefaultRoute-${index}`} {...route}/>
                         )}
                     </div>
 

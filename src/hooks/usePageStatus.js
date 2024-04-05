@@ -6,7 +6,7 @@ export const usePageStatus = () => {
         edit: "",
         details: ""
     })
-    const {blockId, id} = useParams();
+    const {blockId, id, profileURL} = useParams();
     const location = useLocation();
 
     const getBlockId = () => {
@@ -24,5 +24,5 @@ export const usePageStatus = () => {
         })
     }, [blockId]);
 
-    return { edit: pageStates.edit, details: pageStates.details, id }
+    return { edit: pageStates.edit, details: pageStates.details, id, profileURL }
 }

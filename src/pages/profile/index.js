@@ -8,36 +8,48 @@ import ImageCropProvider from "../../providers/ImageCropProvider";
 import DetailsPage from "../../components/profile/DetailsPage";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {usePageStatus} from "../../hooks/usePageStatus";
+import {useParams} from "react-router";
+import Show from "../../elements/shared/Show";
 
 const Profile = () => {
-    const { isLoading, data } = useQuery({
+    const {edit, details, id, profileURL} = usePageStatus();
+    const profile = useQuery({
         queryFn: () => ProfileService.getProfile(),
         queryKey: ['profile'],
         select: ({data}) => data,
     })
-    const { edit, details, id } = usePageStatus();
+    const profileId = useQuery({
+        queryFn: ({queryKey}) => ProfileService.getProfileUrl(queryKey[1]),
+        queryKey: ['profileUrl', profileURL],
+        select: ({data}) => data
+    })
     const queryClient = useQueryClient();
+
+    if(profile.isLoading || profileId.isLoading)
+        return;
 
     return (
         <React.Fragment>
             <Helmet>
                 <title>Profile</title>
             </Helmet>
-            <ConditionalWrapper condition={!isLoading}>
-                <ConditionalWrapper condition={edit}>
-                    <ImageCropProvider>
-                        <EditModalPage editModal={edit} id={id} onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
-                    </ImageCropProvider>
-                </ConditionalWrapper>
 
-                <ConditionalWrapper condition={details}>
-                    <DetailsPage detail={details} user={data} />
-                </ConditionalWrapper>
-
-                <ConditionalWrapper condition={!details}>
-                    <StandardProfilePage user={data} />
-                </ConditionalWrapper>
+            <ConditionalWrapper condition={edit}>
+                <ImageCropProvider>
+                    <EditModalPage editModal={edit} id={id}
+                                   onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
+                </ImageCropProvider>
             </ConditionalWrapper>
+
+            <Show>
+                <Show.When isTrue={details}>
+                    <DetailsPage detail={details} user={profile.data}/>
+                </Show.When>
+
+                <Show.Else>
+                    <StandardProfilePage user={profile.data} isOwner={profileId.data.profileUrl === profile.data.profileUrl}/>
+                </Show.Else>
+            </Show>
         </React.Fragment>
     )
 }

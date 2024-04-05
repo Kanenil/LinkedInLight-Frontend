@@ -2,6 +2,7 @@ import axios from "../services/axios";
 import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
+import {date} from "yup";
 
 export const useAuth = () => {
     const navigator = useNavigate();
@@ -78,10 +79,10 @@ export const useAuth = () => {
 
         axios
             .post('/api/auth/login', props)
-            .then(response => {
-                saveData(response.data);
+            .then(({data}) => {
+                saveData(data);
 
-                navigator('/in');
+                navigator(`/in/${data.user.profileUrl}`);
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
@@ -100,10 +101,10 @@ export const useAuth = () => {
     const googleLogin = async (props) => {
         axios
             .post('/api/auth/google/login', props)
-            .then(response => {
-                saveData(response.data);
+            .then(({data}) => {
+                saveData(data);
 
-                navigator('/in');
+                navigator(`/in/${data.user.profileUrl}`);
             })
             .catch((error) => {
                 console.log("Unhandled error: ", error)

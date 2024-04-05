@@ -5,7 +5,7 @@ import {peopleMayKnow} from "../../pages/profile/mock";
 import {sections} from "../../constants/sections";
 import {useScrollToLocation} from "../../hooks/useScrollToLocation";
 
-const StandardProfilePage = ({ user }) => {
+const StandardProfilePage = ({ user, isOwner }) => {
     useScrollToLocation();
 
     return (
@@ -18,7 +18,8 @@ const StandardProfilePage = ({ user }) => {
                                 sections.map((section, index) =>
                                     React.cloneElement(section.children, {
                                         key: `sections-${index}`,
-                                        user
+                                        user,
+                                        isOwner
                                     })
                                 )
                             }

@@ -62,7 +62,7 @@ const SliderItem = ({title, description, buttonTitle, to}) => {
     )
 }
 
-const ProfileStatus = ({user}) => {
+const ProfileStatus = ({user, isOwner}) => {
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
     useEffect(() => {
@@ -77,7 +77,7 @@ const ProfileStatus = ({user}) => {
     const maxLevel = suggestions.length;
 
     return (
-        <ConditionalWrapper condition={filteredSuggestions.length > 0}>
+        <ConditionalWrapper condition={filteredSuggestions.length > 0 && isOwner}>
             <div
                 className="rounded-lg bg-white overflow-hidden px-10 py-8">
                 <div>
