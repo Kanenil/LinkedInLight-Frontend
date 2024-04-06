@@ -290,7 +290,8 @@
     "Learning": "Learning",
     "Jobs": "Jobs",
     "SignIn": "Sign In",
-    "SignUp": "Sign Up"
+    "SignUp": "Sign Up",
+    "search": "Search"
   },
   "slider": {
     "next": "Next",
@@ -326,5 +327,15 @@
     "noCode": "Haven't received the code?",
     "resend": "Resend it",
     "confirmEmailAndSignUp": "Confirm and Sign Up"
+  },
+  "profile": {
+    "aboutMe": "About me",
+    "visibleForMe": "This section is only visible to you",
+    "generalInformation": "General information",
+    "defaultText": "Here your self-description will be displayed...",
+    "generalSkills": "General skills",
+    "skills": "Skills",
+    "showAll": "Show all",
+    "courses": "Courses"
   }
 }

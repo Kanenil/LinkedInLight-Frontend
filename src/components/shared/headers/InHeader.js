@@ -9,8 +9,11 @@ import MessagesIcon from "../../../elements/icons/MessagesIcon";
 import ArrowDownIcon from "../../../elements/icons/ArrowDownIcon";
 import CalculatorIcon from "../../../elements/icons/CalculatorIcon";
 import AccountButton from "../../../elements/buttons/AccountButton";
+import {useTranslation} from "react-i18next";
 
 const InHeader = () => {
+    const {t} = useTranslation();
+
     return (
         <header className="absolute top-0 left-0 z-40 w-full sticky" style={{boxShadow: "0px 2px 6px 0px #24459A33"}}>
             <div className="bg-white flex flex-row justify-center py-2.5">
@@ -19,7 +22,7 @@ const InHeader = () => {
                 </Link>
 
                 <div className="ml-10 my-auto relative">
-                    <input type="text" placeholder="Search"
+                    <input type="text" placeholder={t('header.search')}
                            className="border-[1px] border-[#2D2A33] rounded-xl w-[300px] pl-10 text-xs"/>
 
                     <LoopIcon className="absolute left-4 top-2.5 fill-[#2D2A33] h-3"/>

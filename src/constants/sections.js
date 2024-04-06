@@ -19,9 +19,9 @@ export const sections = [
     {
         children: <ProfileStatus />,
     },
-    {
-        children: <AnalyticsSection />,
-    },
+    // {
+    //     children: <AnalyticsSection />,
+    // },
     {
         children: <AboutMeSection />,
     },

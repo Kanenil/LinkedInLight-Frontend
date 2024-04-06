@@ -8,7 +8,6 @@ import ImageCropProvider from "../../providers/ImageCropProvider";
 import DetailsPage from "../../components/profile/DetailsPage";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {usePageStatus} from "../../hooks/usePageStatus";
-import {useParams} from "react-router";
 import Show from "../../elements/shared/Show";
 
 const Profile = () => {
@@ -31,7 +30,7 @@ const Profile = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Profile</title>
+                <title>{profile.data.firstName} {profile.data.lastName}</title>
             </Helmet>
 
             <ConditionalWrapper condition={edit}>
@@ -47,7 +46,7 @@ const Profile = () => {
                 </Show.When>
 
                 <Show.Else>
-                    <StandardProfilePage user={profile.data} isOwner={profileId.data.profileUrl === profile.data.profileUrl}/>
+                    <StandardProfilePage user={profileId.data} isOwner={profileId.data.profileUrl === profile.data.profileUrl}/>
                 </Show.Else>
             </Show>
         </React.Fragment>

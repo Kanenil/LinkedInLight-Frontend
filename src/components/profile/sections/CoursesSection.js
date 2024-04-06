@@ -3,8 +3,10 @@ import RecommendedProfileService from "../../../services/recommendedProfileServi
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CourseItem from "../items/CourseItem";
+import {useTranslation} from "react-i18next";
 
 const CoursesSection = ({user}) => {
+    const {t} = useTranslation();
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
@@ -19,7 +21,7 @@ const CoursesSection = ({user}) => {
                      className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
                 <div className="mx-10">
                     <div className="flex flex-row items-center gap-[20px]">
-                        <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Courses</h1>
+                        <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">{t('profile.courses')}</h1>
 
                         <PencilButton to='details/courses'/>
                     </div>

@@ -296,7 +296,8 @@
     "Learning": "Навчання",
     "Jobs": "Вакансії",
     "SignIn": "Вхід",
-    "SignUp": "Реєстрація"
+    "SignUp": "Реєстрація",
+    "search": "Пошук"
   },
   "slider": {
     "next": "Вперед",
@@ -332,5 +333,15 @@
     "noCode": "Не получили код?",
     "resend": "Переслати",
     "confirmEmailAndSignUp": "Підтвердити та Зареєструватись"
+  },
+  "profile": {
+    "aboutMe": "Про мене",
+    "visibleForMe": "Ця секція видна лише для вас",
+    "generalInformation": "Загальна інформація",
+    "defaultText": "Тут буде описана інформація про вас...",
+    "generalSkills": "Загальні навички",
+    "skills": "Навички",
+    "showAll": "Показати всі",
+    "courses": "Курси"
   }
 }
