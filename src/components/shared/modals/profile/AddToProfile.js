@@ -29,7 +29,7 @@ const AddToProfile = ({onClose}) => {
             id: 2, title: 'Additional information', content: [
                 {title: 'Add volunteer experience', to: 'edit/volunteerExperience'},
                 {title: 'Add languages', to: 'edit/language'},
-                {title: 'Add contact information', to: '/in'},
+                {title: 'Add contact information', to: 'edit/contact-information'},
             ]
         },
     ]

@@ -10,6 +10,7 @@ import AddVolunteerExperience from "../components/shared/modals/profile/AddVolun
 import AddSkill from "../components/shared/modals/profile/AddSkill";
 import React from "react";
 import EditIntro from "../components/shared/modals/profile/EditIntro";
+import EditContactInformation from "../components/shared/modals/profile/EditContactInformation";
 
 export const modals = [
     {
@@ -55,5 +56,9 @@ export const modals = [
     {
         route: ["intro"],
         children: <EditIntro/>
+    },
+    {
+        route: ["contact-information"],
+        children: <EditContactInformation/>
     },
 ]

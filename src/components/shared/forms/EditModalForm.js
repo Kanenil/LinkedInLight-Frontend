@@ -12,6 +12,7 @@ const EditModalForm = ({
                            onRemove,
                            onSubmit,
                            removeTitle,
+                           withBorder = true
                        }) => {
     const {isOverflow, containerRef, contentRef} = useOverflow();
 
@@ -30,7 +31,7 @@ const EditModalForm = ({
                 </div>
             </div>
 
-            <div className="flex justify-end pt-2.5 pb-1 gap-5 border-t-[0.5px] border-[#24459A80]">
+            <div className={`flex justify-end pt-2.5 pb-1 gap-5 ${withBorder?'border-t-[0.5px] border-[#24459A80]':''}`}>
                 <ConditionalWrapper condition={isEdit}>
                     <button onClick={onRemove} className="mr-auto text-[#24459A] font-medium hover:underline">
                         Remove {removeTitle}

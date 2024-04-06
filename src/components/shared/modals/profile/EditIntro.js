@@ -1,4 +1,3 @@
-import ProfileService from "../../../../services/profileService";
 import EditModalForm from "../../forms/EditModalForm";
 import React, {useEffect} from "react";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
