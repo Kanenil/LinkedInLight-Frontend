@@ -12,8 +12,11 @@ import FacebookButton from "../../../elements/buttons/FacebookButton";
 import illustration from "../../../assets/login-illustration.jpg";
 import {Helmet} from "react-helmet-async";
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 const SignIn = () => {
+    const {t} = useTranslation();
+
     const {login, googleLogin} = useAuth();
 
     const initValues = {
@@ -49,7 +52,7 @@ const SignIn = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Sign In</title>
+                <title>{t('auth.logIn')}</title>
             </Helmet>
             <div className="flex-grow flex flex-col bg-[#E7E7E7]">
                 <div
@@ -64,34 +67,34 @@ const SignIn = () => {
                             <div className="flex flex-row mt-5">
                                 <div className="flex w-full border-b-[1px] border-[#585359]">
                                     <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                        Log in
+                                        {t('auth.logIn')}
                                     </Link>
                                 </div>
                                 <div className="flex w-full">
                                     <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                        Sign up
+                                        {t('auth.signUp')}
                                     </Link>
                                 </div>
                             </div>
 
                             <FormGroup margin="mt-[30px]" name="email" value={values.email} type="email"
                                        touched={touched.email}
-                                       error={errors.email} title="Username/Email" handleChange={handleChange}/>
+                                       error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
 
                             <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
                                        touched={touched.password}
-                                       error={errors.password} title="Password" handleChange={handleChange}/>
+                                       error={errors.password} title={t('auth.password')} handleChange={handleChange}/>
 
                             <Link to={routes.forgetPassword} className="text-xs text-[#7D7D7D] hover:text-[#24459A]">
-                                Forgot your password?
+                                {t('auth.forgotPassword')}
                             </Link>
 
                             <button type="submit"
                                     className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                                Log In
+                                {t('auth.logIn')}
                             </button>
 
-                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
+                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
 
                             <div
                                 className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
@@ -101,9 +104,9 @@ const SignIn = () => {
                             </div>
 
                             <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]">
-                                <span className="font-light">Do you have an account?</span>
+                                <span className="font-light">{t('auth.noAccount')}</span>
 
-                                <Link className="font-bold" to={routes.signUp}>Sign Up</Link>
+                                <Link className="font-bold" to={routes.signUp}>{t('auth.signUp')}</Link>
                             </div>
                         </form>
                         <div className="w-3/4 flex justify-center items-center">

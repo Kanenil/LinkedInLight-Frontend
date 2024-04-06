@@ -295,5 +295,36 @@
   "slider": {
     "next": "Next",
     "back": "Back"
+  },
+  "auth": {
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "or": "or",
+    "noAccount": "Do you not have an account?",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "createPassword": "Create a Password",
+    "selectCountry": "Select a country ...",
+    "selectCity": "Select a city ...",
+    "terms": "Yes, I understand and agree to the Privacy Policy and Terms of <strong>Job for you</strong>.",
+    "alreadyMember": "Already a member of <strong>Job for you?</strong>",
+    "validation": {
+      "emptyEmail": "Email can not be empty!",
+      "email": "Enter an email!",
+      "emptyPassword": "Password can not be empty!",
+      "minPassword": "Password must be at least 6 symbols!",
+      "emptyFirstName": "First Name can not be empty!",
+      "emptyLastName": "Last Name can not be empty!",
+      "emptyCountry": "Select your country!",
+      "emptyCity": "Select your city!"
+    },
+    "confirmEmail": "Confirm your email address",
+    "enterCode": "Enter the code we sent to your email address ",
+    "noCode": "Haven't received the code?",
+    "resend": "Resend it",
+    "confirmEmailAndSignUp": "Confirm and Sign Up"
   }
 }

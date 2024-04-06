@@ -5,8 +5,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../hooks/auth";
 import {useLocation, useNavigate} from "react-router";
 import {Helmet} from "react-helmet-async";
+import {useTranslation} from "react-i18next";
 
 const ConfirmEmail = () => {
+    const {t} = useTranslation();
     const [searchParams] = useSearchParams();
     const location = useLocation();
     const navigator = useNavigate();
@@ -21,11 +23,11 @@ const ConfirmEmail = () => {
         return extractedParams;
     };
 
-    useEffect( () => {
-        if(!searchParams.has("email")) {
+    useEffect(() => {
+        if (!searchParams.has("email")) {
             navigator(routes.signUp);
         }
-        if(searchParams.has('token')) {
+        if (searchParams.has('token')) {
             confirmEmail(searchParams.get("email"), '', parseParams(location.search).token)
                 .then(() => navigator(routes.signIn))
                 .catch(err => {
@@ -81,10 +83,9 @@ const ConfirmEmail = () => {
                         <form onSubmit={onSubmit} className="mx-auto my-12">
                             <Logo className="fill-[#2D2A33] h-[55px] p-[5px] mx-auto"/>
 
-                            <h1 className="text-[#2D2A33] font-bold text-2xl text-center my-7">Confirm your email
-                                address</h1>
+                            <h1 className="text-[#2D2A33] font-bold text-2xl text-center my-7">{t('auth.confirmEmail')}</h1>
 
-                            <h3 className="text-lg text-[#2D2A33]">Enter the code we sent to your email address <span
+                            <h3 className="text-lg text-[#2D2A33]">{t('auth.enterCode')} <span
                                 className="font-bold">{searchParams.get("email")}</span></h3>
 
                             {/*<div className="flex justify-center mt-2.5 mb-7">*/}
@@ -98,16 +99,19 @@ const ConfirmEmail = () => {
                                        className="border-[1px] border-[#2D2A33] font-semibold rounded-xl tracking-widest w-full text-center"/>
                             </div>
 
-                            <h3 className="text-sm text-[#2D2A33] text-center mt-2.5">Haven't received the code? <button
-                                onClick={reSend}
-                                type="button"
-                                className="font-bold ml-2">Resend it</button>
+                            <h3 className="text-sm text-[#2D2A33] text-center mt-2.5">{t('auth.noCode')}
+                                <button
+                                    onClick={reSend}
+                                    type="button"
+                                    className="font-bold ml-2">
+                                    {t('auth.resend')}
+                                </button>
                             </h3>
 
                             <div className="flex justify-center">
                                 <button type="submit"
                                         className="bg-[#24459A] w-[344px] rounded-full border-[1px] border-[#B4BFDD] mt-16 py-[10px] px-[20px] font-semibold text-base text-white">
-                                    Confirm and Sign Up
+                                    {t('auth.confirmEmailAndSignUp')}
                                 </button>
                             </div>
                         </form>

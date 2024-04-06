@@ -4,7 +4,8 @@ import LanguageSelector from "../../../elements/shared/LanguageSelector";
 import {useTranslation} from "react-i18next";
 
 const AuthFooter = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const font = i18n.language.includes('uk')?'font-jost':'';
 
     const authRoutes = t("footer.authRoutes", { returnObjects: true });
 
@@ -18,9 +19,9 @@ const AuthFooter = () => {
                 </div>
             </div>
 
-            {authRoutes.map((link, index) => <Link key={`footer-${index}`} className="font-light text-[#2D2A33] text-xs" to={link.url}>{link.name}</Link>)}
+            {authRoutes.map((link, index) => <Link key={`footer-${index}`} className={`font-light text-[#2D2A33] text-xs ${font}`} to={link.url}>{link.name}</Link>)}
 
-            <LanguageSelector fill="[#2D2A33]" text="[#2D2A33]" font="light" className="text-xs" width="3.5"/>
+            <LanguageSelector fill="[#2D2A33]" text="[#2D2A33]" font="light" className={`text-xs ${font}`} width="3.5"/>
         </div>
     )
 }

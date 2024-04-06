@@ -1,9 +1,11 @@
 import classNames from "classnames";
 import EyeIcon from "../../../elements/icons/EyeIcon";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 const FormGroup = ({handleChange, value, touched, error, title, name, type, margin, ...props}) => {
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const {t} = useTranslation();
 
     return (
         <>
@@ -31,7 +33,7 @@ const FormGroup = ({handleChange, value, touched, error, title, name, type, marg
                 )}
             </div>
             {touched && error && (
-                <p className="mt-3 text-xs text-red-400">{error}</p>
+                <p className="mt-3 text-xs text-red-400">{t(error)}</p>
             )}
         </>
     )

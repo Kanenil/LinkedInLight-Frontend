@@ -15,8 +15,10 @@ import {authService} from "../../../services/authService";
 import {general} from "../../../constants/general";
 import {Helmet} from "react-helmet-async";
 import TextDown from "../../../elements/shared/TextDown";
+import {useTranslation} from "react-i18next";
 
 const SignUp = () => {
+    const {t} = useTranslation();
     const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState([]);
     const user = JSON.parse(localStorage.getItem(general.user) || '{}');
@@ -92,7 +94,7 @@ const SignUp = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Sign Up</title>
+                <title>{t('auth.signUp')}</title>
             </Helmet>
             <div className="flex-grow flex flex-col bg-[#E7E7E7]">
                 <div
@@ -107,35 +109,35 @@ const SignUp = () => {
                             <div className="flex flex-row mt-5">
                                 <div className="flex w-full">
                                     <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                        Log in
+                                        {t('auth.logIn')}
                                     </Link>
                                 </div>
                                 <div className="flex w-full border-b-[1px] border-[#585359]">
                                     <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                        Sign up
+                                        {t('auth.signUp')}
                                     </Link>
                                 </div>
                             </div>
 
                             <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
                                        touched={touched.firstName}
-                                       error={errors.firstName} title="First Name" handleChange={handleChange}/>
+                                       error={errors.firstName} title={t('auth.firstName')} handleChange={handleChange}/>
 
                             <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
                                        touched={touched.lastName}
-                                       error={errors.lastName} title="Last Name" handleChange={handleChange}/>
+                                       error={errors.lastName} title={t('auth.lastName')} handleChange={handleChange}/>
 
                             <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
                                        touched={touched.email}
-                                       error={errors.email} title="Email" handleChange={handleChange}/>
+                                       error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
 
                             <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
                                        touched={touched.password}
-                                       error={errors.password} title="Create a Password" handleChange={handleChange}/>
+                                       error={errors.password} title={t('auth.createPassword')} handleChange={handleChange}/>
 
                             <TextDown
                                 options={countryOptions}
-                                placeHolder='Select your country ...'
+                                placeHolder={t('auth.selectCountry')}
                                 containerHeightMax={200}
                                 containerWidth={380}
                                 onEnterSelect={false}
@@ -147,7 +149,7 @@ const SignUp = () => {
 
                             <TextDown
                                 options={cities}
-                                placeHolder='Select your city ...'
+                                placeHolder={t('auth.selectCity')}
                                 className="mt-[12px]"
                                 containerHeightMax={200}
                                 containerWidth={380}
@@ -182,18 +184,16 @@ const SignUp = () => {
                                         </span>
                                         </div>
                                     </div>
-                                    <span className="text-xs text-[#7D7D7D]">
-                                    Yes, I understand and agree to the Privacy Policy and Terms of <strong>Job for You</strong>.
-                                </span>
+                                    <span className="text-xs text-[#7D7D7D]" dangerouslySetInnerHTML={{__html: t('auth.terms')}}/>
                                 </label>
                             </div>
 
                             <button type="submit"
                                     className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                                Sign Up
+                                {t('auth.signUp')}
                             </button>
 
-                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">or</h1>
+                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
 
                             <div
                                 className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
@@ -203,9 +203,9 @@ const SignUp = () => {
                             </div>
 
                             <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
-                                <span className="font-light">Already a member of <span className="font-semibold">Job for You?</span></span>
+                                <span className="font-light [&>strong]:font-semibold" dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
 
-                                <Link className="font-bold" to={routes.signIn}>Log In</Link>
+                                <Link className="font-bold" to={routes.signIn}>{t('auth.logIn')}</Link>
                             </div>
                         </form>
                         <div className="w-3/4 flex justify-center items-center">

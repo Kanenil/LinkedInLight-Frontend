@@ -301,5 +301,36 @@
   "slider": {
     "next": "Вперед",
     "back": "Назад"
+  },
+  "auth": {
+    "logIn": "Вхід",
+    "signUp": "Реєстрація",
+    "email": "Email",
+    "password": "Пароль",
+    "forgotPassword": "Забули пароль?",
+    "or": "або",
+    "noAccount": "У вас немає аккаунту?",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "createPassword": "Створити пароль",
+    "selectCountry": "Вибрати країну ...",
+    "selectCity": "Вибрати місто ...",
+    "terms": "Так, я розумію та погоджуюсь з політикою конфіденційності та правилами <strong>Job for you</strong>.",
+    "alreadyMember": "Вже учасник <strong>Job for you?</strong>",
+    "validation": {
+      "emptyEmail": "Email не може бути пустим!",
+      "email": "Введіть електронну пошту!",
+      "emptyPassword": "Пароль не може бути пустим!",
+      "minPassword": "Пароль повинен бути мінімум з 6 символів!",
+      "emptyFirstName": "Ім'я не може бути пустим!",
+      "emptyLastName": "Прізвище не може бути пустим!",
+      "emptyCountry": "Виберіть країну!",
+      "emptyCity": "Виберіть місто!"
+    },
+    "confirmEmail": "Підтвердити електронну пошту",
+    "enterCode": "Введіть код, який ми надіслали вам на вашу електронну адресу ",
+    "noCode": "Не получили код?",
+    "resend": "Переслати",
+    "confirmEmailAndSignUp": "Підтвердити та Зареєструватись"
   }
 }
