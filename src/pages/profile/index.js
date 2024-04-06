@@ -30,19 +30,20 @@ const Profile = () => {
     return (
         <React.Fragment>
             <Helmet>
-                <title>{profile.data.firstName} {profile.data.lastName}</title>
+                <title>{profileId.data.firstName} {profileId.data.lastName}</title>
             </Helmet>
 
             <ConditionalWrapper condition={edit}>
                 <ImageCropProvider>
                     <EditModalPage editModal={edit} id={id}
+                                   isOwner={profileId.data.profileUrl === profile.data.profileUrl}
                                    onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
                 </ImageCropProvider>
             </ConditionalWrapper>
 
             <Show>
                 <Show.When isTrue={!!details}>
-                    <DetailsPage detail={details} user={profile.data}/>
+                    <DetailsPage detail={details} isOwner={profileId.data.profileUrl === profile.data.profileUrl} user={profile.data}/>
                 </Show.When>
 
                 <Show.Else>

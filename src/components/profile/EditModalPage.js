@@ -2,10 +2,17 @@ import React, {useEffect, useState} from 'react'
 import ConfirmationModal from "../shared/modals/ConfirmationModal";
 import {useQueryClient} from "@tanstack/react-query";
 import {modals} from "../../constants/modals";
+import {useNavigate} from "react-router";
 
-const EditModalPage = ({editModal, id}) => {
+const EditModalPage = ({editModal, isOwner, id}) => {
     const [selected, setSelected] = useState(null);
     const queryClient = useQueryClient();
+    const navigator = useNavigate();
+
+    useEffect(() => {
+        if(!isOwner)
+            navigator(-1);
+    }, [isOwner])
 
     useEffect(() => {
         setSelected(modals.find(page => page.route.includes(editModal)))

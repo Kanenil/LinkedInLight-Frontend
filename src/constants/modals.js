@@ -9,7 +9,7 @@ import AddProject from "../components/shared/modals/profile/AddProject";
 import AddVolunteerExperience from "../components/shared/modals/profile/AddVolunteerExperience";
 import AddSkill from "../components/shared/modals/profile/AddSkill";
 import React from "react";
-import EditAboutUrSelf from "../components/shared/modals/profile/EditAboutUrSelf";
+import EditIntro from "../components/shared/modals/profile/EditIntro";
 
 export const modals = [
     {
@@ -54,6 +54,6 @@ export const modals = [
     },
     {
         route: ["intro"],
-        children: <EditAboutUrSelf/>
+        children: <EditIntro/>
     },
 ]

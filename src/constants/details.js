@@ -1,4 +1,4 @@
-import {additionalProfileService} from "../services/additionalProfileService";
+import AdditionalProfileService from "../services/additionalProfileService";
 import LanguageItem from "../components/profile/items/LanguageItem";
 import ProfileService from "../services/profileService";
 import EducationItem from "../components/profile/items/EducationItem";
@@ -15,7 +15,7 @@ export const details = [
     {
         route: ["languages"],
         props: {
-            promise: async () => await additionalProfileService.getLanguages(),
+            promise: async () => await AdditionalProfileService.getLanguages(),
             detail: 'Languages',
             edit: 'language',
             itemComponent: <LanguageItem/>
@@ -69,7 +69,7 @@ export const details = [
     {
         route: ["volunteerExperience"],
         props: {
-            promise: async () => await additionalProfileService.getVolunteerExperiences(),
+            promise: async () => await AdditionalProfileService.getVolunteerExperiences(),
             detail: 'VolunteerExperience',
             edit: 'volunteerExperience',
             title: "VolunteerExperience",

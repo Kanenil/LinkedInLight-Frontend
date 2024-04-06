@@ -1,7 +1,7 @@
 import useForm from "../../../../hooks/useForm";
 import React, {useEffect} from "react";
 import {getDateTime, getLongMonth} from "../../../../utils/date";
-import {additionalProfileService} from "../../../../services/additionalProfileService";
+import AdditionalProfileService from "../../../../services/additionalProfileService";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
@@ -42,7 +42,7 @@ const AddVolunteerExperience = ({onClose, onSave, onChange, id}) => {
 
     useEffect(() => {
         if (id) {
-            additionalProfileService.getVolunteerExperience(id).then(({data}) => {
+            AdditionalProfileService.getVolunteerExperience(id).then(({data}) => {
                 const startDate = new Date(data.startDate);
                 const endDate = data.endDate ? new Date(data.endDate) : null;
 
@@ -89,16 +89,16 @@ const AddVolunteerExperience = ({onClose, onSave, onChange, id}) => {
         }
 
         if (id) {
-            await additionalProfileService.updateVolunteerExperience(model, id);
+            await AdditionalProfileService.updateVolunteerExperience(model, id);
         } else {
-            await additionalProfileService.addVolunteerExperience(model);
+            await AdditionalProfileService.addVolunteerExperience(model);
         }
 
         onSave();
     }
 
     const onRemoveClick = async () => {
-        await additionalProfileService.removeVolunteerExperience(id);
+        await AdditionalProfileService.removeVolunteerExperience(id);
 
         onSave();
     }

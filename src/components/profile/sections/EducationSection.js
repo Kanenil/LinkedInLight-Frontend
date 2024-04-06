@@ -4,7 +4,7 @@ import ProfileService from "../../../services/profileService";
 import EducationItem from "../items/EducationItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
-const EducationSection = ({user}) => {
+const EducationSection = ({user, isOwner}) => {
     const [educations, setEducations] = useState([]);
 
     useEffect(() => {

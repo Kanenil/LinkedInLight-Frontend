@@ -10,27 +10,41 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {Link} from "react-router-dom";
 import {APP_ENV} from "../../../env";
 import PencilButton from "../../../elements/buttons/PencilButton";
+import Show from "../../../elements/shared/Show";
 
-const ImageSector = ({user}) => {
+const ImageSector = ({user, isOwner}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
 
     return (
         <div className="relative w-full h-48" style={{background: `url(${backgroundUrl})`}}>
-            <Link to="edit/background"
-                  className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
-                <CameraIcon/>
-            </Link>
+            <ConditionalWrapper condition={isOwner}>
+                <Link to="edit/background"
+                      className="absolute flex justify-center items-center rounded-full bg-white w-10 h-10 top-3 right-5">
+                    <CameraIcon/>
+                </Link>
+            </ConditionalWrapper>
 
-            <Link to="edit/image"
-                  className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
-                <img className="object-contain" src={imageUrl} alt="image"/>
-            </Link>
+            <Show>
+                <Show.When isTrue={isOwner}>
+                    <Link to="edit/image"
+                          className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                        <img className="object-contain" src={imageUrl} alt="image"/>
+                    </Link>
+                </Show.When>
+
+                <Show.Else>
+                    <div
+                        className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                        <img className="object-contain" src={imageUrl} alt="image"/>
+                    </div>
+                </Show.Else>
+            </Show>
         </div>
     )
 }
 
-const InformationSector = ({user}) => {
+const InformationSector = ({user, isOwner}) => {
     const [isVisible, setIsVisible] = useState(false)
 
     const closeModal = () => {
@@ -40,10 +54,12 @@ const InformationSector = ({user}) => {
     return (
         <React.Fragment>
             <div className="ml-10 mr-8 mt-5 mb-4">
-                <div className="flex justify-end mb-2">
-                    <PencilButton to='edit/intro'/>
-                </div>
-                <div className="flex flex-row">
+                <ConditionalWrapper condition={isOwner}>
+                    <div className="flex justify-end mb-2">
+                        <PencilButton to='edit/intro'/>
+                    </div>
+                </ConditionalWrapper>
+                <div className={`flex flex-row ${!isOwner ? 'mt-6' : ''}`}>
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>
 
                     <ConditionalWrapper condition={user?.company}>
@@ -67,14 +83,16 @@ const InformationSector = ({user}) => {
 
                     <h4 className="ml-4">*****</h4>
                 </div>
-                <div className="flex flex-row gap-4 mt-4">
-                    <OpenToButton/>
-                    <ProfileButton onClickHandler={() => setIsVisible(true)} title="Add profile section"/>
-                    <button
-                        className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">
-                        More
-                    </button>
-                </div>
+                <ConditionalWrapper condition={isOwner}>
+                    <div className="flex flex-row gap-4 mt-4">
+                        <OpenToButton/>
+                        <ProfileButton onClickHandler={() => setIsVisible(true)} title="Add profile section"/>
+                        <button
+                            className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">
+                            More
+                        </button>
+                    </div>
+                </ConditionalWrapper>
             </div>
             <Modal isOpen={isVisible} onClose={closeModal} position="mt-10 mx-auto">
                 <AddToProfile onClose={closeModal}/>
@@ -83,12 +101,12 @@ const InformationSector = ({user}) => {
     )
 }
 
-const UserProfileSection = ({user}) => {
+const UserProfileSection = ({user, isOwner}) => {
     return (
         <div className="flex flex-col bg-white rounded-b-lg">
-            <ImageSector user={user}/>
+            <ImageSector user={user} isOwner={isOwner}/>
 
-            <InformationSector user={user}/>
+            <InformationSector user={user} isOwner={isOwner}/>
         </div>
     )
 }

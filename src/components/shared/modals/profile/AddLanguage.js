@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
-import {additionalProfileService} from "../../../../services/additionalProfileService";
+import AdditionalProfileService from "../../../../services/additionalProfileService";
 
 const AddLanguage = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -41,7 +41,7 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
         const languageId = options.language.find(val => val.label === values.language).value;
 
         if (id) {
-            await additionalProfileService.updateLanguage({
+            await AdditionalProfileService.updateLanguage({
                 id,
                 languageId: languageId,
                 language: {
@@ -51,7 +51,7 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
                 proficiency: values.proficiency
             });
         } else {
-            await additionalProfileService.addLanguage({
+            await AdditionalProfileService.addLanguage({
                 proficiency: values.proficiency,
                 languageId: languageId,
                 language: {
@@ -65,13 +65,13 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
     }
 
     const onRemoveClick = async () => {
-        await additionalProfileService.removeLanguage(id);
+        await AdditionalProfileService.removeLanguage(id);
 
         onSave();
     }
 
     useEffect(() => {
-        additionalProfileService.getAllLanguages().then(({data})=>{
+        AdditionalProfileService.getAllLanguages().then(({data})=>{
             setOptions(prev => ({
                 ...prev,
                 language: data.map(val => ({ value: val.id, label: val.name }))
@@ -79,7 +79,7 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
         })
 
         if (id) {
-            additionalProfileService.getLanguages().then(({data}) => {
+            AdditionalProfileService.getLanguages().then(({data}) => {
                 const language = data.filter(val => val.id === +id)?.[0];
 
                 if (!language) {

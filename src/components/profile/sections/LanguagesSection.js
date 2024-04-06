@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import EyeIcon from "../../../elements/icons/EyeIcon";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
-import {additionalProfileService} from "../../../services/additionalProfileService";
+import AdditionalProfileService from "../../../services/additionalProfileService";
 
 const LanguagesSection = ({user}) => {
     const [languages, setLanguages] = useState([]);
 
     useEffect(() => {
-        additionalProfileService
+        AdditionalProfileService
             .getLanguages()
             .then(({data}) => setLanguages(data))
     }, [user])

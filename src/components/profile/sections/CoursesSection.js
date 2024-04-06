@@ -5,7 +5,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CourseItem from "../items/CourseItem";
 import {useTranslation} from "react-i18next";
 
-const CoursesSection = ({user}) => {
+const CoursesSection = ({user, isOwner}) => {
     const {t} = useTranslation();
     const [courses, setCourses] = useState([]);
 
@@ -23,7 +23,9 @@ const CoursesSection = ({user}) => {
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">{t('profile.courses')}</h1>
 
-                        <PencilButton to='details/courses'/>
+                        <ConditionalWrapper condition={isOwner}>
+                            <PencilButton to='details/courses'/>
+                        </ConditionalWrapper>
                     </div>
 
                     <div className="flex flex-col mt-2.5 gap-[25px] py-[5px]">

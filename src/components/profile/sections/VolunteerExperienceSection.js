@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {additionalProfileService} from "../../../services/additionalProfileService";
+import AdditionalProfileService from "../../../services/additionalProfileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import VolunteerExperienceItem from "../items/VolunteerExperienceItem";
@@ -8,7 +8,7 @@ const VolunteerExperienceSection = ({user}) => {
     const [volunteerExperiences, setVolunteerExperiences] = useState([]);
 
     useEffect(() => {
-        additionalProfileService
+        AdditionalProfileService
             .getVolunteerExperiences()
             .then(({data}) => setVolunteerExperiences(data))
     }, [user])

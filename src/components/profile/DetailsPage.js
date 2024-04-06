@@ -8,7 +8,7 @@ import {useNavigate} from "react-router";
 import AbstractDetails from "./AbstractDetails";
 import {details} from "../../constants/details";
 
-const DetailsPage = ({user, detail}) => {
+const DetailsPage = ({user, isOwner, detail}) => {
     const [selected, setSelected] = useState(null);
     const imageUrl = user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage;
     const navigator = useNavigate();
@@ -16,6 +16,11 @@ const DetailsPage = ({user, detail}) => {
     const onClickBack = () => {
         navigator(`/in/${user.profileUrl}`, { state: detail });
     }
+
+    useEffect(() => {
+        if(!isOwner)
+            navigator(-1);
+    }, [isOwner])
 
     useEffect(() => {
         window.scrollTo (0,0);

@@ -1,4 +1,3 @@
-import EyeIcon from "../../../elements/icons/EyeIcon";
 import React, {useEffect, useState} from "react";
 import InformationIcon from "../../../elements/icons/InformationIcon";
 import PuzzlesIcon from "../../../elements/icons/PuzzlesIcon";
@@ -7,7 +6,7 @@ import ProfileService from "../../../services/profileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import {useTranslation} from "react-i18next";
 
-const AboutMeSection = ({user}) => {
+const AboutMeSection = ({user, isOwner}) => {
     const {t} = useTranslation();
     const [skills, setSkills] = useState([]);
 
@@ -30,31 +29,35 @@ const AboutMeSection = ({user}) => {
                 <div className="mx-10">
                     <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">{t('profile.aboutMe')}</h1>
 
-                    <div className="flex flex-row items-center gap-2.5 mt-2">
-                        <EyeIcon className="h-4"/>
+                    {/*<div className="flex flex-row items-center gap-2.5 mt-2">*/}
+                    {/*    <EyeIcon className="h-4"/>*/}
 
-                        <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">
-                            {t('profile.visibleForMe')}
-                        </h3>
-                    </div>
+                    {/*    <h3 className="text-sm font-roboto font-light text-[#7D7D7D]">*/}
+                    {/*        {t('profile.visibleForMe')}*/}
+                    {/*    </h3>*/}
+                    {/*</div>*/}
                 </div>
 
                 <div className="mx-10 mt-2.5 flex flex-row gap-[30px] py-[5px]">
-                    <div className="w-1/2 py-[5px]">
-                        <div className="flex flex-col gap-2.5">
-                            <div className="flex flex-row gap-2.5 items-center">
-                                <InformationIcon className="h-5 fill-[#24459A]"/>
+                    <ConditionalWrapper condition={isOwner || user.about}>
+                        <div className="w-1/2 py-[5px]">
+                            <div className="flex flex-col gap-2.5">
+                                <div className="flex flex-row gap-2.5 items-center">
+                                    <InformationIcon className="h-5 fill-[#24459A]"/>
 
-                                <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">{t('profile.generalInformation')}</h1>
+                                    <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">{t('profile.generalInformation')}</h1>
 
-                                <PencilButton to='edit/general-information' className="ml-auto"/>
+                                    <ConditionalWrapper condition={isOwner}>
+                                        <PencilButton to='edit/general-information' className="ml-auto"/>
+                                    </ConditionalWrapper>
+                                </div>
+
+                                <h3 className="text-[#2D2A33] font-jost font-light text-sm">
+                                    {user?.about ? user?.about : t('profile.defaultText')}
+                                </h3>
                             </div>
-
-                            <h3 className="text-[#2D2A33] font-jost font-light text-sm">
-                                {user?.about ? user?.about : t('profile.defaultText')}
-                            </h3>
                         </div>
-                    </div>
+                    </ConditionalWrapper>
 
                     <ConditionalWrapper condition={skills.length > 0}>
                         <div className="w-1/2 py-[5px]">
@@ -64,7 +67,9 @@ const AboutMeSection = ({user}) => {
 
                                     <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">{t('profile.generalSkills')}</h1>
 
-                                    <PencilButton to='edit/general-information' className="ml-auto"/>
+                                    <ConditionalWrapper condition={isOwner}>
+                                        <PencilButton to='edit/general-information' className="ml-auto"/>
+                                    </ConditionalWrapper>
                                 </div>
 
 

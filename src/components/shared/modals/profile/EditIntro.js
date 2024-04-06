@@ -5,8 +5,9 @@ import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import useForm from "../../../../hooks/useForm";
 import AddButton from "../../../../elements/buttons/AddButton";
 import {Link} from "react-router-dom";
+import AdditionalProfileService from "../../../../services/additionalProfileService";
 
-const EditAboutUrSelf = ({onClose, onSave, onChange}) => {
+const EditIntro = ({onClose, onSave, onChange}) => {
     const initialValues = {
         options: {},
         values: {
@@ -33,8 +34,7 @@ const EditAboutUrSelf = ({onClose, onSave, onChange}) => {
     } = useForm(initialValues, onChange);
 
     useEffect(() => {
-        ProfileService.getProfile().then(({data}) => {
-            console.log(data)
+        AdditionalProfileService.getIntro().then(({data}) => {
             setValues({
                 ...data
             })
@@ -46,12 +46,14 @@ const EditAboutUrSelf = ({onClose, onSave, onChange}) => {
     }, [])
 
     const onSaveClick = async () => {
-
+        AdditionalProfileService
+            .updateIntro(values)
+            .then(onSave);
     }
 
     return (
         <EditModalForm
-            onSubmit={onSaveClick}
+            onSubmit={() => onSubmit(onSaveClick)}
             onClose={onClose}
             onRemove={null}
             isEdit={false}
@@ -167,4 +169,4 @@ const EditAboutUrSelf = ({onClose, onSave, onChange}) => {
         </EditModalForm>
     )
 }
-export default EditAboutUrSelf;
+export default EditIntro;
