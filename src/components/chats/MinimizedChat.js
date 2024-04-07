@@ -17,6 +17,7 @@ const MinimizedChat = () => {
         select: ({data}) => data,
     });
     const imageUrl = data?.image ? APP_ENV.UPLOADS_URL + "/" + data?.image : defaultImage;
+    const [selectedChat, setSelectedChat] = useState(null);
 
     const toggleOpen = () => {
         setIsOpen(prev => !prev);
@@ -52,7 +53,7 @@ const MinimizedChat = () => {
             </div>
 
             <ConditionalWrapper condition={isOpen}>
-                <MinimizedChatsList/>
+                <MinimizedChatsList selectedChat={selectedChat} setSelectedChat={setSelectedChat}/>
             </ConditionalWrapper>
         </div>
     )

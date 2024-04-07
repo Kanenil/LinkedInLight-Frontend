@@ -2,6 +2,11 @@ import noDataImage from "../../assets/empty-chat.png";
 import {useQuery} from "@tanstack/react-query";
 import ChatService from "../../services/chatService";
 import Show from "../../elements/shared/Show";
+import defaultImage from "../../assets/default-image.jpg";
+import {APP_ENV} from "../../env";
+import {EllipsisVerticalIcon} from "@heroicons/react/24/solid";
+import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import classNames from "classnames";
 
 const NoData = () => {
     return (
@@ -22,7 +27,7 @@ const NoData = () => {
     )
 }
 
-const ChatsSection = () => {
+const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
     const {isLoading, data} = useQuery({
         queryFn: () => ChatService.getAllChats(),
         queryKey: ['allChats'],
@@ -30,45 +35,64 @@ const ChatsSection = () => {
     })
 
     return (
-        <Show>
-            <Show.When isTrue={data && data.length > 0}>
-                {
-                    !isLoading && data.map(chat => (
-                        <div
-                            // onClick={() => setSelectedChat(chat)}
-                            className="border-b-gray-200 border-b-[1px] pt-2 hover:bg-gray-200 transition-colors duration-300 transform cursor-pointer"
-                        >
-                            <div className="flex">
-                                <div className="inline-block pl-1">
+        <div className="w-1/3 inline-block border-r-gray border-r-[1px] px-4 pt-2.5">
+            <Show>
+                <Show.When isTrue={data && data.length > 0}>
+                    {
+                        !isLoading && data.map(chat => {
+                            const participant = getParticipant(chat);
+                            const isSelected = selectedChat ? selectedChat.id === chat.id : false;
+
+                            return (
+                                <div key={`chat-${participant.id}`} className="flex flex-row">
                                     <div
-                                        className="rounded-full bg-gray-500 h-12 w-12 flex items-center justify-center overflow-hidden">
-                                        <img
-                                            className="w-full h-full"
-                                            src={chat.user.avatar}
-                                            alt="noData"
-                                        ></img>
-                                    </div>
-                                </div>
+                                        onClick={() => setSelectedChat(chat)}
+                                        className={classNames("hover:bg-[#EEF1FB] rounded-lg transition-colors duration-300 transform cursor-pointer w-full",{
+                                            'bg-[#EEF1FB]': isSelected
+                                        })}
+                                    >
+                                        <div className="flex">
+                                            <div className="pl-1">
+                                                <div
+                                                    className="rounded-full bg-gray-500 h-12 w-12 flex items-center justify-center border-2 border-black overflow-hidden">
+                                                    <img
+                                                        className="w-full h-full"
+                                                        src={participant.image ? APP_ENV.UPLOADS_URL + "/" + participant?.image : defaultImage}
+                                                        alt="noData"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <div className="inline-block ml-5">
-                                    <div className="text-md">{chat.user.name}</div>
-                                    <div className="text-gray-400 text-sm">
-                                        {chat.lastMessage.text}
+                                            <div className="flex flex-col ml-5 font-jost">
+                                                <div
+                                                    className="text-md">{participant.firstName} {participant.lastName}</div>
+                                                <div className="flex flex-row gap-2">
+                                                    <div className="text-gray-400 text-sm max-w-52 truncate text-ellipsis">
+                                                        Недавно написав цей вірш і прочи
+                                                    </div>
+                                                    <div className="text-gray-400 text-sm">
+                                                        2 д.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <ConditionalWrapper condition={isSelected}>
+                                        <button className="ml-auto">
+                                            <EllipsisVerticalIcon className="w-8 h-8 fill-[#24459A]"/>
+                                        </button>
+                                    </ConditionalWrapper>
                                 </div>
-                            </div>
-                            <div className="flex justify-end pr-2 text-xs text-blue-300">
-                                {/*{getSendingTime(chat.lastMessage.sendingTime)}*/}
-                            </div>
-                        </div>
-                    ))
-                }
-            </Show.When>
+                            )
+                        })
+                    }
+                </Show.When>
 
-            <Show.Else>
-                <NoData/>
-            </Show.Else>
-        </Show>
+                <Show.Else>
+                    <NoData/>
+                </Show.Else>
+            </Show>
+        </div>
     )
 }
 export default ChatsSection;

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import WriteInIcon from "../../elements/icons/WriteInIcon";
 import {
     AdjustmentsHorizontalIcon,
@@ -10,6 +10,11 @@ import {
 } from "@heroicons/react/24/outline";
 import ChatsSection from "../../components/chats/ChatsSection";
 import MessagesSection from "../../components/chats/MessagesSection";
+import {useDebounceCallback} from "usehooks-ts";
+import ChatService from "../../services/chatService";
+import {useQuery} from "@tanstack/react-query";
+import SearchConnections from "../../components/chats/SearchConnections";
+import ProfileService from "../../services/profileService";
 
 // Test data for chat, delete after adding API methods
 let todayDate = new Date();
@@ -37,7 +42,23 @@ const getSendingTime = (date) => {
 };
 
 const Chats = () => {
-    const [selectedChat, setSelectedChat] = useState();
+    const [selectedChat, setSelectedChat] = useState(null);
+    const [participant, setParticipant] = useState(null);
+    const {data} = useQuery({
+        queryFn: () => ProfileService.getProfile(),
+        queryKey: ['profile'],
+        select: ({data}) => data,
+    });
+
+    const getParticipant = (chat) => {
+        if(!data || !chat)
+            return;
+
+        return data.id === chat.participant2Id ? chat.participant1 : chat.participant2;
+    }
+
+    //const [searchList, setSearchList] = useState([]);
+    //const debounced = useDebounceCallback(setSearch, 500)
 
     const messages = (chat) => {
         if (!chat) {
@@ -90,10 +111,16 @@ const Chats = () => {
         }
     };
 
+    const onNewChat = user => {
+        ChatService.startChat(user.id).then(({data}) => {
+            console.log(data)
+            setSelectedChat(data);
+        })
+    }
 
     return (
         <div className="flex-grow flex flex-col mt-8 mb-2 mx-auto w-[1170px]">
-            <div className="flex relative border-[1px] border-gray rounded-t-3xl overflow-hidden h-[70px]">
+            <div className="flex relative border-[1px] border-gray rounded-t-3xl  h-[70px]">
                 <div className="w-1/3 inline-block border-r-gray border-r-[1px] overflow-hidden relative">
                     <div className="inline-block absolute left-10 top-6">Messages</div>
                     <div className="inline-block absolute text-3xl font-mono inline-flex right-24 top-3">
@@ -113,23 +140,14 @@ const Chats = () => {
                             className="w-5 h-5 absolute top-3 right-5 text-gray-500"/>
                     </div>
 
-                    <div className="ml-auto flex flex-row gap-4 items-center">
-                        <h1 className="text-lg font-medium">New message</h1>
-                        <input
-                            className="rounded-xl font-light"
-                            placeholder="Enter name or few names"
-                        />
-                    </div>
+                    <SearchConnections selectCallback={onNewChat}/>
                 </div>
             </div>
             <div className="flex relative flex-grow border-[1px] border-gray rounded-b-3xl overflow-hidden">
-                <div className="w-1/3 inline-block border-r-gray border-r-[1px]">
-                    <ChatsSection/>
-                </div>
+                <ChatsSection getParticipant={getParticipant} selectedChat={selectedChat} setSelectedChat={setSelectedChat}/>
+
                 <div className="w-2/3 flex flex-col">
-                    <div className="h-full flex-shrink">
-                        <MessagesSection chat={selectedChat}/>
-                    </div>
+                    <MessagesSection getParticipant={getParticipant} chat={selectedChat}/>
 
                     <div className="w-full border-t-[1px] border-t-gray h-40 relative">
                           <textarea

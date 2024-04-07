@@ -8,11 +8,7 @@ class ProfileService {
     }
 
     getProfileUrl(url) {
-        return axios.get(`${this.#URL}/profileUrl`, {
-            params: {
-                profileUrl: url
-            }
-        });
+        return axios.get(`${this.#URL}/${url}`);
     }
 
     changeImage(data, isBackground = false) {
