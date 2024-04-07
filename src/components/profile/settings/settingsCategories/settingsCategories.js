@@ -1,3 +1,5 @@
+import { settingsRoutes } from "../../../../constants/routes";
+
 export const accountParams = [
   {
     category: "Profile info",
@@ -10,7 +12,7 @@ export const accountParams = [
   {
     category: "General",
     items: [
-      { name: "Language" },
+      { name: "Language", link: `${settingsRoutes.sections.params}/language` },
       { name: "Content language" },
       { name: "Video autoplay", prescription: "enabled" },
       { name: "Audio effects", prescription: "enabled" },
@@ -47,7 +49,10 @@ export const securitySettings = [
     items: [
       { name: "Email", prescription: "test@gmail.com" },
       { name: "Phone" },
-      { name: "Change password" },
+      {
+        name: "Change password",
+        link: `${settingsRoutes.sections.security}/passwordChange`,
+      },
       { name: "Access keys" },
       { name: "Log in locations" },
       { name: "Devices where your password has been saved" },
