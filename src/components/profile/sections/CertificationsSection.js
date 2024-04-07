@@ -1,29 +1,32 @@
-import {useEffect, useState} from "react";
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CertificationItem from "../items/CertificationItem";
 import RecommendedProfileService from "../../../services/recommendedProfileService";
+import {useQuery} from "@tanstack/react-query";
 
-const CertificationsSection = ({ user }) => {
-    const [certificates, setCertificates] = useState([]);
+const CertificationsSection = ({ user, isOwner }) => {
+    const {data, isLoading} = useQuery({
+        queryFn: ({queryKey}) => RecommendedProfileService.getCertificationsByProfileUrl(queryKey[1]),
+        queryKey: ['certification', user.profileUrl],
+        select: ({data}) => data,
+        enabled: !!user.profileUrl
+    })
 
-    useEffect(() => {
-        RecommendedProfileService
-            .getCertifications()
-            .then(({data}) => setCertificates(data))
-    }, [user])
+    if(isLoading)
+        return;
 
     return (
-        <ConditionalWrapper condition={certificates.length > 0}>
+        <ConditionalWrapper condition={data.length > 0}>
             <div id="certifications" className="rounded-lg bg-white py-8 px-10">
                 <SectionHeaderBlock
                     title="Certifications"
                     buttonTitle="Add certification"
                     onPencilClickTo="details/certifications"
                     link="edit/certification"
+                    isOwner={isOwner}
                 />
 
-                {certificates.map((certificate, index) =>
+                {data.map((certificate, index) =>
                     <CertificationItem key={`sectionCertificates-${index}`} {...certificate} />
                 )}
             </div>

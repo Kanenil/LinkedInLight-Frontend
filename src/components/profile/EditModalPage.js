@@ -4,7 +4,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {modals} from "../../constants/modals";
 import {useNavigate} from "react-router";
 
-const EditModalPage = ({editModal, isOwner, id}) => {
+const EditModalPage = ({editModal, user, isOwner, id}) => {
     const [selected, setSelected] = useState(null);
     const queryClient = useQueryClient();
     const navigator = useNavigate();
@@ -25,7 +25,7 @@ const EditModalPage = ({editModal, isOwner, id}) => {
                     <ConfirmationModal
                         key={`modal-${selected.route[0]}`}
                         isOpen={true}
-                        onSaveCallback={() => queryClient.invalidateQueries(selected.route)}
+                        onSaveCallback={() => queryClient.invalidateQueries([selected.route, user.profileUrl])}
                         children={selected.children}
                         id={id}
                         isBackground={editModal === "background"}

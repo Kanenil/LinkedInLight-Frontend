@@ -15,6 +15,10 @@ class AdditionalProfileService {
         return axios.get(`${this.#URL}/allLanguages`);
     }
 
+    getLanguagesByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/languages`);
+    }
+
     getLanguages() {
         return axios.get(`${this.#URL}/userLanguages`);
     }
@@ -38,6 +42,10 @@ class AdditionalProfileService {
 
     getVolunteerExperiences() {
         return axios.get(`${this.#URL}/userVolunteerExperiences`)
+    }
+
+    getVolunteerExperiencesByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/volunteerExperiences`);
     }
 
     getVolunteerExperience(id) {

@@ -43,8 +43,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
 
                     model = {
                         name: skill.skill.name,
-                        id: skill.skill.id,
-                        skillId: skill.skillId,
+                        id: skill.skillId,
                         modelId: skill.id,
                         isMainSkill: skill.isMainSkill,
                         applicationUserId: skill.applicationUserId,
@@ -123,14 +122,15 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     const onSaveClick = async () => {
         try {
             if(id) {
+                console.log(values)
                 await ProfileService.updateSkill({
-                    id: values.modelId,
+                    id: id,
                     isMainSkill: values.isMainSkill,
                     skill: {
                         id: values.id,
                         name: values.name
                     },
-                    skillId: values.skillId,
+                    skillId: values.id,
                     applicationUserId: values.applicationUserId
                 }, id)
             } else {

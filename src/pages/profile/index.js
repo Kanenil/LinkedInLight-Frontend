@@ -36,6 +36,7 @@ const Profile = () => {
             <ConditionalWrapper condition={edit}>
                 <ImageCropProvider>
                     <EditModalPage editModal={edit} id={id}
+                                   user={profileId.data}
                                    isOwner={profileId.data.profileUrl === profile.data.profileUrl}
                                    onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
                 </ImageCropProvider>

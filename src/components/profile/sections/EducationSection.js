@@ -3,27 +3,31 @@ import {useEffect, useState} from "react";
 import ProfileService from "../../../services/profileService";
 import EducationItem from "../items/EducationItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {useQuery} from "@tanstack/react-query";
 
 const EducationSection = ({user, isOwner}) => {
-    const [educations, setEducations] = useState([]);
+    const {data, isLoading} = useQuery({
+        queryFn: ({queryKey}) => ProfileService.getEducationsByProfileUrl(queryKey[1]),
+        queryKey: ['education', user.profileUrl],
+        select: ({data}) => data,
+        enabled: !!user.profileUrl
+    })
 
-    useEffect(() => {
-        ProfileService
-            .getEducations()
-            .then(({data}) => setEducations(data))
-    }, [user])
+    if(isLoading)
+        return;
 
     return (
-        <ConditionalWrapper condition={educations.length > 0}>
+        <ConditionalWrapper condition={data.length > 0}>
             <div id="educations" className="rounded-lg bg-white py-8 px-10">
                 <SectionHeaderBlock
                     title="Education"
                     buttonTitle="Add education"
                     onPencilClickTo="details/educations"
                     link="edit/education"
+                    isOwner={isOwner}
                 />
 
-                {educations.map((education, index) =>
+                {data.map((education, index) =>
                     <EducationItem key={`sectionEducation-${index}`} {...education} />
                 )}
             </div>

@@ -11,7 +11,7 @@ const CoursesSection = ({user, isOwner}) => {
 
     useEffect(() => {
         RecommendedProfileService
-            .getCourses()
+            .getCoursesByProfileUrl(user.profileUrl)
             .then(({data}) => setCourses(data))
     }, [user])
 

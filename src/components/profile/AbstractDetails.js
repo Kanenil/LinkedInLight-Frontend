@@ -4,6 +4,29 @@ import {Link} from "react-router-dom";
 import PlusIcon from "../../elements/icons/PlusIcon";
 import {useQuery} from "@tanstack/react-query";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import defaultImage from '../../assets/empty-messages.png'
+import AddButton from "../../elements/buttons/AddButton";
+import Show from "../../elements/shared/Show";
+
+const NoData = ({ title, addPath }) => {
+    return (
+        <div className="flex flex-col items-center gap-4">
+            <img className="w-96" src={defaultImage} alt="noData"/>
+
+            <h1 className="text-center text-lg text-blue-800">
+                Nothing to see for now
+            </h1>
+
+            <h3 className="text-sm text-center text-gray-400 w-2/3 mx-auto">
+                When you add new {title.toLowerCase()} they'll show up here.
+            </h3>
+
+            <AddButton to={addPath}>
+                Add {title.toLowerCase()}
+            </AddButton>
+        </div>
+    )
+}
 
 const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, title = ""}) => {
     const { isLoading, data } = useQuery({
@@ -26,15 +49,23 @@ const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, tit
                         <PlusIcon className="w-4 fill-[#556DA9]"/>
                     </Link>
                 </div>
-                {
-                    data?.map((item, index) =>
-                        React.cloneElement(itemComponent, {
-                            key: `abstractDetail-${index}`,
-                            editPath: `details/${detail.toLowerCase()}/edit/${edit}/${item.id}`,
-                            ...item
-                        })
-                    )
-                }
+                <Show>
+                    <Show.When isTrue={data?.length > 0}>
+                        {
+                            data?.map((item, index) =>
+                                React.cloneElement(itemComponent, {
+                                    key: `abstractDetail-${index}`,
+                                    editPath: `details/${detail.toLowerCase()}/edit/${edit}/${item.id}`,
+                                    ...item
+                                })
+                            )
+                        }
+                    </Show.When>
+
+                    <Show.Else>
+                        <NoData title={edit} addPath={`details/${detail.toLowerCase()}/edit/${edit}`}/>
+                    </Show.Else>
+                </Show>
             </ConditionalWrapper>
         </div>
     )

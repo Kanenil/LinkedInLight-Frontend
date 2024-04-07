@@ -11,7 +11,8 @@ const ModalInputFormGroup = ({
                                  title,
                                  className = "pt-[5px] pb-[10px] pr-[20px] gap-[5px]",
                                  children,
-                                 errorChildren
+                                 errorChildren,
+                                 disabled = false
                              }) => {
     return (
         <div className={className}>
@@ -22,10 +23,11 @@ const ModalInputFormGroup = ({
                 id={name}
                 type={type}
                 value={value}
+                disabled={disabled}
                 onChange={onChange}
                 className={classNames("w-full rounded-[4px] border-[0.5px] py-[5px] px-2.5 text-[#7D7D7D] text-sm", {
-                    "border-[#556DA9]":!error,
-                    "border-[#9E0F20]":error
+                    "border-[#556DA9]": !error,
+                    "border-[#9E0F20]": error
                 })}
             />
             {children}

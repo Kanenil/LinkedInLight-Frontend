@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import InformationIcon from "../../../elements/icons/InformationIcon";
 import PuzzlesIcon from "../../../elements/icons/PuzzlesIcon";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import ProfileService from "../../../services/profileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import {useTranslation} from "react-i18next";
+import {useQuery} from "@tanstack/react-query";
 
 const AboutMeSection = ({user, isOwner}) => {
     const {t} = useTranslation();
-    const [skills, setSkills] = useState([]);
+    const {data, isLoading} = useQuery({
+        queryFn: () => ProfileService.getMainSkills(),
+        queryKey: ['skill'],
+        select: ({data}) => data.map(skill => skill.skill.name)
+    })
 
-    useEffect(() => {
-        ProfileService
-            .getMainSkills()
-            .then(({data}) => setSkills(data.map(skill => skill.skill.name)))
-    }, [user])
+    if(isLoading)
+        return;
 
     const dot = <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
         <path
@@ -23,7 +25,7 @@ const AboutMeSection = ({user, isOwner}) => {
     </svg>
 
     return (
-        <ConditionalWrapper condition={user?.about || skills.length > 0}>
+        <ConditionalWrapper condition={user?.about || data?.length > 0}>
             <div
                 className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
                 <div className="mx-10">
@@ -59,7 +61,7 @@ const AboutMeSection = ({user, isOwner}) => {
                         </div>
                     </ConditionalWrapper>
 
-                    <ConditionalWrapper condition={skills.length > 0}>
+                    <ConditionalWrapper condition={data?.length > 0}>
                         <div className="w-1/2 py-[5px]">
                             <div className="flex flex-col gap-2.5">
                                 <div className="flex flex-row gap-2.5 items-center">
@@ -75,10 +77,10 @@ const AboutMeSection = ({user, isOwner}) => {
 
                                 <h3 className="flex flex-row flex-wrap content-start items-center gap-1 text-[#2D2A33] font-jost font-light text-sm">
                                     {
-                                        skills.map((skill, index) =>
+                                        data.map((skill, index) =>
                                             <React.Fragment key={`${skill}-${index}`}>
                                                 <span>{skill}</span>
-                                                {index + 1 !== skills.length ? dot : ''}
+                                                {index + 1 !== data.length ? dot : ''}
                                             </React.Fragment>
                                         )
                                     }

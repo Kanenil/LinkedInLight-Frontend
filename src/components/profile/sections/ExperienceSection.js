@@ -9,7 +9,7 @@ const ExperienceSection = ({ user }) => {
 
     useEffect(() => {
         ProfileService
-            .getExperiences()
+            .getExperiencesByProfileUrl(user.profileUrl)
             .then(({data}) => setExperiences(data))
     }, [user])
 

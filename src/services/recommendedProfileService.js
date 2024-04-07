@@ -11,6 +11,10 @@ class RecommendedProfileService {
         return axios.get(`${this.#URL}/certification/${id}`)
     }
 
+    getCertificationsByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/certifications`);
+    }
+
     addCertification(data) {
         return axios.post(`${this.#URL}/newCertification`, data)
     }
@@ -25,6 +29,10 @@ class RecommendedProfileService {
 
     getCourses() {
         return axios.get(`${this.#URL}/userCourses`)
+    }
+
+    getCoursesByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/courses`);
     }
 
     getCourse(id) {
@@ -49,6 +57,10 @@ class RecommendedProfileService {
 
     getProject(id) {
         return axios.get(`${this.#URL}/project/${id}`)
+    }
+
+    getProjectsByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/projects`);
     }
 
     addProject(data) {

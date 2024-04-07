@@ -35,6 +35,10 @@ class ProfileService {
         return axios.get(`${this.#URL}/allSkills`)
     }
 
+    getSkillsByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/skills`);
+    }
+
     getSkills() {
         return axios.get(`${this.#URL}/userSkills`)
     }
@@ -65,6 +69,10 @@ class ProfileService {
         return axios.get(`${this.#URL}/userEducations`)
     }
 
+    getEducationsByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/educations`);
+    }
+
     getEducation(id) {
         return axios.get(`${this.#URL}/education/${id}`)
     }
@@ -83,6 +91,10 @@ class ProfileService {
 
     getExperiences() {
         return axios.get(`${this.#URL}/userExperiences`)
+    }
+
+    getExperiencesByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/experiences`);
     }
 
     getExperience(id) {
