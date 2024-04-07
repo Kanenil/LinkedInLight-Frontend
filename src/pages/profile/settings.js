@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 const Settings = () => {
-  const { section } = useParams();
+  const { section, block } = useParams();
   const selectedSection = section || settingsRoutes.sections.params;
   const [currentSettings, setCurrentSettings] = useState(accountParams);
 
@@ -35,9 +35,9 @@ const Settings = () => {
         setCurrentSettings(accountParams);
         break;
     }
-  }, [selectedSection]);
+  }, [selectedSection, block]);
   return (
-    <div className="bg-[#E7E7E7] py-24 flex justify-center">
+    <div className="bg-[#E7E7E7] w-full py-24 flex justify-center">
       <div className="w-1/4 bg-white h-[900px] rounded-lg overflow-hidden py-8 px-6 inline-block">
         <img
           className="w-[45px] h-[45px] rounded-full  hover:opacity-45 transition duration-300 ease-in-out"
@@ -73,7 +73,7 @@ const Settings = () => {
           <div className="ml-[10px] inline-block">Visibility</div>
         </Link>
       </div>
-      <SettingsTable settings={currentSettings} />
+      <SettingsTable settings={currentSettings} block={block} />
     </div>
   );
 };
