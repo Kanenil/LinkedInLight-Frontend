@@ -62,8 +62,8 @@ const InformationSector = ({user, isOwner}) => {
                 <div className={`flex flex-row ${!isOwner ? 'mt-6' : ''}`}>
                     <h1 className="font-bold text-2xl text-[#2D2A33]">{user?.firstName} {user?.lastName}</h1>
 
-                    <ConditionalWrapper condition={user?.company}>
-                        <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">{user?.company}</h1>
+                    <ConditionalWrapper condition={user?.currentPosition}>
+                        <h1 className="ml-auto font-jost text-[#2D2A33] font-bold mt-auto">{user?.currentPosition}</h1>
                     </ConditionalWrapper>
                 </div>
                 <ConditionalWrapper condition={user?.headline}>

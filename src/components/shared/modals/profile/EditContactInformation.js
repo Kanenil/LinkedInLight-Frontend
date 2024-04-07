@@ -8,7 +8,7 @@ import EditModalForm from "../../forms/EditModalForm";
 import {APP_ENV} from "../../../../env";
 import classNames from "classnames";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
-import {daysInMonth, getLongMonth, getMonths, getYears} from "../../../../utils/date";
+import {daysInMonth, getDateTime, getLongMonth, getMonths, getYears} from "../../../../utils/date";
 import FormSelector from "../../forms/FormSelector";
 
 const EditContactInformation = ({onClose, onSave, onChange}) => {
@@ -33,8 +33,6 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
         onSubmit,
         setErrors,
         setValues,
-        errors,
-        isSubmitted
     } = useForm(initialValues, onChange);
 
     const months = getMonths();
@@ -48,7 +46,7 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
             setValues({
                 ...data,
                 phone: data.phoneNumbers[0] ?? "",
-                address: data.country + ', ' + data.city,
+                address: data.address || "",
                 birthdayDay: birthday.getDay(),
                 birthdayMonth: getLongMonth(birthday.getMonth()),
                 birthdayYear: birthday.getFullYear(),
@@ -61,9 +59,15 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
     }, [])
 
     const onSaveClick = async () => {
-        // AdditionalProfileService
-        //     .updateIntro(values)
-        //     .then(onSave);
+        const model = {
+            address: values.address,
+            phoneNumber: values.phone,
+            birthday: getDateTime(values.birthdayDay, values.birthdayMonth, values.birthdayYear)
+        }
+
+        AdditionalProfileService
+            .updateContactInformation(model)
+            .then(onSave);
         onSave();
     }
 

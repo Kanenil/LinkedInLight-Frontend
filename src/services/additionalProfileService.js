@@ -11,6 +11,10 @@ class AdditionalProfileService {
         return axios.put(`${this.#URL}/intro`, data);
     }
 
+    updateContactInformation(data) {
+        return axios.put(`${this.#URL}/contacts/edit`, data);
+    }
+
     getAllLanguages() {
         return axios.get(`${this.#URL}/allLanguages`);
     }
