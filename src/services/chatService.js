@@ -26,5 +26,13 @@ class ChatService {
             }
         });
     }
+
+    sendMessage(message) {
+        return axios.postForm(this.#URL, message);
+    }
+
+    readChat(chat) {
+        return axios.post(`${this.#URL}/read/${chat}`, null);
+    }
 }
 export default new ChatService();

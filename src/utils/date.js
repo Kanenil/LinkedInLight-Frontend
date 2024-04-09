@@ -33,4 +33,19 @@ const getDateTime = (day = 1, month, year) => {
     return day && month && year ? new Date(now_utc): null;
 }
 
-export {getMonths, getYears, getDateTime, getShortMonth, getLongMonth}
+const getSendingTime = (date) => {
+    const today = new Date();
+
+    const localTime = date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+    if (today.toDateString() === date.toDateString()) {
+        return localTime;
+    } else {
+        const daysAgo = Math.floor((today - date) / (1000 * 3600 * 24));
+        return `${daysAgo} days ago`;
+    }
+};
+
+export {getMonths, getYears, getDateTime, getShortMonth, getLongMonth, getSendingTime}

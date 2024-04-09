@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router";
-import {useAuthorize} from "../../../hooks/authorize";
+import {useAuthorize} from "../../../hooks/useAuthorize";
 import React, {useEffect} from "react";
 import {general} from "../../../constants/general";
 import {routes} from "../../../constants/routes";

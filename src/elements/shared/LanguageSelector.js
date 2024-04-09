@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import useComponentVisible from "../../hooks/componentVisible";
+import useComponentVisible from "../../hooks/useComponentVisible";
 import {useTranslation} from "react-i18next";
 import ChevronDownIcon from "../icons/ChevronDownIcon";
 

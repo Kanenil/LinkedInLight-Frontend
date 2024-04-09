@@ -1,5 +1,5 @@
 import noDataImage from "../../assets/empty-chat.png";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import ChatService from "../../services/chatService";
 import Show from "../../elements/shared/Show";
 import defaultImage from "../../assets/default-image.jpg";
@@ -7,6 +7,8 @@ import {APP_ENV} from "../../env";
 import {EllipsisVerticalIcon} from "@heroicons/react/24/solid";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import classNames from "classnames";
+import {getSendingTime} from "../../utils/date";
+import {SignalRContext} from "../../providers/SocketProvider";
 
 const NoData = () => {
     return (
@@ -27,12 +29,27 @@ const NoData = () => {
     )
 }
 
-const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
+const ChatsSection =({getParticipant, selectedChat, setSelectedChat}) => {
     const {isLoading, data} = useQuery({
         queryFn: () => ChatService.getAllChats(),
         queryKey: ['allChats'],
         select: ({data}) => data,
-    })
+    });
+    const queryClient = useQueryClient();
+
+    SignalRContext.useSignalREffect(
+        "UpdateChatList",
+        () => {
+            queryClient.invalidateQueries('allChats');
+        },[]
+    );
+
+    SignalRContext.useSignalREffect(
+        "MessagesMarkedAsRead",
+        () => {
+            queryClient.invalidateQueries('allChats');
+        }, []
+    )
 
     return (
         <div className="w-1/3 inline-block border-r-gray border-r-[1px] px-4 pt-2.5">
@@ -43,8 +60,13 @@ const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
                             const participant = getParticipant(chat);
                             const isSelected = selectedChat ? selectedChat.id === chat.id : false;
 
+                            if(!participant)
+                                return;
+
+                            const lastMessage = chat.messages[chat.messages.length - 1];
+
                             return (
-                                <div key={`chat-${participant.id}`} className="flex flex-row">
+                                <div key={`chat-${participant.id}`} className="flex flex-row mb-4">
                                     <div
                                         onClick={() => setSelectedChat(chat)}
                                         className={classNames("hover:bg-[#EEF1FB] rounded-lg transition-colors duration-300 transform cursor-pointer w-full",{
@@ -68,10 +90,10 @@ const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
                                                     className="text-md">{participant.firstName} {participant.lastName}</div>
                                                 <div className="flex flex-row gap-2">
                                                     <div className="text-gray-400 text-sm max-w-52 truncate text-ellipsis">
-                                                        Недавно написав цей вірш і прочи
+                                                        {lastMessage?.content}
                                                     </div>
                                                     <div className="text-gray-400 text-sm">
-                                                        2 д.
+                                                        {getSendingTime(new Date(lastMessage?.sentAt))}
                                                     </div>
                                                 </div>
                                             </div>

@@ -2,7 +2,7 @@ import Header from "../headers/Header";
 import {Outlet} from "react-router-dom";
 import Footer from "../footers/Footer";
 import {useNavigate} from "react-router";
-import {useAuthorize} from "../../../hooks/authorize";
+import {useAuthorize} from "../../../hooks/useAuthorize";
 import {useEffect} from "react";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 

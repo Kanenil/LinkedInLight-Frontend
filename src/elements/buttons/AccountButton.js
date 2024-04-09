@@ -3,8 +3,8 @@ import defaultImage from '../../assets/default-image.jpg'
 import React from "react";
 import ProfileService from "../../services/profileService";
 import {Link} from "react-router-dom";
-import useComponentVisible from "../../hooks/componentVisible";
-import {useAuth} from "../../hooks/auth";
+import useComponentVisible from "../../hooks/useComponentVisible";
+import {useAuth} from "../../hooks/useAuth";
 import ConditionalWrapper from "../shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
 import {useQuery} from "@tanstack/react-query";

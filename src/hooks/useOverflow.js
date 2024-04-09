@@ -7,7 +7,7 @@ const useOverflow = () => {
 
     useEffect(() => {
         function toggleScrollbar() {
-            setIsOverflow(contentRef.current.offsetHeight > containerRef.current.offsetHeight);
+            setIsOverflow(contentRef.current?.offsetHeight > containerRef.current?.offsetHeight);
         }
 
         if(contentRef.current && containerRef.current)

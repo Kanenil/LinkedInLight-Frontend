@@ -1,4 +1,4 @@
-import useOverflow from "../../../hooks/overflow";
+import useOverflow from "../../../hooks/useOverflow";
 import ModalHeader from "../modals/ModalHeader";
 import React from "react";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";

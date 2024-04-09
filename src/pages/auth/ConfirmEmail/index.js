@@ -2,7 +2,7 @@ import Logo from "../../../elements/shared/Logo";
 import {useSearchParams} from "react-router-dom";
 import {routes} from "../../../constants/routes";
 import React, {useEffect, useRef, useState} from "react";
-import {useAuth} from "../../../hooks/auth";
+import {useAuth} from "../../../hooks/useAuth";
 import {useLocation, useNavigate} from "react-router";
 import {Helmet} from "react-helmet-async";
 import {useTranslation} from "react-i18next";

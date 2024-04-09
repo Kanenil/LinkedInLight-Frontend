@@ -6,7 +6,7 @@ export const useScrollToLocation = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
-        if (location.state && location.state) {
+        if (location.state) {
             const targetId = location.state;
             let iteration = 0;
 

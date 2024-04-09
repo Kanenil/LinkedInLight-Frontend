@@ -3,7 +3,7 @@ import {LoginSchema} from "./validation";
 import {Link} from "react-router-dom";
 import {routes} from "../../../constants/routes";
 import GoogleButton from "../../../elements/buttons/GoogleButton";
-import {useAuth} from "../../../hooks/auth";
+import {useAuth} from "../../../hooks/useAuth";
 import FormGroup from "../../../components/shared/forms/FormGroup";
 import {jwtDecode} from "jwt-decode";
 import Logo from "../../../elements/shared/Logo";

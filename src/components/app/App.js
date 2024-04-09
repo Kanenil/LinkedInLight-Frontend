@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ChatsLayout from "../shared/layouts/ChatsLayout";
 import React from "react";
+import SocketProvider from "../../providers/SocketProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,50 +27,52 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <div className="App">
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-              </Route>
+      <SocketProvider>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                </Route>
 
-              <Route path="/in">
-                <Route index element={<InLayout />} />
+                <Route path="/in">
+                  <Route index element={<InLayout />} />
 
-                <Route element={<InLayout />}>
-                  <Route path=":profileURL" element={<Profile />}>
-                    <Route path="edit/:blockId" element={<Profile />} />
-                    <Route path="details/:blockId" element={<Profile />}>
-                      <Route path="edit/:blockId" element={<Profile />}>
-                        <Route path=":id" element={<Profile />} />
+                  <Route element={<InLayout />}>
+                    <Route path=":profileURL" element={<Profile />}>
+                      <Route path="edit/:blockId" element={<Profile />} />
+                      <Route path="details/:blockId" element={<Profile />}>
+                        <Route path="edit/:blockId" element={<Profile />}>
+                          <Route path=":id" element={<Profile />} />
+                        </Route>
                       </Route>
                     </Route>
                   </Route>
+
+                  <Route path="chats" element={<ChatsLayout />}>
+                    <Route index element={<Chats />} />
+                  </Route>
+
+                  <Route path="settings" element={<ChatsLayout />}>
+                    <Route
+                        path="settings/:section?/:block?"
+                        element={<Settings />}
+                    />
+                  </Route>
                 </Route>
 
-                <Route path="chats" element={<ChatsLayout />}>
-                  <Route index element={<Chats />} />
+                <Route path="/auth" element={<AuthLayout />}>
+                  <Route path="sign-up" element={<SignUp />} />
+                  <Route path="sign-in" element={<SignIn />} />
+                  <Route path="confirm-email" element={<ConfirmEmail />} />
                 </Route>
-
-                <Route path="settings" element={<ChatsLayout />}>
-                  <Route
-                    path="settings/:section?/:block?"
-                    element={<Settings />}
-                  />
-                </Route>
-              </Route>
-
-              <Route path="/auth" element={<AuthLayout />}>
-                <Route path="sign-up" element={<SignUp />} />
-                <Route path="sign-in" element={<SignIn />} />
-                <Route path="confirm-email" element={<ConfirmEmail />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-          <ReactQueryDevtools buttonPosition="bottom-right" />
-        </QueryClientProvider>
-      </HelmetProvider>
+              </Routes>
+            </BrowserRouter>
+            <ReactQueryDevtools buttonPosition="bottom-right" />
+          </QueryClientProvider>
+        </HelmetProvider>
+      </SocketProvider>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import {useDebounceCallback} from "usehooks-ts";
 import {useQuery} from "@tanstack/react-query";
 import ChatService from "../../services/chatService";
-import useComponentVisible from "../../hooks/componentVisible";
+import useComponentVisible from "../../hooks/useComponentVisible";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
 

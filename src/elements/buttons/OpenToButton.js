@@ -1,4 +1,4 @@
-import useComponentVisible from "../../hooks/componentVisible";
+import useComponentVisible from "../../hooks/useComponentVisible";
 import {Link} from "react-router-dom";
 import ConditionalWrapper from "../shared/ConditionalWrapper";
 

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Outlet} from "react-router-dom";
 import InHeader from "../headers/InHeader";
 import InFooter from "../footers/InFooter";
-import {useAuthorize} from "../../../hooks/authorize";
+import {useAuthorize} from "../../../hooks/useAuthorize";
 import {general} from "../../../constants/general";
 import {routes} from "../../../constants/routes";
 import {useNavigate} from "react-router";
