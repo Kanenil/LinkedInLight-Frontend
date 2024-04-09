@@ -14,7 +14,7 @@ const DetailsPage = ({user, isOwner, detail}) => {
     const navigator = useNavigate();
 
     const onClickBack = () => {
-        navigator(`/in/${user.profileUrl}`, { state: detail });
+        navigator(`/j4y/${user.profileUrl}`, { state: detail });
     }
 
     useEffect(() => {

@@ -83,8 +83,8 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
             <div className="flex flex-col gap-2 mt-2.5">
                 <h1 className="font-jost font-light text-lg">URL</h1>
 
-                <Link to={`${APP_ENV.FRONTEND_URL}/in/${values.profileUrl}`} className="text-[#24459A] font-medium hover:underline">
-                    {`${APP_ENV.FRONTEND_URL}/in/${values.profileUrl}`}
+                <Link onClick={onClose} to={`${APP_ENV.FRONTEND_URL}/j4y/${values.profileUrl}`} className="text-[#24459A] font-medium hover:underline">
+                    {`${APP_ENV.FRONTEND_URL}/j4y/${values.profileUrl}`}
                 </Link>
             </div>
 

@@ -11,7 +11,7 @@ const AuthLayout = () => {
 
     useEffect(() => {
         if(isAuth) {
-            navigator('/in');
+            navigator('/j4y');
         }
     }, [navigator, isAuth])
 

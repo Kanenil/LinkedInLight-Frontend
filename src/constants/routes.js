@@ -3,7 +3,7 @@ export const routes = {
   signUp: "/auth/sign-up",
   confirmEmail: "/auth/confirm-email",
   forgetPassword: "/forget-password",
-  chats: "/in/chats",
+  chats: "/j4y/chats",
 };
 
 export const settingsRoutes = {

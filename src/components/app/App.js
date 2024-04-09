@@ -36,7 +36,7 @@ const App = () => {
                   <Route index element={<Home />} />
                 </Route>
 
-                <Route path="/in">
+                <Route path="/j4y">
                   <Route index element={<InLayout />} />
 
                   <Route element={<InLayout />}>

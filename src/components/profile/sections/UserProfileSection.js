@@ -87,10 +87,10 @@ const InformationSector = ({user, isOwner}) => {
                     <div className="flex flex-row gap-4 mt-4">
                         <OpenToButton/>
                         <ProfileButton onClickHandler={() => setIsVisible(true)} title="Add profile section"/>
-                        <button
-                            className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">
-                            More
-                        </button>
+                        {/*<button*/}
+                        {/*    className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">*/}
+                        {/*    More*/}
+                        {/*</button>*/}
                     </div>
                 </ConditionalWrapper>
             </div>

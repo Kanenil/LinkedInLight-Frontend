@@ -12,7 +12,7 @@ const Layout = () => {
 
     useEffect(() => {
         if(isAuth) {
-            navigator('/in');
+            navigator('/j4y');
         }
     }, [navigator, isAuth])
 
