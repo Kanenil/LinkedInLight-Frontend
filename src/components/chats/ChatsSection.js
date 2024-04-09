@@ -9,6 +9,7 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import classNames from "classnames";
 import {getSendingTime} from "../../utils/date";
 import {SignalRContext} from "../../providers/SocketProvider";
+import ChatOptionButton from "./ChatOptionButton";
 
 const NoData = () => {
     return (
@@ -100,9 +101,7 @@ const ChatsSection =({getParticipant, selectedChat, setSelectedChat}) => {
                                         </div>
                                     </div>
                                     <ConditionalWrapper condition={isSelected}>
-                                        <button className="ml-auto">
-                                            <EllipsisVerticalIcon className="w-8 h-8 fill-[#24459A]"/>
-                                        </button>
+                                        <ChatOptionButton chat={selectedChat}/>
                                     </ConditionalWrapper>
                                 </div>
                             )

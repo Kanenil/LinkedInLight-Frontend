@@ -5,9 +5,9 @@ import Show from "../../elements/shared/Show";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
-import MessageItem from "./MessageItem";
 import useOverflow from "../../hooks/useOverflow";
 import {useEffect} from "react";
+import MessagesList from "./MessagesList";
 
 const NoData = () => {
     return (
@@ -67,9 +67,8 @@ const MessagesSection = ({getParticipant, chat}) => {
                          className={`max-h-[51.5vh] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                         <div ref={contentRef} className="flex flex-col px-3 py-4 gap-5">
                             {
-                                !isLoading && data && [...data].reverse().map(message => (
-                                    <MessageItem key={`message-${message.id}`} participant={participant} message={message}/>
-                                ))
+                                !isLoading && data &&
+                                <MessagesList messages={[...data].reverse()} participant={participant}/>
                             }
                         </div>
                     </div>

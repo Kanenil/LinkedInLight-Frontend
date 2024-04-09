@@ -82,7 +82,7 @@ export const useAuth = () => {
             .then(({data}) => {
                 saveData(data);
 
-                navigator(`/in/${data.user.profileUrl}`);
+                navigator(`/j4y/${data.user.profileUrl}`);
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
@@ -104,7 +104,7 @@ export const useAuth = () => {
             .then(({data}) => {
                 saveData(data);
 
-                navigator(`/in/${data.user.profileUrl}`);
+                navigator(`/j4y/${data.user.profileUrl}`);
             })
             .catch((error) => {
                 console.log("Unhandled error: ", error)

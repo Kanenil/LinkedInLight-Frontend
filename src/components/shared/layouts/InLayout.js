@@ -8,25 +8,26 @@ import {routes} from "../../../constants/routes";
 import {useNavigate} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import MinimizedChat from "../../chats/MinimizedChat";
+import SocketProvider from "../../../providers/SocketProvider";
 
 const InLayout = () => {
     const navigator = useNavigate();
     const isAuth = useAuthorize();
 
     useEffect(() => {
-        if(!isAuth && !localStorage.getItem(general.token)) {
+        if (!isAuth && !localStorage.getItem(general.token)) {
             navigator(routes.signIn);
         }
     }, [navigator, isAuth])
 
     return (
         <ConditionalWrapper condition={isAuth}>
-            <React.Fragment>
+            <SocketProvider>
                 <InHeader/>
                 <Outlet/>
                 <InFooter/>
                 <MinimizedChat/>
-            </React.Fragment>
+            </SocketProvider>
         </ConditionalWrapper>
     )
 }

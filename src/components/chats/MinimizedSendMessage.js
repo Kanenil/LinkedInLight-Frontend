@@ -1,24 +1,25 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import {FaceSmileIcon, GifIcon, PaperClipIcon, PhotoIcon} from "@heroicons/react/24/outline";
 import ChatService from "../../services/chatService";
+import SelectMessageFile from "./SelectMessageFile";
 
 const MinimizedSendMessage = ({selectedChat, getParticipant}) => {
-    const messageRef = useRef();
+    const [message, setMessage] = useState('');
     const [sending, setSending] = useState(false);
+
+    const participant = getParticipant(selectedChat);
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const {value} = messageRef.current;
-
-        if (value) {
+        if (message) {
             setSending(true);
             ChatService.sendMessage({
-                content: value,
-                receiverId: getParticipant(selectedChat).id,
+                content: message,
+                receiverId: participant.id,
                 chatId: selectedChat.id,
             }).then(() => {
-                e.target.reset();
+                setMessage('');
                 setSending(false);
             })
         }
@@ -27,19 +28,24 @@ const MinimizedSendMessage = ({selectedChat, getParticipant}) => {
     return (
         <form onSubmit={onSubmit} className="flex flex-col mt-auto px-2 pb-1">
             <textarea
-                ref={messageRef}
+                value={message}
+                onChange={e => setMessage(e.target.value)}
                 className="w-full h-[120px] rounded-xl text-sm border-[#B4BFDD] border-[1px] resize-none"
                 placeholder="Type message..."
             />
 
             <div className="flex flex-row gap-3 items-center">
                 <FaceSmileIcon className="text-gray w-12 h-12 inline-block"/>
-                <div className="transform -rotate-90">
-                    <PaperClipIcon
-                        className="text-gray w-[22px] h-[22px] inline-block transform rotate-45"/>
-                </div>
+                <SelectMessageFile accept=".doc, .docx, .pdf, .txt, .csv, .xls, .xlsx, .ppt, .pptx, .zip, .rar, .tar.gz" chat={selectedChat} participant={participant} setMessage={setMessage} disabled={!selectedChat || sending} message={message}>
+                    <div className="transform -rotate-90">
+                        <PaperClipIcon
+                            className="text-gray w-[22px] h-[22px] inline-block transform rotate-45"/>
+                    </div>
+                </SelectMessageFile>
                 <GifIcon className="text-gray w-12 h-12 inline-block"/>
-                <PhotoIcon className="text-gray w-12 h-12 inline-block"/>
+                <SelectMessageFile chat={selectedChat} participant={participant} setMessage={setMessage} disabled={!selectedChat || sending} message={message}>
+                    <PhotoIcon className="text-gray w-6 h-6 inline-block"/>
+                </SelectMessageFile>
 
                 <button
                     disabled={sending}

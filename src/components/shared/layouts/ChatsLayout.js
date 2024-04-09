@@ -8,6 +8,7 @@ import InHeader from "../headers/InHeader";
 import {Outlet} from "react-router-dom";
 import AuthFooter from "../footers/AuthFooter";
 import MinimizedChat from "../../chats/MinimizedChat";
+import SocketProvider from "../../../providers/SocketProvider";
 
 const ChatsLayout = () => {
     const navigator = useNavigate();
@@ -21,12 +22,12 @@ const ChatsLayout = () => {
 
     return (
         <ConditionalWrapper condition={isAuth}>
-            <React.Fragment>
+            <SocketProvider>
                 <InHeader/>
                 <Outlet/>
                 <AuthFooter/>
                 <MinimizedChat/>
-            </React.Fragment>
+            </SocketProvider>
         </ConditionalWrapper>
     )
 }

@@ -34,5 +34,13 @@ class ChatService {
     readChat(chat) {
         return axios.post(`${this.#URL}/read/${chat}`, null);
     }
+
+    deleteChat(chat, deleteForMe) {
+        return axios.delete(`${this.#URL}/${chat}`, {
+            params: {
+                deleteForMeOnly: deleteForMe
+            }
+        });
+    }
 }
 export default new ChatService();

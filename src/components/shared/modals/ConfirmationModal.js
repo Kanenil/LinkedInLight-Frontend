@@ -4,7 +4,7 @@ import ConfirmChanges from "./shared/ConfirmChanges";
 import {useNavigate} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 
-const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
+const ConfirmationModal = ({ children, isOpen, onSaveCallback, onCloseCallback = null, position = "mt-10 mx-auto", ...props }) => {
     const [modalState, setModalState] = useState({
         isClosing: false,
         isModalClosed: false,
@@ -13,13 +13,25 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
     const navigator = useNavigate();
 
     const onConfirm = () => {
-        navigator(-1);
-        setModalState({
-            ...modalState,
-            isClosing: false,
-            hasUserInformationChanged: false,
-            isModalClosed: true
-        })
+        if (onCloseCallback) {
+            setModalState({
+                isClosing: false,
+                isModalClosed: false,
+                hasUserInformationChanged: false,
+            })
+
+            onCloseCallback();
+        }
+        else {
+            navigator(-1);
+
+            setModalState({
+                ...modalState,
+                isClosing: false,
+                hasUserInformationChanged: false,
+                isModalClosed: true
+            })
+        }
     }
 
     const onCloseConfirm = () => {
@@ -38,8 +50,18 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
             })
         })
 
-        if (!modalState.hasUserInformationChanged)
+        if (!modalState.hasUserInformationChanged && !onCloseCallback)
             navigator(-1);
+
+        if (!modalState.hasUserInformationChanged && onCloseCallback) {
+            setModalState({
+                isClosing: false,
+                isModalClosed: false,
+                hasUserInformationChanged: false,
+            })
+
+            onCloseCallback();
+        }
     }
 
     const onSave = () => {
@@ -49,7 +71,10 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
             hasUserInformationChanged: false,
             isModalClosed: true
         })
-        navigator(-1);
+        if (onCloseCallback)
+            onCloseCallback();
+        else
+            navigator(-1);
         onSaveCallback();
     }
 
@@ -66,7 +91,7 @@ const ConfirmationModal = ({ children, isOpen, onSaveCallback, ...props }) => {
     return (
         <ConditionalWrapper condition={isOpen}>
             <Modal isOpen={isOpen} closeModal={modalState.isModalClosed} hideOnClose={false} onClose={closeModal}
-                   position="mt-10 mx-auto">
+                   position={position}>
                 {React.cloneElement(children, eventHandlers)}
                 <Modal childModal={true} isOpen={modalState.isClosing} onClose={onCloseConfirm} position="mt-24 mx-auto">
                     <ConfirmChanges onConfirm={onConfirm} onClose={onCloseConfirm}/>

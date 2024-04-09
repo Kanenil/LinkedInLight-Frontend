@@ -3,6 +3,10 @@ import defaultImage from "../../assets/default-image.jpg";
 import {getSendingTime} from "../../utils/date";
 import {CheckIcon} from "@heroicons/react/16/solid";
 import Show from "../../elements/shared/Show";
+import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import {DocumentIcon} from "@heroicons/react/24/outline";
+import React from "react";
+import {Link} from "react-router-dom";
 
 const DoubleCheck = ({className = 'w-4 h-4'}) => {
     return (
@@ -15,6 +19,9 @@ const DoubleCheck = ({className = 'w-4 h-4'}) => {
 }
 
 const MessageItem = ({message, participant}) => {
+    const fileExt = message.attachedFileName.split('.').pop() || '';
+    const isImage = fileExt.match(/(jpg|jpeg|png|gif)$/i)?.length > 0;
+
     if(message.sender.id === participant.id)
         return (
             <div className="flex flex-row gap-3">
@@ -29,10 +36,40 @@ const MessageItem = ({message, participant}) => {
                     </div>
                 </div>
 
-                <div className="flex-shrink border-[1px] border-[#B4BFDD] rounded-xl p-2 max-w-[20vw]">
-                    <h3 className="font-jost text-wrap break-words">
-                        {message.content}
-                    </h3>
+                <div className="flex flex-col gap-1">
+                    <ConditionalWrapper condition={fileExt}>
+                        <Show>
+                            <Show.When isTrue={isImage}>
+                                <div
+                                    className="rounded-lg border-[1px] border-[#B4BFDD] h-56 w-56 flex items-center justify-center overflow-hidden">
+                                    <img
+                                        className="object-contain"
+                                        src={APP_ENV.UPLOADS_URL + "/" + message.attachedFileName}
+                                        alt="attachedImage"
+                                    />
+                                </div>
+                            </Show.When>
+
+                            <Show.Else>
+                                <Link to={`${APP_ENV.UPLOADS_URL}/${message.attachedFileName}`} target="_blank" className="flex flex-row gap-3 rounded-lg overflow-hidden items-center bg-gray-500 max-w-[20vw]">
+                                    <div className="bg-gray-300 px-2 py-2">
+                                        <DocumentIcon className="w-8 h-8"/>
+                                    </div>
+
+                                    <div className="pr-2">
+                                        <h3 className="font-jost text-xl text-white truncate break-words">{message.attachedFileName}</h3>
+                                    </div>
+                                </Link>
+                            </Show.Else>
+                        </Show>
+                    </ConditionalWrapper>
+
+
+                    <div className="flex-shrink border-[1px] border-[#B4BFDD] rounded-xl p-2 max-w-[20vw]">
+                        <h3 className="font-jost text-wrap break-words">
+                            {message.content}
+                        </h3>
+                    </div>
                 </div>
 
                 <h3 className="font-jost font-light text-sm mt-auto">
@@ -69,11 +106,41 @@ const MessageItem = ({message, participant}) => {
                 {getSendingTime(new Date(message?.sentAt))}
             </h3>
 
-            <div className="flex-shrink bg-[#EEF1FB] rounded-xl p-2 max-w-[20vw]">
-                <h3 className="font-jost text-wrap break-words">
-                    {message.content}
-                </h3>
+            <div className="flex flex-col gap-1">
+                <ConditionalWrapper condition={fileExt}>
+                    <Show>
+                        <Show.When isTrue={isImage}>
+                            <div
+                                className="rounded-lg ml-auto bg-[#EEF1FB] h-56 w-56 flex items-center justify-center overflow-hidden">
+                                <img
+                                    className="object-contain"
+                                    src={APP_ENV.UPLOADS_URL + "/" + message.attachedFileName}
+                                    alt="attachedImage"
+                                />
+                            </div>
+                        </Show.When>
+
+                        <Show.Else>
+                            <Link to={`${APP_ENV.UPLOADS_URL}/${message.attachedFileName}`} target="_blank" className="flex flex-row gap-3 rounded-lg overflow-hidden items-center bg-gray-500 max-w-[20vw]">
+                                <div className="bg-gray-300 px-2 py-2">
+                                    <DocumentIcon className="w-8 h-8"/>
+                                </div>
+
+                                <div className="pr-2">
+                                    <h3 className="font-jost text-xl text-white truncate break-words">{message.attachedFileName}</h3>
+                                </div>
+                            </Link>
+                        </Show.Else>
+                    </Show>
+                </ConditionalWrapper>
+
+                <div className="flex-shrink bg-[#EEF1FB] rounded-xl p-2 max-w-[20vw]">
+                    <h3 className="font-jost text-wrap break-words">
+                        {message.content}
+                    </h3>
+                </div>
             </div>
+
 
             <div className="pr-1">
                 <div

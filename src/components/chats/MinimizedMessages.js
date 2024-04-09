@@ -9,7 +9,8 @@ import {useQuery} from "@tanstack/react-query";
 import ChatService from "../../services/chatService";
 import useOverflow from "../../hooks/useOverflow";
 import Show from "../../elements/shared/Show";
-import MessageItem from "./MessageItem";
+import MessagesList from "./MessagesList";
+import {useDebounceCallback} from "usehooks-ts";
 
 const NoData = () => {
     return (
@@ -46,9 +47,17 @@ const MinimizedMessages = ({chat, setSelectedChat, getParticipant}) => {
         waitForOffsetTop();
     }, [chat, containerRef, contentRef])
 
+    const onFocus = async (value) => {
+        if(chat && value) {
+            await ChatService.readChat(chat.id);
+        }
+    }
+
+    const debounced = useDebounceCallback(onFocus, 500);
+
     return (
         <ConditionalWrapper condition={!!chat}>
-            <div className="w-80 h-[50vh] mt-auto mb-10 bg-white rounded-xl flex flex-col"
+            <div onMouseOver={debounced} className="w-80 h-[65vh] mt-auto mb-10 bg-white rounded-xl flex flex-col"
                  style={{boxShadow: "0px 2px 10px rgba(71, 77, 92, 0.25)"}}>
                 <div className="flex flex-row gap-4 py-4 px-2 border-b-[1px] border-b-[#B4BFDD]">
                     <div
@@ -73,9 +82,8 @@ const MinimizedMessages = ({chat, setSelectedChat, getParticipant}) => {
                              className={`overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                             <div ref={contentRef} className="flex flex-col px-3 py-4 gap-5">
                                 {
-                                    !isLoading && data && [...data].reverse().map(message => (
-                                        <MessageItem key={`message-${message.id}`} participant={participant} message={message}/>
-                                    ))
+                                    !isLoading && data &&
+                                    <MessagesList messages={[...data].reverse()} participant={participant}/>
                                 }
                             </div>
                         </div>

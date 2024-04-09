@@ -1,7 +1,7 @@
 import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/24/solid";
 import {useQuery} from "@tanstack/react-query";
 import ProfileService from "../../services/profileService";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
 import {PencilSquareIcon} from "@heroicons/react/24/outline";
@@ -10,9 +10,11 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import MinimizedChatsList from "./MinimizedChatsList";
 import MinimizedMessages from "./MinimizedMessages";
 import ChatService from "../../services/chatService";
+import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 const MinimizedChat = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [parent] = useAutoAnimate();
     const {data} = useQuery({
         queryFn: () => ProfileService.getProfile(),
         queryKey: ['profile'],
@@ -37,33 +39,8 @@ const MinimizedChat = () => {
         await ChatService.readChat(val.id);
     }
 
-    const onFocus = async (value) => {
-        if(selectedChat && value) {
-            await ChatService.readChat(selectedChat.id);
-        }
-    }
-
-    useEffect(() => {
-        const handleActivityFalse = () => onFocus(false)
-        const handleActivityTrue = () => onFocus(true)
-
-        document.addEventListener('visibilitychange', onFocus)
-        document.addEventListener('blur', handleActivityFalse)
-        window.addEventListener('blur', handleActivityFalse)
-        window.addEventListener('focus', handleActivityTrue )
-        document.addEventListener('focus', handleActivityTrue)
-
-        return () => {
-            window.removeEventListener('blur', onFocus)
-            document.removeEventListener('blur', handleActivityFalse)
-            window.removeEventListener('focus', handleActivityFalse)
-            document.removeEventListener('focus', handleActivityTrue )
-            document.removeEventListener('visibilitychange', handleActivityTrue )
-        }
-    }, [selectedChat])
-
     return (
-        <div className={`fixed flex flex-row gap-10 z-20 left-[${selectedChat?'55':'75'}vw] bottom-0`}>
+        <div className="fixed flex flex-row gap-10 z-20 right-24 bottom-0">
             <MinimizedMessages chat={selectedChat} setSelectedChat={setSelectedChat} getParticipant={getParticipant}/>
             <div className="w-80 h-fit mt-auto bg-white rounded-t-xl flex flex-col"
                  style={{boxShadow: "0px 2px 10px rgba(71, 77, 92, 0.25)"}}>
@@ -93,9 +70,11 @@ const MinimizedChat = () => {
                     </div>
                 </div>
 
-                <ConditionalWrapper condition={isOpen}>
-                    <MinimizedChatsList selectedChat={selectedChat} setSelectedChat={onSelectChat}/>
-                </ConditionalWrapper>
+                <div ref={parent}>
+                    <ConditionalWrapper condition={isOpen}>
+                        <MinimizedChatsList selectedChat={selectedChat} setSelectedChat={onSelectChat}/>
+                    </ConditionalWrapper>
+                </div>
             </div>
         </div>
     )

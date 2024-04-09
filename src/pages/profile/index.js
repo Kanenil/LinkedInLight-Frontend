@@ -4,7 +4,6 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {Helmet} from "react-helmet-async";
 import StandardProfilePage from "../../components/profile/StandardProfilePage";
 import EditModalPage from "../../components/profile/EditModalPage";
-import ImageCropProvider from "../../providers/ImageCropProvider";
 import DetailsPage from "../../components/profile/DetailsPage";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {usePageStatus} from "../../hooks/usePageStatus";
@@ -24,7 +23,7 @@ const Profile = () => {
     })
     const queryClient = useQueryClient();
 
-    if(profile.isLoading || profileId.isLoading)
+    if (profile.isLoading || profileId.isLoading)
         return;
 
     return (
@@ -34,21 +33,21 @@ const Profile = () => {
             </Helmet>
 
             <ConditionalWrapper condition={edit}>
-                <ImageCropProvider>
-                    <EditModalPage editModal={edit} id={id}
-                                   user={profileId.data}
-                                   isOwner={profileId.data.profileUrl === profile.data.profileUrl}
-                                   onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
-                </ImageCropProvider>
+                <EditModalPage editModal={edit} id={id}
+                               user={profileId.data}
+                               isOwner={profileId.data.profileUrl === profile.data.profileUrl}
+                               onSaveCallback={() => queryClient.invalidateQueries('profile')}/>
             </ConditionalWrapper>
 
             <Show>
                 <Show.When isTrue={!!details}>
-                    <DetailsPage detail={details} isOwner={profileId.data.profileUrl === profile.data.profileUrl} user={profile.data}/>
+                    <DetailsPage detail={details} isOwner={profileId.data.profileUrl === profile.data.profileUrl}
+                                 user={profile.data}/>
                 </Show.When>
 
                 <Show.Else>
-                    <StandardProfilePage user={profileId.data} isOwner={profileId.data.profileUrl === profile.data.profileUrl}/>
+                    <StandardProfilePage user={profileId.data}
+                                         isOwner={profileId.data.profileUrl === profile.data.profileUrl}/>
                 </Show.Else>
             </Show>
         </React.Fragment>
