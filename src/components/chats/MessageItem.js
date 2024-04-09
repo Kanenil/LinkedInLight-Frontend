@@ -39,7 +39,7 @@ const MessageItem = ({message, participant}) => {
                     {getSendingTime(new Date(message?.sentAt))}
                 </h3>
 
-                <div className="my-auto">
+                <div className="mt-auto">
                     <Show>
                         <Show.When isTrue={message.isRead}>
                             <DoubleCheck className="w-6 h-6 stroke-black"/>
@@ -54,7 +54,7 @@ const MessageItem = ({message, participant}) => {
 
     return (
         <div className="ml-auto flex flex-row gap-3">
-            <div className="my-auto">
+            <div className="mt-auto">
                 <Show>
                     <Show.When isTrue={message.isRead}>
                         <DoubleCheck className="w-6 h-6 stroke-black"/>
