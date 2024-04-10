@@ -7,7 +7,7 @@ import {general} from "../../../constants/general";
 import {routes} from "../../../constants/routes";
 import {useNavigate} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
-import MinimizedChat from "../../chats/MinimizedChat";
+import MinimizedChat from "../../chats/minimized/MinimizedChat";
 import SocketProvider from "../../../providers/SocketProvider";
 
 const InLayout = () => {

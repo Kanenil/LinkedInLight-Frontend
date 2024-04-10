@@ -7,7 +7,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import InHeader from "../headers/InHeader";
 import {Outlet} from "react-router-dom";
 import AuthFooter from "../footers/AuthFooter";
-import MinimizedChat from "../../chats/MinimizedChat";
+import MinimizedChat from "../../chats/minimized/MinimizedChat";
 import SocketProvider from "../../../providers/SocketProvider";
 
 const ChatsLayout = () => {

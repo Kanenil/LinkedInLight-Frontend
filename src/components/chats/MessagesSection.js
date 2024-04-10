@@ -68,7 +68,7 @@ const MessagesSection = ({getParticipant, chat}) => {
                         <div ref={contentRef} className="flex flex-col px-3 py-4 gap-5">
                             {
                                 !isLoading && data &&
-                                <MessagesList messages={[...data].reverse()} participant={participant}/>
+                                <MessagesList chat={chat} messages={[...data].reverse()} participant={participant}/>
                             }
                         </div>
                     </div>

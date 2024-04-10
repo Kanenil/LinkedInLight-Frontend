@@ -1,3 +1,4 @@
+import moment from "moment";
 
 const getMonths = () => {
     return Array.from({length: 12}, (item, i) => {
@@ -30,22 +31,13 @@ const getDateTime = (day = 1, month, year) => {
         date.getUTCDate(), date.getUTCHours() + (date.getTimezoneOffset() / -60),
         date.getUTCMinutes(), date.getUTCSeconds());
 
-    return day && month && year ? new Date(now_utc): null;
+    return day && month && year ? new Date(now_utc) : null;
 }
 
 const getSendingTime = (date) => {
-    const today = new Date();
+    const today = moment();
 
-    const localTime = date.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-    if (today.toDateString() === date.toDateString()) {
-        return localTime;
-    } else {
-        const daysAgo = Math.floor((today - date) / (1000 * 3600 * 24));
-        return `${daysAgo} days ago`;
-    }
+    return today.startOf('day').diff(date, "hours") > 0 ? moment(date).format('D MMM HH:mm') : moment(date).format('HH:mm')
 };
 
 export {getMonths, getYears, getDateTime, getShortMonth, getLongMonth, getSendingTime}

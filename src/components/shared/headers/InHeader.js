@@ -10,9 +10,16 @@ import ArrowDownIcon from "../../../elements/icons/ArrowDownIcon";
 import CalculatorIcon from "../../../elements/icons/CalculatorIcon";
 import AccountButton from "../../../elements/buttons/AccountButton";
 import {useTranslation} from "react-i18next";
+import {useQuery} from "@tanstack/react-query";
+import ChatService from "../../../services/chatService";
 
 const InHeader = () => {
     const {t} = useTranslation();
+    const {data} = useQuery({
+        queryFn: () => ChatService.allUnreadMessages(),
+        queryKey: ['allUnreadMessages'],
+        select: ({data}) => data,
+    })
 
     return (
         <header className="absolute top-0 left-0 z-40 w-full sticky" style={{boxShadow: "0px 2px 6px 0px #24459A33"}}>
@@ -42,7 +49,7 @@ const InHeader = () => {
                     </Link>
 
                     <Link to='/j4y/chats' className="p-2">
-                        <MessagesIcon number={1}/>
+                        <MessagesIcon number={data || null}/>
                     </Link>
 
                     <Link to='/j4y' className="p-2">

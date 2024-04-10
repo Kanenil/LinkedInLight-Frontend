@@ -1,32 +1,8 @@
 import moment from 'moment';
 import React, {memo} from "react";
-import MessageItem from "./MessageItem";
+import MessageItem from "./items/MessageItem";
 
-function groupedDays(messages) {
-    return messages.reduce((acc, el, i) => {
-        const messageDay = moment(el.created_at).format('YYYY-MM-DD');
-        if (acc[messageDay]) {
-            return { ...acc, [messageDay]: acc[messageDay].concat([el]) };
-        }
-        return { ...acc, [messageDay]: [el] };
-    }, {});
-}
-
-function generateItems(messages) {
-    const days = groupedDays(messages);
-    const sortedDays = Object.keys(days).sort(
-        (x, y) => moment(y, 'YYYY-MM-DD').unix() - moment(x, 'YYYY-MM-DD').unix()
-    );
-    const items = sortedDays.reduce((acc, date) => {
-        const sortedMessages = days[date].sort(
-            (x, y) => new Date(y.created_at) - new Date(x.created_at)
-        );
-        return acc.concat([...sortedMessages, { type: 'day', date, id: date }]);
-    }, []);
-    return items;
-}
-
-const MessagesList = memo(({messages, participant}) => {
+const MessagesList = memo(({messages, chat, participant, isMobile = false}) => {
     const msgDates = new Set();
 
     const formatMsgDate = (created_date) => {
@@ -42,7 +18,7 @@ const MessagesList = memo(({messages, participant}) => {
             dateDay = 'Yesterday';
         }
         else{
-            dateDay = msgDate.format('D.M.YY');
+            dateDay = msgDate.format('DD.MM.YY');
         }
 
         return dateDay
@@ -75,7 +51,7 @@ const MessagesList = memo(({messages, participant}) => {
         messages?.map((message, index) => (
             <React.Fragment key={`message-${message.id}`}>
                 {renderMsgDate(message, messages[index-1])}
-                <MessageItem key={index} message={message} participant={participant} />
+                <MessageItem key={index} isMobile={isMobile} chat={chat} message={message} participant={participant} />
             </React.Fragment>
         ))
     )

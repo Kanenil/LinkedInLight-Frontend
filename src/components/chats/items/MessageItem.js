@@ -1,12 +1,16 @@
-import {APP_ENV} from "../../env";
-import defaultImage from "../../assets/default-image.jpg";
-import {getSendingTime} from "../../utils/date";
+import {APP_ENV} from "../../../env";
+import defaultImage from "../../../assets/default-image.jpg";
+import {getSendingTime} from "../../../utils/date";
 import {CheckIcon} from "@heroicons/react/16/solid";
-import Show from "../../elements/shared/Show";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import Show from "../../../elements/shared/Show";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {DocumentIcon} from "@heroicons/react/24/outline";
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import MessageOptionButton from "../options/MessageOptionButton";
+import ChatService from "../../../services/chatService";
+import Modal from "../../shared/modals/Modal";
+import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
 
 const DoubleCheck = ({className = 'w-4 h-4'}) => {
     return (
@@ -18,7 +22,12 @@ const DoubleCheck = ({className = 'w-4 h-4'}) => {
     )
 }
 
-const MessageItem = ({message, participant}) => {
+const MessageItem = ({message, chat, participant, isMobile = false}) => {
+    const [confirmModal, setConfirmModal] = useState(false);
+    const [isForMe, setIsForMe] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [editMessage, setEditMessage] = useState(message.content || '');
+
     const fileExt = message.attachedFileName.split('.').pop() || '';
     const isImage = fileExt.match(/(jpg|jpeg|png|gif)$/i)?.length > 0;
 
@@ -72,6 +81,10 @@ const MessageItem = ({message, participant}) => {
                     </div>
                 </div>
 
+                <ConditionalWrapper condition={message.isEdited}>
+                    <span className="text-gray-500 mt-auto text-xs">edited</span>
+                </ConditionalWrapper>
+
                 <h3 className="font-jost font-light text-sm mt-auto">
                     {getSendingTime(new Date(message?.sentAt))}
                 </h3>
@@ -89,8 +102,43 @@ const MessageItem = ({message, participant}) => {
             </div>
         )
 
+    const onDelete = async () => {
+        setConfirmModal(false);
+
+        await ChatService.deleteMessage(message.id, chat.id, isForMe);
+    }
+
+    const onClose = () => {
+        setConfirmModal(false)
+    }
+
+    const onTryDelete = (forMe) => {
+        setIsForMe(forMe);
+        setConfirmModal(true);
+    }
+
+    const onEdit = async (e) => {
+        e.preventDefault();
+        setIsEdit(false);
+
+        await ChatService.editMessage({
+            content: editMessage,
+            attachedFileName: message.attachedFileName,
+            senderId: message.senderId,
+            receiverId: message.receiverId,
+            chatId: message.chatId
+        }, message.id);
+    }
+
     return (
         <div className="ml-auto flex flex-row gap-3">
+            <ConditionalWrapper condition={!isMobile}>
+                <MessageOptionButton onDelete={onTryDelete} onEdit={() => setIsEdit(prev => !prev)}/>
+                <Modal isOpen={confirmModal} onClose={onClose}>
+                    <ConfirmAction onClose={onClose} onConfirm={onDelete} title="Delete message?" action="You won't be able to undo this action after confirming!"/>
+                </Modal>
+            </ConditionalWrapper>
+
             <div className="mt-auto">
                 <Show>
                     <Show.When isTrue={message.isRead}>
@@ -105,6 +153,9 @@ const MessageItem = ({message, participant}) => {
             <h3 className="font-jost font-light text-sm mt-auto">
                 {getSendingTime(new Date(message?.sentAt))}
             </h3>
+            <ConditionalWrapper condition={message.isEdited}>
+                <span className="ml-auto text-gray-500 mt-auto text-xs">edited</span>
+            </ConditionalWrapper>
 
             <div className="flex flex-col gap-1">
                 <ConditionalWrapper condition={fileExt}>
@@ -134,13 +185,47 @@ const MessageItem = ({message, participant}) => {
                     </Show>
                 </ConditionalWrapper>
 
-                <div className="flex-shrink bg-[#EEF1FB] rounded-xl p-2 max-w-[20vw]">
-                    <h3 className="font-jost text-wrap break-words">
-                        {message.content}
-                    </h3>
-                </div>
-            </div>
+                <Show>
+                    <Show.When isTrue={isEdit}>
+                        <form onSubmit={onEdit} className="flex flex-col gap-1">
+                            <textarea
+                                value={editMessage}
+                                onChange={(e) => setEditMessage(e.target.value)}
+                                className="w-full h-full rounded-xl border-gray-300 border-[1px] text-sm inline block"
+                                placeholder="Edited message..."
+                            />
+                            {editMessage.length === 0 && (
+                                <p className="mt-2 text-[#9E0F20] text-xs">Message can not be empty!</p>
+                            )}
 
+                            <div className="flex flex-row justify-end gap-2">
+                                <button
+                                    type="button"
+                                    className={`font-jost py-1 px-5 rounded-full border-[1px] border-[#24459A] text-[#556DA9] border-[1.5px] hover:border-[#24459A] hover:bg-[#E4EAFF] hover:text-[#24459A] transition duration-300 ease-in-out text-sm`}
+                                    onClick={() => setIsEdit(false)}
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    disabled={editMessage.length === 0}
+                                    type="submit"
+                                    className="w-fit text-white text-sm bg-blue-800 px-6 py-1 rounded-2xl hover:bg-blue-600 transition duration-300 ease-in-out disabled:bg-blue-800">
+                                    Save
+                                </button>
+                            </div>
+                        </form>
+                    </Show.When>
+
+                    <Show.Else>
+                        <div className="flex-shrink bg-[#EEF1FB] rounded-xl p-2 max-w-[20vw]">
+                            <h3 className="font-jost text-wrap break-words">
+                                {message.content}
+                            </h3>
+                        </div>
+                    </Show.Else>
+                </Show>
+            </div>
 
             <div className="pr-1">
                 <div

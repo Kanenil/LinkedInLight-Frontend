@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import WriteInIcon from "../../elements/icons/WriteInIcon";
 import {
     AdjustmentsHorizontalIcon,
@@ -7,10 +7,10 @@ import {
 import ChatsSection from "../../components/chats/ChatsSection";
 import MessagesSection from "../../components/chats/MessagesSection";
 import ChatService from "../../services/chatService";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import SearchConnections from "../../components/chats/SearchConnections";
 import ProfileService from "../../services/profileService";
-import SendMessage from "../../components/chats/SendMessage";
+import SendMessage from "../../components/chats/message-senders/SendMessage";
 import {Helmet} from "react-helmet-async";
 
 const Chats = () => {
@@ -20,6 +20,7 @@ const Chats = () => {
         queryKey: ['profile'],
         select: ({data}) => data,
     });
+    const queryClient = useQueryClient();
 
     const getParticipant = (chat) => {
         if(!data || !chat)
@@ -30,40 +31,17 @@ const Chats = () => {
 
     const onNewChat = user => {
         ChatService.startChat(user.id).then(({data}) => {
-            console.log(data)
-            //setSelectedChat(data);
+            queryClient.invalidateQueries('allChats').then(() => {
+                setSelectedChat(data);
+            });
         })
     }
 
-    const onSelectChat = async (val) => {
+    const onSelectChat = (val) => {
         setSelectedChat(val);
-        await ChatService.readChat(val.id);
+        if(val)
+            ChatService.readChat(val.id).then();
     }
-
-    const onFocus = async (value) => {
-        if(selectedChat && value) {
-            await ChatService.readChat(selectedChat.id);
-        }
-    }
-
-    useEffect(() => {
-        const handleActivityFalse = () => onFocus(false)
-        const handleActivityTrue = () => onFocus(true)
-
-        document.addEventListener('visibilitychange', onFocus)
-        document.addEventListener('blur', handleActivityFalse)
-        window.addEventListener('blur', handleActivityFalse)
-        window.addEventListener('focus', handleActivityTrue )
-        document.addEventListener('focus', handleActivityTrue)
-
-        return () => {
-            window.removeEventListener('blur', onFocus)
-            document.removeEventListener('blur', handleActivityFalse)
-            window.removeEventListener('focus', handleActivityFalse)
-            document.removeEventListener('focus', handleActivityTrue )
-            document.removeEventListener('visibilitychange', handleActivityTrue )
-        }
-    }, [selectedChat])
 
     return (
         <React.Fragment>

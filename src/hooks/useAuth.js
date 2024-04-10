@@ -80,13 +80,17 @@ export const useAuth = () => {
         axios
             .post('/api/auth/login', props)
             .then(({data}) => {
-                saveData(data);
+                if(data.token) {
+                    saveData(data);
 
-                navigator(`/j4y/${data.user.profileUrl}`);
+                    navigator(`/j4y/${data.user.profileUrl}`);
+                }
             })
             .catch((error) => {
                 if(error.code === "ERR_NETWORK")
                     return setErrors({password:"Oops... Something went wrong! Try later."})
+
+                console.log(error)
 
                 if(error.response.data.includes('Login failed'))
                     return setErrors({password:"Email or password are incorrect!"})

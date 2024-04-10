@@ -29,12 +29,21 @@ module.exports = {
             opacity: 1,
             transform: 'translate3d(0,0,0)'
           },
+        },
+        customPulse: {
+          '0%, 100%': {
+            backgroundColor: 'var(--tw-gradient-from)'
+          },
+          '50%': {
+            backgroundColor: 'var(--tw-gradient-to)'
+          }
         }
       },
       animation: {
         opacity: 'animationOpacity .5s ease-in-out',
         scaleIn: 'scaleIn .35s ease-in-out',
-        fadeInUp: 'fadeInUp .65s ease-in-out'
+        fadeInUp: 'fadeInUp .65s ease-in-out',
+        customPulse: 'customPulse 2s cubic-bezier(0.4, 0, 0.6, 1) 2 forwards'
       }
     },
   },

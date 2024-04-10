@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {FaceSmileIcon, GifIcon, PaperClipIcon, PhotoIcon} from "@heroicons/react/24/outline";
-import ChatService from "../../services/chatService";
+import ChatService from "../../../services/chatService";
 import SelectMessageFile from "./SelectMessageFile";
 
 const MinimizedSendMessage = ({selectedChat, getParticipant}) => {

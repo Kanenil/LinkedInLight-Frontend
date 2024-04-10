@@ -1,15 +1,15 @@
 import {XMarkIcon} from "@heroicons/react/24/solid";
-import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import React, {useEffect} from "react";
-import {APP_ENV} from "../../env";
-import defaultImage from "../../assets/default-image.jpg";
-import MinimizedSendMessage from "./MinimizedSendMessage";
-import noDataImage from "../../assets/empty-messages.png";
+import {APP_ENV} from "../../../env";
+import defaultImage from "../../../assets/default-image.jpg";
+import MinimizedSendMessage from "../message-senders/MinimizedSendMessage";
+import noDataImage from "../../../assets/empty-messages.png";
 import {useQuery} from "@tanstack/react-query";
-import ChatService from "../../services/chatService";
-import useOverflow from "../../hooks/useOverflow";
-import Show from "../../elements/shared/Show";
-import MessagesList from "./MessagesList";
+import ChatService from "../../../services/chatService";
+import useOverflow from "../../../hooks/useOverflow";
+import Show from "../../../elements/shared/Show";
+import MessagesList from "../MessagesList";
 import {useDebounceCallback} from "usehooks-ts";
 
 const NoData = () => {
@@ -20,8 +20,8 @@ const NoData = () => {
     )
 }
 
-const MinimizedMessages = ({chat, setSelectedChat, getParticipant}) => {
-    const {isLoading, data} = useQuery({
+const MinimizedMessages = ({chat, setSelectedChat, getParticipant, unReadMessages}) => {
+    const {isLoading, data: messages} = useQuery({
         queryFn: ({queryKey}) => ChatService.getAllMessages(queryKey[1]),
         queryKey: ['allChats', chat?.id],
         select: ({data}) => data,
@@ -48,8 +48,8 @@ const MinimizedMessages = ({chat, setSelectedChat, getParticipant}) => {
     }, [chat, containerRef, contentRef])
 
     const onFocus = async (value) => {
-        if(chat && value) {
-            await ChatService.readChat(chat.id);
+        if (chat && value && unReadMessages > 0) {
+            await ChatService.readChat(chat?.id).catch(() => setSelectedChat(null));
         }
     }
 
@@ -77,19 +77,19 @@ const MinimizedMessages = ({chat, setSelectedChat, getParticipant}) => {
                 </div>
 
                 <Show>
-                    <Show.When isTrue={data && data.length > 0}>
+                    <Show.When isTrue={messages && messages.length > 0}>
                         <div id="container" ref={containerRef}
                              className={`overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                             <div ref={contentRef} className="flex flex-col px-3 py-4 gap-5">
                                 {
-                                    !isLoading && data &&
-                                    <MessagesList messages={[...data].reverse()} participant={participant}/>
+                                    !isLoading && messages &&
+                                    <MessagesList chat={chat} messages={[...messages].reverse()} isMobile={true} participant={participant}/>
                                 }
                             </div>
                         </div>
                     </Show.When>
 
-                    <Show.When isTrue={(!data || data.length === 0) && !chat}>
+                    <Show.When isTrue={(!messages || messages.length === 0) && !chat}>
                         <NoData/>
                     </Show.When>
                 </Show>

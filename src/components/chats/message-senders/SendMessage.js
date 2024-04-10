@@ -1,6 +1,6 @@
 import {FaceSmileIcon, GifIcon, PaperClipIcon, PhotoIcon} from "@heroicons/react/24/outline";
 import {useState} from "react";
-import ChatService from "../../services/chatService";
+import ChatService from "../../../services/chatService";
 import SelectMessageFile from "./SelectMessageFile";
 
 const SendMessage = ({selectedChat, getParticipant}) => {

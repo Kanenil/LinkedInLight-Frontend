@@ -35,8 +35,32 @@ class ChatService {
         return axios.post(`${this.#URL}/read/${chat}`, null);
     }
 
+    allUnreadMessages() {
+        return axios.get(`${this.#URL}/allUnreadMessages`);
+    }
+
+    unreadMessages(chatId) {
+        return axios.get(`${this.#URL}/unreadMessages/count`, {
+            params: {
+                chatId
+            }
+        });
+    }
+
+    editMessage(model, messageId) {
+        return axios.put(`${this.#URL}/editeMessage/${messageId}`, model);
+    }
+
     deleteChat(chat, deleteForMe) {
         return axios.delete(`${this.#URL}/${chat}`, {
+            params: {
+                deleteForMeOnly: deleteForMe
+            }
+        });
+    }
+
+    deleteMessage(message, chat, deleteForMe) {
+        return axios.delete(`${this.#URL}/${message}/${chat}`, {
             params: {
                 deleteForMeOnly: deleteForMe
             }
