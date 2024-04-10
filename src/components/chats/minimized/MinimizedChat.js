@@ -12,7 +12,7 @@ import MinimizedMessages from "./MinimizedMessages";
 import ChatService from "../../../services/chatService";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import classNames from "classnames";
-import {SignalRContext} from "../../../providers/SocketProvider";
+import useValidateChatEvents from "../../../hooks/useValidateChatEvents";
 
 const MinimizedChat = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -44,41 +44,11 @@ const MinimizedChat = () => {
 
     const onSelectChat = async (val) => {
         setSelectedChat(val);
-        if(val)
+        if (val)
             await ChatService.readChat(val.id);
     }
 
-    SignalRContext.useSignalREffect(
-        "UpdateChatList",
-        () => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        }, []
-    );
-
-    SignalRContext.useSignalREffect(
-        "MessagesMarkedAsRead",
-        () => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        }, []
-    )
-
-    SignalRContext.useSignalREffect(
-        "MessageUpdated",
-        (message) => {
-            if(selectedChat?.id === message.chatId)
-                queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        }, []
-    )
-
-    SignalRContext.useSignalREffect(
-        "ChatDeletedForAll",
-        (chats) => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-            if(selectedChat && !chats.find(chat => chat.id === selectedChat.id)) {
-                setSelectedChat(null);
-            }
-        }, [selectedChat]
-    )
+    useValidateChatEvents(queryClient, selectedChat, setSelectedChat);
 
     return (
         <div className="fixed flex flex-row gap-10 z-20 right-24 bottom-0">

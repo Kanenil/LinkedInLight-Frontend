@@ -1,12 +1,12 @@
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import ChatService from "../../services/chatService";
 import Show from "../../elements/shared/Show";
-import {SignalRContext} from "../../providers/SocketProvider";
 import ChatItem from "./items/ChatItem";
 import React, {useEffect} from "react";
 import NoChats from "./items/NoChats";
+import useValidateChatEvents from "../../hooks/useValidateChatEvents";
 
-const ChatsSection =({getParticipant, selectedChat, setSelectedChat}) => {
+const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
     const {isLoading, data} = useQuery({
         queryFn: () => ChatService.getAllChats(),
         queryKey: ['allChats'],
@@ -14,46 +14,16 @@ const ChatsSection =({getParticipant, selectedChat, setSelectedChat}) => {
     });
     const queryClient = useQueryClient();
 
-    SignalRContext.useSignalREffect(
-        "UpdateChatList",
-        () => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        },[]
-    );
-
-    SignalRContext.useSignalREffect(
-        "MessagesMarkedAsRead",
-        () => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        }, []
-    )
-
-    SignalRContext.useSignalREffect(
-        "MessageUpdated",
-        (message) => {
-            if(selectedChat?.id === message.chatId)
-                queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-        }, []
-    )
-
-    SignalRContext.useSignalREffect(
-        "ChatDeletedForAll",
-        (chats) => {
-            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
-            if(selectedChat && !chats.find(chat => chat.id === selectedChat.id)) {
-                setSelectedChat(null);
-            }
-        }, [selectedChat]
-    )
+    useValidateChatEvents(queryClient, selectedChat, setSelectedChat);
 
     useEffect(() => {
-        if(selectedChat && !selectedChat?.participant1 && !isLoading) {
+        if (selectedChat && !selectedChat?.participant1 && !isLoading) {
             setSelectedChat(data.find(chat => chat.id === selectedChat.id))
         }
     }, [data, isLoading, selectedChat])
 
     const onFocus = async (value) => {
-        if(selectedChat && value) {
+        if (selectedChat && value) {
             await ChatService.readChat(selectedChat?.id);
         }
     }
@@ -62,15 +32,15 @@ const ChatsSection =({getParticipant, selectedChat, setSelectedChat}) => {
         document.addEventListener('visibilitychange', onFocus)
         document.addEventListener('blur', onFocus)
         window.addEventListener('blur', onFocus)
-        window.addEventListener('focus', onFocus )
+        window.addEventListener('focus', onFocus)
         document.addEventListener('focus', onFocus)
 
         return () => {
             window.removeEventListener('blur', onFocus)
             document.removeEventListener('blur', onFocus)
             window.removeEventListener('focus', onFocus)
-            document.removeEventListener('focus', onFocus )
-            document.removeEventListener('visibilitychange', onFocus )
+            document.removeEventListener('focus', onFocus)
+            document.removeEventListener('visibilitychange', onFocus)
         }
     }, [selectedChat])
 
