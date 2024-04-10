@@ -10,7 +10,7 @@ import {readFile} from "../../../../utils/cropImage";
 import Show from "../../../../elements/shared/Show";
 import {DocumentIcon} from "@heroicons/react/24/outline";
 
-const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, accept}) => {
+const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, setFile, accept}) => {
     const {setRotation, rotation, setImage} = useImageCropContext();
     const [error, setError] = useState(false);
     const isImage = file.type.includes('image');
@@ -23,14 +23,18 @@ const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, 
         const file = files && files[0];
         if (!file) return;
 
-        onChange();
-        const imageDataUrl = await readFile(file);
+        if(file.type.includes('image')) {
+            onChange();
+            const imageDataUrl = await readFile(file);
 
-        const img = new Image();
-        img.src = imageDataUrl;
-        img.onload = () => {
-            setImage(imageDataUrl);
-        };
+            const img = new Image();
+            img.src = imageDataUrl;
+            img.onload = () => {
+                setImage(imageDataUrl);
+            };
+        } else {
+            setFile(file);
+        }
     };
 
     const onSubmit = () => {
@@ -95,7 +99,7 @@ const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, 
 
             <div className="flex flex-col items-end pt-2.5 pb-1 gap-2.5">
                 <div className="flex justify-end items-start gap-5">
-                    <SecondaryButton onClick={() => document.querySelector('#changeImage').click()}>
+                    <SecondaryButton type="button" onClick={() => document.querySelector('#changeImage').click()}>
                         Change file
                     </SecondaryButton>
                     <input id="changeImage" className="hidden" onChange={handleFileChange}

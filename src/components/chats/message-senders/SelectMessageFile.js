@@ -70,7 +70,7 @@ const SelectMessageFile = ({children, chat, message, participant, setMessage, ac
             <ConfirmationModal isOpen={!!selectedFile} onSaveCallback={onSave}
                                position="mx-auto my-auto"
                                onCloseCallback={onClose}>
-                <MessageWithFile message={message} accept={accept} setMessage={setMessage} file={selectedFile}/>
+                <MessageWithFile message={message} setFile={setSelectedFile} accept={accept} setMessage={setMessage} file={selectedFile}/>
             </ConfirmationModal>
         </React.Fragment>
     )
