@@ -15,6 +15,8 @@ import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import ChatsLayout from "../shared/layouts/ChatsLayout";
 import React from "react";
 import ImageCropProvider from "../../providers/ImageCropProvider";
+import MyNetwork from "../../pages/network";
+import Connections from "../../pages/network/connections";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -48,6 +50,9 @@ const App = () => {
                                                 </Route>
                                             </Route>
                                         </Route>
+
+                                        <Route path="my-network" element={<MyNetwork/>}/>
+                                        <Route path="my-network/connections" element={<Connections/>}/>
                                     </Route>
 
                                     <Route path="chats" element={<ChatsLayout/>}>

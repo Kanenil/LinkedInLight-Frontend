@@ -40,7 +40,7 @@ const InHeader = () => {
                         <HomeIcon/>
                     </Link>
 
-                    <Link to='/j4y' className="p-2">
+                    <Link to='/j4y/my-network' className="p-2">
                         <GroupsIcon/>
                     </Link>
 
