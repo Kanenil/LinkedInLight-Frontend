@@ -18,6 +18,7 @@ import ImageCropProvider from "../../providers/ImageCropProvider";
 import MyNetwork from "../../pages/network";
 import Connections from "../../pages/network/connections";
 import ChatProvider from "../../providers/ChatProvider";
+import CreateCompany from "../../pages/company/createCompany";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -61,9 +62,15 @@ const App = () => {
                                             <Route index element={<Chats/>}/>
                                         </Route>
 
+                                        <Route path="company">
+                                            <Route path="new" element={<ChatsLayout/>}>
+                                                <Route index element={<CreateCompany/>}/>
+                                            </Route>
+                                        </Route>
+
                                         <Route path="settings" element={<ChatsLayout/>}>
                                             <Route
-                                                path="settings/:section?/:block?"
+                                                path=":section?/:block?"
                                                 element={<Settings/>}
                                             />
                                         </Route>

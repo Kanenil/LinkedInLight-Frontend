@@ -10,6 +10,7 @@ const AddButton = ({className, to, onClick, children, ...props}) => {
                 <Link
                     className={`group flex flex-row gap-2.5 items-center mt-[5px] w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF] ${className}`}
                     to={to}
+                    onClick={onClick}
                     {...props}
                 >
                     <PlusIcon
@@ -18,7 +19,7 @@ const AddButton = ({className, to, onClick, children, ...props}) => {
                     {children}
                 </Link>
             </ConditionalWrapper>
-            <ConditionalWrapper condition={onClick}>
+            <ConditionalWrapper condition={onClick && !to}>
                 <button
                     className={`group flex flex-row gap-2.5 items-center mt-[5px] w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF] ${className}`}
                     onClick={onClick}

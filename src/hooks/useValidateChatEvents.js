@@ -31,6 +31,13 @@ const useValidateChatEvents = (queryClient, selectedChat, setSelectedChat) => {
     )
 
     SignalRContext.useSignalREffect(
+        "MessageDeletedForMe",
+        () => {
+            queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
+        }, []
+    )
+
+    SignalRContext.useSignalREffect(
         "ChatDeletedForAll",
         (chats) => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);

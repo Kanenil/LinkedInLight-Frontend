@@ -4,24 +4,24 @@ import AddButton from "../../../../elements/buttons/AddButton";
 
 const options = [
     {
-        title: 'Залучайте кращих фахівців',
-        description: 'Пошук і найм кваліфікованих кандидатів для вашого бізнесу'
+        title: 'Attract top talent',
+        description: 'Find and hire qualified candidates for your business'
     },
     {
-        title: 'Продайте свої послуги',
-        description: 'Розкажіть про свій бізнес та пропонуйте свої послуги'
+        title: 'Promote your services',
+        description: 'Tell people about your business and offer your services'
     },
     {
-        title: 'Розмістіть вакансію безкоштовно',
-        description: 'Представте вашу вакансію широкому колу кандидатів'
+        title: 'Post a job for free',
+        description: 'Present your job opening to a wide range of candidates'
     },
     {
-        title: 'Розмістіть рекламу',
-        description: 'Привертайте увагу клієнтів за допомогою реклами на нашому сайті'
+        title: 'Place an ad',
+        description: 'Attract customer attention with advertising on our website'
     },
     {
-        title: 'Навчайтеся та розвивайтеся',
-        description: 'Отримуйте доступ до корисних матеріалів та курсів для професійного зростання'
+        title: 'Learn and grow',
+        description: 'Get access to useful materials and courses for professional development'
     }
 ]
 
@@ -57,7 +57,7 @@ const StartCompany = forwardRef(({setIsComponentVisible}, ref) => {
                 </div>
 
                 <div className="border-[#F7F7F7] border-[1px] p-2.5 rounded-b-lg">
-                    <AddButton to='/j4y/company/new' className="border-transparent hover:border-transparent active:border-transparent active:bg-transparent">
+                    <AddButton onClick={() => setIsComponentVisible(false)} to='/j4y/company/new' className="border-transparent hover:border-transparent active:border-transparent active:bg-transparent">
                         Create a company
                     </AddButton>
                 </div>
