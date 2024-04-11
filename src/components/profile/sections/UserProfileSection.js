@@ -11,6 +11,12 @@ import {Link} from "react-router-dom";
 import {APP_ENV} from "../../../env";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import Show from "../../../elements/shared/Show";
+import {useQueries, useQuery, useQueryClient} from "@tanstack/react-query";
+import {connectedQuery} from "../../../constants/combinedQueries";
+import AddButton from "../../../elements/buttons/AddButton";
+import ConnectedButton from "../../../elements/buttons/ConnectedButton";
+import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
+import ConnectionService from "../../../services/connectionService";
 
 const ImageSector = ({user, isOwner}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
@@ -44,11 +50,66 @@ const ImageSector = ({user, isOwner}) => {
     )
 }
 
+const CONNECTION = 'connection';
+const CONNECTIONREQUEST = 'connectionRequest';
+
 const InformationSector = ({user, isOwner}) => {
-    const [isVisible, setIsVisible] = useState(false)
+    const queryClient = useQueryClient();
+    const {isConnected, isConnectionRequested} = useQueries({
+        queries: connectedQuery(user.id, isOwner).map((value) => ({
+            ...value
+        })),
+        combine: (results) => {
+            return {
+                isConnected: results[0].data ?? false,
+                isConnectionRequested: results[1].isError ? false: results[1].data
+            }
+        },
+    });
+    const {data} = useQuery({
+        queryFn: () => ConnectionService.getConnections(),
+        queryKey: ['connections'],
+        select: ({data}) => data
+    })
+    const [isVisible, setIsVisible] = useState(false);
+    const [confirmModal, setConfirmModal] = useState(null);
 
     const closeModal = () => {
         setIsVisible(false);
+    }
+
+    const onRemoveConnection = () => {
+        setConfirmModal(CONNECTION);
+        setIsVisible(true);
+    }
+
+    const onRemoveConnectionRequest = () => {
+        setConfirmModal(CONNECTIONREQUEST);
+        setIsVisible(true);
+    }
+
+    const refetch = () => {
+        const [val1, val2] = connectedQuery(user.id, isOwner)
+            .map(val => val.queryKey);
+
+        queryClient.invalidateQueries([...val1, ...val2]);
+    }
+
+    const onConnect = () => {
+        ConnectionService.sendRequest(user.id).then(refetch)
+    }
+
+    const onConfirm = () => {
+        setIsVisible(false);
+        setConfirmModal(null);
+
+        if (confirmModal === CONNECTION) {
+            const {id} = data.find(val => val.user.id === user.id);
+
+            ConnectionService.removeConnection(id).then(refetch);
+        } else {
+            ConnectionService.revokeRequest(isConnectionRequested.id).then(refetch);
+        }
     }
 
     return (
@@ -78,24 +139,84 @@ const InformationSector = ({user, isOwner}) => {
                         Contact information
                     </button>
                 </div>
-                <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm">
-                    <h3 className="font-medium">Contacts:</h3>
+                <Show>
+                    <Show.When isTrue={isOwner}>
+                        <Link to='/j4y/my-network/connections' className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline">
+                            <h3 className="font-medium">Connections:</h3>
 
-                    <h4 className="ml-4">*****</h4>
-                </div>
-                <ConditionalWrapper condition={isOwner}>
-                    <div className="flex flex-row gap-4 mt-4">
-                        <OpenToButton/>
-                        <ProfileButton onClickHandler={() => setIsVisible(true)} title="Add profile section"/>
-                        {/*<button*/}
-                        {/*    className="border-[#7D88A4] border-[1px] rounded-full py-1.5 px-6 font-jost text-[#7D88A4] text-sm">*/}
-                        {/*    More*/}
-                        {/*</button>*/}
-                    </div>
-                </ConditionalWrapper>
+                            <h4 className="ml-4">{data?.length}</h4>
+                        </Link>
+                    </Show.When>
+
+                    <Show.Else>
+                        <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm">
+                            <h3 className="font-medium">Connections:</h3>
+
+                            <h4 className="ml-4">{data?.length}</h4>
+                        </div>
+                    </Show.Else>
+                </Show>
+
+                <Show>
+                    <Show.When isTrue={isOwner}>
+                        <div className="flex flex-row gap-4 mt-4">
+                            <OpenToButton/>
+                            <ProfileButton
+                                onClickHandler={() => setIsVisible(true)}
+                                title="Add profile section"
+                            />
+                        </div>
+                    </Show.When>
+
+                    <Show.Else>
+                        <Show>
+                            <Show.When isTrue={isConnected}>
+                                <ConnectedButton
+                                    onClick={onRemoveConnection}
+                                >
+                                    Remove connection
+                                </ConnectedButton>
+                            </Show.When>
+
+                            <Show.When isTrue={!!isConnectionRequested && isConnectionRequested.status === 'Rejected'}>
+                                <div className="text-red-700 mt-1">
+                                    Requested was rejected
+                                </div>
+                            </Show.When>
+
+                            <Show.When isTrue={!!isConnectionRequested}>
+                                <ConnectedButton
+                                    onClick={onRemoveConnectionRequest}
+                                >
+                                    Requested connection
+                                </ConnectedButton>
+                            </Show.When>
+
+                            <Show.Else>
+                                <AddButton onClick={onConnect}>
+                                    Connect
+                                </AddButton>
+                            </Show.Else>
+                        </Show>
+                    </Show.Else>
+                </Show>
             </div>
             <Modal isOpen={isVisible} onClose={closeModal} position="mt-10 mx-auto">
-                <AddToProfile onClose={closeModal}/>
+                <Show>
+                    <Show.When isTrue={confirmModal && confirmModal === CONNECTION}>
+                        <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection?"
+                                       action={`Do you want to remove your connection with ${user?.firstName} ${user?.lastName}?`}/>
+                    </Show.When>
+
+                    <Show.When isTrue={confirmModal && confirmModal === CONNECTIONREQUEST}>
+                        <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection request?"
+                                       action="Do you want to remove your connection request?"/>
+                    </Show.When>
+
+                    <Show.Else>
+                        <AddToProfile onClose={closeModal}/>
+                    </Show.Else>
+                </Show>
             </Modal>
         </React.Fragment>
     )

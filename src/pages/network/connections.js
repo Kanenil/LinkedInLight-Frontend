@@ -1,5 +1,5 @@
 import {Helmet} from "react-helmet-async";
-import React from "react";
+import React, {useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import ConnectionService from "../../services/connectionService";
 import LoopIcon from "../../elements/icons/LoopIcon";
@@ -8,14 +8,28 @@ import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
 import {Link} from "react-router-dom";
 import SecondaryButton from "../../elements/buttons/SecondaryButton";
-import {EllipsisHorizontalIcon} from "@heroicons/react/24/solid";
+import ConnectionOptions from "../../components/network/ConnectionOptions";
+import ConfirmAction from "../../components/shared/modals/shared/ConfirmAction";
+import Modal from "../../components/shared/modals/Modal";
 
 const Connections = () => {
-    const {data: connectionsList, isLoading: connectionsListLoading} = useQuery({
+    const {data: connectionsList, isLoading: connectionsListLoading, refetch} = useQuery({
         queryFn: () => ConnectionService.getConnections(),
         queryKey: ['connections'],
         select: ({data}) => data
     })
+    const [isVisible, setIsVisible] = useState(false);
+    const [selected, setSelected] = useState(null);
+
+    const onRemove = (val) => {
+        setSelected(val);
+        setIsVisible(true);
+    }
+
+    const onConfirm = () => {
+        setIsVisible(false);
+        ConnectionService.removeConnection(selected.id).then(refetch);
+    }
 
     return (
         <React.Fragment>
@@ -24,7 +38,7 @@ const Connections = () => {
             </Helmet>
             <main className='flex-grow bg-[#E7E7E7]'>
                 <div className="flex flex-row my-8 mx-auto w-[1170px]">
-                    <div className="min-h-[30vh] w-full bg-white rounded-lg">
+                    <div className="w-full bg-white rounded-lg">
                         <div className="pt-6 px-6 pb-3 flex flex-row border-b-2 border-b-gray-200">
                             <h1 className="font-jost text-xl">
                                 {!connectionsListLoading && connectionsList.length} Connections
@@ -66,14 +80,16 @@ const Connections = () => {
                                                     </SecondaryButton>
                                                 </div>
 
-                                                <button className="hover:bg-gray-100 rounded-full p-1">
-                                                    <EllipsisHorizontalIcon className="w-6 h-6"/>
-                                                </button>
+                                                <ConnectionOptions onChange={() => onRemove(connection)}/>
                                             </div>
                                         </div>
                                     ))
                                 }
                             </div>
+                            <Modal isOpen={isVisible} onClose={() => setIsVisible(false)} position="mt-10 mx-auto">
+                                <ConfirmAction onConfirm={onConfirm} onClose={() => setIsVisible(false)} title="Remove connection?"
+                                               action={`Do you want to remove connection with ${selected?.user.firstName} ${selected?.user.lastName}?`}/>
+                            </Modal>
                         </ConditionalWrapper>
                     </div>
                 </div>

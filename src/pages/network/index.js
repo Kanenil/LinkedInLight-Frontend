@@ -1,6 +1,7 @@
 import React from "react";
 import ManageNetwork from "../../components/network/ManageNetwork";
 import {Helmet} from "react-helmet-async";
+import PendingRequests from "../../components/network/PendingRequests";
 
 const MyNetwork = () => {
 
@@ -9,7 +10,7 @@ const MyNetwork = () => {
             <Helmet>
                 <title>My Network</title>
             </Helmet>
-            <main className='bg-[#E7E7E7]'>
+            <main className='flex-grow bg-[#E7E7E7]'>
                 <div className="flex flex-row my-8 mx-auto w-[1170px]">
                     <div className="w-3/12">
                         <div className="rounded-t-lg overflow-hidden">
@@ -19,7 +20,7 @@ const MyNetwork = () => {
                         </div>
                     </div>
                     <div className="w-9/12 ml-10">
-                        <div className="h-[500px] bg-white rounded-lg"></div>
+                        <PendingRequests/>
                     </div>
                 </div>
             </main>

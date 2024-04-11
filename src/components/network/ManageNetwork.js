@@ -12,7 +12,7 @@ const ManageNetwork = () => {
     })
 
     return (
-        <div className="py-4 h-[500px] bg-white rounded-b-lg">
+        <div className="py-4 h-full bg-white rounded-b-lg">
             <h1 className="mx-4 font-jost text-lg">Manage my network</h1>
 
             <Link className="flex flex-row items-center gap-3 font-jost hover:bg-gray-50 px-4 py-2" to="connections">

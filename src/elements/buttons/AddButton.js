@@ -31,8 +31,6 @@ const AddButton = ({className, to, onClick, children, ...props}) => {
                 </button>
             </ConditionalWrapper>
         </React.Fragment>
-
-
     )
 }
 export default AddButton;
