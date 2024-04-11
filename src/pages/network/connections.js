@@ -11,6 +11,7 @@ import SecondaryButton from "../../elements/buttons/SecondaryButton";
 import ConnectionOptions from "../../components/network/ConnectionOptions";
 import ConfirmAction from "../../components/shared/modals/shared/ConfirmAction";
 import Modal from "../../components/shared/modals/Modal";
+import {useChatContext} from "../../providers/ChatProvider";
 
 const Connections = () => {
     const {data: connectionsList, isLoading: connectionsListLoading, refetch} = useQuery({
@@ -20,6 +21,7 @@ const Connections = () => {
     })
     const [isVisible, setIsVisible] = useState(false);
     const [selected, setSelected] = useState(null);
+    const {setSelectedChatByUserId} = useChatContext();
 
     const onRemove = (val) => {
         setSelected(val);
@@ -75,7 +77,7 @@ const Connections = () => {
 
                                             <div className="flex flex-row gap-3 items-center ml-auto">
                                                 <div className="px-2 py-4">
-                                                    <SecondaryButton onClick={() => {}}>
+                                                    <SecondaryButton onClick={() => setSelectedChatByUserId(connection.user.id)}>
                                                         Message
                                                     </SecondaryButton>
                                                 </div>

@@ -12,12 +12,18 @@ import AccountButton from "../../../elements/buttons/AccountButton";
 import {useTranslation} from "react-i18next";
 import {useQuery} from "@tanstack/react-query";
 import ChatService from "../../../services/chatService";
+import ConnectionService from "../../../services/connectionService";
 
 const InHeader = () => {
     const {t} = useTranslation();
     const {data} = useQuery({
         queryFn: () => ChatService.allUnreadMessages(),
         queryKey: ['allUnreadMessages'],
+        select: ({data}) => data,
+    })
+    const {data:pendingRequests} = useQuery({
+        queryFn: () => ConnectionService.getPendingRequests(),
+        queryKey: ['pendingRequests'],
         select: ({data}) => data,
     })
 
@@ -41,7 +47,7 @@ const InHeader = () => {
                     </Link>
 
                     <Link to='/j4y/my-network' className="p-2">
-                        <GroupsIcon/>
+                        <GroupsIcon number={pendingRequests?.length > 0 && pendingRequests.length}/>
                     </Link>
 
                     <Link to='/j4y' className="p-2">

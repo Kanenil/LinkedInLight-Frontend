@@ -13,6 +13,7 @@ import ChatService from "../../../services/chatService";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import classNames from "classnames";
 import useValidateChatEvents from "../../../hooks/useValidateChatEvents";
+import {useChatContext} from "../../../providers/ChatProvider";
 
 const MinimizedChat = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,7 @@ const MinimizedChat = () => {
         select: ({data}) => data,
     })
     const imageUrl = profile?.image ? APP_ENV.UPLOADS_URL + "/" + profile?.image : defaultImage;
-    const [selectedChat, setSelectedChat] = useState(null);
+    const {selectedChat, setSelectedChat} = useChatContext();
 
     const toggleOpen = () => {
         setIsOpen(prev => !prev);

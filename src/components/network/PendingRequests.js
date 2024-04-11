@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import ConnectionService from "../../services/connectionService";
 import Show from "../../elements/shared/Show";
 import {Link} from "react-router-dom";
@@ -11,6 +11,7 @@ import Modal from "../shared/modals/Modal";
 import ConfirmAction from "../shared/modals/shared/ConfirmAction";
 
 const PendingRequests = () => {
+    const queryClient = useQueryClient();
     const {data: pendingRequestsList, isLoading: pendingRequestsListLoading, refetch} = useQuery({
         queryFn: () => ConnectionService.getPendingRequests(),
         queryKey: ['pendingRequests'],
@@ -30,18 +31,21 @@ const PendingRequests = () => {
     }
 
     const onAdd = (val) => {
-        ConnectionService.acceptRequest(val).then(refetch);
+        ConnectionService.acceptRequest(val).then(() => {
+            refetch();
+            queryClient.invalidateQueries('connections');
+        });
     }
 
     return (
         <div className="bg-white rounded-lg">
             <Show>
                 <Show.When isTrue={!pendingRequestsListLoading && pendingRequestsList?.length > 0}>
-                    <div className="flex flex-row px-4 py-2">
-                        <Link to="pending-requests" className="ml-auto font-jost hover:bg-gray-100 p-1">
-                            Manage
-                        </Link>
-                    </div>
+                    {/*<div className="flex flex-row px-4 py-2">*/}
+                    {/*    <Link to="pending-requests" className="ml-auto font-jost hover:bg-gray-100 p-1">*/}
+                    {/*        Manage*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
 
                     <div className="flex flex-col gap-4 px-4 py-3">
                         {
@@ -91,9 +95,9 @@ const PendingRequests = () => {
                     <div className="flex flex-row px-4 py-2">
                         <h1 className="font-jost text-lg">No pending requests</h1>
 
-                        <Link to="pending-requests" className="ml-auto font-jost hover:bg-gray-100 p-1">
-                           Manage
-                        </Link>
+                        {/*<Link to="pending-requests" className="ml-auto font-jost hover:bg-gray-100 p-1">*/}
+                        {/*   Manage*/}
+                        {/*</Link>*/}
                     </div>
                 </Show.Else>
             </Show>
