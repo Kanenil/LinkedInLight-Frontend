@@ -7,7 +7,7 @@ import defaultImage from "../../../../assets/default-image.jpg";
 import {Link} from "react-router-dom";
 import React, {forwardRef} from "react";
 
-const Search = forwardRef(({search}, ref,) => {
+const Search = forwardRef(({search, setIsComponentVisible}, ref,) => {
     const {data} = useQuery({
         queryKey: ['search', search],
         queryFn: ({queryKey}) => SearchService.search(queryKey[1]),
@@ -32,7 +32,9 @@ const Search = forwardRef(({search}, ref,) => {
                             <div className="flex flex-col gap-2.5">
                                 {
                                     userList?.map(user => (
-                                        <div
+                                        <Link
+                                            to={`/j4y/${user.profileUrl}`}
+                                            onClick={() => setIsComponentVisible(false)}
                                             className="flex flex-row gap-3 hover:bg-gray-50 px-4"
                                             key={`user-${user.id}`}
                                         >
@@ -44,11 +46,11 @@ const Search = forwardRef(({search}, ref,) => {
                                             </div>
 
                                             <div className="flex flex-col gap-1">
-                                                <Link to={`/j4y/${user.profileUrl}`} className="font-jost font-medium">{user.firstName} {user.lastName}</Link>
+                                                <h1 className="font-jost font-medium">{user.firstName} {user.lastName}</h1>
 
                                                 <h3>{user.headline}</h3>
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))
                                 }
                             </div>

@@ -4,6 +4,7 @@ import PeopleMayKnow from "./sections/PeopleMayKnow";
 import {peopleMayKnow} from "../../pages/profile/mock";
 import {sections} from "../../constants/sections";
 import {useScrollToLocation} from "../../hooks/useScrollToLocation";
+import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 
 const StandardProfilePage = ({ user, isOwner }) => {
     useScrollToLocation();
@@ -27,7 +28,9 @@ const StandardProfilePage = ({ user, isOwner }) => {
                     </div>
                 </div>
                 <div className="w-4/12 ml-10">
-                    <RightEditSection/>
+                    <ConditionalWrapper condition={isOwner}>
+                        <RightEditSection/>
+                    </ConditionalWrapper>
 
                     <PeopleMayKnow peopleMayKnow={peopleMayKnow.slice(0, 5)}/>
                 </div>

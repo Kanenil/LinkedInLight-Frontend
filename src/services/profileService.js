@@ -47,6 +47,10 @@ class ProfileService {
         return axios.get(`${this.#URL}/mainSkills`)
     }
 
+    getMainSkillsByProfileUrl(url) {
+        return axios.get(`${this.#URL}/${url}/mainSkills`)
+    }
+
     addSkill(skill, isMainSkill = true) {
         return axios.post(`${this.#URL}/newSkill`, {
             skill,

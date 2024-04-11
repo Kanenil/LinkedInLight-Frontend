@@ -23,7 +23,7 @@ const HeaderModal = () => {
                onClose={() => setIsComponentVisible(false)}>
             <Show>
                 <Show.When isTrue={modal === 'search'}>
-                    <Search ref={modalRef} search={search}/>
+                    <Search ref={modalRef} search={search} setIsComponentVisible={setIsComponentVisible}/>
                 </Show.When>
 
                 <Show.Else>

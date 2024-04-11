@@ -10,8 +10,8 @@ import {useQuery} from "@tanstack/react-query";
 const AboutMeSection = ({user, isOwner}) => {
     const {t} = useTranslation();
     const {data, isLoading} = useQuery({
-        queryFn: () => ProfileService.getMainSkills(),
-        queryKey: ['skill'],
+        queryFn: ({queryKey}) => ProfileService.getMainSkillsByProfileUrl(queryKey[1]),
+        queryKey: ['skill', user.profileUrl],
         select: ({data}) => data.map(skill => skill.skill.name)
     })
 
