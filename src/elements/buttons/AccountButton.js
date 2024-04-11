@@ -53,9 +53,9 @@ const AccountButton = () => {
     }
 
     return (
-        <div ref={ref} className="relative">
+        <div ref={ref} className="relative flex items-center border-l-2 border-[#24459A73] pl-10">
             <button onClick={() => setIsComponentVisible((val) => !val)}
-                    className="flex flex-row items-end border-l-2 border-[#24459A73] pl-10">
+                    className="flex flex-row items-end">
                 <div className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
                     <img alt="image" className="object-contain"
                          src={imageUrl}/>

@@ -5,9 +5,9 @@ import useOverflow from "../../../../hooks/useOverflow";
 import {APP_ENV} from "../../../../env";
 import defaultImage from "../../../../assets/default-image.jpg";
 import {Link} from "react-router-dom";
-import React from "react";
+import React, {forwardRef} from "react";
 
-const Search = ({search}) => {
+const Search = forwardRef(({search}, ref,) => {
     const {data} = useQuery({
         queryKey: ['search', search],
         queryFn: ({queryKey}) => SearchService.search(queryKey[1]),
@@ -21,6 +21,7 @@ const Search = ({search}) => {
 
     return (
         <div className="flex flex-col w-[350px]"
+             ref={ref}
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div id="container" ref={containerRef} className={`max-h-[300px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
                 <div ref={contentRef} className="flex flex-col gap-2.5 py-5">
@@ -73,5 +74,5 @@ const Search = ({search}) => {
             </div>
         </div>
     )
-}
+})
 export default Search;
