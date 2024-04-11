@@ -1,4 +1,5 @@
 import ConnectionService from "../services/connectionService";
+import ChatService from "../services/chatService";
 
 const connectedQuery = (userId, isOwner) => [
     {
@@ -14,6 +15,19 @@ const connectedQuery = (userId, isOwner) => [
         enabled: !isOwner,
         retry: false
     }
+];
+
+const headerQuery = () => [
+    {
+        queryFn: () => ChatService.allUnreadMessages(),
+        queryKey: ['allUnreadMessages'],
+        select: ({data}) => data,
+    },
+    {
+        queryFn: () => ConnectionService.getPendingRequests(),
+        queryKey: ['pendingRequests'],
+        select: ({data}) => data,
+    }
 ]
 
-export {connectedQuery}
+export {connectedQuery, headerQuery}
