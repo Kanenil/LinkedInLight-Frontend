@@ -152,7 +152,7 @@ const InformationSector = ({user, isOwner}) => {
                 <Show>
                     <Show.When isTrue={isOwner}>
                         <Link to='/j4y/my-network/connections'
-                              className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline">
+                              className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline w-fit">
                             <h3 className="font-medium">Connections:</h3>
 
                             <h4 className="ml-4">{data}</h4>
@@ -160,7 +160,7 @@ const InformationSector = ({user, isOwner}) => {
                     </Show.When>
 
                     <Show.Else>
-                        <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm">
+                        <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm w-fit">
                             <h3 className="font-medium">Connections:</h3>
 
                             <h4 className="ml-4">{data}</h4>

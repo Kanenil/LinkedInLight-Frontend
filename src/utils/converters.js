@@ -33,4 +33,18 @@ function objectMap(object, mapFn) {
     }, {})
 }
 
-export {imageUrlToBase64, slugify, objectMap}
+async function asyncFilter(arr, cb){
+    const filtered = [];
+
+    for (const element of arr) {
+        const needAdd = await cb(element);
+
+        if (needAdd) {
+            filtered.push(element);
+        }
+    }
+
+    return filtered;
+}
+
+export {imageUrlToBase64, slugify, objectMap, asyncFilter}

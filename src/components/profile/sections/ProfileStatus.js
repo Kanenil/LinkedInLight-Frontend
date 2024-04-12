@@ -3,6 +3,9 @@ import Slider from "../../shared/Slider";
 import ProfileButton from "../../../elements/buttons/ProfileButton";
 import {useEffect, useState} from "react";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {asyncFilter} from "../../../utils/converters";
+import ProfileService from "../../../services/profileService";
+import {useQueryClient} from "@tanstack/react-query";
 
 const suggestions = [
     {
@@ -11,7 +14,13 @@ const suggestions = [
         buttonTitle: "Add position",
         to: "edit/experience",
         width: 220,
-        condition: 'experiences'
+        condition: async function(queryClient, user) {
+            const {data} = await queryClient.fetchQuery({
+                queryFn: ({queryKey}) => ProfileService.getExperiencesByProfileUrl(queryKey[1]),
+                queryKey: ['experiences', user.profileUrl],
+            })
+            return data.filter(val => val.currentlyWorking).length === 0;
+        }
     },
     {
         title: "What is your field of work?",
@@ -35,7 +44,13 @@ const suggestions = [
         buttonTitle: "Add skills",
         to: "edit/skill",
         width: 220,
-        condition: 'skills'
+        condition: async function(queryClient, user) {
+            const {data} = await queryClient.fetchQuery({
+                queryFn: ({queryKey}) => ProfileService.getSkillsByProfileUrl(queryKey[1]),
+                queryKey: ['skills', user.profileUrl],
+            })
+            return data.length === 0;
+        }
     },
     {
         title: "Highlight your uniqueness",
@@ -64,13 +79,21 @@ const SliderItem = ({title, description, buttonTitle, to}) => {
 
 const ProfileStatus = ({user, isOwner}) => {
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (user) {
-            setFilteredSuggestions(suggestions.filter((suggestion) => {
-                const userValue = user[suggestion.condition];
-                return userValue === "" || userValue === null || userValue?.length === 0;
-            }));
+            asyncFilter(suggestions, async (suggestion) => {
+                if(typeof suggestion.condition === 'function')
+                    return await suggestion.condition(queryClient, user);
+
+                return await new Promise((resolve) => {
+                    const userValue = user[suggestion.condition];
+                    resolve(userValue === "" || userValue === null || userValue?.length === 0);
+                });
+            }).then(resp => {
+                setFilteredSuggestions(resp);
+            })
         }
     }, [user])
 
