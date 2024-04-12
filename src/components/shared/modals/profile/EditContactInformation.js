@@ -6,10 +6,9 @@ import AddButton from "../../../../elements/buttons/AddButton";
 import {Link} from "react-router-dom";
 import EditModalForm from "../../forms/EditModalForm";
 import {APP_ENV} from "../../../../env";
-import classNames from "classnames";
-import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
-import {daysInMonth, getDateTime, getLongMonth, getMonths, getYears} from "../../../../utils/date";
+import {getDateTime, getLongMonth, getMonths, getYears} from "../../../../utils/date";
 import FormSelector from "../../forms/FormSelector";
+import moment from "moment";
 
 const EditContactInformation = ({onClose, onSave, onChange}) => {
     const initialValues = {
@@ -36,7 +35,7 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
     } = useForm(initialValues, onChange);
 
     const months = getMonths();
-    const years = getYears();
+    const years = getYears(moment().add(-17, "years").toDate());
     const days = Array.from({length: 31}, (_, i) => i + 1);
 
     useEffect(() => {
@@ -97,19 +96,19 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
             </div>
 
             <ModalInputFormGroup
-                title="Phone number"
-                name="phone"
+                title="Address"
+                name="address"
                 type="text"
-                value={values.phone}
+                value={values.address}
                 onChange={onChangeInput}
                 className="pb-[10px] pr-[20px] gap-[5px] mt-5"
             />
 
             <ModalInputFormGroup
-                title="Address"
-                name="address"
+                title="Phone number"
+                name="phone"
                 type="text"
-                value={values.address}
+                value={values.phone}
                 onChange={onChangeInput}
                 className="pb-[10px] pr-[20px] gap-[5px]"
             />

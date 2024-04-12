@@ -19,6 +19,10 @@ class ProfileService {
         })
     }
 
+    getCompanies() {
+        return axios.get(`${this.#URL}/allCompanies`)
+    }
+
     getAbout() {
         return axios.get(`${this.#URL}/edit/about`)
     }

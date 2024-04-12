@@ -11,7 +11,7 @@ const AboutMeSection = ({user, isOwner}) => {
     const {t} = useTranslation();
     const {data, isLoading} = useQuery({
         queryFn: ({queryKey}) => ProfileService.getMainSkillsByProfileUrl(queryKey[1]),
-        queryKey: ['skill', user.profileUrl],
+        queryKey: ['mainSkills', user.profileUrl],
         select: ({data}) => data.map(skill => skill.skill.name)
     })
 

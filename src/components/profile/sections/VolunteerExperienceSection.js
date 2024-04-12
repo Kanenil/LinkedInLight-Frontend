@@ -8,7 +8,7 @@ import {useQuery} from "@tanstack/react-query";
 const VolunteerExperienceSection = ({user}) => {
     const {data, isLoading} = useQuery({
         queryFn: ({queryKey}) => AdditionalProfileService.getVolunteerExperiencesByProfileUrl(queryKey[1]),
-        queryKey: ['volunteerExperience', user.profileUrl],
+        queryKey: ['volunteer-experience', user.profileUrl],
         select: ({data}) => data,
         enabled: !!user.profileUrl
     })
@@ -24,7 +24,7 @@ const VolunteerExperienceSection = ({user}) => {
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Volunteer Experiences</h1>
 
-                        <PencilButton to='details/volunteerExperiences'/>
+                        <PencilButton to='details/volunteer-experiences'/>
                     </div>
 
                     <div className="flex flex-col mt-2.5 gap-[25px] py-[5px]">

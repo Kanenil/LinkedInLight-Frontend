@@ -16,6 +16,10 @@ class ConnectionService {
         });
     }
 
+    getConnectionCountByProfileUrl(url) {
+        return axios.get(`${this.#URL}/connectionCount/${url}`);
+    }
+
     getPendingRequests() {
         return axios.get(`${this.#URL}/pendingRequests`);
     }

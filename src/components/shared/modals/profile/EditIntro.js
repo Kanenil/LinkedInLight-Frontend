@@ -1,13 +1,10 @@
 import EditModalForm from "../../forms/EditModalForm";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import useForm from "../../../../hooks/useForm";
-import AddButton from "../../../../elements/buttons/AddButton";
 import {Link} from "react-router-dom";
 import AdditionalProfileService from "../../../../services/additionalProfileService";
 import {authService} from "../../../../services/authService";
-import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
-import {COMPANIES_STORE} from "../../../../constants/stores";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 
 const EditIntro = ({onClose, onSave, onChange}) => {
@@ -63,12 +60,11 @@ const EditIntro = ({onClose, onSave, onChange}) => {
                 firstName: false,
                 lastName: false,
             })
-            console.log(data)
         }).catch(() => onClose())
     }, []);
 
-    useEffect( () => {
-        if(values.country?.length > 0) {
+    useEffect(() => {
+        if (values.country?.length > 0) {
             authService.cities(values.country).then(({data}) => {
                 setOptions(prev => ({
                     ...prev,
@@ -87,7 +83,7 @@ const EditIntro = ({onClose, onSave, onChange}) => {
         const model = {
             id: values.id,
             firstName: values.firstName,
-            lastName:  values.lastName,
+            lastName: values.lastName,
             additionalName: values.additionalName || "",
             country: values.country,
             headline: values.headline || "",
@@ -96,7 +92,8 @@ const EditIntro = ({onClose, onSave, onChange}) => {
             address: values.address || "",
             lastPosition: values.lastPosition || "",
             isClosed: values.isClosed,
-            isHibernated: values.isHibernated
+            isHibernated: values.isHibernated,
+            profileUrl: values.profileUrl
         }
 
         AdditionalProfileService

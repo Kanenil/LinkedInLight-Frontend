@@ -17,6 +17,7 @@ import {AddButtonVariant2} from "../../../elements/buttons/AddButton";
 import ConnectedButton from "../../../elements/buttons/ConnectedButton";
 import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
 import ConnectionService from "../../../services/connectionService";
+import ContactInformation from "../../shared/modals/profile/ContactInformation";
 
 const ImageSector = ({user, isOwner}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
@@ -52,6 +53,7 @@ const ImageSector = ({user, isOwner}) => {
 
 const CONNECTION = 'connection';
 const CONNECTIONREQUEST = 'connectionRequest';
+const CONTACTINFORMATION = 'contactInformation';
 
 const InformationSector = ({user, isOwner}) => {
     const queryClient = useQueryClient();
@@ -67,8 +69,8 @@ const InformationSector = ({user, isOwner}) => {
         },
     });
     const {data} = useQuery({
-        queryFn: () => ConnectionService.getConnections(),
-        queryKey: ['connections'],
+        queryFn: ({queryKey}) => ConnectionService.getConnectionCountByProfileUrl(queryKey[1]),
+        queryKey: ['connections', user.profileUrl],
         select: ({data}) => data
     })
     const [isVisible, setIsVisible] = useState(false);
@@ -80,6 +82,11 @@ const InformationSector = ({user, isOwner}) => {
 
     const onRemoveConnection = () => {
         setConfirmModal(CONNECTION);
+        setIsVisible(true);
+    }
+
+    const onShowContactInformation = () => {
+        setConfirmModal(CONTACTINFORMATION);
         setIsVisible(true);
     }
 
@@ -138,7 +145,7 @@ const InformationSector = ({user, isOwner}) => {
                 <div className="flex flex-row mt-1.5 font-jost text-sm">
                     <h3 className="text-[#7F7F7F]">{user?.city}, {user?.country}</h3>
 
-                    <button className="ml-6 text-[#24459A] font-medium hover:underline">
+                    <button onClick={onShowContactInformation} className="ml-6 text-[#24459A] font-medium hover:underline">
                         Contact information
                     </button>
                 </div>
@@ -148,7 +155,7 @@ const InformationSector = ({user, isOwner}) => {
                               className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline">
                             <h3 className="font-medium">Connections:</h3>
 
-                            <h4 className="ml-4">{data?.length}</h4>
+                            <h4 className="ml-4">{data}</h4>
                         </Link>
                     </Show.When>
 
@@ -156,7 +163,7 @@ const InformationSector = ({user, isOwner}) => {
                         <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm">
                             <h3 className="font-medium">Connections:</h3>
 
-                            <h4 className="ml-4">{data?.length}</h4>
+                            <h4 className="ml-4">{data}</h4>
                         </div>
                     </Show.Else>
                 </Show>
@@ -215,6 +222,10 @@ const InformationSector = ({user, isOwner}) => {
                     <Show.When isTrue={confirmModal && confirmModal === CONNECTIONREQUEST}>
                         <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection request?"
                                        action="Do you want to remove your connection request?"/>
+                    </Show.When>
+
+                    <Show.When isTrue={confirmModal && confirmModal === CONTACTINFORMATION}>
+                        <ContactInformation onClose={closeModal} isOwner={isOwner} user={user} />
                     </Show.When>
 
                     <Show.Else>

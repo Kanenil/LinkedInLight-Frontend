@@ -67,12 +67,12 @@ export const details = [
         }
     },
     {
-        route: ["volunteerExperience"],
+        route: ["volunteer-experiences"],
         props: {
             promise: async () => await AdditionalProfileService.getVolunteerExperiences(),
-            detail: 'VolunteerExperience',
-            edit: 'volunteerExperience',
-            title: "VolunteerExperience",
+            detail: 'volunteer-experiences',
+            edit: 'volunteer-experience',
+            title: "Volunteer Experience",
             itemComponent: <VolunteerExperienceItem/>
         }
     },

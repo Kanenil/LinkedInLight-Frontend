@@ -11,7 +11,7 @@ const SkillsSection = ({user, isOwner}) => {
     const {t} = useTranslation();
     const {data, isLoading} = useQuery({
         queryFn: ({queryKey}) => ProfileService.getSkillsByProfileUrl(queryKey[1]),
-        queryKey: ['skill', user.profileUrl],
+        queryKey: ['skills', user.profileUrl],
         select: ({data}) => data,
         enabled: !!user.profileUrl
     })

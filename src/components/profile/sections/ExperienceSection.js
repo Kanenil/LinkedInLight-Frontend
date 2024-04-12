@@ -1,29 +1,32 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
-import {useEffect, useState} from "react";
 import ProfileService from "../../../services/profileService";
 import ExperienceItem from "../items/ExperienceItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {useQuery} from "@tanstack/react-query";
 
-const ExperienceSection = ({ user }) => {
-    const [experiences, setExperiences] = useState([]);
+const ExperienceSection = ({user, isOwner}) => {
+    const {data, isLoading} = useQuery({
+        queryFn: ({queryKey}) => ProfileService.getExperiencesByProfileUrl(queryKey[1]),
+        queryKey: ['experience', user.profileUrl],
+        select: ({data}) => data,
+        enabled: !!user.profileUrl
+    })
 
-    useEffect(() => {
-        ProfileService
-            .getExperiencesByProfileUrl(user.profileUrl)
-            .then(({data}) => setExperiences(data))
-    }, [user])
+    if (isLoading)
+        return;
 
     return (
-        <ConditionalWrapper condition={experiences.length > 0}>
+        <ConditionalWrapper condition={data.length > 0}>
             <div id="experiences" className="rounded-lg bg-white py-8 px-10">
                 <SectionHeaderBlock
                     title="Experience"
                     buttonTitle="Add experience"
                     onPencilClickTo="details/experiences"
                     link="edit/experience"
+                    isOwner={isOwner}
                 />
 
-                {experiences.map((experience, index) =>
+                {data.map((experience, index) =>
                     <ExperienceItem key={`sectionExperiences-${index}`} {...experience} />
                 )}
             </div>

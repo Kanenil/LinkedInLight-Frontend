@@ -2,7 +2,6 @@ import axios from "../services/axios";
 import {useNavigate} from "react-router";
 import {routes} from "../constants/routes";
 import {general} from "../constants/general";
-import {date} from "yup";
 
 export const useAuth = () => {
     const navigator = useNavigate();

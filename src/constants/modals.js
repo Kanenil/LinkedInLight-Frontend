@@ -46,7 +46,7 @@ export const modals = [
         children: <AddProject/>
     },
     {
-        route: ["volunteerExperience"],
+        route: ["volunteer-experience"],
         children: <AddVolunteerExperience/>
     },
     {

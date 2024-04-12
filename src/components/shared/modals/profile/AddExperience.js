@@ -14,12 +14,12 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
         options: {
             title: JSON.parse(localStorage.getItem(TITLES_STORE) || '[]'),
-            companyName: JSON.parse(localStorage.getItem(COMPANIES_STORE) || '[]'),
+            company: [],
             industry: []
         },
         values: {
             title: '',
-            companyName: '',
+            company: '',
             startDateYear: '',
             startDateMonth: '',
             endDateYear: '',
@@ -31,7 +31,7 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         },
         errors: {
             title: true,
-            companyName: true,
+            company: true,
             industry: true,
             endDate: null,
             startDate: null,
@@ -58,6 +58,13 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
                 industry: data.map(val => ({ value: val.id, label: val.name }))
             }))
         })
+        ProfileService.getCompanies().then(({data})=>{
+            setOptions(prev => ({
+                ...prev,
+                savedCompanies: data,
+                company: data.map(val => ({ value: val.id, label: val.companyName }))
+            }))
+        })
 
         if (id) {
             ProfileService.getExperience(id).then(({data}) => {
@@ -72,12 +79,13 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
                     startDateYear: startDate.getFullYear(),
                     endDateMonth: endDate ? getLongMonth(endDate.getMonth()) : "",
                     endDateYear: endDate ? endDate.getFullYear() : "",
-                    industry: experience.industry.name
+                    industry: experience.industry.name,
+                    company: experience.company.companyName
                 })
 
                 setErrors({
                     title: false,
-                    companyName: false,
+                    company: false,
                     industry: false
                 })
             }).catch(() => onClose())
@@ -97,7 +105,9 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         const model = {
             id: id ?? 0,
             title: values.title,
-            companyName: values.companyName,
+            company: {
+                ...options.savedCompanies.find(val => val.companyName === values.company)
+            },
             startDate: getDateTime(1, values.startDateMonth, values.startDateYear),
             endDate: getDateTime(1, values.endDateMonth, values.endDateYear),
             currentlyWorking: getDateTime(1, values.endDateMonth, values.endDateYear) ? values.currentlyWorking : true,
@@ -153,15 +163,32 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
 
             <ModalSelectFormGroup
                 className="pt-[5px] pb-[10px] pr-[20px] gap-[5px]"
-                title="Company name *"
-                value={values.companyName}
-                options={options.companyName}
+                title="Company *"
+                value={values.company}
+                options={options.company}
                 containerWidth={665}
                 placeHolder="ex: Microsoft"
-                error={isSubmitted && errors['companyName']}
+                error={isSubmitted && errors['company']}
                 hasTools={false}
                 clearOnSelect={false}
-                onChange={(e) => handleChangeSelect(e, "companyName", COMPANIES_STORE)}
+                onChange={(e) => handleChangeSelect(e, "company")}
+                errorChildren={
+                    <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
+                }
+            />
+
+            <ModalSelectFormGroup
+                className="pt-[5px] pb-[10px] pr-[20px] gap-[5px]"
+                title="Industry *"
+                value={values.industry}
+                options={options.industry}
+                containerWidth={665}
+                placeHolder="ex: Software Development"
+                error={isSubmitted && errors['industry']}
+                hasTools={false}
+                onEnterSelect={false}
+                clearOnSelect={false}
+                onChange={(e) => handleChangeSelect(e, "industry")}
                 errorChildren={
                     <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
                 }
@@ -182,23 +209,6 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
                 errors={errors}
                 onChange={onChange}
                 isEndDateDisabled={values.currentlyWorking}
-            />
-
-            <ModalSelectFormGroup
-                className="pt-[5px] pb-[10px] pr-[20px] gap-[5px]"
-                title="Industry *"
-                value={values.industry}
-                options={options.industry}
-                containerWidth={665}
-                placeHolder="ex: Software Development"
-                error={isSubmitted && errors['industry']}
-                hasTools={false}
-                onEnterSelect={false}
-                clearOnSelect={false}
-                onChange={(e) => handleChangeSelect(e, "industry")}
-                errorChildren={
-                    <h3 className="mt-2 text-[#9E0F20] text-xs">This field is required</h3>
-                }
             />
 
             <ModalTextareaFormGroup

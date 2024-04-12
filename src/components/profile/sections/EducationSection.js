@@ -1,5 +1,4 @@
 import SectionHeaderBlock from "../shared/SectionHeaderBlock";
-import {useEffect, useState} from "react";
 import ProfileService from "../../../services/profileService";
 import EducationItem from "../items/EducationItem";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
@@ -13,7 +12,7 @@ const EducationSection = ({user, isOwner}) => {
         enabled: !!user.profileUrl
     })
 
-    if(isLoading)
+    if (isLoading)
         return;
 
     return (

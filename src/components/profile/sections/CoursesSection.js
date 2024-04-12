@@ -1,22 +1,26 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import RecommendedProfileService from "../../../services/recommendedProfileService";
 import PencilButton from "../../../elements/buttons/PencilButton";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import CourseItem from "../items/CourseItem";
 import {useTranslation} from "react-i18next";
+import {useQuery} from "@tanstack/react-query";
 
 const CoursesSection = ({user, isOwner}) => {
-    const {t} = useTranslation();
-    const [courses, setCourses] = useState([]);
+    const {data, isLoading} = useQuery({
+        queryFn: ({queryKey}) => RecommendedProfileService.getCoursesByProfileUrl(queryKey[1]),
+        queryKey: ['course', user.profileUrl],
+        select: ({data}) => data,
+        enabled: !!user.profileUrl
+    })
 
-    useEffect(() => {
-        RecommendedProfileService
-            .getCoursesByProfileUrl(user.profileUrl)
-            .then(({data}) => setCourses(data))
-    }, [user])
+    const {t} = useTranslation();
+
+    if (isLoading)
+        return;
 
     return (
-        <ConditionalWrapper condition={courses.length > 0}>
+        <ConditionalWrapper condition={data.length > 0}>
             <section id="courses"
                      className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
                 <div className="mx-10">
@@ -30,7 +34,7 @@ const CoursesSection = ({user, isOwner}) => {
 
                     <div className="flex flex-col mt-2.5 gap-[25px] py-[5px]">
                         {
-                            courses.map((course, index) =>
+                            data.map((course, index) =>
                                 <CourseItem {...course} key={`courses-${course.name}-${index}`}/>
                             )
                         }
