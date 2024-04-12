@@ -11,6 +11,7 @@ const ModalSelectFormGroup = ({
                                   onEnterSelect = true,
                                   placeHolder,
                                   onChange,
+                                  isAbsolute = false,
                                   searchAble = true,
                                   containerWidth = 665,
                                   containerHeightMax = 100,
@@ -30,6 +31,7 @@ const ModalSelectFormGroup = ({
                 containerHeightMax={containerHeightMax}
                 placeHolder={placeHolder}
                 error={error}
+                isAbsolute={isAbsolute}
                 onEnterSelect={onEnterSelect}
                 searchAble={searchAble}
                 hasTools={hasTools}

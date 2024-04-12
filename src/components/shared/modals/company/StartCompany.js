@@ -1,6 +1,6 @@
 import {XMarkIcon} from "@heroicons/react/24/outline";
 import {forwardRef} from "react";
-import AddButton from "../../../../elements/buttons/AddButton";
+import AddButton, {AddButtonVariant4} from "../../../../elements/buttons/AddButton";
 
 const options = [
     {
@@ -57,9 +57,9 @@ const StartCompany = forwardRef(({setIsComponentVisible}, ref) => {
                 </div>
 
                 <div className="border-[#F7F7F7] border-[1px] p-2.5 rounded-b-lg">
-                    <AddButton onClick={() => setIsComponentVisible(false)} to='/j4y/company/new' className="border-transparent hover:border-transparent active:border-transparent active:bg-transparent">
+                    <AddButtonVariant4 onClick={() => setIsComponentVisible(false)} to='/j4y/company/new'>
                         Create a company
-                    </AddButton>
+                    </AddButtonVariant4>
                 </div>
             </div>
         </div>

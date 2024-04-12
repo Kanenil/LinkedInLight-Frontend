@@ -13,7 +13,7 @@ import PencilButton from "../../../elements/buttons/PencilButton";
 import Show from "../../../elements/shared/Show";
 import {useQueries, useQuery, useQueryClient} from "@tanstack/react-query";
 import {connectedQuery} from "../../../constants/combinedQueries";
-import AddButton from "../../../elements/buttons/AddButton";
+import {AddButtonVariant2} from "../../../elements/buttons/AddButton";
 import ConnectedButton from "../../../elements/buttons/ConnectedButton";
 import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
 import ConnectionService from "../../../services/connectionService";
@@ -62,7 +62,7 @@ const InformationSector = ({user, isOwner}) => {
         combine: (results) => {
             return {
                 isConnected: results[0].data ?? false,
-                isConnectionRequested: results[1].isError ? false: results[1].data
+                isConnectionRequested: results[1].isError ? false : results[1].data
             }
         },
     });
@@ -89,10 +89,13 @@ const InformationSector = ({user, isOwner}) => {
     }
 
     const refetch = () => {
-        const [val1, val2] = connectedQuery(user.id, isOwner)
+        const [[first], [second]] = connectedQuery(user.id, isOwner)
             .map(val => val.queryKey);
 
-        queryClient.invalidateQueries([...val1, ...val2]);
+        queryClient.invalidateQueries({
+            predicate: query =>
+                [first, second].includes(query.queryKey[0])
+        })
     }
 
     const onConnect = () => {
@@ -141,7 +144,8 @@ const InformationSector = ({user, isOwner}) => {
                 </div>
                 <Show>
                     <Show.When isTrue={isOwner}>
-                        <Link to='/j4y/my-network/connections' className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline">
+                        <Link to='/j4y/my-network/connections'
+                              className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline">
                             <h3 className="font-medium">Connections:</h3>
 
                             <h4 className="ml-4">{data?.length}</h4>
@@ -193,9 +197,9 @@ const InformationSector = ({user, isOwner}) => {
                             </Show.When>
 
                             <Show.Else>
-                                <AddButton onClick={onConnect}>
+                                <AddButtonVariant2 className="mt-2" onClick={onConnect}>
                                     Connect
-                                </AddButton>
+                                </AddButtonVariant2>
                             </Show.Else>
                         </Show>
                     </Show.Else>
