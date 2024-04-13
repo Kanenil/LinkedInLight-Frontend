@@ -18,7 +18,13 @@ const ShowProfilePhotos = () => {
           type="radio"
           className="inline-block"
         />
-        <div className="inline-block mx-3">Nobody</div>
+        <div
+          className={`inline-block mx-3 ${
+            selectedOption === "nobody" ? "text-black" : "text-gray-400"
+          }`}
+        >
+          Nobody
+        </div>
       </div>
       <div className="mt-6 flex items-center">
         <input
@@ -27,7 +33,13 @@ const ShowProfilePhotos = () => {
           type="radio"
           className="inline-block"
         />
-        <div className="inline-block mx-3">Your contacts</div>
+        <div
+          className={`inline-block mx-3 ${
+            selectedOption === "contacts" ? "text-black" : "text-gray-400"
+          }`}
+        >
+          Your contacts
+        </div>
       </div>
       <div className="mt-6 flex items-center">
         <input
@@ -36,7 +48,13 @@ const ShowProfilePhotos = () => {
           type="radio"
           className="inline-block"
         />
-        <div className="inline-block mx-3">Network</div>
+        <div
+          className={`inline-block mx-3 ${
+            selectedOption === "network" ? "text-black" : "text-gray-400"
+          }`}
+        >
+          Network
+        </div>
       </div>
       <div className="mt-6 flex items-center">
         <input
@@ -45,7 +63,13 @@ const ShowProfilePhotos = () => {
           type="radio"
           className="inline-block"
         />
-        <div className="inline-block mx-3">All j4Y members</div>
+        <div
+          className={`inline-block mx-3 ${
+            selectedOption === "all" ? "text-black" : "text-gray-400"
+          }`}
+        >
+          All j4Y members
+        </div>
       </div>
     </div>
   );
