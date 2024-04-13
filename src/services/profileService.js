@@ -23,6 +23,14 @@ class ProfileService {
         return axios.get(`${this.#URL}/allCompanies`)
     }
 
+    getPositions() {
+        return axios.get(`${this.#URL}/allPositions`)
+    }
+
+    openToWork(model) {
+        return axios.post(`${this.#URL}/addOpenToWork`, model)
+    }
+
     getAbout() {
         return axios.get(`${this.#URL}/edit/about`)
     }

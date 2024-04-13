@@ -7,11 +7,11 @@ const PencilButton = ({ to, onClick, className, ...props }) => {
     return (
         <React.Fragment>
             <ConditionalWrapper condition={to}>
-                <Link to={to} className={className}>
+                <Link to={to} onClick={onClick} className={className}>
                     <PencilIcon className="w-5 stroke-[#24459A] fill-[#24459A]"/>
                 </Link>
             </ConditionalWrapper>
-            <ConditionalWrapper condition={onClick}>
+            <ConditionalWrapper condition={onClick && !to}>
                 <button onClick={onClick} className={className}>
                     <PencilIcon className="w-5 stroke-[#24459A] fill-[#24459A]"/>
                 </button>

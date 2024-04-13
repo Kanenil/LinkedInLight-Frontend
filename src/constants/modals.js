@@ -12,6 +12,7 @@ import React from "react";
 import EditIntro from "../components/shared/modals/profile/EditIntro";
 import EditContactInformation from "../components/shared/modals/profile/EditContactInformation";
 import RequestRecommendation from "../components/shared/modals/profile/RequestRecommendation";
+import OpenToWork from "../components/shared/modals/profile/OpenToWork";
 
 export const modals = [
     {
@@ -65,5 +66,9 @@ export const modals = [
     {
         route: ["request-recommendation"],
         children: <RequestRecommendation/>
+    },
+    {
+        route: ["job-opportunity"],
+        children: <OpenToWork/>
     },
 ]

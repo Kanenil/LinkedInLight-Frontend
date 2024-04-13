@@ -23,7 +23,7 @@ const ContactInformation = ({onClose, isOwner, user}) => {
                 <h3 className="font-jost text-[#2D2A33] text-lg">Contact information</h3>
 
                 <ConditionalWrapper condition={isOwner}>
-                    <PencilButton className="ml-auto" to={`/j4y/${user.profileUrl}/edit/contact-information`}/>
+                    <PencilButton onClick={onClose} className="ml-auto" to={`/j4y/${user.profileUrl}/edit/contact-information`}/>
                 </ConditionalWrapper>
             </div>
 
