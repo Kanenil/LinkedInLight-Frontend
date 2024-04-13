@@ -21,7 +21,10 @@ export const accountParams = [
         prescription: "All members of jY4",
         link: `${settingsRoutes.sections.params}/profilePhotos`,
       },
-      { name: "String params" },
+      {
+        name: "String params",
+        link: `${settingsRoutes.sections.params}/stringParams`,
+      },
       { name: "People who also have seen", prescription: "enabled" },
       { name: "People you stopped following", prescription: "enabled" },
     ],
