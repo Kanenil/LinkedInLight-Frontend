@@ -46,7 +46,7 @@ const Settings = () => {
         ></img>
         <div className="my-3 text-2xl font-semibold">Settings</div>
         <Link
-          to={`/in${settingsRoutes.settings}${settingsRoutes.sections.params}`}
+          to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.params}`}
           className={`text-${getColor(
             settingsRoutes.sections.params
           )} my-7 w-2/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}
@@ -55,7 +55,7 @@ const Settings = () => {
           <div className="ml-[10px] inline-block">Account parameters</div>
         </Link>
         <Link
-          to={`/in${settingsRoutes.settings}${settingsRoutes.sections.security}`}
+          to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.security}`}
           className={`text-${getColor(
             settingsRoutes.sections.security
           )} my-7 w-2/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}
@@ -64,7 +64,7 @@ const Settings = () => {
           <div className="ml-[10px] inline-block">Sign-in and Security</div>
         </Link>
         <Link
-          to={`/in${settingsRoutes.settings}${settingsRoutes.sections.visibility}`}
+          to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.visibility}`}
           className={`text-${getColor(
             settingsRoutes.sections.visibility
           )} my-7 w-1/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}

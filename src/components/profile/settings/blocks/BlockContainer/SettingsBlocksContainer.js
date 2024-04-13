@@ -1,15 +1,10 @@
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
 
-export const settingsBlocks = {
-  language: LanguageBlock(),
-  passwordChange: PasswordChange(),
-};
-
-const settingBlockElement = (block) => {
+const SettingBlockElement = (block) => {
   switch (block) {
     case "language":
-      return LanguageBlock();
+      return <LanguageBlock />;
     case "passwordChange":
       return <PasswordChange />;
     default:
@@ -17,4 +12,4 @@ const settingBlockElement = (block) => {
   }
 };
 
-export default settingBlockElement;
+export default SettingBlockElement;
