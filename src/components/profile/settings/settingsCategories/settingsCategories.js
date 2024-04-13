@@ -16,8 +16,15 @@ export const accountParams = [
       { name: "Content language" },
       { name: "Video autoplay", prescription: "enabled" },
       { name: "Audio effects", prescription: "enabled" },
-      { name: "Show profile photos", prescription: "All members of jY4" },
-      { name: "String params" },
+      {
+        name: "Show profile photos",
+        prescription: "All members of jY4",
+        link: `${settingsRoutes.sections.params}/profilePhotos`,
+      },
+      {
+        name: "String params",
+        link: `${settingsRoutes.sections.params}/stringParams`,
+      },
       { name: "People who also have seen", prescription: "enabled" },
       { name: "People you stopped following", prescription: "enabled" },
     ],
@@ -37,7 +44,10 @@ export const accountParams = [
   {
     category: "Account management",
     items: [
-      { name: "Put your account into sleep mode" },
+      {
+        name: "Put your account into sleep mode",
+        link: `${settingsRoutes.sections.params}/sleepMode`,
+      },
       { name: "Close your account" },
     ],
   },

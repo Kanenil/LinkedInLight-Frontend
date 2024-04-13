@@ -1,20 +1,24 @@
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
+import ShowProfilePhotos from "./ShowProfilePhotos/ShowProfilePhotos";
+import SleepMode from "./SleepMode/SleepMode";
+import StringParams from "./StringParams/StringParams";
 
-export const settingsBlocks = {
-  language: LanguageBlock(),
-  passwordChange: PasswordChange(),
-};
-
-const settingBlockElement = (block) => {
+const SettingBlockElement = (block) => {
   switch (block) {
     case "language":
-      return LanguageBlock();
+      return <LanguageBlock />;
     case "passwordChange":
       return <PasswordChange />;
+    case "profilePhotos":
+      return <ShowProfilePhotos />;
+    case "stringParams":
+      return <StringParams />;
+    case "sleepMode":
+      return <SleepMode />;
     default:
       return <></>;
   }
 };
 
-export default settingBlockElement;
+export default SettingBlockElement;

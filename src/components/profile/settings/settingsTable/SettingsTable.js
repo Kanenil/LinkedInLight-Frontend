@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { settingsRoutes } from "../../../../constants/routes";
-import settingBlockElement from "../blocks/BlockContainer/SettingsBlocksContainer";
+import SettingBlockElement from "../blocks/BlockContainer/SettingsBlocksContainer";
 
 const getSettings = (item, sub, index) => {
   return (
@@ -35,7 +35,10 @@ const SettingsTable = ({ settings, block }) => {
             !sub.link ? (
               <div key={index}>{getSettings(item, sub, index)}</div>
             ) : (
-              <Link to={`/in${settingsRoutes.settings}${sub.link}`} key={index}>
+              <Link
+                to={`/j4y${settingsRoutes.settings}${sub.link}`}
+                key={index}
+              >
                 {getSettings(item, sub, index)}
               </Link>
             )
@@ -46,7 +49,7 @@ const SettingsTable = ({ settings, block }) => {
   };
   return (
     <div className="inline-block mx-10 w-1/2">
-      {block ? settingBlockElement(block) : getData()}
+      {block ? SettingBlockElement(block) : getData()}
     </div>
   );
 };
