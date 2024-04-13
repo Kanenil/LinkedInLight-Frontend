@@ -44,7 +44,10 @@ export const accountParams = [
   {
     category: "Account management",
     items: [
-      { name: "Put your account into sleep mode" },
+      {
+        name: "Put your account into sleep mode",
+        link: `${settingsRoutes.sections.params}/sleepMode`,
+      },
       { name: "Close your account" },
     ],
   },

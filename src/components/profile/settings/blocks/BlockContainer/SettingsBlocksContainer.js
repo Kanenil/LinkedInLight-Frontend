@@ -1,6 +1,7 @@
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
 import ShowProfilePhotos from "./ShowProfilePhotos/ShowProfilePhotos";
+import SleepMode from "./SleepMode/SleepMode";
 import StringParams from "./StringParams/StringParams";
 
 const SettingBlockElement = (block) => {
@@ -13,6 +14,8 @@ const SettingBlockElement = (block) => {
       return <ShowProfilePhotos />;
     case "stringParams":
       return <StringParams />;
+    case "sleepMode":
+      return <SleepMode />;
     default:
       return <></>;
   }
