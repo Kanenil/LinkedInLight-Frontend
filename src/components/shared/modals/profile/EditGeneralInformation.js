@@ -6,6 +6,7 @@ import TextDown from "../../../../elements/shared/TextDown";
 import ProfileService from "../../../../services/profileService";
 import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const EditGeneralInformation = ({onClose, onSave, onChange}) => {
     const initialValues = {
@@ -33,6 +34,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
         setValues,
         setOptions
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         ProfileService
@@ -130,6 +132,7 @@ const EditGeneralInformation = ({onClose, onSave, onChange}) => {
                 await ProfileService.removeSkill(userSkill.id);
         }
 
+        success('General information successfully saved.', 5);
         onSave();
     }
 

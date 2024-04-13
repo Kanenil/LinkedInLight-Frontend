@@ -3,6 +3,7 @@ import useForm from "../../../../hooks/useForm";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import AdditionalProfileService from "../../../../services/additionalProfileService";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddLanguage = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -36,6 +37,7 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
         setValues,
         setOptions
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     const onSaveClick = async () => {
         const languageId = options.language.find(val => val.label === values.language).value;
@@ -61,11 +63,13 @@ const AddLanguage = ({onClose, onSave, onChange, id}) => {
             });
         }
 
+        success(`Language ${values.language} successfully saved.`, 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await AdditionalProfileService.removeLanguage(id);
+        success('Language successfully removed.', 5);
 
         onSave();
     }

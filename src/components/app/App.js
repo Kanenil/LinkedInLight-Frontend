@@ -19,6 +19,8 @@ import MyNetwork from "../../pages/network";
 import Connections from "../../pages/network/connections";
 import ChatProvider from "../../providers/ChatProvider";
 import CreateCompany from "../../pages/company/createCompany";
+import AlertProvider from "../../providers/AlertProvider";
+import Alert from "../shared/Alert";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -33,59 +35,62 @@ const App = () => {
         <div className="App">
             <HelmetProvider>
                 <QueryClientProvider client={queryClient}>
-                    <ImageCropProvider>
-                        <ChatProvider>
-                            <BrowserRouter>
-                                <Routes>
-                                    <Route path="/" element={<Layout/>}>
-                                        <Route index element={<Home/>}/>
-                                    </Route>
+                    <AlertProvider>
+                        <ImageCropProvider>
+                            <ChatProvider>
+                                <BrowserRouter>
+                                    <Routes>
+                                        <Route path="/" element={<Layout/>}>
+                                            <Route index element={<Home/>}/>
+                                        </Route>
 
-                                    <Route path="/j4y">
-                                        <Route index element={<InLayout/>}/>
+                                        <Route path="/j4y">
+                                            <Route index element={<InLayout/>}/>
 
-                                        <Route element={<InLayout/>}>
-                                            <Route path=":profileURL" element={<Profile/>}>
-                                                <Route path="edit/:blockId" element={<Profile/>}/>
-                                                <Route path="details/:blockId" element={<Profile/>}>
-                                                    <Route path="edit/:blockId" element={<Profile/>}>
-                                                        <Route path=":id" element={<Profile/>}/>
+                                            <Route element={<InLayout/>}>
+                                                <Route path=":profileURL" element={<Profile/>}>
+                                                    <Route path="edit/:blockId" element={<Profile/>}/>
+                                                    <Route path="details/:blockId" element={<Profile/>}>
+                                                        <Route path="edit/:blockId" element={<Profile/>}>
+                                                            <Route path=":id" element={<Profile/>}/>
+                                                        </Route>
                                                     </Route>
+                                                </Route>
+
+                                                <Route path="my-network" element={<MyNetwork/>}/>
+                                                <Route path="my-network/connections" element={<Connections/>}/>
+                                            </Route>
+
+                                            <Route path="chats" element={<ChatsLayout/>}>
+                                                <Route index element={<Chats/>}/>
+                                            </Route>
+
+                                            <Route path="company">
+                                                <Route path="new" element={<ChatsLayout/>}>
+                                                    <Route index element={<CreateCompany/>}/>
                                                 </Route>
                                             </Route>
 
-                                            <Route path="my-network" element={<MyNetwork/>}/>
-                                            <Route path="my-network/connections" element={<Connections/>}/>
-                                        </Route>
-
-                                        <Route path="chats" element={<ChatsLayout/>}>
-                                            <Route index element={<Chats/>}/>
-                                        </Route>
-
-                                        <Route path="company">
-                                            <Route path="new" element={<ChatsLayout/>}>
-                                                <Route index element={<CreateCompany/>}/>
+                                            <Route path="settings" element={<ChatsLayout/>}>
+                                                <Route
+                                                    path=":section?/:block?"
+                                                    element={<Settings/>}
+                                                />
                                             </Route>
                                         </Route>
 
-                                        <Route path="settings" element={<ChatsLayout/>}>
-                                            <Route
-                                                path=":section?/:block?"
-                                                element={<Settings/>}
-                                            />
+                                        <Route path="/auth" element={<AuthLayout/>}>
+                                            <Route path="sign-up" element={<SignUp/>}/>
+                                            <Route path="sign-in" element={<SignIn/>}/>
+                                            <Route path="confirm-email" element={<ConfirmEmail/>}/>
                                         </Route>
-                                    </Route>
-
-                                    <Route path="/auth" element={<AuthLayout/>}>
-                                        <Route path="sign-up" element={<SignUp/>}/>
-                                        <Route path="sign-in" element={<SignIn/>}/>
-                                        <Route path="confirm-email" element={<ConfirmEmail/>}/>
-                                    </Route>
-                                </Routes>
-                            </BrowserRouter>
-                            <ReactQueryDevtools buttonPosition="bottom-right"/>
-                        </ChatProvider>
-                    </ImageCropProvider>
+                                    </Routes>
+                                </BrowserRouter>
+                                <Alert/>
+                                <ReactQueryDevtools buttonPosition="bottom-right"/>
+                            </ChatProvider>
+                        </ImageCropProvider>
+                    </AlertProvider>
                 </QueryClientProvider>
             </HelmetProvider>
         </div>

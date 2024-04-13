@@ -7,6 +7,7 @@ import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import EditModalForm from "../../forms/EditModalForm";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddVolunteerExperience = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -39,6 +40,7 @@ const AddVolunteerExperience = ({onClose, onSave, onChange, id}) => {
         setValues,
         setIsSubmitted
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         if (id) {
@@ -94,11 +96,13 @@ const AddVolunteerExperience = ({onClose, onSave, onChange, id}) => {
             await AdditionalProfileService.addVolunteerExperience(model);
         }
 
+        success('Volunteer experience successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await AdditionalProfileService.removeVolunteerExperience(id);
+        success('Volunteer experience successfully removed.', 5);
 
         onSave();
     }

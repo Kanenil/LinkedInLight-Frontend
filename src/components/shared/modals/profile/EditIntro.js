@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import AdditionalProfileService from "../../../../services/additionalProfileService";
 import {authService} from "../../../../services/authService";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const EditIntro = ({onClose, onSave, onChange}) => {
     const initialValues = {
@@ -38,6 +39,7 @@ const EditIntro = ({onClose, onSave, onChange}) => {
         setOptions,
         options
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         authService.countries().then(({data}) => {
@@ -98,7 +100,10 @@ const EditIntro = ({onClose, onSave, onChange}) => {
 
         AdditionalProfileService
             .updateIntro(model)
-            .then(onSave);
+            .then(() => {
+                success('Intro successfully saved.', 5);
+                onSave();
+            });
     }
 
     return (

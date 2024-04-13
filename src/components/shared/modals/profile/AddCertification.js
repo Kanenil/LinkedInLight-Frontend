@@ -7,6 +7,7 @@ import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import StartEndDateForm from "../../forms/StartEndDateForm";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import RecommendedProfileService from "../../../../services/recommendedProfileService";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddCertification = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -43,6 +44,7 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
         setValues,
         setIsSubmitted
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         if (id) {
@@ -100,11 +102,13 @@ const AddCertification = ({onClose, onSave, onChange, id}) => {
             await RecommendedProfileService.addCertification(model);
         }
 
+        success('Certification successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await RecommendedProfileService.removeCertification(id);
+        success('Certification successfully removed.', 5);
 
         onSave();
     }

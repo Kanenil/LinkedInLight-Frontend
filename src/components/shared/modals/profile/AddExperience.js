@@ -9,6 +9,7 @@ import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
 import {COMPANIES_STORE, TITLES_STORE} from "../../../../constants/stores";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddExperience = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -50,6 +51,7 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
         setIsSubmitted,
         setOptions
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         ProfileService.getIndustries().then(({data})=>{
@@ -125,11 +127,13 @@ const AddExperience = ({onClose, onSave, onChange, id}) => {
             await ProfileService.addExperience(model);
         }
 
+        success('Experience successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await ProfileService.removeExperience(id);
+        success('Experience successfully removed.', 5);
 
         onSave();
     }

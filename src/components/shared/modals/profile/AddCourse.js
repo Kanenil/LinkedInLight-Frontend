@@ -3,6 +3,7 @@ import React, {useEffect} from "react";
 import RecommendedProfileService from "../../../../services/recommendedProfileService";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddCourse = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -25,6 +26,7 @@ const AddCourse = ({onClose, onSave, onChange, id}) => {
         errors,
         isSubmitted
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         if (id) {
@@ -54,11 +56,13 @@ const AddCourse = ({onClose, onSave, onChange, id}) => {
             await RecommendedProfileService.addCourse(model);
         }
 
+        success('Course successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await RecommendedProfileService.removeCourse(id);
+        success('Course successfully removed.', 5);
 
         onSave();
     }

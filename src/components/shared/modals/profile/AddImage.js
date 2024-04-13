@@ -14,6 +14,7 @@ import ModalHeader from "../ModalHeader";
 import {imageUrlToBase64} from "../../../../utils/converters";
 import {APP_ENV} from "../../../../env";
 import {useQuery} from "@tanstack/react-query";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
     const { data } = useQuery({
@@ -23,6 +24,7 @@ const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
     })
     const {image, setImage, rotation, setRotation, getProcessedImage} = useImageCropContext();
     const [error, setError] = useState("");
+    const {success} = useAlertContext();
 
     const handleFileChange = async ({target: {files}}) => {
         const file = files && files[0];
@@ -55,6 +57,7 @@ const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
             ProfileService.changeImage(base64data, isBackground)
                 .then(() => {
                     onSave();
+                    success(`${isBackground? 'Background image':'Image'} successfully saved.`, 5);
                     setImage(null);
                 })
         };

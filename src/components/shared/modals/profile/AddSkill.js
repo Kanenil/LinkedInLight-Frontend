@@ -4,6 +4,7 @@ import ProfileService from "../../../../services/profileService";
 import EditModalForm from "../../forms/EditModalForm";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddSkill = ({onClose, onSave, onChange, id}) => {
     const [isDisabled, seIsDisabled] = useState({isMainSkill: ''});
@@ -31,6 +32,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
         isSubmitted,
         setErrors
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     const getSkill = (id, mapped) => {
         ProfileService.getSkills()
@@ -116,13 +118,13 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
     const onRemoveClick = async () => {
         await ProfileService.removeSkill(id);
 
+        success(`Skill successfully removed.`, 5);
         onSave();
     }
 
     const onSaveClick = async () => {
         try {
             if(id) {
-                console.log(values)
                 await ProfileService.updateSkill({
                     id: id,
                     isMainSkill: values.isMainSkill,
@@ -139,6 +141,8 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
                     id: values.id
                 }, values.isMainSkill);
             }
+
+            success(`Skill ${values.name} saved.`, 5)
         } catch (err) {
             if(err.response.data === "You can only have 5 main skills.") {
                 seIsDisabled({isMainSkill: err.response.data})

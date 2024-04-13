@@ -7,6 +7,7 @@ import StartEndDateForm from "../../forms/StartEndDateForm";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import EditModalForm from "../../forms/EditModalForm";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const AddProject = ({onClose, onSave, onChange, id}) => {
     const initialValues = {
@@ -38,6 +39,7 @@ const AddProject = ({onClose, onSave, onChange, id}) => {
         setValues,
         setIsSubmitted
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         if (id) {
@@ -93,11 +95,13 @@ const AddProject = ({onClose, onSave, onChange, id}) => {
             await RecommendedProfileService.addProject(model);
         }
 
+        success('Project successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await RecommendedProfileService.removeProject(id);
+        success('Project successfully removed.', 5);
 
         onSave();
     }

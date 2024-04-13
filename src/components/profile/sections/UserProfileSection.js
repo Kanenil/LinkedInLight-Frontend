@@ -68,9 +68,14 @@ const InformationSector = ({user, isOwner}) => {
             }
         },
     });
-    const {data} = useQuery({
+    const {data:connectionsCount} = useQuery({
         queryFn: ({queryKey}) => ConnectionService.getConnectionCountByProfileUrl(queryKey[1]),
         queryKey: ['connections', user.profileUrl],
+        select: ({data}) => data
+    })
+    const {data} = useQuery({
+        queryFn: () => ConnectionService.getConnections(),
+        queryKey: ['connections'],
         select: ({data}) => data
     })
     const [isVisible, setIsVisible] = useState(false);
@@ -155,7 +160,7 @@ const InformationSector = ({user, isOwner}) => {
                               className="flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline w-fit">
                             <h3 className="font-medium">Connections:</h3>
 
-                            <h4 className="ml-4">{data}</h4>
+                            <h4 className="ml-4">{connectionsCount}</h4>
                         </Link>
                     </Show.When>
 
@@ -163,7 +168,7 @@ const InformationSector = ({user, isOwner}) => {
                         <div className="flex flex-row mt-1 font-jost text-[#24459A] text-sm w-fit">
                             <h3 className="font-medium">Connections:</h3>
 
-                            <h4 className="ml-4">{data}</h4>
+                            <h4 className="ml-4">{connectionsCount}</h4>
                         </div>
                     </Show.Else>
                 </Show>

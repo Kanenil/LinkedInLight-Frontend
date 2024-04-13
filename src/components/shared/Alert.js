@@ -1,48 +1,32 @@
-import classNames from "classnames";
-import XMarkIcon from "../../elements/icons/XMarkIcon";
-import ShieldExclamationIcon from "../../elements/icons/ShieldExclamationIcon";
-import ExclamationTriangleIcon from "../../elements/icons/ExclamationTriangleIcon";
+import {useAlertContext} from "../../providers/AlertProvider";
+import Show from "../../elements/shared/Show";
 import CheckIcon from "../../elements/icons/CheckIcon";
+import {useAutoAnimate} from "@formkit/auto-animate/react";
 
-const Alert = ({text, type, open, setOpen}) => {
+const Alert = () => {
+    const {alerts, clear} = useAlertContext();
+    const [parent] = useAutoAnimate({
+        easing: 'ease-in-out'
+    });
+
     return (
-        <>
-            {open && (
-                <div
-                    className={classNames(
-                        "w-full text-white",
-                        {"bg-emerald-500": type === "success"},
-                        {"bg-blue-500": type === "info"},
-                        {"bg-yellow-400": type === "warning"},
-                        {"bg-red-500": type === "danger"}
-                    )}
-                >
-                    <div className="container flex items-center justify-between px-6 py-4 mx-auto">
-                        <div className="flex">
-                            {type === "success" && (
-                                <CheckIcon className="w-6 h-6 fill-current"/>
-                            )}
-                            {type === "info" && (
-                                <ExclamationTriangleIcon className="w-6 h-6 fill-current"/>
-                            )}
-                            {type === "warning" && (
-                                <ExclamationTriangleIcon className="w-6 h-6 fill-current"/>
-                            )}
-                            {type === "danger" && (
-                                <ShieldExclamationIcon className="w-6 h-6 fill-current"/>
-                            )}
+        <div ref={parent} className="fixed bottom-3 left-4 flex flex-col gap-4">
+            {
+                [...alerts].reverse().map(({id, status, message}) => (
+                    <div key={`alert-${id}`} style={{boxShadow: "0px 1px 6px rgba(0, 0, 0, 0.25)"}}
+                         onClick={() => clear(id)}
+                         className="flex flex-row items-center gap-3 rounded-lg bg-white/50 hover:bg-gray-200 cursor-pointer px-4 py-1">
+                        <Show>
+                            <Show.When isTrue={status === 'success'}>
+                                <CheckIcon className="fill-[#24459A] w-5 h-5"/>
+                            </Show.When>
+                        </Show>
 
-                            <p className="mx-3">{text}</p>
-                        </div>
-
-                        <button onClick={() => setOpen(false)}
-                                className="p-1 transition-colors duration-300 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
-                            <XMarkIcon className="w-5 h-5"/>
-                        </button>
+                        <h1 className="text-[#2D2A33] font-jost font-light text-lg">{message}</h1>
                     </div>
-                </div>
-            )}
-        </>
+                ))
+            }
+        </div>
     )
 }
 export default Alert;

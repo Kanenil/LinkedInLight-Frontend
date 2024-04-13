@@ -6,7 +6,7 @@ const OpenToButton = () => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
 
     const statuses = [
-        {title: 'Finding a new work', description: 'Show recruiters and others that you\'re open to work', to: '/in'},
+        {title: 'Finding a new work', description: 'Show recruiters and others that you\'re open to work', to: 'edit/job-opportunity'},
         {title: 'Hiring', description: 'Share that you\'re hiring and attract qualified candidates', to: '/in'},
         {
             title: 'Providing services',
@@ -17,7 +17,7 @@ const OpenToButton = () => {
 
     const ChoiceItem = ({title, description, to}) => {
         return (
-            <Link to={to} className="py-1 px-5 w-[240px] font-roboto text-[#2D2A33] hover:bg-gray-500/10">
+            <Link to={to} className="py-1 px-5 w-[240px] font-roboto text-[#2D2A33] hover:bg-[#F5F8FF]">
                 <h1 className="font-medium text-sm">{title}</h1>
                 <h3 className="font-light font-jost text-sm">{description}</h3>
             </Link>

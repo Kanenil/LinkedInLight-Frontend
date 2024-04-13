@@ -9,6 +9,7 @@ import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import {DEGREES_STORE, FIELD_STORE, SCHOOLS_STORE} from "../../../../constants/stores";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 
 const AddEducation = ({onClose, onSave, onChange, id}) => {
@@ -50,6 +51,7 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
         setValues,
         setIsSubmitted
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     useEffect(() => {
         if (id) {
@@ -104,11 +106,13 @@ const AddEducation = ({onClose, onSave, onChange, id}) => {
             await ProfileService.addEducation(model);
         }
 
+        success('Education successfully saved.', 5);
         onSave();
     }
 
     const onRemoveClick = async () => {
         await ProfileService.removeEducation(id);
+        success('Education successfully removed.', 5);
 
         onSave();
     }

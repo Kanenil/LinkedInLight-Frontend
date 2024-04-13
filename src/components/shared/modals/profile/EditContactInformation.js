@@ -9,6 +9,7 @@ import {APP_ENV} from "../../../../env";
 import {getDateTime, getLongMonth, getMonths, getYears} from "../../../../utils/date";
 import FormSelector from "../../forms/FormSelector";
 import moment from "moment";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const EditContactInformation = ({onClose, onSave, onChange}) => {
     const initialValues = {
@@ -33,6 +34,7 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
         setErrors,
         setValues,
     } = useForm(initialValues, onChange);
+    const {success} = useAlertContext();
 
     const months = getMonths();
     const years = getYears(moment().add(-17, "years").toDate());
@@ -40,7 +42,6 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
 
     useEffect(() => {
         AdditionalProfileService.getIntro().then(({data}) => {
-            console.log(data)
             const birthday = new Date(data.birthday);
             setValues({
                 ...data,
@@ -66,8 +67,10 @@ const EditContactInformation = ({onClose, onSave, onChange}) => {
 
         AdditionalProfileService
             .updateContactInformation(model)
-            .then(onSave);
-        onSave();
+            .then(() => {
+                success('Contact information successfully saved.', 5);
+                onSave();
+            });
     }
 
     return (
