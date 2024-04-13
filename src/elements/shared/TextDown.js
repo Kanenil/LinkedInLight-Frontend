@@ -3,6 +3,7 @@ import ChevronDownIcon from "../icons/ChevronDownIcon";
 import useComponentVisible from "../../hooks/useComponentVisible";
 import useOverflow from "../../hooks/useOverflow";
 import ConditionalWrapper from "./ConditionalWrapper";
+import Show from "./Show";
 
 const TextDown = ({
                       placeHolder,
@@ -19,7 +20,9 @@ const TextDown = ({
                       hasTools = true,
                       searchAble = true,
                       containerHeightMax = 100,
-                      containerWidth = 272
+                      containerWidth = 272,
+                      item = null,
+                      searchFunc = null
                   }) => {
     const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false);
     const [selectedValue, setSelectedValue] = useState();
@@ -69,7 +72,7 @@ const TextDown = ({
             return options;
         }
 
-        return options.filter(
+        return item ? options.filter(searchFunc(searchValue.toLowerCase())) : options.filter(
             (option) =>
                 option.label.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
         );
@@ -118,10 +121,24 @@ const TextDown = ({
                 <div ref={contentRef}>
                     {
                         getOptions().map((option, index) => (
-                            <div onClick={() => onItemClick(option)} key={`${option.value}-${index}`}
-                                 className="cursor-pointer active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light">
-                                {option.label}
-                            </div>
+                            <Show key={`${option.id || option.value}-${index}`}>
+                                <Show.When isTrue={!!item}>
+                                    {
+                                        item &&
+                                        React.cloneElement(item, {
+                                            onClick: () => onItemClick(option),
+                                            ...option
+                                        })
+                                    }
+                                </Show.When>
+
+                                <Show.Else>
+                                    <div onClick={() => onItemClick(option)}
+                                         className="cursor-pointer active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light">
+                                        {option.label}
+                                    </div>
+                                </Show.Else>
+                            </Show>
                         ))
                     }
                 </div>

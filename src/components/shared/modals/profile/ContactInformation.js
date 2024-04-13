@@ -8,9 +8,6 @@ import {Link} from "react-router-dom";
 
 
 const ContactInformation = ({onClose, isOwner, user}) => {
-
-    console.log(user)
-
     return (
         <div className="flex flex-col gap-2 px-7 py-5 w-[480px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>

@@ -15,7 +15,7 @@ const ModalTextareaFormGroup = ({
             <textarea
                 name={name}
                 id={name}
-                className="mt-[15px] resize-none w-full border-[0.5px] border-[#556DA9] rounded-lg text-sm font-jost font-light"
+                className="resize-none w-full border-[0.5px] border-[#556DA9] rounded-lg text-sm font-jost font-light"
                 onChange={onChange}
                 value={value}
                 rows={rows}

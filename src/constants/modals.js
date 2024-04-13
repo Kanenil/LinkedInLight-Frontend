@@ -11,6 +11,7 @@ import AddSkill from "../components/shared/modals/profile/AddSkill";
 import React from "react";
 import EditIntro from "../components/shared/modals/profile/EditIntro";
 import EditContactInformation from "../components/shared/modals/profile/EditContactInformation";
+import RequestRecommendation from "../components/shared/modals/profile/RequestRecommendation";
 
 export const modals = [
     {
@@ -60,5 +61,9 @@ export const modals = [
     {
         route: ["contact-information"],
         children: <EditContactInformation/>
+    },
+    {
+        route: ["request-recommendation"],
+        children: <RequestRecommendation/>
     },
 ]

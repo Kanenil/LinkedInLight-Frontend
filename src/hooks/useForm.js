@@ -12,7 +12,7 @@ const useForm = (initialValues, onChangeCallback) => {
         onChangeCallback();
         setValues({
             ...values,
-            [field]: e.label
+            [field]: e.label || e
         });
         setTouched({
             ...touched,

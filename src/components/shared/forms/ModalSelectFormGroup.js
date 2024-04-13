@@ -17,7 +17,9 @@ const ModalSelectFormGroup = ({
                                   containerHeightMax = 100,
                                   errorChildren,
                                   title,
-                                  className = "pt-[5px] pb-[10px] pr-[20px] gap-[5px]"
+                                  className = "pt-[5px] pb-[10px] pr-[20px] gap-[5px]",
+                                  item = null,
+                                  searchFunc = null
                               }) => {
     return (
         <div className={className}>
@@ -37,6 +39,8 @@ const ModalSelectFormGroup = ({
                 hasTools={hasTools}
                 clearOnSelect={clearOnSelect}
                 onChange={onChange}
+                item={item}
+                searchFunc={searchFunc}
             />
             <ConditionalWrapper condition={error}>
                 {errorChildren}
