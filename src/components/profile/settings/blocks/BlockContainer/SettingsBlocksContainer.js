@@ -1,5 +1,6 @@
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
+import ShowProfilePhotos from "./ShowProfilePhotos/ShowProfilePhotos";
 
 const SettingBlockElement = (block) => {
   switch (block) {
@@ -7,6 +8,8 @@ const SettingBlockElement = (block) => {
       return <LanguageBlock />;
     case "passwordChange":
       return <PasswordChange />;
+    case "profilePhotos":
+      return <ShowProfilePhotos />;
     default:
       return <></>;
   }

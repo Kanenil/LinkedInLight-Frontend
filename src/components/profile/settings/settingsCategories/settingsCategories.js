@@ -16,7 +16,11 @@ export const accountParams = [
       { name: "Content language" },
       { name: "Video autoplay", prescription: "enabled" },
       { name: "Audio effects", prescription: "enabled" },
-      { name: "Show profile photos", prescription: "All members of jY4" },
+      {
+        name: "Show profile photos",
+        prescription: "All members of jY4",
+        link: `${settingsRoutes.sections.params}/profilePhotos`,
+      },
       { name: "String params" },
       { name: "People who also have seen", prescription: "enabled" },
       { name: "People you stopped following", prescription: "enabled" },
