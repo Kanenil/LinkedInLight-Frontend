@@ -87,6 +87,18 @@ const PasswordChange = () => {
           />
         )}
       </div>
+      <div className="my-1 flex items-center">
+        <input type="checkbox" className="my-10" />
+        <div className="inline-block mx-2">
+          Require to sign in with new password in all devices
+        </div>
+      </div>
+      <div className="mb-8 text-lg text-white text-center bg-indigo-800 hover:bg-indigo-900 hover:text-gray-200 w-[200px] rounded-full py-2 font-semibold">
+        Save Password
+      </div>
+      <div className="mb-5 mx-4 text-lg text-gray-500 font-semibold hover:text-gray-700 inline-block">
+        Forgot Password
+      </div>
     </div>
   );
 };
