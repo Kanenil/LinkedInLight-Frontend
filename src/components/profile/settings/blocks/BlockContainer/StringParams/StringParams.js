@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const StringParams = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("recent");
   const selectOption = (val) => {
     setSelectedOption(val);
   };

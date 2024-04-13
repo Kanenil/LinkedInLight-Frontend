@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const ShowProfilePhotos = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("contacts");
   const selectOption = (val) => {
     setSelectedOption(val);
   };
