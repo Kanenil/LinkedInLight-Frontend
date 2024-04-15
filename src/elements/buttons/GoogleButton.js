@@ -2,6 +2,8 @@ import {createGoogleWrapper} from "../../utils/googleWrapper";
 import {APP_ENV} from "../../env";
 import React from "react";
 import {useScript} from "usehooks-ts";
+import Show from "../shared/Show";
+import {useTranslation} from "react-i18next";
 
 const GoogleIcon = ({className}) => {
     return (
@@ -12,7 +14,9 @@ const GoogleIcon = ({className}) => {
     )
 }
 
-const GoogleButton = ({googleLoginCallback, ...props}) => {
+const GoogleButton = ({googleLoginCallback, withText= false, ...props}) => {
+    const {t} = useTranslation();
+
     let googleWrapper = null;
 
     const status = useScript("https://accounts.google.com/gsi/client", {removeOnUnmount: true, id: "google"})
@@ -30,11 +34,24 @@ const GoogleButton = ({googleLoginCallback, ...props}) => {
     return (
         <React.Fragment>
             {status === "ready" ? initializeGoogle() : status}
-            <button type="button" onClick={() => googleWrapper?.click()}
-                    className="rounded-full border-[1px] border-[#2D2A33] p-1"
-                    {...props}>
-                <GoogleIcon className="fill-[#2D2A33] h-[16px]"/>
-            </button>
+            <Show>
+                <Show.When isTrue={withText}>
+                    <button type="button" onClick={() => googleWrapper?.click()}
+                            className="flex flex-row items-center justify-center font-jost font-medium gap-2 text-lg rounded-full border-[1px] border-[#2D2A33] p-1"
+                            {...props}>
+                        <GoogleIcon className="fill-[#2D2A33] h-[16px]"/>
+                        {t('auth.continueWithGoogle')}
+                    </button>
+                </Show.When>
+
+                <Show.Else>
+                    <button type="button" onClick={() => googleWrapper?.click()}
+                            className="rounded-full border-[1px] border-[#2D2A33] p-1"
+                            {...props}>
+                        <GoogleIcon className="fill-[#2D2A33] h-[16px]"/>
+                    </button>
+                </Show.Else>
+            </Show>
         </React.Fragment>
     )
 }

@@ -43,8 +43,6 @@ const Home = () => {
     const designedFor = t("home.designedFor", {returnObjects: true});
     const whyChoose = t("home.whyChooseSlider", {returnObjects: true});
 
-    console.log(size)
-
     useLayoutEffect(() => {
         function updateSize() {
             setSize(calculateWidth(window.innerWidth));

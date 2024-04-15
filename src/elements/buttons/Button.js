@@ -6,7 +6,7 @@ import {PlusIcon, XMarkIcon} from "@heroicons/react/24/solid";
 const ButtonVariant1 = ({children, className, ...props}) => {
     return (
         <button
-            className={`bg-[#24459A] rounded-full py-1.5 px-6 font-jost text-white text-sm hover:bg-[#112861] transition duration-500 ease-in-out ${className}`}
+            className={`${className} bg-[#24459A] rounded-full py-1.5 px-6 font-jost text-white text-sm hover:bg-[#112861] transition duration-500 ease-in-out`}
             {...props}
         >
             {children}
@@ -51,4 +51,15 @@ const ButtonVariant3 = ({children, className, ...props}) => {
     )
 }
 
-export {ButtonVariant1, ButtonVariant2, ButtonVariant3}
+const ButtonVariant4 = ({children, className = '', ...props}) => {
+    return (
+        <button
+            className={`${className} text-[#24459A] py-1.5 px-6 font-jost font-bold text-xl hover:text-[#112861] transition duration-500 ease-in-out`}
+            {...props}
+        >
+            {children}
+        </button>
+    )
+}
+
+export {ButtonVariant1, ButtonVariant2, ButtonVariant3, ButtonVariant4}

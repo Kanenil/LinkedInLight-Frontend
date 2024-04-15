@@ -21,6 +21,7 @@ import ChatProvider from "../../providers/ChatProvider";
 import CreateCompany from "../../pages/company/createCompany";
 import AlertProvider from "../../providers/AlertProvider";
 import Alert from "../shared/Alert";
+import Auth from "../../pages/auth";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -77,6 +78,12 @@ const App = () => {
                                                     element={<Settings/>}
                                                 />
                                             </Route>
+                                        </Route>
+
+                                        <Route path="/m/auth">
+                                            <Route index element={<Auth/>}/>
+                                            <Route path="sign-up" element={<SignUp/>}/>
+                                            <Route path="sign-in" element={<SignIn/>}/>
                                         </Route>
 
                                         <Route path="/auth" element={<AuthLayout/>}>

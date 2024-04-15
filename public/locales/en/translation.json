@@ -326,7 +326,13 @@
     "enterCode": "Enter the code we sent to your email address ",
     "noCode": "Haven't received the code?",
     "resend": "Resend it",
-    "confirmEmailAndSignUp": "Confirm and Sign Up"
+    "confirmEmailAndSignUp": "Confirm and Sign Up",
+    "illustrationText": "Create a professional profile and attract potential employers",
+    "confirmText": "By clicking the \"Accept and Continue\" button, I agree to the privacy policy and terms of use of the <strong>Job for You</strong>",
+    "confirmAndContinue": "Confirm and continue",
+    "continueWithGoogle": "Continue with Google",
+    "joinTo": "Join to J4Y",
+    "backToAccount": "Back to account"
   },
   "profile": {
     "aboutMe": "About me",
