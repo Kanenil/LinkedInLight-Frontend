@@ -44,7 +44,7 @@ module.exports = {
         scaleIn: 'scaleIn .35s ease-in-out',
         fadeInUp: 'fadeInUp .65s ease-in-out',
         customPulse: 'customPulse 2s cubic-bezier(0.4, 0, 0.6, 1) 2 forwards'
-      }
+      },
     },
   },
   plugins: [require('@tailwindcss/forms'),],

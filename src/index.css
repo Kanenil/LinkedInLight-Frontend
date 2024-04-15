@@ -45,6 +45,9 @@
     background: #a0a5b0;
 }
 
+body, html {
+    overflow-x: hidden;
+}
 
 body {
     font-family: "Plus Jakarta Sans", sans-serif;
@@ -58,10 +61,6 @@ body {
 body.modal-open {
     height: 100vh;
     overflow-y: hidden;
-}
-
-.container {
-    @apply mx-auto px-1
 }
 
 .font-jost {

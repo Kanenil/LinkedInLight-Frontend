@@ -7,7 +7,7 @@ import LightIcon from "../../elements/icons/LightIcon";
 import LikeIcon from "../../elements/icons/LikeIcon";
 import FramedClickableText from "../../elements/text/FramedClickableText";
 import HiddenContent from "../../components/home/HiddenContent";
-import React from "react";
+import React, {useLayoutEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {routes} from "../../constants/routes";
 import {Helmet} from "react-helmet-async";
@@ -23,22 +23,37 @@ import {useTranslation} from "react-i18next";
 
 const SliderItem = ({title, description}) => {
     return (
-        <div className="w-[570px] h-[354px] flex flex-col gap-[40px]">
-            <h1 className="ml-[15px] text-[30px] leading-[48px] font-medium text-[#2E467E]">{title}</h1>
+        <div className="w-[90vw] md:w-[33vw] h-fit flex flex-col gap-[40px]">
+            <h1 className="ml-[15px] text-lg md:text-[30px] md:leading-[48px] font-medium text-[#2E467E] w-[85vw] md:w-[28vw]">{title}</h1>
 
             <h3 dangerouslySetInnerHTML={{__html: description}}
-                className="ml-[15px] font-light text-[22px] leading-[35.2px] text-[#2D2A33] w-[540px]"/>
+                className="ml-[15px] font-light text-wrap lg:text-[22px] lg:leading-[35.2px] h-fit text-[#2D2A33] w-[85vw] md:w-[28vw]"/>
         </div>
     )
 }
 
-const Home = () => {
-    const {t, i18n} = useTranslation();
-    const font = i18n.language.includes('uk')?'font-light font-jost':'';
+const calculateWidth = (width) => (width * (width > 760 ? 33 : 90)) / 100
 
-    const popularSearches = t("home.popularSearches", { returnObjects: true });
-    const designedFor = t("home.designedFor", { returnObjects: true });
-    const whyChoose = t("home.whyChooseSlider", { returnObjects: true });
+const Home = () => {
+    const [size, setSize] = useState(calculateWidth(window.innerWidth));
+    const {t, i18n} = useTranslation();
+    const font = i18n.language.includes('uk') ? 'font-light font-jost' : '';
+
+    const popularSearches = t("home.popularSearches", {returnObjects: true});
+    const designedFor = t("home.designedFor", {returnObjects: true});
+    const whyChoose = t("home.whyChooseSlider", {returnObjects: true});
+
+    console.log(size)
+
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize(calculateWidth(window.innerWidth));
+        }
+
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
 
     return (
         <React.Fragment>
@@ -46,59 +61,61 @@ const Home = () => {
                 <title>{t('home.title')}</title>
             </Helmet>
             <main className="flex-grow">
-                <section className="mx-auto w-[1170px] mt-36 mb-40">
-                    <img src={jfy} alt="Job for you"/>
+                <section className="w-full px-5 sm:mx-auto sm:container md:w-[1170px] mt-36 mb-40">
+                    <img className="object-contain" src={jfy} alt="Job for you"/>
 
-                    <h1 className="mt-[60px] [&>strong]:font-bold mx-auto w-[765px] text-center text-base text-white" dangerouslySetInnerHTML={{__html: t('home.slogan')}}/>
+                    <h1 className={`mt-[60px] [&>strong]:font-bold mx-auto md:w-[765px] text-center text-sm sm:text-base font-light text-white ${font}`}
+                        dangerouslySetInnerHTML={{__html: t('home.slogan')}}/>
 
                     <Link
                         to={routes.signUp}
-                        className="mt-12 flex gap-4 text-3xl font-semibold text-white w-fit ml-auto px-[71px] py-[10px] bg-[#0A48DBB2] hover:bg-[#24459A] rounded-full transition duration-500 ease-in-out">
+                        className="mt-12 flex gap-4 text-lg md:text-3xl font-semibold text-white w-fit ml-auto px-8 md:px-[71px] py-4 md:py-[10px] bg-[#0A48DBB2] hover:bg-[#24459A] rounded-full transition duration-500 ease-in-out">
                         {t('home.getStarted')}
                         <ArrowRightIcon className="w-[16px] h-[16px] fill-white my-auto"/>
                     </Link>
                 </section>
-                <section className="bg-white py-24">
-                    <div className="flex flex-row mx-auto gap-[30px] w-[1170px] justify-center">
-                        <div className="flex flex-row mr-5">
+                <section className="bg-white py-10 md:py-24">
+                    <div
+                        className="flex flex-row flex-wrap lg:flex-nowrap mx-2 sm:mx-auto gap-6 sm:gap-[30px] w-full sm:container md:w-[1170px] justify-center">
+                        <div className="flex flex-row max-w-40 sm:mr-5 sm:max-w-full">
                             <CertificateIcon className="fill-[#0A48DB] w-[60px] h-[70px] my-auto"/>
-                            <div className="flex flex-col gap-4 ml-8 max-w-[170px]">
-                                <h1 className="font-bold text-3xl text-[#585359]">95 000</h1>
+                            <div className="flex flex-col gap-4 ml-5 md:ml-8 w-full sm:max-w-[170px]">
+                                <h1 className="font-bold text-xl sm:text-3xl text-[#585359]">95 000</h1>
 
-                                <h3 className="font-medium text-lg text-[#585359] text-wrap">
+                                <h3 className="font-medium text-sm sm:text-lg text-[#585359] text-wrap">
                                     {t('home.registeredCompanies')}
                                 </h3>
                             </div>
                         </div>
 
-                        <div className="flex flex-row mr-5">
+                        <div className="flex flex-row max-w-40 sm:mr-5 sm:max-w-full">
                             <GroupIcon className="fill-[#0A48DB] w-[60px] h-[70px] my-auto"/>
-                            <div className="flex flex-col gap-4 ml-8 max-w-[170px]">
-                                <h1 className="font-bold text-3xl text-[#585359]">450 000</h1>
+                            <div className="flex flex-col gap-4 ml-5 sm:ml-8 w-full sm:max-w-[170px]">
+                                <h1 className="font-bold text-xl sm:text-3xl text-[#585359]">450 000</h1>
 
-                                <h3 className="font-medium text-lg text-[#585359] text-wrap">
+                                <h3 className="font-medium text-sm sm:text-lg text-[#585359] text-wrap">
                                     {t('home.jobSeekers')}
                                 </h3>
                             </div>
                         </div>
 
-                        <div className="flex flex-row mr-5">
+                        <div className="flex flex-row max-w-40 sm:mr-5 sm:max-w-full">
                             <LightIcon className="fill-[#0A48DB] w-[60px] h-[70px] my-auto"/>
-                            <div className="flex flex-col gap-4 ml-8 max-w-[170px]">
-                                <h1 className="font-bold text-3xl text-[#585359]">17 000</h1>
+                            <div className="flex flex-col gap-4 ml-5 md:ml-8 w-full sm:max-w-[170px]">
+                                <h1 className="font-bold text-xl sm:text-3xl text-[#585359]">17 000</h1>
 
-                                <h3 className="font-medium text-lg text-[#585359] text-wrap">
+                                <h3 className="font-medium text-sm sm:text-lg text-[#585359] text-wrap">
                                     {t('home.registeredCourses')}
                                 </h3>
                             </div>
                         </div>
 
-                        <div className="flex flex-row mr-5">
+                        <div className="flex flex-row max-w-40 sm:mr-5 sm:max-w-full">
                             <LikeIcon className="fill-[#0A48DB] w-[60px] h-[70px] my-auto"/>
-                            <div className="flex flex-col gap-4 ml-8 max-w-[170px]">
-                                <h1 className="font-bold text-3xl text-[#585359]">98%</h1>
+                            <div className="flex flex-col gap-4 ml-5 md:ml-8 w-full sm:max-w-[170px]">
+                                <h1 className="font-bold text-xl sm:text-3xl text-[#585359]">98%</h1>
 
-                                <h3 className="font-medium text-lg text-[#585359] text-wrap">
+                                <h3 className="font-medium text-sm sm:text-lg text-[#585359] text-wrap">
                                     {t('home.satisfiedUsers')}
                                 </h3>
                             </div>
@@ -115,13 +132,13 @@ const Home = () => {
                         background: `linear-gradient(90deg, rgba(88, 83, 89, 0.6) 0%, rgba(45, 42, 51, 0.8) 100%)`,
                     }}
                 />
-                <div className="font-thin w-full bg-zinc-200 text-2xl pt-[60px] pb-[80px]">
-                    <div className={`text-center text-4xl py-20 ${font}`}>
+                <section className="font-thin w-full bg-zinc-200 text-2xl pb-7 sm:pt-[60px] sm:pb-[80px]">
+                    <div className={`text-center text-4xl py-6 md:py-20 ${font}`}>
                         {t('home.dreamJob')}{" "}
                         <span className="font-medium">Job for You</span>
                     </div>
 
-                    <div className="mx-auto w-[1170px]">
+                    <div className="mx-4 sm:container sm:mx-auto md:w-[1170px]">
                         <div className={`text-lg uppercase font-light ${font}`}>{t('home.popularSearchesText')}</div>
                         <div className={`mt-2.5 mx-auto ${font}`}>
                             {popularSearches.map((val, index) =>
@@ -130,10 +147,11 @@ const Home = () => {
                             <HiddenContent></HiddenContent>
                         </div>
                     </div>
-                </div>
-                <div className="flex flex-row mx-auto w-[1170px] pt-[80px] pb-[60px]">
-                    <div className="flex flex-col gap-[50px] w-[568px] pr-[15px]">
-                        <h3 className="text-[#2E467E] text-5xl font-medium [&>strong]:font-bold leading-[70px]" dangerouslySetInnerHTML={{__html:t('home.whoIs')}}/>
+                </section>
+                <section className="flex flex-row sm:mx-auto sm:container md:mx-auto md:w-[1170px] pt-[80px] pb-[60px]">
+                    <div className="flex flex-col mx-4 gap-[50px] sm:w-[568px] pr-[15px]">
+                        <h3 className="text-[#2E467E] text-4xl sm:text-5xl [&>strong]:font-bold sm:leading-[70px]"
+                            dangerouslySetInnerHTML={{__html: t('home.whoIs')}}/>
 
                         <div className={`flex flex-col gap-[20px] ${font}`}>
                             {designedFor.map((val, index) =>
@@ -141,7 +159,7 @@ const Home = () => {
                                     key={`designedFor-${index}`}
                                     className="flex flex-row py-2.5 px-4 bg-[#F1F1F1]"
                                 >
-                                    <h1 className="text-lg text-[#2D2A33] font-light">{val}</h1>
+                                    <h1 className="text-lg text-[#2D2A33]">{val}</h1>
 
                                     <ChevronLeftIcon className="ml-auto w-5 fill-[#4F7BE2]"
                                                      style={{transform: "rotate(-90deg)"}}/>
@@ -150,121 +168,122 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="mx-auto my-auto">
+                    <div className="hidden md:block mx-auto my-auto">
                         <img className="w-fit h-fit" src={home1} alt="designed-for-illustration"/>
                     </div>
-                </div>
-                <div className="flex flex-col gap-[50px] mx-auto w-[1170px] pt-[60px] pb-[80px]">
-                    <h1 className={`text-[#2D2A33] font-light text-4xl text-center [&>strong]:font-bold ${font}`} dangerouslySetInnerHTML={{__html:t('home.whyChoose')}}/>
+                </section>
+                <section
+                    className="flex flex-col gap-[50px] px-8 sm:mx-auto sm:container md:mx-auto md:w-[1170px] pt-[60px] pb-[80px]">
+                    <h1 className={`text-[#2D2A33] text-2xl md:text-4xl text-center [&>strong]:font-bold ${font}`}
+                        dangerouslySetInnerHTML={{__html: t('home.whyChoose')}}/>
 
-                    <div className="flex flex-row items-center gap-[30px] ">
+                    <div className="flex flex-col px-4 md:flex-row md:px-0 items-center gap-[30px] ">
                         <div className="mx-auto">
                             <img className="w-fit h-fit" src={home2} alt="designed-for-illustration"/>
                         </div>
 
                         <div className="overflow-hidden">
                             <Slider
-                                className="flex flex-col mx-auto w-[570px] h-[354px] my-auto pt-[12px] px-[15px]"
+                                className="flex flex-col mx-auto w-[90vw] h-[40vh] sm:h-[25vh] md:w-[33vw] md:h-[45vh] lg:h-[50vh] my-auto pt-[12px] px-[15px]"
                                 containerClass="flex flex-row gap-6 w-fit"
                                 isNewDesignStyle={true}
                             >
                                 {whyChoose.map((choose, index) =>
-                                    <SliderItem key={`whyChoose-${index}`} {...choose}/>
+                                    <SliderItem key={`whyChoose-${index}`} {...choose} width={size}/>
                                 )}
                             </Slider>
                         </div>
                     </div>
-                </div>
-                <div className="bg-[#E7E7E7] w-full pt-[80px] h-[1188px] px-[13px] flex flex-row gap-[30px]">
-                    <img className="w-fit h-fit" src={home3} alt="find-job-illustration"/>
-
-                    <div className="flex flex-col items-center gap-[60px]">
-                        <div className="flex flex-col mr-auto gap-[5px] text-[#2E467E]">
-                            <h1 className="font-semibold text-[50px] leading-[80px]">{t('home.findJob')}</h1>
-                            <h3 className="font-light text-[44px] leading-[70.4px]">{t('home.dontOutHome')}</h3>
-                            <h3 className="font-light text-[44px] leading-[70.4px]">{t('home.with')} <span className="font-medium">Job for You</span></h3>
+                </section>
+                <section className="bg-[#E7E7E7] pt-[80px] h-[950px] md:h-[1188px] lg:px-[13px]">
+                    <div className="container mx-auto lg:mx-0 flex flex-row gap-[30px]">
+                        <div className="hidden lg:block max-w-[60vw] mt-auto">
+                            <img className="object-contain w-fit h-fit" src={home3} alt="find-job-illustration"/>
                         </div>
 
-                        <h3 className={`text-[#2D2A33] font-light text-[30px] w-[570px] leading-[48px] ${font}`}>
-                            {t('home.explore')}
-                        </h3>
+                        <div className="flex flex-col items-center gap-[60px] mx-auto lg:mx-0">
+                            <div className="flex flex-col mr-auto ml-4 md:ml-0 gap-[5px] text-[#2E467E]">
+                                <h1 className="font-semibold text-4xl leading-[60px] md:text-[50px] md:leading-[80px]">{t('home.findJob')}</h1>
+                                <h3 className="font-light text-4xl leading-[50px] md:text-[44px] md:leading-[70.4px]">{t('home.dontOutHome')}</h3>
+                                <h3 className="font-light text-4xl leading-[50px] md:text-[44px] md:leading-[70.4px]">{t('home.with')}
+                                    <span
+                                        className="font-medium">Job for You</span></h3>
+                            </div>
 
-                        <Link to={routes.signUp}
-                              className="mt-[20px] ml-auto flex flex-row gap-[20px] items-center border-[1px] border-[#0A48DB] py-2 px-7 rounded-full text-[#2E467E] text-xl font-semibold">
-                            <span>{t('home.findJobButton')}</span>
-                            <ArrowRightIcon className="w-5 fill-[#2E467E]"/>
-                        </Link>
-                    </div>
-                </div>
-                <div
-                    className="flex flex-row mt-[-230px] mb-[102px] justify-center gap-[35px] pt-[80px] px-2.5 pb-[40px]">
-                    <div
-                        className="relative flex flex-col bg-white w-[360px] h-[460px] rounded-tl-[100px] rounded-bl-[10px]"
-                        style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home4} alt="sign-up"/>
+                            <h3 className={`text-[#2D2A33] font-light mx-4 md:ml-0 text-2xl md:text-[30px] md:w-[570px] md:leading-[48px] ${font}`}>
+                                {t('home.explore')}
+                            </h3>
 
-                        <h1 className="mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
-                            {t('home.cards.card1.title')}
-                        </h1>
-
-                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center [&>strong]:font-bold ${font}`} dangerouslySetInnerHTML={{__html:t('home.cards.card1.description')}}/>
-
-                        <div className="absolute bottom-0 w-full">
-                            <Link to="/"
-                                  className="flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                                <span>{t('home.cards.card1.button')}</span>
-                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                                 style={{transform: "rotate(-90deg)"}}/>
+                            <Link to={routes.signUp}
+                                  className="mt-[20px] ml-auto mr-4 md:mr-0 flex flex-row gap-[20px] items-center border-[1px] border-[#0A48DB] py-2 px-7 rounded-full text-[#2E467E] hover:border-2 text-xl hover:font-semibold">
+                                <span>{t('home.findJobButton')}</span>
+                                <ArrowRightIcon className="w-5 fill-[#2E467E]"/>
                             </Link>
                         </div>
                     </div>
 
-                    <div className="relative bg-white w-[360px] h-[460px]"
+                </section>
+                <section
+                    className="flex flex-row -mt-32 sm:-mt-52 mb-44 justify-center gap-[35px] pt-16 px-2.5 pb-0 sm:pb-10">
+                    <div className="flex flex-col bg-white w-[360px] h-[28rem] md:h-[33rem] lg:h-[30rem] rounded-t-[100px] rounded-b-[10px] md:rounded-tr-[0px] md:rounded-br-[0px] md:rounded-tl-[100px] md:rounded-bl-[10px]"
                          style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home5}
+                        <img className="mx-auto -mt-20 w-fit h-fit" src={home4} alt="sign-up"/>
+
+                        <h1 className="mt-6 mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
+                            {t('home.cards.card1.title')}
+                        </h1>
+
+                        <h3 className={`text-[#2D2A33] mx-2.5 lg:mx-[25px] mt-[25px] text-base lg:text-[16px] lg:leading-[25.6px] text-center [&>strong]:font-bold ${font}`}
+                            dangerouslySetInnerHTML={{__html: t('home.cards.card1.description')}}/>
+
+                        <Link to="/"
+                              className="mt-auto flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] hover:bg-[#24459A] transition duration-500 ease-in-out font-semibold text-white">
+                            <span>{t('home.cards.card1.button')}</span>
+                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                             style={{transform: "rotate(-90deg)"}}/>
+                        </Link>
+                    </div>
+
+                    <div className="hidden md:flex md:flex-col bg-white w-[360px] h-[28rem] md:h-[33rem] lg:h-[30rem]"
+                         style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
+                        <img className="mx-auto -mt-20 w-fit h-fit" src={home5}
                              alt="complete-profile"/>
 
-                        <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
+                        <h1 className="mt-6 mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
                             {t('home.cards.card2.title')}
                         </h1>
 
-                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center ${font}`}>
-                            {t('home.cards.card2.description')}
-                        </h3>
+                        <h3 className={`text-[#2D2A33] mx-2.5 lg:mx-[25px] mt-[25px] lg:text-[16px] lg:leading-[25.6px] text-center [&>strong]:font-bold ${font}`}
+                            dangerouslySetInnerHTML={{__html: t('home.cards.card2.description')}}/>
 
-                        <div className="absolute bottom-5 w-full">
-                            <Link to="/"
-                                  className="flex flex-row items-center justify-center mt-[30px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                                <span>{t('home.cards.card2.button')}</span>
-                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                                 style={{transform: "rotate(-90deg)"}}/>
-                            </Link>
-                        </div>
+                        <Link to="/"
+                              className="mt-auto flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] hover:bg-[#24459A] transition duration-500 ease-in-out font-semibold text-white">
+                            <span>{t('home.cards.card2.button')}</span>
+                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                             style={{transform: "rotate(-90deg)"}}/>
+                        </Link>
                     </div>
 
-                    <div className="relative bg-white w-[360px] h-[460px] rounded-tr-[100px] rounded-br-[10px]"
+                    <div className="hidden md:flex md:flex-col bg-white w-[360px] h-[28rem] md:h-[33rem] lg:h-[30rem] rounded-tr-[100px] rounded-br-[10px]"
                          style={{boxShadow: "0px 1px 6px 0px #2D2A3340"}}>
-                        <img className="absolute left-1/4 -top-20 w-fit h-fit" src={home6}
-                             alt="land-your-dream-job"/>
+                        <img className="mx-auto -mt-20 w-fit h-fit" src={home6}
+                             alt="complete-profile"/>
 
-                        <h1 className="font-raleway mt-[100px] mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
-                            {t('home.cards.card1.title')}
+                        <h1 className="mt-6 mx-[25px] text-[#4E79E0] text-[24px] leading-[38.4px] text-center font-bold">
+                            {t('home.cards.card3.title')}
                         </h1>
 
-                        <h3 className={`text-[#2D2A33] mx-[25px] mt-[25px] text-[16px] leading-[25.6px] text-center ${font}`}>
-                            {t('home.cards.card3.description')}
-                        </h3>
+                        <h3 className={`text-[#2D2A33] mx-2.5 lg:mx-[25px] mt-[25px] lg:text-[16px] lg:leading-[25.6px] text-center [&>strong]:font-bold ${font}`}
+                            dangerouslySetInnerHTML={{__html: t('home.cards.card3.description')}}/>
 
-                        <div className="absolute bottom-5 w-full">
-                            <Link to="/"
-                                  className="flex flex-row items-center justify-center mt-[82px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] font-semibold text-white">
-                                <span>{t('home.cards.card3.button')}</span>
-                                <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
-                                                 style={{transform: "rotate(-90deg)"}}/>
-                            </Link>
-                        </div>
+                        <Link to="/"
+                              className="mt-auto flex flex-row items-center justify-center mt-auto mb-[25px] w-fit mx-auto gap-[10px] py-[5px] px-[15px] rounded-full bg-[#0A48DBB2] text-center text-[16px] leading-[24px] hover:bg-[#24459A] transition duration-500 ease-in-out font-semibold text-white">
+                            <span>{t('home.cards.card3.button')}</span>
+                            <ChevronLeftIcon className="fill-white w-[18px] h-[15.75px]"
+                                             style={{transform: "rotate(-90deg)"}}/>
+                        </Link>
                     </div>
-                </div>
+                </section>
             </main>
         </React.Fragment>
     );
