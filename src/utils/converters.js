@@ -47,4 +47,11 @@ async function asyncFilter(arr, cb){
     return filtered;
 }
 
-export {imageUrlToBase64, slugify, objectMap, asyncFilter}
+function guidGenerator() {
+    var S4 = function() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+export {imageUrlToBase64, slugify, objectMap, asyncFilter, guidGenerator}

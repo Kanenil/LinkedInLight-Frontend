@@ -4,9 +4,10 @@ import MessageWithFile from "../../shared/modals/chat/MessageWithFile";
 import {useImageCropContext} from "../../../providers/ImageCropProvider";
 import {readFile} from "../../../utils/cropImage";
 import ChatService from "../../../services/chatService";
+import {guidGenerator} from "../../../utils/converters";
 
 const SelectMessageFile = ({children, chat, message, participant, setMessage, accept = "image/png, image/jpg, image/jpeg", disabled = false}) => {
-    const id = crypto.randomUUID();
+    const id = guidGenerator();
     const [selectedFile, setSelectedFile] = useState(null);
     const {setImage, getProcessedImage} = useImageCropContext();
 

@@ -22,12 +22,15 @@ const GoogleButton = ({googleLoginCallback, withText= false, ...props}) => {
     const status = useScript("https://accounts.google.com/gsi/client", {removeOnUnmount: true, id: "google"})
 
     const initializeGoogle = () => {
-        window.google.accounts.id.initialize({
-            client_id: APP_ENV.GOOGLE_CLIENT_ID, ux_mode: "popup", callback: googleLoginCallback,
-            cancel_on_tap_outside: false,
-            itp_support: true,
-        });
-        window.google.accounts.id.prompt();
+        try {
+            window.google.accounts.id.initialize({
+                client_id: APP_ENV.GOOGLE_CLIENT_ID, ux_mode: "popup", callback: googleLoginCallback,
+                cancel_on_tap_outside: false,
+                itp_support: true,
+            });
+            window.google.accounts.id.prompt();
+        } catch{}
+
         googleWrapper = createGoogleWrapper();
     }
 

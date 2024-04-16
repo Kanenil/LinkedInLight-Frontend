@@ -14,6 +14,7 @@ import {useAutoAnimate} from "@formkit/auto-animate/react";
 import classNames from "classnames";
 import useValidateChatEvents from "../../../hooks/useValidateChatEvents";
 import {useChatContext} from "../../../providers/ChatProvider";
+import useMobileDetector from "../../../hooks/useMobileDetector";
 
 const MinimizedChat = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -51,56 +52,60 @@ const MinimizedChat = () => {
 
     useValidateChatEvents(queryClient, selectedChat, setSelectedChat);
 
+    const {isMobile} = useMobileDetector();
+
     return (
-        <div className="fixed flex flex-row gap-10 z-20 right-24 bottom-0">
-            <MinimizedMessages unReadMessages={unReadMessages} chat={selectedChat} setSelectedChat={setSelectedChat}
-                               getParticipant={getParticipant}/>
-            <div className={classNames("w-80 h-fit mt-auto rounded-t-xl flex flex-col", {
-                'animate-customPulse from-blue-400 to-white': unReadMessages && !isOpen,
-                'bg-white': !unReadMessages || isOpen
-            })}
-                 style={{boxShadow: "0px 2px 10px rgba(71, 77, 92, 0.25)"}}>
-                <button onClick={toggleOpen} className="w-full py-2 border-b-[1px] border-b-[#B4BFDD]">
-                    <Show>
-                        <Show.When isTrue={isOpen}>
-                            <ChevronDownIcon className="mx-auto w-5 h-5"/>
-                        </Show.When>
+        <ConditionalWrapper condition={!isMobile}>
+            <div className="fixed flex flex-row gap-10 z-20 right-24 bottom-0">
+                <MinimizedMessages unReadMessages={unReadMessages} chat={selectedChat} setSelectedChat={setSelectedChat}
+                                   getParticipant={getParticipant}/>
+                <div className={classNames("w-80 h-fit mt-auto rounded-t-xl flex flex-col", {
+                    'animate-customPulse from-blue-400 to-white': unReadMessages && !isOpen,
+                    'bg-white': !unReadMessages || isOpen
+                })}
+                     style={{boxShadow: "0px 2px 10px rgba(71, 77, 92, 0.25)"}}>
+                    <button onClick={toggleOpen} className="w-full py-2 border-b-[1px] border-b-[#B4BFDD]">
+                        <Show>
+                            <Show.When isTrue={isOpen}>
+                                <ChevronDownIcon className="mx-auto w-5 h-5"/>
+                            </Show.When>
 
-                        <Show.Else>
-                            <ChevronUpIcon className="mx-auto w-5 h-5"/>
-                        </Show.Else>
-                    </Show>
-                </button>
+                            <Show.Else>
+                                <ChevronUpIcon className="mx-auto w-5 h-5"/>
+                            </Show.Else>
+                        </Show>
+                    </button>
 
-                <div className="flex flex-row gap-5 items-center px-4 py-2">
-                    <div className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
-                        <img alt="image" className="object-contain"
-                             src={imageUrl}/>
+                    <div className="flex flex-row gap-5 items-center px-4 py-2">
+                        <div className="w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]">
+                            <img alt="image" className="object-contain"
+                                 src={imageUrl}/>
+                        </div>
+
+                        <h1 className="font-jost font-medium">Messages</h1>
+
+                        {
+                            !unReadMessagesLoading && unReadMessages > 0 && (
+                                <div className="flex items-center rounded-full w-6 h-6 bg-[#24459A]">
+                                    <h1 className="text-[12px] mx-auto font-bold text-white">{unReadMessages}</h1>
+                                </div>
+                            )
+                        }
+
+                        <div className="ml-auto items-center gap-5 flex flex-row">
+                            <h3 className="text-3xl -mt-3 font-mono">...</h3>
+                            <PencilSquareIcon className="w-6 h-6"/>
+                        </div>
                     </div>
 
-                    <h1 className="font-jost font-medium">Messages</h1>
-
-                    {
-                        !unReadMessagesLoading && unReadMessages > 0 && (
-                            <div className="flex items-center rounded-full w-6 h-6 bg-[#24459A]">
-                                <h1 className="text-[12px] mx-auto font-bold text-white">{unReadMessages}</h1>
-                            </div>
-                        )
-                    }
-
-                    <div className="ml-auto items-center gap-5 flex flex-row">
-                        <h3 className="text-3xl -mt-3 font-mono">...</h3>
-                        <PencilSquareIcon className="w-6 h-6"/>
+                    <div ref={parent}>
+                        <ConditionalWrapper condition={isOpen}>
+                            <MinimizedChatsList selectedChat={selectedChat} setSelectedChat={onSelectChat}/>
+                        </ConditionalWrapper>
                     </div>
-                </div>
-
-                <div ref={parent}>
-                    <ConditionalWrapper condition={isOpen}>
-                        <MinimizedChatsList selectedChat={selectedChat} setSelectedChat={onSelectChat}/>
-                    </ConditionalWrapper>
                 </div>
             </div>
-        </div>
+        </ConditionalWrapper>
     )
 }
 export default MinimizedChat;

@@ -16,10 +16,10 @@ const SearchInput = () => {
 
     return (
         <React.Fragment>
-            <div className="ml-10 my-auto relative">
+            <div className="flex-grow md:flex-grow-0 md:ml-10 my-auto relative">
                 <input type="text"
                        placeholder={t('header.search')}
-                       className="border-[1px] border-[#2D2A33] rounded-xl w-[300px] pl-10 text-xs"
+                       className="border-[1px] border-[#2D2A33] rounded-xl w-full md:w-[300px] pl-10 text-xs"
                        ref={ref}
                        onChange={e => debounced(e.target.value)}
                        onFocus={onFocus}

@@ -11,7 +11,6 @@ import InLayout from "../shared/layouts/InLayout";
 import {HelmetProvider} from "react-helmet-async";
 import Settings from "../../pages/profile/settings";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import ChatsLayout from "../shared/layouts/ChatsLayout";
 import React from "react";
 import ImageCropProvider from "../../providers/ImageCropProvider";
@@ -22,6 +21,7 @@ import CreateCompany from "../../pages/company/createCompany";
 import AlertProvider from "../../providers/AlertProvider";
 import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
+import SocketProvider from "../../providers/SocketProvider";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -39,62 +39,64 @@ const App = () => {
                     <AlertProvider>
                         <ImageCropProvider>
                             <ChatProvider>
-                                <BrowserRouter>
-                                    <Routes>
-                                        <Route path="/" element={<Layout/>}>
-                                            <Route index element={<Home/>}/>
-                                        </Route>
+                                <SocketProvider>
+                                    <BrowserRouter>
+                                        <Routes>
+                                            <Route path="/" element={<Layout/>}>
+                                                <Route index element={<Home/>}/>
+                                            </Route>
 
-                                        <Route path="/j4y">
-                                            <Route index element={<InLayout/>}/>
+                                            <Route path="/j4y">
+                                                <Route index element={<InLayout/>}/>
 
-                                            <Route element={<InLayout/>}>
-                                                <Route path=":profileURL" element={<Profile/>}>
-                                                    <Route path="edit/:blockId" element={<Profile/>}/>
-                                                    <Route path="details/:blockId" element={<Profile/>}>
-                                                        <Route path="edit/:blockId" element={<Profile/>}>
-                                                            <Route path=":id" element={<Profile/>}/>
+                                                <Route element={<InLayout/>}>
+                                                    <Route path=":profileURL" element={<Profile/>}>
+                                                        <Route path="edit/:blockId" element={<Profile/>}/>
+                                                        <Route path="details/:blockId" element={<Profile/>}>
+                                                            <Route path="edit/:blockId" element={<Profile/>}>
+                                                                <Route path=":id" element={<Profile/>}/>
+                                                            </Route>
                                                         </Route>
+                                                    </Route>
+
+                                                    <Route path="my-network" element={<MyNetwork/>}/>
+                                                    <Route path="my-network/connections" element={<Connections/>}/>
+                                                </Route>
+
+                                                <Route path="chats" element={<ChatsLayout/>}>
+                                                    <Route index element={<Chats/>}/>
+                                                </Route>
+
+                                                <Route path="company">
+                                                    <Route path="new" element={<ChatsLayout/>}>
+                                                        <Route index element={<CreateCompany/>}/>
                                                     </Route>
                                                 </Route>
 
-                                                <Route path="my-network" element={<MyNetwork/>}/>
-                                                <Route path="my-network/connections" element={<Connections/>}/>
-                                            </Route>
-
-                                            <Route path="chats" element={<ChatsLayout/>}>
-                                                <Route index element={<Chats/>}/>
-                                            </Route>
-
-                                            <Route path="company">
-                                                <Route path="new" element={<ChatsLayout/>}>
-                                                    <Route index element={<CreateCompany/>}/>
+                                                <Route path="settings" element={<ChatsLayout/>}>
+                                                    <Route
+                                                        path=":section?/:block?"
+                                                        element={<Settings/>}
+                                                    />
                                                 </Route>
                                             </Route>
 
-                                            <Route path="settings" element={<ChatsLayout/>}>
-                                                <Route
-                                                    path=":section?/:block?"
-                                                    element={<Settings/>}
-                                                />
+                                            <Route path="/m/auth">
+                                                <Route index element={<Auth/>}/>
+                                                <Route path="sign-up" element={<SignUp/>}/>
+                                                <Route path="sign-in" element={<SignIn/>}/>
                                             </Route>
-                                        </Route>
 
-                                        <Route path="/m/auth">
-                                            <Route index element={<Auth/>}/>
-                                            <Route path="sign-up" element={<SignUp/>}/>
-                                            <Route path="sign-in" element={<SignIn/>}/>
-                                        </Route>
-
-                                        <Route path="/auth" element={<AuthLayout/>}>
-                                            <Route path="sign-up" element={<SignUp/>}/>
-                                            <Route path="sign-in" element={<SignIn/>}/>
-                                            <Route path="confirm-email" element={<ConfirmEmail/>}/>
-                                        </Route>
-                                    </Routes>
-                                </BrowserRouter>
+                                            <Route path="/auth" element={<AuthLayout/>}>
+                                                <Route path="sign-up" element={<SignUp/>}/>
+                                                <Route path="sign-in" element={<SignIn/>}/>
+                                                <Route path="confirm-email" element={<ConfirmEmail/>}/>
+                                            </Route>
+                                        </Routes>
+                                    </BrowserRouter>
+                                </SocketProvider>
                                 <Alert/>
-                                <ReactQueryDevtools buttonPosition="bottom-right"/>
+                                {/*<ReactQueryDevtools buttonPosition="bottom-right"/>*/}
                             </ChatProvider>
                         </ImageCropProvider>
                     </AlertProvider>

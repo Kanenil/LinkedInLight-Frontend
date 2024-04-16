@@ -35,7 +35,7 @@ const ImageSector = ({user, isOwner}) => {
             <Show>
                 <Show.When isTrue={isOwner}>
                     <Link to="edit/image"
-                          className="absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                          className="absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                         <img className="object-contain" src={imageUrl} alt="image"/>
                     </Link>
                 </Show.When>
@@ -129,7 +129,7 @@ const InformationSector = ({user, isOwner}) => {
 
     return (
         <React.Fragment>
-            <div className="ml-10 mr-8 mt-5 mb-4">
+            <div className="ml-6 md:ml-10 mr-8 mt-5 mb-4">
                 <ConditionalWrapper condition={isOwner}>
                     <div className="flex justify-end mb-2">
                         <PencilButton to='edit/intro'/>

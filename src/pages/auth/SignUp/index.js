@@ -16,8 +16,9 @@ import {general} from "../../../constants/general";
 import {Helmet} from "react-helmet-async";
 import TextDown from "../../../elements/shared/TextDown";
 import {useTranslation} from "react-i18next";
-import {BrowserView, MobileView } from 'react-device-detect';
 import {XMarkIcon} from "@heroicons/react/24/solid";
+import useMobileDetector from "../../../hooks/useMobileDetector";
+import Show from "../../../elements/shared/Show";
 
 const SignUp = () => {
     const {t} = useTranslation();
@@ -80,8 +81,10 @@ const SignUp = () => {
         });
     }
 
-    useEffect( () => {
-        if(values.country.length > 0) {
+    const {isMobile} = useMobileDetector();
+
+    useEffect(() => {
+        if (values.country.length > 0) {
             authService.cities(values.country).then(({data}) => {
                 setCities(data.map(val => {
                     return {
@@ -93,89 +96,95 @@ const SignUp = () => {
         }
     }, [values.country]);
 
+
     return (
         <React.Fragment>
             <Helmet>
                 <title>{t('auth.signUp')}</title>
             </Helmet>
-            <BrowserView>
-                <div className="flex-grow flex flex-col bg-[#E7E7E7]">
-                    <div
-                        className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
-                        style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
-                        <div className="flex flex-row h-full">
-                            <form onSubmit={handleSubmit} className="w-1/2 p-11">
-                                <Link to='/'>
-                                    <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
-                                </Link>
+            <Show>
+                <Show.When isTrue={!isMobile}>
+                    <div className="flex-grow flex flex-col bg-[#E7E7E7]">
+                        <div
+                            className="items-center my-auto mx-auto bg-white min-w-2xl rounded-lg overflow-hidden h-full w-[1140px]"
+                            style={{boxShadow: '0px 1px 6px 0px #00000029'}}>
+                            <div className="flex flex-row h-full">
+                                <form onSubmit={handleSubmit} className="w-1/2 p-11">
+                                    <Link to='/'>
+                                        <Logo className="fill-black h-[55px] p-[5px] mx-auto"/>
+                                    </Link>
 
-                                <div className="flex flex-row mt-5">
-                                    <div className="flex w-full">
-                                        <Link to={routes.signIn} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                            {t('auth.logIn')}
-                                        </Link>
+                                    <div className="flex flex-row mt-5">
+                                        <div className="flex w-full">
+                                            <Link to={routes.signIn}
+                                                  className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                                {t('auth.logIn')}
+                                            </Link>
+                                        </div>
+                                        <div className="flex w-full border-b-[1px] border-[#585359]">
+                                            <Link to={routes.signUp}
+                                                  className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
+                                                {t('auth.signUp')}
+                                            </Link>
+                                        </div>
                                     </div>
-                                    <div className="flex w-full border-b-[1px] border-[#585359]">
-                                        <Link to={routes.signUp} className="py-[5px] mx-auto uppercase text-[#585359] text-xs">
-                                            {t('auth.signUp')}
-                                        </Link>
-                                    </div>
-                                </div>
 
-                                <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
-                                           touched={touched.firstName}
-                                           error={errors.firstName} title={t('auth.firstName')} handleChange={handleChange}/>
+                                    <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
+                                               touched={touched.firstName}
+                                               error={errors.firstName} title={t('auth.firstName')}
+                                               handleChange={handleChange}/>
 
-                                <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
-                                           touched={touched.lastName}
-                                           error={errors.lastName} title={t('auth.lastName')} handleChange={handleChange}/>
+                                    <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
+                                               touched={touched.lastName}
+                                               error={errors.lastName} title={t('auth.lastName')} handleChange={handleChange}/>
 
-                                <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
-                                           touched={touched.email}
-                                           error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
+                                    <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
+                                               touched={touched.email}
+                                               error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
 
-                                <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
-                                           touched={touched.password}
-                                           error={errors.password} title={t('auth.createPassword')} handleChange={handleChange}/>
+                                    <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
+                                               touched={touched.password}
+                                               error={errors.password} title={t('auth.createPassword')}
+                                               handleChange={handleChange}/>
 
-                                <TextDown
-                                    options={countryOptions}
-                                    placeHolder={t('auth.selectCountry')}
-                                    containerHeightMax={200}
-                                    containerWidth={380}
-                                    onEnterSelect={false}
-                                    isAbsolute={true}
-                                    containerClass="rounded-xl border-[1px] border-[#B4BFDD]"
-                                    containerSizing="py-2 px-[20px]"
-                                    onChange={(e) => setValues({...values, country: e.label})}
-                                />
+                                    <TextDown
+                                        options={countryOptions}
+                                        placeHolder={t('auth.selectCountry')}
+                                        containerHeightMax={200}
+                                        containerWidth={380}
+                                        onEnterSelect={false}
+                                        isAbsolute={true}
+                                        containerClass="rounded-xl border-[1px] border-[#B4BFDD]"
+                                        containerSizing="py-2 px-[20px]"
+                                        onChange={(e) => setValues({...values, country: e.label})}
+                                    />
 
-                                <TextDown
-                                    options={cities}
-                                    placeHolder={t('auth.selectCity')}
-                                    className="mt-[12px]"
-                                    containerHeightMax={200}
-                                    containerWidth={380}
-                                    onEnterSelect={false}
-                                    isAbsolute={true}
-                                    containerClass="rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]"
-                                    containerSizing="py-2 px-[20px]"
-                                    onChange={(e) => setValues({...values, city: e.label})}
-                                />
+                                    <TextDown
+                                        options={cities}
+                                        placeHolder={t('auth.selectCity')}
+                                        className="mt-[12px]"
+                                        containerHeightMax={200}
+                                        containerWidth={380}
+                                        onEnterSelect={false}
+                                        isAbsolute={true}
+                                        containerClass="rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]"
+                                        containerSizing="py-2 px-[20px]"
+                                        onChange={(e) => setValues({...values, city: e.label})}
+                                    />
 
-                                <div className="mt-[12px]">
-                                    <label
-                                        className="flex items-center cursor-pointer select-none"
-                                        htmlFor="terms">
-                                        <div className="relative">
-                                            <input name="terms"
-                                                   value={values.terms}
-                                                   onChange={handleChange}
-                                                   className="hidden"
-                                                   type="checkbox"
-                                                   id="terms"/>
-                                            <div
-                                                className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
+                                    <div className="mt-[12px]">
+                                        <label
+                                            className="flex items-center cursor-pointer select-none"
+                                            htmlFor="terms">
+                                            <div className="relative">
+                                                <input name="terms"
+                                                       value={values.terms}
+                                                       onChange={handleChange}
+                                                       className="hidden"
+                                                       type="checkbox"
+                                                       id="terms"/>
+                                                <div
+                                                    className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
                                         <span className={values.terms === false ? "opacity-0" : ""}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16"
                                                  className="ml-1 mb-1"
@@ -185,117 +194,121 @@ const SignUp = () => {
                                                     fill="#24459A"/>
                                             </svg>
                                         </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <span className="text-xs text-[#7D7D7D]" dangerouslySetInnerHTML={{__html: t('auth.terms')}}/>
-                                    </label>
+                                            <span className="text-xs text-[#7D7D7D]"
+                                                  dangerouslySetInnerHTML={{__html: t('auth.terms')}}/>
+                                        </label>
+                                    </div>
+
+                                    <button type="submit"
+                                            className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                                        {t('auth.signUp')}
+                                    </button>
+
+                                    <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
+
+                                    <div
+                                        className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
+                                        <GoogleButton googleLoginCallback={googleCallback}/>
+                                        <AppleButton/>
+                                        <FacebookButton/>
+                                    </div>
+
+                                    <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                                <span className="font-light [&>strong]:font-semibold"
+                                      dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
+
+                                        <Link className="font-bold" to={routes.signIn}>{t('auth.logIn')}</Link>
+                                    </div>
+                                </form>
+                                <div className="w-3/4 flex justify-center items-center">
+                                    <img src={illustration} alt="illustration"/>
                                 </div>
-
-                                <button type="submit"
-                                        className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                                    {t('auth.signUp')}
-                                </button>
-
-                                <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
-
-                                <div
-                                    className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
-                                    <GoogleButton googleLoginCallback={googleCallback}/>
-                                    <AppleButton/>
-                                    <FacebookButton/>
-                                </div>
-
-                                <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
-                                    <span className="font-light [&>strong]:font-semibold" dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
-
-                                    <Link className="font-bold" to={routes.signIn}>{t('auth.logIn')}</Link>
-                                </div>
-                            </form>
-                            <div className="w-3/4 flex justify-center items-center">
-                                <img src={illustration} alt="illustration" />
                             </div>
                         </div>
                     </div>
-                </div>
-            </BrowserView>
-            <MobileView>
-                <main className="flex-grow flex flex-col px-6 py-8">
-                    <div className="flex flex-row items-center">
-                        <Link to='/'>
-                            <Logo className="pb-3 mr-auto fill-[#2D2A33] h-10 md:h-16"/>
-                        </Link>
+                </Show.When>
 
-                        <Link to="/m/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
-                            <XMarkIcon className="w-10 h-10"/>
-                        </Link>
-                    </div>
+                <Show.Else>
+                    <div className="flex-grow flex flex-col px-6 py-8">
+                        <div className="flex flex-row items-center">
+                            <Link to='/'>
+                                <Logo className="pb-3 mr-auto fill-[#2D2A33] h-10 md:h-16"/>
+                            </Link>
 
-                    <div className="flex flex-col mt-10">
-                        <div className="py-2 w-full border-b-[#24459A] border-b-[0.5px]">
-                            <h1 className="text-[#585359] font-jost font-bold text-xl">{t('auth.signUp')}</h1>
+                            <Link to="/m/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
+                                <XMarkIcon className="w-10 h-10"/>
+                            </Link>
                         </div>
 
-                        <div className="flex flex-row items-center gap-3">
-                            <span className="font-jost text-lg">{t('auth.or')}</span>
-                            <Link to='/m/auth/sign-in' className="text-lg text-[#24459A] font-bold">{t('auth.backToAccount')}</Link>
+                        <div className="flex flex-col mt-10">
+                            <div className="py-2 w-full border-b-[#24459A] border-b-[0.5px]">
+                                <h1 className="text-[#585359] font-jost font-bold text-xl">{t('auth.signUp')}</h1>
+                            </div>
+
+                            <div className="flex flex-row items-center gap-3">
+                                <span className="font-jost text-lg">{t('auth.or')}</span>
+                                <Link to='/m/auth/sign-in'
+                                      className="text-lg text-[#24459A] font-bold">{t('auth.backToAccount')}</Link>
+                            </div>
                         </div>
-                    </div>
 
-                    <form onSubmit={handleSubmit} className="mt-10">
-                        <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
-                                   touched={touched.firstName}
-                                   error={errors.firstName} title={t('auth.firstName')} handleChange={handleChange}/>
+                        <form onSubmit={handleSubmit} className="mt-10">
+                            <FormGroup margin="mt-[30px]" name="firstName" value={values.firstName} type="text"
+                                       touched={touched.firstName}
+                                       error={errors.firstName} title={t('auth.firstName')} handleChange={handleChange}/>
 
-                        <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
-                                   touched={touched.lastName}
-                                   error={errors.lastName} title={t('auth.lastName')} handleChange={handleChange}/>
+                            <FormGroup margin="mt-[12px]" name="lastName" value={values.lastName} type="text"
+                                       touched={touched.lastName}
+                                       error={errors.lastName} title={t('auth.lastName')} handleChange={handleChange}/>
 
-                        <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
-                                   touched={touched.email}
-                                   error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
+                            <FormGroup margin="mt-[12px]" name="email" value={values.email} type="email"
+                                       touched={touched.email}
+                                       error={errors.email} title={t('auth.email')} handleChange={handleChange}/>
 
-                        <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
-                                   touched={touched.password}
-                                   error={errors.password} title={t('auth.createPassword')} handleChange={handleChange}/>
+                            <FormGroup margin="my-[12px]" name="password" value={values.password} type="password"
+                                       touched={touched.password}
+                                       error={errors.password} title={t('auth.createPassword')} handleChange={handleChange}/>
 
-                        <TextDown
-                            options={countryOptions}
-                            placeHolder={t('auth.selectCountry')}
-                            containerHeightMax={200}
-                            containerWidth={380}
-                            onEnterSelect={false}
-                            isAbsolute={true}
-                            containerClass="rounded-xl border-[1px] border-[#B4BFDD]"
-                            containerSizing="py-2 px-[20px]"
-                            onChange={(e) => setValues({...values, country: e.label})}
-                        />
+                            <TextDown
+                                options={countryOptions}
+                                placeHolder={t('auth.selectCountry')}
+                                containerHeightMax={200}
+                                containerWidth={380}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                containerClass="rounded-xl border-[1px] border-[#B4BFDD]"
+                                containerSizing="py-2 px-[20px]"
+                                onChange={(e) => setValues({...values, country: e.label})}
+                            />
 
-                        <TextDown
-                            options={cities}
-                            placeHolder={t('auth.selectCity')}
-                            className="mt-[12px]"
-                            containerHeightMax={200}
-                            containerWidth={380}
-                            onEnterSelect={false}
-                            isAbsolute={true}
-                            containerClass="rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]"
-                            containerSizing="py-2 px-[20px]"
-                            onChange={(e) => setValues({...values, city: e.label})}
-                        />
+                            <TextDown
+                                options={cities}
+                                placeHolder={t('auth.selectCity')}
+                                className="mt-[12px]"
+                                containerHeightMax={200}
+                                containerWidth={380}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                containerClass="rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]"
+                                containerSizing="py-2 px-[20px]"
+                                onChange={(e) => setValues({...values, city: e.label})}
+                            />
 
-                        <div className="mt-[12px]">
-                            <label
-                                className="flex items-center cursor-pointer select-none"
-                                htmlFor="terms">
-                                <div className="relative">
-                                    <input name="terms"
-                                           value={values.terms}
-                                           onChange={handleChange}
-                                           className="hidden"
-                                           type="checkbox"
-                                           id="terms"/>
-                                    <div
-                                        className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
+                            <div className="mt-[12px]">
+                                <label
+                                    className="flex items-center cursor-pointer select-none"
+                                    htmlFor="terms">
+                                    <div className="relative">
+                                        <input name="terms"
+                                               value={values.terms}
+                                               onChange={handleChange}
+                                               className="hidden"
+                                               type="checkbox"
+                                               id="terms"/>
+                                        <div
+                                            className="box flex items-center justify-center w-[12px] h-[12px] rounded-sm border border-[#2D2A33] mr-2">
                                         <span className={values.terms === false ? "opacity-0" : ""}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16"
                                                  className="ml-1 mb-1"
@@ -305,34 +318,37 @@ const SignUp = () => {
                                                     fill="#24459A"/>
                                             </svg>
                                         </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <span className="text-xs text-[#7D7D7D]" dangerouslySetInnerHTML={{__html: t('auth.terms')}}/>
-                            </label>
-                        </div>
+                                    <span className="text-xs text-[#7D7D7D]"
+                                          dangerouslySetInnerHTML={{__html: t('auth.terms')}}/>
+                                </label>
+                            </div>
 
-                        <button type="submit"
-                                className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
-                            {t('auth.signUp')}
-                        </button>
+                            <button type="submit"
+                                    className="bg-[#24459A] w-full rounded-xl border-[1px] border-[#B4BFDD] mt-[24px] py-[10px] px-[20px] font-semibold text-base text-white">
+                                {t('auth.signUp')}
+                            </button>
 
-                        <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
+                            <h1 className="mt-[12px] text-center uppercase text-xs text-[#7D7D7D]">{t('auth.or')}</h1>
 
-                        <div
-                            className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
-                            <GoogleButton googleLoginCallback={googleCallback}/>
-                            <AppleButton/>
-                            <FacebookButton/>
-                        </div>
+                            <div
+                                className="flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]">
+                                <GoogleButton googleLoginCallback={googleCallback}/>
+                                <AppleButton/>
+                                <FacebookButton/>
+                            </div>
 
-                        <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
-                            <span className="font-light [&>strong]:font-semibold" dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
+                            <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm">
+                        <span className="font-light [&>strong]:font-semibold"
+                              dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
 
-                            <Link className="font-bold text-[#24459A]" to="/m/auth/sign-in">{t('auth.logIn')}</Link>
-                        </div>
-                    </form>
-                </main>
-            </MobileView>
+                                <Link className="font-bold text-[#24459A]" to="/m/auth/sign-in">{t('auth.logIn')}</Link>
+                            </div>
+                        </form>
+                    </div>
+                </Show.Else>
+            </Show>
         </React.Fragment>
     )
 }
