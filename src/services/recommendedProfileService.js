@@ -74,6 +74,14 @@ class RecommendedProfileService {
     removeProject(id) {
         return axios.delete(`${this.#URL}/project/remove/${id}`)
     }
+
+    requestRecommendation() {
+        return axios.get(`${this.#URL}/requestRecommendation`);
+    }
+
+    sendRequestRecommendation(model) {
+        return axios.post(`${this.#URL}/requestRecommendation`, model);
+    }
 }
 
 export default new RecommendedProfileService();
