@@ -50,7 +50,7 @@ const Slider = ({
                 </ConditionalWrapper>
                 <ConditionalWrapper condition={!isNewDesignStyle}>
                     <ManipulateButton onClickHandler={() => setCurrentIndex(val => val - 1)}
-                                      position="-left-6 top-16"
+                                      position="-left-4 md:-left-6 top-16"
                     />
                 </ConditionalWrapper>
             </ConditionalWrapper>
@@ -70,7 +70,7 @@ const Slider = ({
                 </ConditionalWrapper>
                 <ConditionalWrapper condition={!isNewDesignStyle}>
                     <ManipulateButton onClickHandler={() => setCurrentIndex(val => val + 1)}
-                                      position="-right-8 top-16"
+                                      position="-right-5 md:-right-8 top-16"
                                       rotate={180}
                     />
                 </ConditionalWrapper>

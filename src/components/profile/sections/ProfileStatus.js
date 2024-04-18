@@ -105,7 +105,7 @@ const ProfileStatus = ({user, isOwner}) => {
     return (
         <ConditionalWrapper condition={filteredSuggestions.length > 0 && isOwner}>
             <div
-                className="rounded-lg bg-white overflow-hidden px-10 py-8">
+                className="rounded-lg bg-white overflow-hidden px-6 md:px-10 py-8">
                 <div>
                     <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Profile status</h1>
 

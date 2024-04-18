@@ -17,7 +17,7 @@ const ProjectsSection = ({user, isOwner}) => {
 
     return (
         <ConditionalWrapper condition={data.length > 0}>
-            <div id="projects" className="rounded-lg bg-white py-8 px-10">
+            <div id="projects" className="rounded-lg bg-white py-8 px-6 md:px-10">
                 <SectionHeaderBlock
                     title="Projects"
                     buttonTitle="Add project"

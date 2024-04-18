@@ -46,7 +46,9 @@ const EditModalForm = ({
                 "mt-auto": isMobile
             })}>
                 <ConditionalWrapper condition={isEdit}>
-                    <button onClick={onRemove} className="mr-auto text-[#24459A] font-medium hover:underline">
+                    <button onClick={onRemove} className={classNames("mr-auto text-[#24459A] font-medium hover:underline", {
+                        "w-full": isMobile
+                    })}>
                         Remove {removeTitle}
                     </button>
                 </ConditionalWrapper>

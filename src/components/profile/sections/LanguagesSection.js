@@ -29,12 +29,12 @@ const LanguagesSection = ({user, isOwner}) => {
         <ConditionalWrapper condition={data.length > 0}>
             <section id="languages"
                      className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
-                <div className="mx-10">
+                <div className="px-6 md:px-10">
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">Languages</h1>
 
                         <ConditionalWrapper condition={isOwner}>
-                            <PencilButton to='details/languages'/>
+                            <PencilButton className="ml-auto md:ml-0" to='details/languages'/>
                         </ConditionalWrapper>
                     </div>
 
@@ -50,9 +50,12 @@ const LanguagesSection = ({user, isOwner}) => {
                         {
                             data.map((language, index) =>
                                 <React.Fragment key={`languages-${language.name}-${index}`}>
-                                    {dot}
+                                    <div className="hidden md:block">
+                                        {dot}
+                                    </div>
+
                                     <div
-                                        className="flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[280px]">
+                                        className="flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[40vw] md:w-[280px]">
                                         <h1 className="font-jost font-medium">{language.language.name}</h1>
 
                                         <h3 className="font-jost text-sm font-light">{language.proficiency}</h3>

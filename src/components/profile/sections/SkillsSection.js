@@ -23,7 +23,7 @@ const SkillsSection = ({user, isOwner}) => {
         <ConditionalWrapper condition={data.length > 0}>
             <section id="skills"
                      className={`rounded-lg bg-white overflow-hidden pt-8 ${data.length > 4 && isOwner?'':'pb-8'}`}>
-                <div className="mx-10">
+                <div className="px-6 md:px-10">
                     <div className="flex flex-row items-center gap-[20px]">
                         <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">{t('profile.skills')}</h1>
 
