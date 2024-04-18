@@ -9,13 +9,13 @@ import {Link} from "react-router-dom";
 
 const ContactInformation = ({onClose, isOwner, user}) => {
     return (
-        <div className="flex flex-col gap-2 px-7 py-5 w-[480px]"
+        <div className="flex flex-col gap-2 px-7 py-5 bg-white w-screen h-screen md:w-[480px] md:h-full"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]">
-                <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">{user.firstName} {user.lastName}</h1>
+                <h1 className="font-jost font-semibold text-[#2D2A33] text-2xl md:text-xl">{user.firstName} {user.lastName}</h1>
 
                 <button onClick={onClose} className="ml-auto">
-                    <XMarkIcon className="fill-[#7D7D7D] h-4"/>
+                    <XMarkIcon className="fill-[#7D7D7D] h-6 md:h-4"/>
                 </button>
             </div>
 
@@ -66,7 +66,7 @@ const ContactInformation = ({onClose, isOwner, user}) => {
             </div>
 
             <ConditionalWrapper condition={isOwner}>
-                <div className="flex flex-row gap-3 mt-4 items-center">
+                <div className="flex flex-row gap-3 mt-auto mb-10 md:mt-4 md:mb-0 items-center">
                     <EyeIcon className="w-4 h-4 text-[#7D7D7D]"/>
                     <span className="font-jost font-light">Everybody in <strong className="font-medium">Job For You</strong></span>
                 </div>

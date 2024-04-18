@@ -237,7 +237,7 @@ const SignUp = () => {
                                 <Logo className="pb-3 mr-auto fill-[#2D2A33] h-10 md:h-16"/>
                             </Link>
 
-                            <Link to="/m/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
+                            <Link to="/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
                                 <XMarkIcon className="w-10 h-10"/>
                             </Link>
                         </div>
@@ -249,7 +249,7 @@ const SignUp = () => {
 
                             <div className="flex flex-row items-center gap-3">
                                 <span className="font-jost text-lg">{t('auth.or')}</span>
-                                <Link to='/m/auth/sign-in'
+                                <Link to={routes.signIn}
                                       className="text-lg text-[#24459A] font-bold">{t('auth.backToAccount')}</Link>
                             </div>
                         </div>
@@ -343,7 +343,7 @@ const SignUp = () => {
                         <span className="font-light [&>strong]:font-semibold"
                               dangerouslySetInnerHTML={{__html: t('auth.alreadyMember')}}/>
 
-                                <Link className="font-bold text-[#24459A]" to="/m/auth/sign-in">{t('auth.logIn')}</Link>
+                                <Link className="font-bold text-[#24459A]" to={routes.signIn}>{t('auth.logIn')}</Link>
                             </div>
                         </form>
                     </div>

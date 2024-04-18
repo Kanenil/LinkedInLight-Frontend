@@ -2,33 +2,34 @@ import XMarkIcon from "../../../../elements/icons/XMarkIcon";
 import React, {useEffect, useState} from "react";
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup";
 import useForm from "../../../../hooks/useForm";
-import ConnectionService from "../../../../services/connectionService";
 import {APP_ENV} from "../../../../env";
 import defaultImage from "../../../../assets/default-image.jpg";
 import {ButtonVariant1} from "../../../../elements/buttons/Button";
 import Show from "../../../../elements/shared/Show";
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup";
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
+import RecommendedProfileService from "../../../../services/recommendedProfileService";
 import {useQuery} from "@tanstack/react-query";
 import ProfileService from "../../../../services/profileService";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
-const UserItem = ({user, onClick}) => {
+const UserItem = ({image, firstName, lastName, lastPosition, onClick}) => {
     return (
         <div
-            className={`flex flex-row gap-3 ${onClick?'hover:bg-gray-50 cursor-pointer':''}`}
+            className={`flex flex-row gap-3 ${onClick ? 'hover:bg-gray-50 cursor-pointer' : ''}`}
             onClick={onClick}
         >
             <div
-                className="overflow-hidden h-10 w-10 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                className="overflow-hidden h-10 w-10 my-auto bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                 <img className="object-contain"
-                     src={user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage}
+                     src={image ? APP_ENV.UPLOADS_URL + "/" + image : defaultImage}
                      alt="image"/>
             </div>
 
             <div className="flex flex-col gap-1">
-                <h1 className="font-jost font-medium">{user.firstName} {user.lastName}</h1>
+                <h1 className="font-jost font-medium">{firstName} {lastName}</h1>
 
-                <h3>{user.lastPosition}</h3>
+                <h3 className="font-jost text-sm">{lastPosition}</h3>
             </div>
         </div>
     )
@@ -43,7 +44,7 @@ const RequestRecommendation = ({onClose, onChange}) => {
             connection: {},
             relationship: '',
             positionAtTheTime: '',
-            message: ''
+            requestMessage: ''
         },
         errors: {
             connection: true,
@@ -65,39 +66,48 @@ const RequestRecommendation = ({onClose, onChange}) => {
         setOptions
     } = useForm(initialValues, onChange);
     const [step, setStep] = useState(1);
+    const {data:profile} = useQuery({
+        queryFn: () => ProfileService.getProfile(),
+        queryKey: ['profile'],
+        select: ({data}) => data,
+    })
+    const {success} = useAlertContext();
 
     useEffect(() => {
-        ConnectionService.getConnections().then(({data}) => {
+        RecommendedProfileService.requestRecommendation().then(({data}) => {
             setOptions({
-                connection: data
+                connection: data.connections
             })
+            setValues(prev => ({...prev, requestMessage: data.requestMessage}))
         })
     }, [])
 
     const stringifyUser = (data) => {
-        const {user} = data;
+        const {firstName, lastName} = data;
 
-        return user ? `${user.firstName} ${user.lastName}` : '';
+        return firstName ? `${firstName} ${lastName}` : '';
     }
 
-    const onNext = () => {
-        if(step === 1)
+    const onNext = async () => {
+        if (step === 1)
             return setStep(2);
 
         const model = {
-            id: 0,
             positionAtTheTime: values.positionAtTheTime,
             relationship: values.positionAtTheTime,
-            content: "",
-            senderId: values.connection.user.id,
-            requestMessage: values.message,
+            senderId: profile.id,
+            requestMessage: values.requestMessage,
+            requesterId: values.connection.id,
         }
 
-        console.log(model)
+        await RecommendedProfileService.sendRequestRecommendation(model)
+
+        success("Your request sent", 5)
+        onClose();
     }
 
     return (
-        <div className="flex flex-col gap-2 px-7 py-5 w-[750px]"
+        <div className="flex flex-col gap-2 px-7 bg-white py-5 w-screen h-screen md:w-[750px] md:h-full"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]">
                 <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Request recommendation</h1>
@@ -112,7 +122,8 @@ const RequestRecommendation = ({onClose, onChange}) => {
             <Show>
                 <Show.When isTrue={step === 1}>
                     <div className="mt-4 flex flex-col">
-                        <h1 className="font-jost font-light text-[#2D2A33] text-lg">Who can write for you recommendation?</h1>
+                        <h1 className="font-jost font-light text-[#2D2A33] text-lg">Who can write for you
+                            recommendation?</h1>
 
                         <ModalSelectFormGroup
                             className="mt-4 pt-[5px] pb-[10px] pr-[20px] gap-[5px]"
@@ -125,11 +136,11 @@ const RequestRecommendation = ({onClose, onChange}) => {
                             hasTools={false}
                             clearOnSelect={false}
                             onChange={(e) => {
+                                handleChangeSelect(e, "connection");
                                 setValues(prev => ({
                                     ...prev,
-                                    positionAtTheTime: e.user.lastPosition || ''
+                                    positionAtTheTime: e.lastPosition || ''
                                 }))
-                                handleChangeSelect(e, "connection")
                             }}
                             item={<UserItem/>}
                             searchFunc={(search) => (el) => {
@@ -145,9 +156,10 @@ const RequestRecommendation = ({onClose, onChange}) => {
 
                 <Show.Else>
                     <div className="mt-4 flex flex-col">
-                        <UserItem user={values.connection.user}/>
+                        <UserItem {...values.connection}/>
 
-                        <h1 className="font-jost text-lg font-light mt-4">From where you know <strong className="font-semibold">{stringifyUser(values.connection)}</strong>?</h1>
+                        <h1 className="font-jost text-lg font-light mt-4">From where you know <strong
+                            className="font-semibold">{stringifyUser(values.connection)}</strong>?</h1>
 
                         <ModalInputFormGroup
                             title="Relationship *"
@@ -169,17 +181,17 @@ const RequestRecommendation = ({onClose, onChange}) => {
 
                         <ModalTextareaFormGroup
                             title="Message"
-                            name="message"
+                            name="requestMessage"
                             className="pb-[10px] pr-[20px] gap-[5px]"
                             onChange={onChangeInput}
-                            value={values.message}
+                            value={values.requestMessage}
                             rows={3}
                         />
                     </div>
                 </Show.Else>
             </Show>
 
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-row mt-auto mb-10 md:mb-0 md:mt-4">
                 <h1 className="font-jost text-lg">Step {step}</h1>
 
                 <ButtonVariant1 onClick={onNext} className="ml-auto">

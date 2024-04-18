@@ -28,7 +28,7 @@ const AboutMeSection = ({user, isOwner}) => {
         <ConditionalWrapper condition={user?.about || data?.length > 0}>
             <div
                 className="rounded-lg bg-white overflow-hidden pt-8 pb-8">
-                <div className="mx-10">
+                <div className="px-6 md:px-10">
                     <h1 className="font-jost font-medium text-2xl text-[#2D2A33]">{t('profile.aboutMe')}</h1>
 
                     {/*<div className="flex flex-row items-center gap-2.5 mt-2">*/}
@@ -40,14 +40,14 @@ const AboutMeSection = ({user, isOwner}) => {
                     {/*</div>*/}
                 </div>
 
-                <div className="mx-10 mt-2.5 flex flex-row gap-[30px] py-[5px]">
+                <div className="mx-6 md:mx-10 mt-2.5 flex flex-col md:flex-row gap-[30px] py-[5px]">
                     <ConditionalWrapper condition={isOwner || user.about}>
-                        <div className="w-1/2 py-[5px]">
+                        <div className="md:w-1/2 py-[5px]">
                             <div className="flex flex-col gap-2.5">
                                 <div className="flex flex-row gap-2.5 items-center">
                                     <InformationIcon className="h-5 fill-[#24459A]"/>
 
-                                    <h1 className="font-jost font-medium text-[#2D2A33] text-2xl">{t('profile.generalInformation')}</h1>
+                                    <h1 className="font-jost font-medium text-[#2D2A33] text-lg md:text-2xl">{t('profile.generalInformation')}</h1>
 
                                     <ConditionalWrapper condition={isOwner}>
                                         <PencilButton to='edit/general-information' className="ml-auto"/>
@@ -62,7 +62,7 @@ const AboutMeSection = ({user, isOwner}) => {
                     </ConditionalWrapper>
 
                     <ConditionalWrapper condition={data?.length > 0}>
-                        <div className="w-1/2 py-[5px]">
+                        <div className="md:w-1/2 py-[5px]">
                             <div className="flex flex-col gap-2.5">
                                 <div className="flex flex-row gap-2.5 items-center">
                                     <PuzzlesIcon className="h-5 fill-[#24459A]"/>

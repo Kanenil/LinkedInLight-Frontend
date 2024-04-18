@@ -11,12 +11,59 @@ import React from "react";
 import {headerQuery} from "../../../constants/combinedQueries";
 import SearchInput from "./SearchInput";
 import HeaderModal from "./HeaderModal";
-import HeaderProvider from "../../../providers/HeaderProvider";
+import HeaderProvider, {useHeaderContext} from "../../../providers/HeaderProvider";
 import CompanyButton from "../../../elements/buttons/CompanyButton";
-import {ArrowLeftIcon} from "@heroicons/react/24/solid";
-import {AdjustmentsHorizontalIcon} from "@heroicons/react/24/outline";
 import useMobileDetector from "../../../hooks/useMobileDetector";
 import Show from "../../../elements/shared/Show";
+import classNames from "classnames";
+import useValidateConnectionEvents from "../../../hooks/useValidateConnectionEvents";
+
+const MobileHeader = ({pendingRequests, unReadMessages}) => {
+    const {isComponentVisible: searchEnabled, modal} = useHeaderContext();
+
+    return (
+        <>
+            <header
+                className={classNames("flex flex-row gap-3 px-5 pt-7 pb-4", {
+                    "absolute top-0 left-0 z-40 w-full sticky bg-white": searchEnabled && modal === 'search'
+                })}
+                style={{boxShadow: "0px 2px 6px 0px #24459A33"}}
+            >
+                <SearchInput/>
+
+                <div className="flex flex-row">
+                    <CompanyButton/>
+
+                    <AccountButton/>
+                </div>
+            </header>
+            <nav
+                className="fixed flex w-full z-20 flex-row justify-center p-5 gap-10 bottom-0 bg-white"
+                style={{boxShadow: "0px 2px 6px 0px #24459A33"}}
+            >
+                <Link to='/j4y' className="p-2">
+                    <HomeIcon className="fill-[#2D2A33] h-5"/>
+                </Link>
+
+                <Link to='/j4y/my-network' className="p-2">
+                    <GroupsIcon number={pendingRequests?.length > 0 && pendingRequests.length}/>
+                </Link>
+
+                <Link to='/j4y/chats' className="p-2">
+                    <MessagesIcon number={unReadMessages || null}/>
+                </Link>
+
+                <Link to='/j4y' className="p-2">
+                    <JobsIcon/>
+                </Link>
+
+                <Link to='/j4y' className="p-2">
+                    <BellIcon/>
+                </Link>
+            </nav>
+        </>
+    )
+}
 
 const InHeader = () => {
     const {unReadMessages, pendingRequests} = useQueries({
@@ -33,11 +80,13 @@ const InHeader = () => {
 
     const {isMobile} = useMobileDetector();
 
+    useValidateConnectionEvents();
+
     return (
         <HeaderProvider>
+            <HeaderModal/>
             <Show>
                 <Show.When isTrue={!isMobile}>
-                    <HeaderModal/>
                     <header className="absolute top-0 left-0 z-40 w-full sticky"
                             style={{boxShadow: "0px 2px 6px 0px #24459A33"}}>
                         <div className="bg-white flex flex-row justify-center py-2.5">
@@ -79,44 +128,7 @@ const InHeader = () => {
                 </Show.When>
 
                 <Show.Else>
-                    <header
-                        className="flex flex-row gap-3 px-5 pt-7 pb-4"
-                        style={{boxShadow: "0px 2px 6px 0px #24459A33"}}
-                    >
-                        <button className="text-[#2D2A33] hover:text-gray-600">
-                            <ArrowLeftIcon className="h-5"/>
-                        </button>
-
-                        <SearchInput/>
-
-                        <button className="text-[#2D2A33] hover:text-gray-600">
-                            <AdjustmentsHorizontalIcon className="h-8 stroke-[1px]"/>
-                        </button>
-                    </header>
-                    <nav
-                        className="fixed flex w-full z-20 flex-row justify-center p-5 gap-10 bottom-0 bg-white"
-                        style={{boxShadow: "0px 2px 6px 0px #24459A33"}}
-                    >
-                        <Link to='/j4y' className="p-2">
-                            <HomeIcon className="fill-[#2D2A33] h-5"/>
-                        </Link>
-
-                        <Link to='/j4y/my-network' className="p-2">
-                            <GroupsIcon number={pendingRequests?.length > 0 && pendingRequests.length}/>
-                        </Link>
-
-                        <Link to='/j4y/chats' className="p-2">
-                            <MessagesIcon number={unReadMessages || null}/>
-                        </Link>
-
-                        <Link to='/j4y' className="p-2">
-                            <JobsIcon/>
-                        </Link>
-
-                        <Link to='/j4y' className="p-2">
-                            <BellIcon/>
-                        </Link>
-                    </nav>
+                    <MobileHeader pendingRequests={pendingRequests} unReadMessages={unReadMessages}/>
                 </Show.Else>
             </Show>
         </HeaderProvider>

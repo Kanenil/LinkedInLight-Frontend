@@ -29,7 +29,7 @@ const SearchConnections = ({selectCallback}) => {
     }
 
     return (
-        <div className="ml-auto flex flex-row gap-4 items-center relative" ref={ref}>
+        <div className="mx-auto md:ml-auto flex flex-row gap-4 items-center relative" ref={ref}>
             <h1 className="text-lg font-medium">New message</h1>
             <input
                 className="rounded-xl font-light"

@@ -5,6 +5,7 @@ import ChatItem from "./items/ChatItem";
 import React, {useEffect} from "react";
 import NoChats from "./items/NoChats";
 import useValidateChatEvents from "../../hooks/useValidateChatEvents";
+import {useSearchParams} from "react-router-dom";
 
 const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
     const {isLoading, data} = useQuery({
@@ -13,6 +14,7 @@ const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
         select: ({data}) => data,
     });
     const queryClient = useQueryClient();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useValidateChatEvents(queryClient, selectedChat, setSelectedChat);
 
@@ -21,6 +23,22 @@ const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
             setSelectedChat(data.find(chat => chat.id === selectedChat.id))
         }
     }, [data, isLoading, selectedChat])
+
+    useEffect(() => {
+        const chatId = searchParams.get('chat');
+
+        if (chatId && !isLoading) {
+            const chat = data?.find(val => val.id == chatId);
+
+            if (!chat) {
+                searchParams.delete('chat');
+                setSearchParams(searchParams);
+                return;
+            }
+
+            setSelectedChat(chat)
+        }
+    }, [searchParams, data, isLoading])
 
     const onFocus = async (value) => {
         if (selectedChat && value) {
@@ -45,27 +63,25 @@ const ChatsSection = ({getParticipant, selectedChat, setSelectedChat}) => {
     }, [selectedChat])
 
     return (
-        <div className="w-1/3 inline-block border-r-gray border-r-[1px] px-4 pt-2.5">
-            <Show>
-                <Show.When isTrue={data && data.length > 0}>
-                    {
-                        !isLoading && data.map(chat => (
-                            <ChatItem
-                                key={`chat-${getParticipant(chat).id}`}
-                                selectedChat={selectedChat}
-                                getParticipant={getParticipant}
-                                setSelectedChat={setSelectedChat}
-                                chat={chat}
-                            />
-                        ))
-                    }
-                </Show.When>
+        <Show>
+            <Show.When isTrue={data && data.length > 0}>
+                {
+                    !isLoading && data?.map(chat => (
+                        <ChatItem
+                            key={`chat-${getParticipant(chat).id}`}
+                            selectedChat={selectedChat}
+                            getParticipant={getParticipant}
+                            setSelectedChat={setSelectedChat}
+                            chat={chat}
+                        />
+                    ))
+                }
+            </Show.When>
 
-                <Show.Else>
-                    <NoChats/>
-                </Show.Else>
-            </Show>
-        </div>
+            <Show.Else>
+                <NoChats/>
+            </Show.Else>
+        </Show>
     )
 }
 export default ChatsSection;

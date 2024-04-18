@@ -8,6 +8,8 @@ import defaultImage from "../../assets/default-image.jpg";
 import useOverflow from "../../hooks/useOverflow";
 import {useEffect} from "react";
 import MessagesList from "./MessagesList";
+import {ChevronLeftIcon} from "@heroicons/react/24/solid";
+import {Link} from "react-router-dom";
 
 const NoData = () => {
     return (
@@ -17,7 +19,7 @@ const NoData = () => {
     )
 }
 
-const MessagesSection = ({getParticipant, chat}) => {
+const MessagesSection = ({getParticipant, chat, setSelectedChat}) => {
     const {isLoading, data} = useQuery({
         queryFn: ({queryKey}) => ChatService.getAllMessages(queryKey[1]),
         queryKey: ['allChats', chat?.id],
@@ -44,10 +46,14 @@ const MessagesSection = ({getParticipant, chat}) => {
         waitForOffsetTop();
     }, [chat, containerRef, contentRef])
 
+
     return (
-        <div className="h-full flex-shrink">
+        <div className="h-full flex-grow">
             <ConditionalWrapper condition={!!chat?.id}>
                 <div className="flex flex-row items-center gap-4 w-full border-b-[1px] border-gray py-2 px-4">
+                    <button onClick={() => setSelectedChat(null)} className="block md:hidden">
+                        <ChevronLeftIcon className="w-5 text-[#2D2A33]"/>
+                    </button>
                     <div
                         className="rounded-full bg-gray-500 h-10 w-10 flex items-center justify-center border-2 border-black overflow-hidden">
                         <img
@@ -57,7 +63,7 @@ const MessagesSection = ({getParticipant, chat}) => {
                         />
                     </div>
 
-                    <h1 className="font-jost text-lg font-medium">{participant?.firstName} {participant?.lastName}</h1>
+                    <Link to={`/j4y/${participant?.profileUrl}`} className="font-jost text-lg font-medium">{participant?.firstName} {participant?.lastName}</Link>
                 </div>
             </ConditionalWrapper>
 

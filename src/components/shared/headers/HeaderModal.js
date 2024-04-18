@@ -5,6 +5,7 @@ import {useHeaderContext} from "../../../providers/HeaderProvider";
 import Show from "../../../elements/shared/Show";
 import StartCompany from "../modals/company/StartCompany";
 import classNames from "classnames";
+import useMobileDetector from "../../../hooks/useMobileDetector";
 
 const HeaderModal = () => {
     const {modalRef, ref, isComponentVisible, setIsComponentVisible, search, modal} = useHeaderContext();
@@ -13,12 +14,14 @@ const HeaderModal = () => {
         left: (modal === 'search'?Math.round(ref.current?.getBoundingClientRect().left): window.innerWidth - 593)
     }
 
+    const {isMobile} = useMobileDetector();
+
     return (
         <Modal isOpen={isComponentVisible} position={classNames({
             'mt-16': modal === 'search',
-            'mt-14': modal === 'company',
+            'mt-14': modal === 'company' && !isMobile,
         })}
-               style={style}
+               style={!isMobile? style: {}}
                isFixed={true}
                onClose={() => setIsComponentVisible(false)}>
             <Show>

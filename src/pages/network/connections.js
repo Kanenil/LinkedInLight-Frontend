@@ -12,6 +12,9 @@ import ConnectionOptions from "../../components/network/ConnectionOptions";
 import ConfirmAction from "../../components/shared/modals/shared/ConfirmAction";
 import Modal from "../../components/shared/modals/Modal";
 import {useChatContext} from "../../providers/ChatProvider";
+import useMobileDetector from "../../hooks/useMobileDetector";
+import {useNavigate} from "react-router";
+import ChatService from "../../services/chatService";
 
 const Connections = () => {
     const {data: connectionsList, isLoading: connectionsListLoading, refetch} = useQuery({
@@ -22,6 +25,8 @@ const Connections = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [selected, setSelected] = useState(null);
     const {setSelectedChatByUserId} = useChatContext();
+    const {isMobile} = useMobileDetector();
+    const navigator = useNavigate();
 
     const onRemove = (val) => {
         setSelected(val);
@@ -31,6 +36,14 @@ const Connections = () => {
     const onConfirm = () => {
         setIsVisible(false);
         ConnectionService.removeConnection(selected.id).then(refetch);
+    }
+
+    const onMessage = (user) => {
+        if(isMobile) {
+            ChatService.startChat(user.id).then(({data}) => navigator(`/j4y/chats?chat=${data.id}`));
+        } else {
+            setSelectedChatByUserId(user.id)
+        }
     }
 
     return (
@@ -77,7 +90,7 @@ const Connections = () => {
 
                                             <div className="flex flex-row gap-3 items-center ml-auto">
                                                 <div className="px-2 py-4">
-                                                    <SecondaryButton onClick={() => setSelectedChatByUserId(connection.user.id)}>
+                                                    <SecondaryButton onClick={() => onMessage(connection.user)}>
                                                         Message
                                                     </SecondaryButton>
                                                 </div>

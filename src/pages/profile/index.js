@@ -8,6 +8,8 @@ import DetailsPage from "../../components/profile/DetailsPage";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {usePageStatus} from "../../hooks/usePageStatus";
 import Show from "../../elements/shared/Show";
+import {useNavigate} from "react-router";
+import ProfileSkeleton from "./profile-skeleton";
 
 const Profile = () => {
     const {edit, details, id, profileURL} = usePageStatus();
@@ -22,9 +24,13 @@ const Profile = () => {
         select: ({data}) => data
     })
     const queryClient = useQueryClient();
+    const navigator = useNavigate();
 
     if (profile.isLoading || profileId.isLoading)
-        return;
+        return <ProfileSkeleton/>
+
+    if(profileId.data.profileUrl !== profile.data.profileUrl && edit)
+        return navigator(-1);
 
     return (
         <React.Fragment>

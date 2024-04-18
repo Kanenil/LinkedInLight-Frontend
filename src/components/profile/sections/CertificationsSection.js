@@ -17,7 +17,7 @@ const CertificationsSection = ({ user, isOwner }) => {
 
     return (
         <ConditionalWrapper condition={data.length > 0}>
-            <div id="certifications" className="rounded-lg bg-white py-8 px-10">
+            <div id="certifications" className="rounded-lg bg-white py-8 px-6 md:px-10">
                 <SectionHeaderBlock
                     title="Certifications"
                     buttonTitle="Add certification"

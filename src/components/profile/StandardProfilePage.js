@@ -14,7 +14,7 @@ const StandardProfilePage = ({ user, isOwner }) => {
     const {isMobile} = useMobileDetector();
 
     return (
-        <main className='bg-[#E7E7E7]'>
+        <main className='bg-[#E7E7E7] flex-grow'>
             <Show>
                 <Show.When isTrue={!isMobile}>
                     <div className="flex flex-row my-8 mx-auto w-[1170px]">

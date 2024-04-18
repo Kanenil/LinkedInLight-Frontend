@@ -9,7 +9,6 @@ import useMobileDetector from "../../../hooks/useMobileDetector";
 const AuthLayout = () => {
     const navigator = useNavigate();
     const isAuth = useAuthorize();
-    const {isMobile} = useMobileDetector();
 
     useEffect(() => {
         if(isAuth) {
@@ -17,16 +16,15 @@ const AuthLayout = () => {
         }
     }, [navigator, isAuth])
 
-    useEffect(() => {
-        if(isMobile)
-            navigator('/m/auth', {replace:true})
-    }, [isMobile])
+    const {isMobile} = useMobileDetector()
 
     return(
         <ConditionalWrapper condition={!isAuth}>
             <React.Fragment>
                 <Outlet/>
-                <AuthFooter/>
+                <ConditionalWrapper condition={!isMobile}>
+                    <AuthFooter/>
+                </ConditionalWrapper>
             </React.Fragment>
         </ConditionalWrapper>
     )
