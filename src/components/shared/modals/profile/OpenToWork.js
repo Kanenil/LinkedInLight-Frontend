@@ -11,6 +11,7 @@ import {authService} from "../../../../services/authService";
 import ModalRadioInput from "../../forms/ModalRadioInput";
 import {useQueries} from "@tanstack/react-query";
 import {useAlertContext} from "../../../../providers/AlertProvider";
+import EditModalForm from "../../forms/EditModalForm";
 
 const employmentTypes = [
     {
@@ -228,189 +229,170 @@ const OpenToWork = ({onClose, onChange, onSave}) => {
     }
 
     return (
-        <form onSubmit={e => onSubmit(handleSubmit, e)} className="flex flex-col gap-2 w-[400px]"
-              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
-            <div className="px-7 pt-5">
-                <div className="flex flex-row pt-2.5 pb-5 border-b-[1px] border-b-[#24459A]/50">
-                    <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Job preferences</h1>
+        <EditModalForm
+            onSubmit={e => onSubmit(handleSubmit, e)}
+            onClose={onClose}
+            onRemove={null}
+            isEdit={false}
+            withBorder={false}
+            header="Job preferences"
+        >
+            <div className="flex flex-col gap-2.5" ref={contentRef}>
+                <h3 className="mt-3 font-jost text-[#2D2A33] font-light text-sm">Required fields are marked with
+                    *</h3>
 
-                    <button onClick={onClose} className="ml-auto">
-                        <XMarkIcon className="fill-[#7D7D7D] h-4"/>
-                    </button>
+                <div className="flex flex-col gap-1 mt-2.5">
+                    <h3 className="font-jost text-[#2D2A33]">Positions *</h3>
+
+                    <div className="flex flex-row flex-wrap gap-2.5">
+                        {
+                            values.positions.map((position) => (
+                                <ButtonVariant3
+                                    key={`position-${position.value}`}
+                                    type="button"
+                                    onClick={() => onRemoveItem(position, 'positions', 'allPositions')}
+                                >
+                                    {position.label}
+                                </ButtonVariant3>
+                            ))
+                        }
+                    </div>
+
+                    <Show>
+                        <Show.When isTrue={values.isAddPosition}>
+                            <TextDown
+                                className="mt-[5px]"
+                                options={options.positions}
+                                error={errors.positions}
+                                searchAble={true}
+                                hasTools={false}
+                                clearOnSelect={true}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                onChange={(e) => onChangeSelect(e, 'positions', 'isAddPosition')}
+                            />
+                        </Show.When>
+
+                        <Show.Else>
+                            <AddButton onClick={() => setValues(prev => ({...prev, isAddPosition: true}))}>
+                                Add position
+                            </AddButton>
+                        </Show.Else>
+                    </Show>
+
+                    {errors.positions && isSubmitted &&
+                        <p className="mt-2 text-[#9E0F20] text-xs">Select at least one position</p>}
                 </div>
-            </div>
 
+                <div className="flex flex-col gap-1 mt-2.5">
+                    <h3 className="font-jost text-[#2D2A33]">Region *</h3>
 
-            <div
-                id="container"
-                ref={containerRef}
-                className={`px-7 max-h-[60vh] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}
-            >
-                <div className="flex flex-col gap-2.5" ref={contentRef}>
-                    <h3 className="mt-3 font-jost text-[#2D2A33] font-light text-sm">Required fields are marked with
-                        *</h3>
-
-                    <div className="flex flex-col gap-1 mt-2.5">
-                        <h3 className="font-jost text-[#2D2A33]">Positions *</h3>
-
-                        <div className="flex flex-row flex-wrap gap-2.5">
-                            {
-                                values.positions.map((position) => (
-                                    <ButtonVariant3
-                                        key={`position-${position.value}`}
-                                        type="button"
-                                        onClick={() => onRemoveItem(position, 'positions', 'allPositions')}
-                                    >
-                                        {position.label}
-                                    </ButtonVariant3>
-                                ))
-                            }
-                        </div>
-
-                        <Show>
-                            <Show.When isTrue={values.isAddPosition}>
-                                <TextDown
-                                    className="mt-[5px]"
-                                    options={options.positions}
-                                    error={errors.positions}
-                                    searchAble={true}
-                                    hasTools={false}
-                                    clearOnSelect={true}
-                                    onEnterSelect={false}
-                                    isAbsolute={true}
-                                    onChange={(e) => onChangeSelect(e, 'positions', 'isAddPosition')}
-                                />
-                            </Show.When>
-
-                            <Show.Else>
-                                <AddButton onClick={() => setValues(prev => ({...prev, isAddPosition: true}))}>
-                                    Add position
-                                </AddButton>
-                            </Show.Else>
-                        </Show>
-
-                        {errors.positions && isSubmitted &&
-                            <p className="mt-2 text-[#9E0F20] text-xs">Select at least one position</p>}
+                    <div className="flex flex-row gap-2.5">
+                        {
+                            values.regions.map((region) => (
+                                <ButtonVariant3
+                                    key={`region-${region.value}`}
+                                    type="button"
+                                    onClick={() => onRemoveItem(region, 'regions', 'allRegions')}
+                                >
+                                    {region.label}
+                                </ButtonVariant3>
+                            ))
+                        }
                     </div>
 
-                    <div className="flex flex-col gap-1 mt-2.5">
-                        <h3 className="font-jost text-[#2D2A33]">Region *</h3>
+                    <Show>
+                        <Show.When isTrue={values.isAddRegion}>
+                            <TextDown
+                                className="mt-[5px]"
+                                options={options.regions}
+                                error={errors.regions}
+                                searchAble={true}
+                                hasTools={false}
+                                clearOnSelect={true}
+                                onEnterSelect={false}
+                                isAbsolute={true}
+                                onChange={(e) => onChangeSelect(e, 'regions', 'isAddRegion')}
+                            />
+                        </Show.When>
 
-                        <div className="flex flex-row gap-2.5">
-                            {
-                                values.regions.map((region) => (
-                                    <ButtonVariant3
-                                        key={`region-${region.value}`}
-                                        type="button"
-                                        onClick={() => onRemoveItem(region, 'regions', 'allRegions')}
-                                    >
-                                        {region.label}
-                                    </ButtonVariant3>
-                                ))
-                            }
-                        </div>
+                        <Show.Else>
+                            <AddButton onClick={() => setValues(prev => ({...prev, isAddRegion: true}))}>
+                                Add region
+                            </AddButton>
+                        </Show.Else>
+                    </Show>
 
-                        <Show>
-                            <Show.When isTrue={values.isAddRegion}>
-                                <TextDown
-                                    className="mt-[5px]"
-                                    options={options.regions}
-                                    error={errors.regions}
-                                    searchAble={true}
-                                    hasTools={false}
-                                    clearOnSelect={true}
-                                    onEnterSelect={false}
-                                    isAbsolute={true}
-                                    onChange={(e) => onChangeSelect(e, 'regions', 'isAddRegion')}
-                                />
-                            </Show.When>
+                    {errors.regions && isSubmitted &&
+                        <p className="mt-2 text-[#9E0F20] text-xs">Select at least one region</p>}
+                </div>
 
-                            <Show.Else>
-                                <AddButton onClick={() => setValues(prev => ({...prev, isAddRegion: true}))}>
-                                    Add region
-                                </AddButton>
-                            </Show.Else>
-                        </Show>
+                <div className="flex flex-col gap-1 mt-2.5">
+                    <h3 className="font-jost text-[#2D2A33]">Start date</h3>
 
-                        {errors.regions && isSubmitted &&
-                            <p className="mt-2 text-[#9E0F20] text-xs">Select at least one region</p>}
+                    <div className="flex flex-row gap-12 mt-2">
+                        <ModalRadioInput
+                            onChange={onRadioChange}
+                            name="canStartImmediately"
+                            condition={true}
+                            title="Immediately"
+                            value={values.canStartImmediately}
+                        />
+
+                        <ModalRadioInput
+                            onChange={onRadioChange}
+                            condition={false}
+                            name="canStartImmediately"
+                            title="After time"
+                            value={values.canStartImmediately}
+                        />
                     </div>
+                </div>
 
-                    <div className="flex flex-col gap-1 mt-2.5">
-                        <h3 className="font-jost text-[#2D2A33]">Start date</h3>
+                <div className="flex flex-col gap-1 mt-2.5">
+                    <h3 className="font-jost text-[#2D2A33]">Employment types *</h3>
 
-                        <div className="flex flex-row gap-12 mt-2">
-                            <ModalRadioInput
-                                onChange={onRadioChange}
-                                name="canStartImmediately"
-                                condition={true}
-                                title="Immediately"
-                                value={values.canStartImmediately}
-                            />
-
-                            <ModalRadioInput
-                                onChange={onRadioChange}
-                                condition={false}
-                                name="canStartImmediately"
-                                title="After time"
-                                value={values.canStartImmediately}
-                            />
-                        </div>
+                    <div className="flex flex-row flex-wrap gap-3">
+                        {
+                            employmentTypes.map(({value, label}) => (
+                                <ButtonVariant2
+                                    key={`employmentType-${value}`}
+                                    type="button"
+                                    onClick={() => onChangeTypes(value)}
+                                    active={values[value]}
+                                >
+                                    {label}
+                                </ButtonVariant2>
+                            ))
+                        }
                     </div>
+                    {errors.employmentTypes && isSubmitted &&
+                        <p className="mt-2 text-[#9E0F20] text-xs">Select at least one employment type</p>}
+                </div>
 
-                    <div className="flex flex-col gap-1 mt-2.5">
-                        <h3 className="font-jost text-[#2D2A33]">Employment types *</h3>
+                <div className="flex flex-col gap-1 mt-2.5">
+                    <h3 className="font-jost text-[#2D2A33]">Visibility (who can view you’re open to work) *</h3>
 
-                        <div className="flex flex-row flex-wrap gap-3">
-                            {
-                                employmentTypes.map(({value, label}) => (
-                                    <ButtonVariant2
-                                        key={`employmentType-${value}`}
-                                        type="button"
-                                        onClick={() => onChangeTypes(value)}
-                                        active={values[value]}
-                                    >
-                                        {label}
-                                    </ButtonVariant2>
-                                ))
-                            }
-                        </div>
-                        {errors.employmentTypes && isSubmitted &&
-                            <p className="mt-2 text-[#9E0F20] text-xs">Select at least one employment type</p>}
-                    </div>
+                    <div className="flex flex-col gap-4 mt-2">
+                        <ModalRadioInput
+                            onChange={onRadioChange}
+                            name="visibleForAll"
+                            condition={true}
+                            title="Only recruiters"
+                            value={values.visibleForAll}
+                        />
 
-                    <div className="flex flex-col gap-1 mt-2.5">
-                        <h3 className="font-jost text-[#2D2A33]">Visibility (who can view you’re open to work) *</h3>
-
-                        <div className="flex flex-col gap-4 mt-2">
-                            <ModalRadioInput
-                                onChange={onRadioChange}
-                                name="visibleForAll"
-                                condition={true}
-                                title="Only recruiters"
-                                value={values.visibleForAll}
-                            />
-
-                            <ModalRadioInput
-                                onChange={onRadioChange}
-                                condition={false}
-                                name="visibleForAll"
-                                title="All Job For You members"
-                                value={values.visibleForAll}
-                            />
-                        </div>
+                        <ModalRadioInput
+                            onChange={onRadioChange}
+                            condition={false}
+                            name="visibleForAll"
+                            title="All Job For You members"
+                            value={values.visibleForAll}
+                        />
                     </div>
                 </div>
             </div>
-
-            <div className="px-7 py-5">
-                <div className="flex justify-end pt-2.5 pb-1 gap-5 border-t-[0.5px] border-[#24459A80]">
-                    <ButtonVariant1 type="submit">
-                        Save
-                    </ButtonVariant1>
-                </div>
-            </div>
-        </form>
+        </EditModalForm>
     )
 }
 export default OpenToWork;

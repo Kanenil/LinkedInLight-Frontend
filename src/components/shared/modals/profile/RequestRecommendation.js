@@ -107,7 +107,7 @@ const RequestRecommendation = ({onClose, onChange}) => {
     }
 
     return (
-        <div className="flex flex-col gap-2 px-7 py-5 w-[750px]"
+        <div className="flex flex-col gap-2 px-7 bg-white py-5 w-screen h-screen md:w-[750px] md:h-full"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]">
                 <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Request recommendation</h1>
@@ -191,7 +191,7 @@ const RequestRecommendation = ({onClose, onChange}) => {
                 </Show.Else>
             </Show>
 
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-row mt-auto mb-10 md:mb-0 md:mt-4">
                 <h1 className="font-jost text-lg">Step {step}</h1>
 
                 <ButtonVariant1 onClick={onNext} className="ml-auto">

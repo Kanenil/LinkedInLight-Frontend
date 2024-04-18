@@ -3,6 +3,8 @@ import XMarkIcon from "../../../../elements/icons/XMarkIcon";
 import ChevronDownIcon from "../../../../elements/icons/ChevronDownIcon";
 import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
 import UnderlinedLink from "../../../../elements/links/UnderlinedLink";
+import useMobileDetector from "../../../../hooks/useMobileDetector";
+import Show from "../../../../elements/shared/Show";
 
 const AddToProfile = ({onClose}) => {
     const [selected, setSelected] = useState(-1);
@@ -39,15 +41,15 @@ const AddToProfile = ({onClose}) => {
             <React.Fragment>
                 <button onClick={onClickHandler}
                         className="flex flex-row items-center pt-2.5 pb-1 border-t-[0.5px] border-[#24459A80]">
-                    <h1 className="font-jost text-[#2D2A33] text-lg">{title}</h1>
+                    <h1 className="font-jost text-[#2D2A33] text-xl md:text-lg">{title}</h1>
 
-                    <ChevronDownIcon className="ml-auto fill-[#2D2A33] w-3.5"
+                    <ChevronDownIcon className="ml-auto fill-[#7D7D7D] w-4 md:w-3.5"
                                      style={{transform: `rotate(${isOpened ? 180 : 0}deg)`}}/>
                 </button>
                 <ConditionalWrapper condition={isOpened}>
                     {content.map((data, index) =>
                         <UnderlinedLink key={`${title}-content-${index}`} to={data.to} onClick={onLinkClick}
-                                        className="mb-2">
+                                        className="mb-2 text-lg md:text-base">
                             {data.title}
                         </UnderlinedLink>
                     )}
@@ -60,26 +62,53 @@ const AddToProfile = ({onClose}) => {
         setSelected((val) => val === id ? -1 : id);
     }
 
+    const {isMobile} = useMobileDetector();
+
     return (
-        <div className="flex flex-col gap-2 p-5 w-[500px]"
-             style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
-            <div className="flex flex-row py-2.5">
-                <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Add to profile</h1>
+        <Show>
+            <Show.When isTrue={!isMobile}>
+                <div className="flex flex-col gap-2 p-5 w-[500px]"
+                     style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
+                    <div className="flex flex-row py-2.5">
+                        <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Add to profile</h1>
 
-                <button onClick={onClose} className="ml-auto">
-                    <XMarkIcon className="fill-[#7D7D7D] h-4"/>
-                </button>
-            </div>
+                        <button onClick={onClose} className="ml-auto">
+                            <XMarkIcon className="fill-[#7D7D7D] h-4"/>
+                        </button>
+                    </div>
 
-            {blocks.map((block, index) =>
-                <SectionItem onClickHandler={() => onChangeSelected(block.id)}
-                             isOpened={selected === block.id}
-                             key={`blockSectionItem-${index}`}
-                             onLinkClick={onClose}
-                             {...block}
-                />
-            )}
-        </div>
+                    {blocks.map((block, index) =>
+                        <SectionItem onClickHandler={() => onChangeSelected(block.id)}
+                                     isOpened={selected === block.id}
+                                     key={`blockSectionItem-${index}`}
+                                     onLinkClick={onClose}
+                                     {...block}
+                        />
+                    )}
+                </div>
+            </Show.When>
+
+            <Show.Else>
+                <div className="flex flex-col px-6 py-6 bg-white h-screen w-screen">
+                    <div className="flex flex-row py-2.5">
+                        <h1 className="font-jost font-semibold text-[#2D2A33] text-2xl">Add to profile</h1>
+
+                        <button onClick={onClose} className="ml-auto">
+                            <XMarkIcon className="fill-[#7D7D7D] h-6"/>
+                        </button>
+                    </div>
+
+                    {blocks.map((block, index) =>
+                        <SectionItem onClickHandler={() => onChangeSelected(block.id)}
+                                     isOpened={selected === block.id}
+                                     key={`blockSectionItem-${index}`}
+                                     onLinkClick={onClose}
+                                     {...block}
+                        />
+                    )}
+                </div>
+            </Show.Else>
+        </Show>
     )
 }
 export default AddToProfile;

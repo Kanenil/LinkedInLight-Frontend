@@ -17,7 +17,7 @@ export const ZoomSlider = () => {
                 </button>
                 <input
                     type="range"
-                    className="w-full"
+                    className="w-full styled-slider slider-progress"
                     name="volju"
                     min={min_zoom}
                     max={max_zoom}
@@ -61,7 +61,7 @@ export const RotationSlider = () => {
                     max={max_rotation}
                     step={rotation_step}
                     value={rotation}
-                    className="w-full"
+                    className="w-full styled-slider slider-progress"
                     onChange={e => {
                         setRotation(Number(e.target.value));
                     }}

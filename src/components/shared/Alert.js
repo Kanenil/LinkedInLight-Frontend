@@ -10,7 +10,7 @@ const Alert = () => {
     });
 
     return (
-        <div ref={parent} className="fixed bottom-3 left-4 flex flex-col gap-4">
+        <div ref={parent} className="fixed bottom-[80vh] md:bottom-3 left-4 flex flex-col gap-4">
             {
                 [...alerts].reverse().map(({id, status, message}) => (
                     <div key={`alert-${id}`} style={{boxShadow: "0px 1px 6px rgba(0, 0, 0, 0.25)"}}

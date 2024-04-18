@@ -18,6 +18,7 @@ import ConnectedButton from "../../../elements/buttons/ConnectedButton";
 import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
 import ConnectionService from "../../../services/connectionService";
 import ContactInformation from "../../shared/modals/profile/ContactInformation";
+import useMobileDetector from "../../../hooks/useMobileDetector";
 
 const ImageSector = ({user, isOwner}) => {
     const backgroundUrl = user?.background ? APP_ENV.UPLOADS_URL + "/" + user?.background : defaultBg;
@@ -95,6 +96,11 @@ const InformationSector = ({user, isOwner}) => {
         setIsVisible(true);
     }
 
+    const onShowAddToProfile = () => {
+        setConfirmModal(null);
+        setIsVisible(true);
+    }
+
     const onRemoveConnectionRequest = () => {
         setConfirmModal(CONNECTIONREQUEST);
         setIsVisible(true);
@@ -126,6 +132,8 @@ const InformationSector = ({user, isOwner}) => {
             ConnectionService.revokeRequest(isConnectionRequested.id).then(refetch);
         }
     }
+
+    const {isMobile} = useMobileDetector();
 
     return (
         <React.Fragment>
@@ -178,7 +186,7 @@ const InformationSector = ({user, isOwner}) => {
                         <div className="flex flex-row gap-4 mt-4">
                             <OpenToButton/>
                             <ProfileButton
-                                onClickHandler={() => setIsVisible(true)}
+                                onClickHandler={onShowAddToProfile}
                                 title="Add profile section"
                             />
                         </div>
@@ -217,7 +225,7 @@ const InformationSector = ({user, isOwner}) => {
                     </Show.Else>
                 </Show>
             </div>
-            <Modal isOpen={isVisible} onClose={closeModal} position="mt-10 mx-auto">
+            <Modal isOpen={isVisible} isRounded={!isMobile} onClose={closeModal} position="mt-0 md:mt-10 mx-auto">
                 <Show>
                     <Show.When isTrue={confirmModal && confirmModal === CONNECTION}>
                         <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection?"
