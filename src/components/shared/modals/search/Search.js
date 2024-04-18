@@ -20,7 +20,7 @@ const Search = forwardRef(({search, setIsComponentVisible}, ref,) => {
     const {userList, companyList} = data ?? {};
 
     return (
-        <div className="flex flex-col w-[350px]"
+        <div className="flex flex-col w-screen md:w-[350px]"
              ref={ref}
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div id="container" ref={containerRef} className={`max-h-[300px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'}`}>
