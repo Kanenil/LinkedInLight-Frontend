@@ -81,13 +81,8 @@ const App = () => {
                                                 </Route>
                                             </Route>
 
-                                            <Route path="/m/auth">
-                                                <Route index element={<Auth/>}/>
-                                                <Route path="sign-up" element={<SignUp/>}/>
-                                                <Route path="sign-in" element={<SignIn/>}/>
-                                            </Route>
-
                                             <Route path="/auth" element={<AuthLayout/>}>
+                                                <Route index element={<Auth/>}/>
                                                 <Route path="sign-up" element={<SignUp/>}/>
                                                 <Route path="sign-in" element={<SignIn/>}/>
                                                 <Route path="confirm-email" element={<ConfirmEmail/>}/>

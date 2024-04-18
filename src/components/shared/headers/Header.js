@@ -14,7 +14,7 @@ const Header = () => {
                 <Logo className="pb-3 mr-auto border-b-[1px] fill-white h-10 md:h-16"/>
             </Link>
             <div className="flex flex-row gap-4 ml-auto md:hidden">
-                <Link className="text-white text-lg font-bold rounded-full bg-[#2D2A33] hover:bg-[#24459A] py-[8px] px-[15px] transition duration-300 ease-in-out" to={routes.signUp}>
+                <Link className="text-white text-lg font-bold rounded-full bg-[#2D2A33] hover:bg-[#24459A] py-[8px] px-[15px] transition duration-300 ease-in-out" to="/auth">
                     <UserSignInIcon className="fill-white h-6"/>
                 </Link>
                 <button>

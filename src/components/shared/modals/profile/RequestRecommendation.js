@@ -11,6 +11,7 @@ import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup";
 import RecommendedProfileService from "../../../../services/recommendedProfileService";
 import {useQuery} from "@tanstack/react-query";
 import ProfileService from "../../../../services/profileService";
+import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const UserItem = ({image, firstName, lastName, lastPosition, onClick}) => {
     return (
@@ -70,6 +71,7 @@ const RequestRecommendation = ({onClose, onChange}) => {
         queryKey: ['profile'],
         select: ({data}) => data,
     })
+    const {success} = useAlertContext();
 
     useEffect(() => {
         RecommendedProfileService.requestRecommendation().then(({data}) => {
@@ -91,21 +93,17 @@ const RequestRecommendation = ({onClose, onChange}) => {
             return setStep(2);
 
         const model = {
-            id: 0,
             positionAtTheTime: values.positionAtTheTime,
             relationship: values.positionAtTheTime,
-            content: "",
             senderId: profile.id,
-            sender: profile,
             requestMessage: values.requestMessage,
             requesterId: values.connection.id,
-            requester: values.connection,
-            status: ""
         }
 
         await RecommendedProfileService.sendRequestRecommendation(model)
 
-        console.log(model)
+        success("Your request sent", 5)
+        onClose();
     }
 
     return (

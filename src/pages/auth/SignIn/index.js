@@ -130,7 +130,7 @@ const SignIn = () => {
                                 <Logo className="pb-3 mr-auto fill-[#2D2A33] h-10 md:h-16"/>
                             </Link>
 
-                            <Link to="/m/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
+                            <Link to="/auth" className="ml-auto text-[#7D7D7D] hover:text-gray-700">
                                 <XMarkIcon className="w-10 h-10"/>
                             </Link>
                         </div>
@@ -142,7 +142,7 @@ const SignIn = () => {
 
                             <div className="flex flex-row items-center gap-3">
                                 <span className="font-jost text-lg">{t('auth.or')}</span>
-                                <Link to='/m/auth/sign-up' className="text-lg text-[#24459A] font-bold">{t('auth.joinTo')}</Link>
+                                <Link to={routes.signUp} className="text-lg text-[#24459A] font-bold">{t('auth.joinTo')}</Link>
                             </div>
                         </div>
 
@@ -176,7 +176,7 @@ const SignIn = () => {
                             <div className="flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]">
                                 <span className="font-light">{t('auth.noAccount')}</span>
 
-                                <Link className="font-bold text-[#24459A]" to="/m/auth/sign-up">{t('auth.signUp')}</Link>
+                                <Link className="font-bold text-[#24459A]" to={routes.signUp}>{t('auth.signUp')}</Link>
                             </div>
                         </form>
                     </div>
