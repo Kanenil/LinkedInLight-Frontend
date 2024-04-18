@@ -6,6 +6,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import {asyncFilter} from "../../../utils/converters";
 import ProfileService from "../../../services/profileService";
 import {useQueryClient} from "@tanstack/react-query";
+import useMobileDetector from "../../../hooks/useMobileDetector";
 
 const suggestions = [
     {
@@ -99,6 +100,8 @@ const ProfileStatus = ({user, isOwner}) => {
 
     const maxLevel = suggestions.length;
 
+    const {isMobile} = useMobileDetector();
+
     return (
         <ConditionalWrapper condition={filteredSuggestions.length > 0 && isOwner}>
             <div
@@ -140,9 +143,9 @@ const ProfileStatus = ({user, isOwner}) => {
                 </div>
 
                 <ConditionalWrapper condition={filteredSuggestions.length > 0}>
-                    <Slider className="mt-2.5" perPage={3}
+                    <Slider className="mt-2.5" perPage={isMobile?1:3}
                             onReset={user}
-                            containerClass="flex flex-row gap-6 w-fit">
+                            containerClass="flex flex-row gap-6 w-fit [&>*:nth-child(n+1)]:ml-3.5 md:[&>*:nth-child(n+1)]:ml-0">
                         {filteredSuggestions.map((suggestion, index) =>
                             <SliderItem key={`suggestion-${index}`} {...suggestion}/>
                         )}
