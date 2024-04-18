@@ -23,7 +23,7 @@ const ChatProvider = ({children}) => {
             if(chat)
                 setSelectedChat(chat);
             else
-                ChatService.startChat(userId).then(() => setSelectedChatByUserId(userId));
+                ChatService.startChat(userId).then((chat) => setSelectedChat(chat));
         })
     }
 
