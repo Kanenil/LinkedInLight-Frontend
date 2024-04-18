@@ -9,9 +9,11 @@ const useOverflow = () => {
         function toggleScrollbar() {
             setIsOverflow(contentRef.current?.offsetHeight > containerRef.current?.offsetHeight);
         }
-
+        
         if(contentRef.current && containerRef.current)
             toggleScrollbar();
+        else
+            setIsOverflow(true)
 
         window.addEventListener('resize', toggleScrollbar);
 

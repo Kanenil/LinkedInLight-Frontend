@@ -44,8 +44,17 @@ const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, 
         onSave();
     }
 
+    /*generated with Input range slider CSS style generator (version 20211225)
+    https://toughengineer.github.io/demo/slider-styler*/
+    for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
+        e.style.setProperty('--value', e.value);
+        e.style.setProperty('--min', e.min == '' ? '0' : e.min);
+        e.style.setProperty('--max', e.max == '' ? '100' : e.max);
+        e.addEventListener('input', () => e.style.setProperty('--value', e.value));
+    }
+
     return (
-        <div className="flex flex-col gap-2.5 py-5 px-8 w-[750px]"
+        <div className="flex flex-col gap-2.5 py-5 px-8 bg-white w-screen h-screen md:h-full md:w-[750px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <ModalHeader
                 title="Message with file"
@@ -71,7 +80,7 @@ const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, 
                         </button>
                     </div>
 
-                    <div className="flex flex-row gap-2.5 py-1">
+                    <div className="flex flex-col md:flex-row gap-2.5 py-1">
                         <ZoomSlider/>
 
                         <RotationSlider/>

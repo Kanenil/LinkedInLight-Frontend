@@ -11,6 +11,7 @@ import MessageOptionButton from "../options/MessageOptionButton";
 import ChatService from "../../../services/chatService";
 import Modal from "../../shared/modals/Modal";
 import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
+import classNames from "classnames";
 
 const DoubleCheck = ({className = 'w-4 h-4'}) => {
     return (
@@ -50,7 +51,10 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                         <Show>
                             <Show.When isTrue={isImage}>
                                 <div
-                                    className="rounded-lg border-[1px] border-[#B4BFDD] h-56 w-56 flex items-center justify-center overflow-hidden">
+                                    className={classNames("rounded-lg border-[1px] border-[#B4BFDD] flex items-center justify-center overflow-hidden",{
+                                        "h-32 w-32 md:h-56 md:w-56": !isMobile,
+                                        "h-24 h-24": isMobile
+                                    })}>
                                     <img
                                         className="object-contain"
                                         src={APP_ENV.UPLOADS_URL + "/" + message.attachedFileName}
@@ -74,7 +78,10 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                     </ConditionalWrapper>
 
 
-                    <div className="flex-shrink border-[1px] border-[#B4BFDD] rounded-xl p-2 max-w-[20vw]">
+                    <div className={classNames("flex-shrink border-[1px] border-[#B4BFDD] rounded-xl p-2", {
+                        "max-w-[20vw]":isMobile,
+                        "max-w-[40vw] md:max-w-[20vw]": !isMobile
+                    })}>
                         <h3 className="font-jost text-wrap break-words">
                             {message.content}
                         </h3>
@@ -162,7 +169,10 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                     <Show>
                         <Show.When isTrue={isImage}>
                             <div
-                                className="rounded-lg ml-auto bg-[#EEF1FB] h-56 w-56 flex items-center justify-center overflow-hidden">
+                                className={classNames("rounded-lg border-[1px] border-[#B4BFDD] flex items-center justify-center overflow-hidden",{
+                                    "h-32 w-32 md:h-56 md:w-56": !isMobile,
+                                    "h-24 h-24": isMobile
+                                })}>
                                 <img
                                     className="object-contain"
                                     src={APP_ENV.UPLOADS_URL + "/" + message.attachedFileName}
@@ -178,7 +188,7 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                                 </div>
 
                                 <div className="pr-2">
-                                    <h3 className="font-jost text-xl text-white truncate break-words">{message.attachedFileName}</h3>
+                                    <h3 className="font-jost md:text-xl text-white truncate break-words">{message.attachedFileName}</h3>
                                 </div>
                             </Link>
                         </Show.Else>
@@ -218,7 +228,10 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                     </Show.When>
 
                     <Show.Else>
-                        <div className="flex-shrink bg-[#EEF1FB] rounded-xl p-2 max-w-[20vw]">
+                        <div className={classNames("flex-shrink bg-[#EEF1FB] rounded-xl p-2", {
+                            "max-w-[20vw]":isMobile,
+                            "max-w-[40vw] md:max-w-[20vw]": !isMobile
+                        })}>
                             <h3 className="font-jost text-wrap break-words">
                                 {message.content}
                             </h3>
