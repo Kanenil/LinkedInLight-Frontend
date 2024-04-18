@@ -16,6 +16,7 @@ import CompanyButton from "../../../elements/buttons/CompanyButton";
 import useMobileDetector from "../../../hooks/useMobileDetector";
 import Show from "../../../elements/shared/Show";
 import classNames from "classnames";
+import useValidateConnectionEvents from "../../../hooks/useValidateConnectionEvents";
 
 const MobileHeader = ({pendingRequests, unReadMessages}) => {
     const {isComponentVisible: searchEnabled, modal} = useHeaderContext();
@@ -79,6 +80,7 @@ const InHeader = () => {
 
     const {isMobile} = useMobileDetector();
 
+    useValidateConnectionEvents();
 
     return (
         <HeaderProvider>

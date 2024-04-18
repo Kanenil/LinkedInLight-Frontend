@@ -1,21 +1,21 @@
-import {SignalRContext} from "../providers/SocketProvider";
+import {SignalRChatContext} from "../providers/SocketProvider";
 
 const useValidateChatEvents = (queryClient, selectedChat, setSelectedChat) => {
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "UpdateChatList",
         () => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
         }, []
     );
 
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "MessagesMarkedAsRead",
         () => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
         }, []
     )
 
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "MessageUpdated",
         (message) => {
             if(selectedChat?.id === message.chatId)
@@ -23,21 +23,21 @@ const useValidateChatEvents = (queryClient, selectedChat, setSelectedChat) => {
         }, []
     )
 
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "MessageDeletedForAll",
         () => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
         }, []
     )
 
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "MessageDeletedForMe",
         () => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
         }, []
     )
 
-    SignalRContext.useSignalREffect(
+    SignalRChatContext.useSignalREffect(
         "ChatDeletedForAll",
         (chats) => {
             queryClient.invalidateQueries(['allChats', 'allUnreadMessages']);
