@@ -59,4 +59,12 @@ const companyQuery = (companyId, industryId) => [
     }
 ];
 
-export {connectedQuery, headerQuery, companiesQuery, companyQuery}
+const companyPageQuery = (companyId) => [
+    {
+        queryFn: ({queryKey}) => CompanyService.getCompany(queryKey[1]),
+        queryKey: ['company', companyId],
+        select: ({data}) => data
+    }
+];
+
+export {connectedQuery, headerQuery, companiesQuery, companyQuery, companyPageQuery}

@@ -30,6 +30,10 @@ class CompanyService {
     getFollowersCount(companyId) {
         return axios.get(`${this.#URL}/${companyId}/followersCount`);
     }
+
+    getCompany(companyId) {
+        return axios.get(`${this.#URL}/${companyId}`);
+    }
 }
 
 export default new CompanyService();

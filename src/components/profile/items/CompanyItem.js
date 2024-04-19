@@ -22,7 +22,7 @@ const CompanyItem = ({logoImg, companyName, industryId, id,...data}) => {
         <div className="flex flex-row gap-6 w-fit md:w-[45vw]">
             <Show>
                 <Show.When isTrue={!!logoImg}>
-                    <div className="flex items-center max-w-[65px] my-auto max-h-[65px] md:max-w-[105px] md:max-h-[105px]">
+                    <div className="flex items-center max-w-[65px] my-auto max-h-[65px] md:max-w-[80px] md:max-h-[80px]">
                         <img className="object-contain" src={`${APP_ENV.UPLOADS_URL}/${logoImg}`} alt="company-logo"/>
                     </div>
                 </Show.When>

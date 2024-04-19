@@ -63,10 +63,6 @@ const CompaniesSection = ({isOwner}) => {
                         </Show.Else>
                     </Show>
                 </div>
-
-                {/*{data.map((education, index) =>*/}
-                {/*    <EducationItem key={`sectionEducation-${index}`} {...education} />*/}
-                {/*)}*/}
             </div>
         </ConditionalWrapper>
     )

@@ -1,7 +1,6 @@
 import React from "react";
 import RightEditSection from "./sections/RightEditSection";
 import PeopleMayKnow from "./sections/PeopleMayKnow";
-import {peopleMayKnow} from "../../pages/profile/mock";
 import {sections} from "../../constants/sections";
 import {useScrollToLocation} from "../../hooks/useScrollToLocation";
 import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
@@ -38,7 +37,7 @@ const StandardProfilePage = ({ user, isOwner }) => {
                                 <RightEditSection/>
                             </ConditionalWrapper>
 
-                            <PeopleMayKnow peopleMayKnow={peopleMayKnow.slice(0, 5)}/>
+                            <PeopleMayKnow/>
                         </div>
                     </div>
                 </Show.When>

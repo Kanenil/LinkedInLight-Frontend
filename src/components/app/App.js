@@ -21,6 +21,7 @@ import CreateCompany from "../../pages/company/createCompany";
 import AlertProvider from "../../providers/AlertProvider";
 import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
+import CompanyPage from "../../pages/company";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -65,10 +66,9 @@ const App = () => {
                                                     <Route index element={<Chats/>}/>
                                                 </Route>
 
-                                                <Route path="company">
-                                                    <Route path="new" element={<ChatsLayout/>}>
-                                                        <Route index element={<CreateCompany/>}/>
-                                                    </Route>
+                                                <Route path="company" element={<ChatsLayout/>}>
+                                                    <Route path=":companyId" element={<CompanyPage/>}/>
+                                                    <Route path="new" element={<CreateCompany/>}/>
                                                 </Route>
 
                                                 <Route path="settings" element={<ChatsLayout/>}>
