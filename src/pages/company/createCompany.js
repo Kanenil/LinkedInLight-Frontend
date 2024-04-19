@@ -101,13 +101,13 @@ const CreateCompany = () => {
                 logo: ''
             }))
 
-            if (img.height > 150) {
-                setErrors(prev => ({
-                    ...prev,
-                    logo: 'Image higher than 150px!'
-                }))
-                return;
-            }
+            // if (img.height > 150) {
+            //     setErrors(prev => ({
+            //         ...prev,
+            //         logo: 'Image higher than 150px!'
+            //     }))
+            //     return;
+            // }
 
             setValues(prev => ({
                 ...prev,
@@ -158,7 +158,7 @@ const CreateCompany = () => {
             </Helmet>
             <main className='flex-grow bg-[#E7E7E7]'>
                 <section className="bg-white">
-                    <div className="flex flex-col gap-3 py-2.5 mx-auto w-[1170px]">
+                    <div className="flex flex-col gap-3 py-2.5 ml-4 md:mx-auto md:w-[1170px]">
                         <button onClick={() => navigator(-1)}
                                 className="flex flex-row items-center gap-5 w-fit hover:underline">
                             <ArrowLeftIcon className="text-[#24459A] w-7 h-7"/>
@@ -171,12 +171,12 @@ const CreateCompany = () => {
                     </div>
                 </section>
 
-                <section className="flex flex-col mx-auto w-[1170px] mt-7 mb-16">
+                <section className="flex flex-col mx-auto md:container lg:w-[1170px] mt-7 mb-16">
                     <h3 className="text-[#2D2A33] font-jost font-light text-sm">Required fields marked as *</h3>
 
-                    <div className="flex flex-row mt-1.5">
+                    <div className="flex flex-col md:flex-row mt-1.5">
                         <form onSubmit={(e) => onSubmit(handleSubmit, e)}
-                              className="w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white">
+                              className="w-full md:w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white">
                             <ModalInputFormGroup
                                 title="Company name *"
                                 name="companyName"
@@ -291,7 +291,7 @@ const CreateCompany = () => {
 
                                         <div
                                             className="flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5">
-                                            <div className="flex items-center max-h-[150px]">
+                                            <div className="flex items-center max-w-[150px] max-h-[150px]">
                                                 <img className="object-contain" src={values.logo}/>
                                             </div>
 
@@ -357,7 +357,7 @@ const CreateCompany = () => {
                         </form>
 
                         <div
-                            className="w-5/12 ml-6 flex flex-col h-fit rounded-lg overflow-hidden border-[1px] border-[#B4BFDD]">
+                            className="w-full md:w-5/12 mt-6 md:mt-0 md:ml-6 flex flex-col h-fit rounded-lg overflow-hidden border-[1px] border-[#B4BFDD]">
                             <div className="border-b-[1px] border-b-[#24459A] px-5 py-3.5 bg-white">
                                 <h3 className="text-lg text-[#2D2A33] font-jost font-semibold">Preview</h3>
                             </div>
@@ -368,7 +368,7 @@ const CreateCompany = () => {
 
                                     <Show>
                                         <Show.When isTrue={!!values.logo}>
-                                            <div className="flex items-center max-h-[150px]">
+                                            <div className="flex items-center max-w-[150px] max-h-[150px]">
                                                 <img className="object-contain" src={values.logo}/>
                                             </div>
                                         </Show.When>

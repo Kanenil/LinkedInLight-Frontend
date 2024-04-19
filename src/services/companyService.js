@@ -18,6 +18,18 @@ class CompanyService {
     create(model) {
         return axios.post(`${this.#URL}/newCompany`, model);
     }
+
+    getUserCompanies() {
+        return axios.get(`${this.#URL}/userCompanies`);
+    }
+
+    getFollowedCompanies() {
+        return axios.get(`${this.#URL}/followedCompanies`);
+    }
+
+    getFollowersCount(companyId) {
+        return axios.get(`${this.#URL}/${companyId}/followersCount`);
+    }
 }
 
 export default new CompanyService();

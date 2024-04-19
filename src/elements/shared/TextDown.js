@@ -112,7 +112,7 @@ const TextDown = ({
             </div>
 
             <div id="container" ref={containerRef}
-                 className={`${isAbsolute ? 'absolute z-50' : ''} bg-white mt-2 py-[5px] px-[20px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
+                 className={`${isAbsolute ? 'absolute z-50' : ''} bg-white mt-2 py-[5px] px-[20px] overflow-x-hidden overflow-y-scroll md:overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
                  style={{
                      boxShadow: "0px 1px 6px 0px #00000040",
                      maxHeight: `${containerHeightMax}px`,

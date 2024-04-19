@@ -12,6 +12,7 @@ import CertificationsSection from "../components/profile/sections/Certifications
 import VolunteerExperienceSection from "../components/profile/sections/VolunteerExperienceSection";
 import React from "react";
 import ProjectsSection from "../components/profile/sections/ProjectsSection";
+import CompaniesSection from "../components/profile/sections/CompaniesSection";
 
 export const sections = [
     {
@@ -52,5 +53,8 @@ export const sections = [
     },
     {
         children: <VolunteerExperienceSection />,
+    },
+    {
+        children: <CompaniesSection />,
     },
 ]
