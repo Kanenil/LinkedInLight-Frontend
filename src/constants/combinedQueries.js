@@ -64,6 +64,11 @@ const companyPageQuery = (companyId) => [
         queryFn: ({queryKey}) => CompanyService.getCompany(queryKey[1]),
         queryKey: ['company', companyId],
         select: ({data}) => data
+    },
+    {
+        queryFn: ({queryKey}) => CompanyService.getFollowersCount(queryKey[1]),
+        queryKey: ['followersCount', companyId],
+        select: ({data}) => data
     }
 ];
 
