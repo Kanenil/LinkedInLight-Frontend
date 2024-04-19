@@ -9,6 +9,7 @@ import {useNavigate} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import MinimizedChat from "../../chats/minimized/MinimizedChat";
 import useMobileDetector from "../../../hooks/useMobileDetector";
+import SocketProvider from "../../../providers/SocketProvider";
 
 const InLayout = () => {
     const navigator = useNavigate();
@@ -24,12 +25,14 @@ const InLayout = () => {
 
     return (
         <ConditionalWrapper condition={isAuth}>
-            <InHeader/>
-            <Outlet/>
-            <ConditionalWrapper condition={!isMobile}>
-                <InFooter/>
-            </ConditionalWrapper>
-            <MinimizedChat/>
+            <SocketProvider>
+                <InHeader/>
+                <Outlet/>
+                <ConditionalWrapper condition={!isMobile}>
+                    <InFooter/>
+                </ConditionalWrapper>
+                <MinimizedChat/>
+            </SocketProvider>
         </ConditionalWrapper>
     )
 }

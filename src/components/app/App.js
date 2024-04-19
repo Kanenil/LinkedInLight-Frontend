@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
 import SignUp from "../../pages/auth/SignUp";
 import SignIn from "../../pages/auth/SignIn";
 import Profile from "../../pages/profile";
@@ -21,7 +21,6 @@ import CreateCompany from "../../pages/company/createCompany";
 import AlertProvider from "../../providers/AlertProvider";
 import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
-import SocketProvider from "../../providers/SocketProvider";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -39,7 +38,6 @@ const App = () => {
                     <AlertProvider>
                         <ImageCropProvider>
                             <ChatProvider>
-                                <SocketProvider>
                                     <BrowserRouter>
                                         <Routes>
                                             <Route path="/" element={<Layout/>}>
@@ -89,7 +87,6 @@ const App = () => {
                                             </Route>
                                         </Routes>
                                     </BrowserRouter>
-                                </SocketProvider>
                                 <Alert/>
                                 {/*<ReactQueryDevtools buttonPosition="bottom-right"/>*/}
                             </ChatProvider>

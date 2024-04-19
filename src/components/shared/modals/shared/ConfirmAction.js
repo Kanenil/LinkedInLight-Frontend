@@ -5,7 +5,7 @@ import React from "react";
 
 const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
     return (
-        <div className="flex flex-col gap-1 p-5 w-[351px]"
+        <div className="flex flex-col gap-1 bg-white p-5 w-screen mt-[30vh] md:mt-0 md:w-[351px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="flex flex-row py-2.5">
                 <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">{title}</h1>
