@@ -1,6 +1,6 @@
 import {XMarkIcon} from "@heroicons/react/24/outline";
 import {forwardRef} from "react";
-import AddButton, {AddButtonVariant4} from "../../../../elements/buttons/AddButton";
+import {AddButtonVariant4} from "../../../../elements/buttons/AddButton";
 
 const options = [
     {
@@ -27,7 +27,7 @@ const options = [
 
 const StartCompany = forwardRef(({setIsComponentVisible}, ref) => {
     return (
-        <div className="flex flex-col gap-2.5 px-6 py-5 h-screen w-screen md:w-[593px] md:h-[500px]"
+        <div className="flex flex-col gap-2.5 px-6 py-5 h-[100dvh] w-screen md:w-[593px] md:h-[500px]"
              ref={ref}
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="py-2.5 flex flex-row border-b-[#24459A] border-b-[0.5px]">

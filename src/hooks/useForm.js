@@ -12,7 +12,7 @@ const useForm = (initialValues, onChangeCallback) => {
         onChangeCallback();
         setValues({
             ...values,
-            [field]: e.label || e
+            [field]: e?.label || e
         });
         setTouched({
             ...touched,
@@ -20,7 +20,7 @@ const useForm = (initialValues, onChangeCallback) => {
         })
         setErrors({
             ...errors,
-            [field]: false
+            [field]: !(e?.label || e)
         });
 
         if (!store)
@@ -72,9 +72,8 @@ const useForm = (initialValues, onChangeCallback) => {
         onChangeCallback();
     }
 
-    const onSubmit = (callback, e = null) => {
-        if(e)
-            e.preventDefault();
+    const onSubmit = (e, callback) => {
+        e.preventDefault();
 
         const hasErrors = Object.values(errors).some(error => error);
 

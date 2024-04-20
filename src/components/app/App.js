@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
 import SignUp from "../../pages/auth/SignUp";
 import SignIn from "../../pages/auth/SignIn";
 import Profile from "../../pages/profile";
@@ -21,7 +21,8 @@ import CreateCompany from "../../pages/company/createCompany";
 import AlertProvider from "../../providers/AlertProvider";
 import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
-import SocketProvider from "../../providers/SocketProvider";
+import CompanyPage from "../../pages/company";
+import CompanySettingsIndex from "../company/settings/CompanySettingsIndex";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -39,7 +40,6 @@ const App = () => {
                     <AlertProvider>
                         <ImageCropProvider>
                             <ChatProvider>
-                                <SocketProvider>
                                     <BrowserRouter>
                                         <Routes>
                                             <Route path="/" element={<Layout/>}>
@@ -67,10 +67,12 @@ const App = () => {
                                                     <Route index element={<Chats/>}/>
                                                 </Route>
 
-                                                <Route path="company">
-                                                    <Route path="new" element={<ChatsLayout/>}>
-                                                        <Route index element={<CreateCompany/>}/>
+                                                <Route path="company" element={<ChatsLayout/>}>
+                                                    <Route path=":companyId">
+                                                        <Route index element={<CompanyPage/>}/>
+                                                        <Route path="settings" element={<CompanySettingsIndex/>}/>
                                                     </Route>
+                                                    <Route path="new" element={<CreateCompany/>}/>
                                                 </Route>
 
                                                 <Route path="settings" element={<ChatsLayout/>}>
@@ -89,7 +91,6 @@ const App = () => {
                                             </Route>
                                         </Routes>
                                     </BrowserRouter>
-                                </SocketProvider>
                                 <Alert/>
                                 {/*<ReactQueryDevtools buttonPosition="bottom-right"/>*/}
                             </ChatProvider>

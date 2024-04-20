@@ -8,7 +8,7 @@ const ModalHeader = ({ onClose, title, withBorder = true }) => {
                 {title}
             </h1>
 
-            <button onClick={onClose} className="ml-auto">
+            <button type="button" onClick={onClose} className="ml-auto">
                 <XMarkIcon className="fill-[#7D7D7D] h-4"/>
             </button>
         </div>

@@ -3,7 +3,6 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import {APP_ENV} from "../../env";
 import defaultImage from "../../assets/default-image.jpg";
 import PeopleMayKnow from "./sections/PeopleMayKnow";
-import {peopleMayKnow} from "../../pages/profile/mock";
 import {useNavigate} from "react-router";
 import AbstractDetails from "./AbstractDetails";
 import {details} from "../../constants/details";
@@ -71,7 +70,7 @@ const DetailsPage = ({user, isOwner, detail}) => {
                     </div>
 
                     <div className="hidden md:block w-4/12 ml-10">
-                        <PeopleMayKnow margin="" peopleMayKnow={peopleMayKnow}/>
+                        <PeopleMayKnow margin=""/>
                     </div>
                 </div>
             </main>

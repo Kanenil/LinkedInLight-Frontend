@@ -68,13 +68,14 @@ const Search = forwardRef(({search, setIsComponentVisible}, ref,) => {
                             <div className="flex flex-col gap-2.5">
                                 {
                                     companyList?.map(company => (
-                                        <div
+                                        <Link
+                                            to={`/j4y/company/${company.id}`}
                                             onClick={() => setIsComponentVisible(false)}
                                             className="flex flex-row gap-3 items-center hover:bg-gray-50 px-4"
                                             key={`company-${company.id}`}
                                         >
                                             <div
-                                                className="overflow-hidden h-12 w-16 bg-white border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
+                                                className="overflow-hidden mx-h-12 max-w-16 bg-white border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                                                 <img className="object-contain"
                                                      src={company?.logoImg ? APP_ENV.UPLOADS_URL + "/" + company?.logoImg : defaultImage}
                                                      alt="image"/>
@@ -83,7 +84,7 @@ const Search = forwardRef(({search, setIsComponentVisible}, ref,) => {
                                             <div className="flex flex-col gap-1">
                                                 <h1 className="font-jost text-lg font-medium">{company.companyName}</h1>
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))
                                 }
                             </div>

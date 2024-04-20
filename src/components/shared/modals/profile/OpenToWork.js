@@ -230,7 +230,7 @@ const OpenToWork = ({onClose, onChange, onSave}) => {
 
     return (
         <EditModalForm
-            onSubmit={e => onSubmit(handleSubmit, e)}
+            onSubmit={e => onSubmit(e, handleSubmit)}
             onClose={onClose}
             onRemove={null}
             isEdit={false}

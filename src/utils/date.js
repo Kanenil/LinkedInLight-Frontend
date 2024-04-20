@@ -40,4 +40,21 @@ const getSendingTime = (date) => {
     return today.startOf('day').diff(date, "hours") > 0 ? moment(date).format('D MMM HH:mm') : moment(date).format('HH:mm')
 };
 
-export {getMonths, getYears, getDateTime, getShortMonth, getLongMonth, getSendingTime}
+const getTimeDuration = (endTime) => {
+    let start = moment.utc(endTime)
+    let end = moment.utc();
+
+    let duration = moment.duration(
+        end.diff(start)
+    );
+
+    let days = duration.days();
+    let hours = duration.hours();
+    let minutes = duration.minutes();
+    let secs = duration.seconds();
+
+    return days >= 1? `${days} days`:
+        hours >= 1? `${hours} hr` : minutes >= 1? `${minutes} min`: `${secs} sec`
+};
+
+export {getMonths, getYears, getDateTime, getShortMonth, getLongMonth, getSendingTime, getTimeDuration}

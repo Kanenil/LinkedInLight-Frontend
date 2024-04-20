@@ -156,7 +156,7 @@ const AddSkill = ({onClose, onSave, onChange, id}) => {
 
     return (
         <EditModalForm
-            onSubmit={() => onSubmit(onSaveClick)}
+            onSubmit={(e) => onSubmit(e, onSaveClick)}
             onClose={onClose}
             onRemove={onRemoveClick}
             isEdit={id ?? false}

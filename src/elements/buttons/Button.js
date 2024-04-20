@@ -41,7 +41,7 @@ const ButtonVariant2 = ({children, className, active = false, ...props}) => {
 const ButtonVariant3 = ({children, className, ...props}) => {
     return (
         <button
-            className="rounded-full flex flex-row items-center gap-1 py-1.5 text-sm px-4 font-jost border-[1.5px] bg-[#3967DB] text-white hover:border-[#24459A] transition duration-500 ease-in-out"
+            className={`${className} rounded-full flex flex-row items-center gap-1 py-1.5 text-sm px-4 font-jost border-[1.5px] bg-[#3967DB] text-white hover:border-[#24459A] transition duration-500 ease-in-out`}
             {...props}
         >
             {children}

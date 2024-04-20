@@ -55,5 +55,9 @@ class ConnectionService {
     isConnectionRequested(user2Id) {
         return axios.get(`${this.#URL}/isConnectionRequested/${user2Id}`);
     }
+
+    suggestions() {
+        return axios.get(`${this.#URL}/suggestions`)
+    }
 }
 export default new ConnectionService();

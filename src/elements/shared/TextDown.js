@@ -4,6 +4,7 @@ import useComponentVisible from "../../hooks/useComponentVisible";
 import useOverflow from "../../hooks/useOverflow";
 import ConditionalWrapper from "./ConditionalWrapper";
 import Show from "./Show";
+import useMobileDetector from "../../hooks/useMobileDetector";
 
 const TextDown = ({
                       placeHolder,
@@ -30,16 +31,18 @@ const TextDown = ({
     const {isOverflow, containerRef, contentRef} = useOverflow();
     const searchRef = useRef();
     const inputRef = useRef();
+    const {isMobile} = useMobileDetector();
 
     useEffect(() => {
         setSelectedValue(value ? {value, label: value} : null)
+        setSearchValue(value || "")
     }, [value])
 
     useEffect(() => {
         if (!placeHolder)
             setSearchValue("");
         if (isComponentVisible && searchRef.current) {
-            searchRef.current.focus();
+            searchRef.current?.focus();
         }
     }, [isComponentVisible]);
 
@@ -49,7 +52,7 @@ const TextDown = ({
 
     const getDisplay = () => {
         if (!selectedValue || selectedValue.length === 0) {
-            return placeHolder || searchValue;
+            return searchValue || placeHolder;
         }
         return selectedValue.label;
     };
@@ -84,6 +87,12 @@ const TextDown = ({
         }
     };
 
+    const onBlur = (e) => {
+        if(!ref.current.contains(e.relatedTarget) && onEnterSelect) {
+            onItemClick(searchValue ? {label: searchValue, value: searchValue} : '');
+        }
+    }
+
     return (
         <div ref={ref} className={`relative ${className}`}>
             <ConditionalWrapper
@@ -100,11 +109,17 @@ const TextDown = ({
 
             <div ref={inputRef} onClick={e => e.stopPropagation()}
                  className={`flex flex-row items-center w-full overflow-hidden ${containerClass} ${error ? 'border-[#9E0F20]' : ''} ${(isComponentVisible && searchAble) || (!isComponentVisible && !searchValue && !placeHolder && !selectedValue && searchAble) ? '' : 'hidden'}`}>
-                <input onClick={e => {
-                    e.stopPropagation();
-                    setIsComponentVisible(true)
-                }} onChange={onSearch} onKeyDown={handleKeyDown} value={searchValue} ref={searchRef}
-                       className={`test w-full border-0 font-jost text-sm text-[#7D88A4] focus:border-[#24459A] focus:bg-[#F5F8FF] ${containerSizing}`}/>
+                <input
+                    onClick={e => {
+                        e.stopPropagation();
+                        setIsComponentVisible(true)
+                    }}
+                    onChange={onSearch}
+                    onKeyDown={handleKeyDown}
+                    onBlur={onBlur}
+                    value={searchValue}
+                    ref={searchRef}
+                    className={`test w-full border-0 font-jost text-sm text-[#7D88A4] focus:border-[#24459A] focus:bg-[#F5F8FF] ${containerSizing}`}/>
 
                 <ConditionalWrapper condition={hasTools}>
                     <ChevronDownIcon onClick={handleInputClick} className="ml-auto w-3 mr-5 fill-[#7D7D7D]"/>
@@ -112,13 +127,13 @@ const TextDown = ({
             </div>
 
             <div id="container" ref={containerRef}
-                 className={`${isAbsolute ? 'absolute z-50' : ''} bg-white mt-2 py-[5px] px-[20px] overflow-x-hidden overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
+                 className={`${isAbsolute ? 'absolute z-50' : ''} bg-white mt-2 overflow-x-hidden overflow-y-scroll md:overflow-y-${isOverflow ? 'scroll' : 'hidden'} ${isComponentVisible && getOptions().length > 0 ? "" : "hidden"}`}
                  style={{
                      boxShadow: "0px 1px 6px 0px #00000040",
                      maxHeight: `${containerHeightMax}px`,
-                     width: `${containerWidth}px`
+                     width: `${isMobile?310:containerWidth}px`
                  }}>
-                <div ref={contentRef}>
+                <div className="flex flex-col py-[5px] px-[20px]" ref={contentRef}>
                     {
                         getOptions().map((option, index) => (
                             <Show key={`${option.id || option.value}-${index}`}>
@@ -133,10 +148,12 @@ const TextDown = ({
                                 </Show.When>
 
                                 <Show.Else>
-                                    <div onClick={() => onItemClick(option)}
-                                         className="cursor-pointer active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light">
+                                    <button
+                                        onClick={() => onItemClick(option)}
+                                        type="button"
+                                        className="cursor-pointer text-start active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light">
                                         {option.label}
-                                    </div>
+                                    </button>
                                 </Show.Else>
                             </Show>
                         ))

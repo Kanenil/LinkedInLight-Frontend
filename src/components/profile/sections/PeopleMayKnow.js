@@ -1,41 +1,183 @@
-import PlusIcon from "../../../elements/icons/PlusIcon";
 import {Link} from "react-router-dom";
 import ArrowRightIcon from "../../../elements/icons/ArrowRightIcon";
-import AddButton from "../../../elements/buttons/AddButton";
+import {AddButtonVariant2} from "../../../elements/buttons/AddButton";
+import {useQueries, useQuery, useQueryClient} from "@tanstack/react-query";
+import ConnectionService from "../../../services/connectionService";
+import {connectedQuery} from "../../../constants/combinedQueries";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import {APP_ENV} from "../../../env";
+import defaultImage from "../../../assets/default-image.jpg";
+import Show from "../../../elements/shared/Show";
+import ConnectedButton from "../../../elements/buttons/ConnectedButton";
+import React, {useState} from "react";
+import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
+import AddToProfile from "../../shared/modals/profile/AddToProfile";
+import Modal from "../../shared/modals/Modal";
 
-const PeopleMayKnow = ({peopleMayKnow, margin = "mt-2.5"}) => {
+const CONNECTION = 'connection';
+const CONNECTIONREQUEST = 'connectionRequest';
+const CONNECTIONREVOKE = 'connectionRevoke';
+
+const MayKnowItem = ({firstName, id, lastName, lastPosition, profileUrl, image}) => {
+    const {isConnected, isConnectionRequested} = useQueries({
+        queries: connectedQuery(id, false).map((value) => ({
+            ...value
+        })),
+        combine: (results) => {
+            return {
+                isConnected: results[0].data ?? false,
+                isConnectionRequested: results[1].isError ? false : results[1].data
+            }
+        },
+    });
+
+    const [isVisible, setIsVisible] = useState(false);
+    const [confirmModal, setConfirmModal] = useState(null);
+    const queryClient = useQueryClient();
+
+    const closeModal = () => {
+        setIsVisible(false);
+    }
+
+    const onRemoveConnection = () => {
+        setConfirmModal(CONNECTION);
+        setIsVisible(true);
+    }
+
+    const onRemoveConnectionRequest = () => {
+        setConfirmModal(CONNECTIONREQUEST);
+        setIsVisible(true);
+    }
+
+    const onRevokeConnectionRequest = () => {
+        setConfirmModal(CONNECTIONREVOKE);
+        setIsVisible(true);
+    }
+
+    const refetch = () => {
+        const [[first], [second]] = connectedQuery(id, false)
+            .map(val => val.queryKey);
+
+        queryClient.invalidateQueries({
+            predicate: query =>
+                [first, second].includes(query.queryKey[0])
+        })
+    }
+
+    const onConnect = () => {
+        ConnectionService.sendRequest(id).then(refetch)
+    }
+
+    const onConfirm = () => {
+        setIsVisible(false);
+        setConfirmModal(null);
+
+        if (confirmModal === CONNECTION) {
+            ConnectionService.getConnections().then(({data})=>{
+                const {id: connectionId} = data.find(val => val.user.id === id);
+
+                ConnectionService.removeConnection(connectionId).then(refetch);
+            })
+        } else {
+            ConnectionService.revokeRequest(isConnectionRequested.id).then(refetch);
+        }
+    }
+
+    return (
+        <div className="mt-2.5 py-2.5 border-[#24459A80] border-t-[0.5px]">
+            <div className="flex flex-row">
+                <div
+                    className="rounded-full overflow-hidden w-10 h-10 border-[1px] border-[#2D2A33] bg-[#E7E7E7]">
+                    <img className="object-contain" src={image?`${APP_ENV.UPLOADS_URL}/${image}`:defaultImage} alt="image"/>
+                </div>
+
+                <div className="flex flex-col ml-2.5 font-jost text-[#2D2A33]">
+                    <Link to={`/j4y/${profileUrl}`} className="font-medium text-lg">{firstName} {lastName}</Link>
+
+                    <h3 className="flex flex-row font-light">
+                        {lastPosition}
+                    </h3>
+
+                    <Show>
+                        <Show.When isTrue={isConnected}>
+                            <ConnectedButton
+                                onClick={onRemoveConnection}
+                            >
+                                Remove connection
+                            </ConnectedButton>
+                        </Show.When>
+
+                        <Show.When isTrue={!!isConnectionRequested && isConnectionRequested.status === 'Rejected'}>
+                            <ConnectedButton
+                                onClick={onRevokeConnectionRequest}
+                            >
+                                Requested connection
+                            </ConnectedButton>
+                        </Show.When>
+
+                        <Show.When isTrue={!!isConnectionRequested}>
+                            <ConnectedButton
+                                onClick={onRemoveConnectionRequest}
+                            >
+                                Requested connection
+                            </ConnectedButton>
+                        </Show.When>
+
+                        <Show.Else>
+                            <AddButtonVariant2 className="mt-2" onClick={onConnect}>
+                                Connect
+                            </AddButtonVariant2>
+                        </Show.Else>
+                    </Show>
+                    <Modal isOpen={isVisible} onClose={closeModal} position="mt-0 md:mt-10 mx-auto">
+                        <Show>
+                            <Show.When isTrue={confirmModal && confirmModal === CONNECTION}>
+                                <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection?"
+                                               action={`Do you want to remove your connection with ${firstName} ${lastName}?`}/>
+                            </Show.When>
+
+                            <Show.When isTrue={confirmModal && [CONNECTIONREQUEST, CONNECTIONREVOKE].includes(confirmModal)}>
+                                <ConfirmAction onConfirm={onConfirm} onClose={closeModal} title="Remove connection request?"
+                                               action="Do you want to remove your connection request?"/>
+                            </Show.When>
+
+                            <Show.Else>
+                                <AddToProfile onClose={closeModal}/>
+                            </Show.Else>
+                        </Show>
+                    </Modal>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const PeopleMayKnow = ({margin = "mt-2.5"}) => {
+    const {data:suggestions, isLoading} = useQuery({
+        queryFn: () => ConnectionService.suggestions(),
+        queryKey: ['suggestions'],
+        select: ({data}) => data,
+    })
+
+    if(isLoading)
+        return;
+
     return (
         <div className={`flex flex-col bg-white rounded-lg px-5 pt-5 ${margin}`}>
             <h1 className="font-jost text-xl text-[#2D2A33] font-medium">People you may know</h1>
 
-            {peopleMayKnow.map((person, index) => <div key={`peopleMayKnow-${index}`}
-                                                       className="mt-2.5 py-2.5 border-[#24459A80] border-t-[0.5px]">
-                <div className="flex flex-row">
-                    <div
-                        className="rounded-full overflow-hidden w-10 h-10 border-[1px] border-[#2D2A33] bg-[#E7E7E7]">
-                        <img className="object-contain" src={person.image} alt="image"/>
-                    </div>
+            {suggestions.map((person, index) =>
+                <MayKnowItem key={`peopleMayKnow-${index}`} {...person}/>
+            )}
 
-                    <div className="flex flex-col ml-2.5 font-jost text-[#2D2A33]">
-                        <h1 className="font-medium text-lg">{person.username}</h1>
+            <ConditionalWrapper condition={suggestions.length > 5}>
+                <Link to=""
+                      className="mt-2.5 py-3 border-[#A7ACBA] border-t-[0.5px] flex flex-row justify-center gap-4 font-jost text-[#2D2A33] font-light">
+                    Show all
 
-                        <h3 className="flex flex-row font-light">
-                            {person.position}
-                        </h3>
-
-                        <AddButton onClick={() => {}}>
-                            Add contact
-                        </AddButton>
-                    </div>
-                </div>
-            </div>)}
-
-            <Link to={'/in'}
-                  className="mt-2.5 py-3 border-[#A7ACBA] border-t-[0.5px] flex flex-row justify-center gap-4 font-jost text-[#2D2A33] font-light">
-                Show all
-
-                <ArrowRightIcon className="fill-[#2D2A33] w-2.5"/>
-            </Link>
+                    <ArrowRightIcon className="fill-[#2D2A33] w-2.5"/>
+                </Link>
+            </ConditionalWrapper>
         </div>
     )
 }
