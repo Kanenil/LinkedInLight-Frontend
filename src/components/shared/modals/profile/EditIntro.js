@@ -108,7 +108,7 @@ const EditIntro = ({onClose, onSave, onChange}) => {
 
     return (
         <EditModalForm
-            onSubmit={() => onSubmit(onSaveClick)}
+            onSubmit={(e) => onSubmit(e, onSaveClick)}
             onClose={onClose}
             onRemove={null}
             isEdit={false}

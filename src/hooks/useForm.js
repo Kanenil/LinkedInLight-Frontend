@@ -72,9 +72,8 @@ const useForm = (initialValues, onChangeCallback) => {
         onChangeCallback();
     }
 
-    const onSubmit = (callback, e = null) => {
-        if(e)
-            e.preventDefault();
+    const onSubmit = (e, callback) => {
+        e.preventDefault();
 
         const hasErrors = Object.values(errors).some(error => error);
 
