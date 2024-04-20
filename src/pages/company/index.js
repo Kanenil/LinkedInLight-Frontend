@@ -47,7 +47,7 @@ const CompanyPage = () => {
                         <CompanyPreview
                             company={company}
                             isAdminPreview={false}
-                            isAdmin={isAdmin}
+                            isAdmin={false}
                             searchParams={[searchParams, setSearchParams]}
                         />
                     </Show.When>
@@ -55,7 +55,7 @@ const CompanyPage = () => {
                     <Show.When isTrue={!!searchParams.get('preview') && isAdmin}>
                         <CompanyPreview
                             company={company}
-                            isAdmin={isAdmin}
+                            isAdmin={true}
                             isAdminPreview={true}
                             searchParams={[searchParams, setSearchParams]}
                         />
@@ -64,6 +64,7 @@ const CompanyPage = () => {
                     <Show.Else>
                         <CompanyIndex
                             company={company}
+                            isAdmin={true}
                             followersCount={followersCount}
                             searchParams={[searchParams, setSearchParams]}
                         />
