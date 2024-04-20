@@ -175,7 +175,7 @@ const CreateCompany = () => {
                     <h3 className="text-[#2D2A33] font-jost font-light text-sm">Required fields marked as *</h3>
 
                     <div className="flex flex-col md:flex-row mt-1.5">
-                        <form onSubmit={(e) => onSubmit(handleSubmit, e)}
+                        <form onSubmit={(e) => onSubmit(e, handleSubmit)}
                               className="w-full md:w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white">
                             <ModalInputFormGroup
                                 title="Company name *"
