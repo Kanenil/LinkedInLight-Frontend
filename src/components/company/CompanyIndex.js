@@ -27,8 +27,8 @@ const CompanyIndex = ({company, followersCount, searchParams}) => {
     ]
 
     return (
-        <div className='flex flex-row my-8 mx-auto w-[1170px]'>
-            <div className='w-2/6 rounded-lg flex flex-col overflow-hidden bg-white h-fit'>
+        <div className='flex flex-col md:flex-row my-8 mx-auto w-full md:container lg:w-[1170px]'>
+            <div className='md:w-2/6 rounded-lg flex flex-col overflow-hidden bg-white h-fit'>
                 <div
                     className='h-[100px] w-full'
                     style={{background: `url(${defaultBg})`}}
@@ -83,7 +83,7 @@ const CompanyIndex = ({company, followersCount, searchParams}) => {
                     ))}
                 </div>
             </div>
-            <div className='w-5/6 ml-5 flex flex-col gap-5'>
+            <div className='mt-5 md:mt-0 md:w-5/6 md:ml-5 flex flex-col gap-5'>
                 <CompanyCreatePost company={company} searchParams={searchParams}/>
 
                 <CompanySectionNavigation company={company} searchParams={searchParams}/>
