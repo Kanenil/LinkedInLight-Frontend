@@ -138,8 +138,8 @@ const CreateCompany = () => {
 
         CompanyService
             .create(model)
-            .then(() => {
-                navigator(-1);//TODO. Change to normal url where company will be located
+            .then(({data}) => {
+                navigator(`/j4y/company/${data.id}`);
             })
             .catch(err => {
                 setIsSubmitted(true);
