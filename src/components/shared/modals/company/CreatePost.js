@@ -29,12 +29,11 @@ const CreatePost = ({onClose, onSave, onChange, company}) => {
         if(searchParams.has('id')) {
             CompanyService.editPost({
                 ...values,
-                image: values.oldImage,
                 id: searchParams.get('id'),
                 postedAt: new Date().toISOString(),
                 visibility: "Everybody",
                 companyId: company.id,
-            }, values.image).then(onSave)
+            }).then(onSave)
         } else {
             CompanyService.createPost({
                 ...values,
@@ -45,8 +44,6 @@ const CreatePost = ({onClose, onSave, onChange, company}) => {
                 postedById: ""
             }).then(onSave)
         }
-
-
     }
 
     const formik = useFormik({

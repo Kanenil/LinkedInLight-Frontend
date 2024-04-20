@@ -59,12 +59,8 @@ class CompanyService {
 		return axios.post(`${this.#URL}/post`, model)
 	}
 
-	editPost(model, newImage = '') {
-		return axios.put(`${this.#URL}/post/${model.id}`, model, {
-			params:{
-				newImage
-			}
-		})
+	editPost(model) {
+		return axios.put(`${this.#URL}/post/${model.id}`, model)
 	}
 
 	posts(companyId) {
