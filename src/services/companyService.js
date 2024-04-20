@@ -74,6 +74,10 @@ class CompanyService {
 	post(postId) {
 		return axios.get(`${this.#URL}/post/${postId}`)
 	}
+
+	followers(companyId) {
+		return axios.get(`${this.#URL}/${companyId}/followers`)
+	}
 }
 
 export default new CompanyService()

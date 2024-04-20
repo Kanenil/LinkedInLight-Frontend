@@ -2,6 +2,7 @@ import CompanyNavButton from "./CompanyNavButton";
 import Show from "../../elements/shared/Show";
 import CompanyPostsSection from "./posts/CompanyPostsSection";
 import React, {useState} from "react";
+import CompanyFollowersSection from "./CompanyFollowersSection";
 
 const links = [
     'Posts',
@@ -28,6 +29,10 @@ const CompanySectionNavigation = ({company, searchParams}) => {
             <Show>
                 <Show.When isTrue={selected === links[0]}>
                     <CompanyPostsSection company={company} searchParams={searchParams}/>
+                </Show.When>
+
+                <Show.When isTrue={selected === links[1]}>
+                    <CompanyFollowersSection company={company}/>
                 </Show.When>
             </Show>
         </>
