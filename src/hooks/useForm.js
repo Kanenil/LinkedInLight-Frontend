@@ -23,7 +23,7 @@ const useForm = (initialValues, onChangeCallback) => {
             [field]: !(e?.label || e)
         });
 
-        if (!store)
+        if (!store || !e)
             return;
 
         const saveInStorage = (arr) => {
@@ -34,12 +34,13 @@ const useForm = (initialValues, onChangeCallback) => {
             });
         };
 
-        if (options[field].length === 0) {
+        if (options[field].length === 0 && e.label.length > 0) {
             saveInStorage([e]);
         }
 
         if (
             initialValues.values[field].length > 0 &&
+            e.label.length > 0 &&
             initialValues.values[field].filter(
                 (option) =>
                     option.label.toLowerCase() === e.label.toLowerCase()
