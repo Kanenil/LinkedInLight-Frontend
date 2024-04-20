@@ -12,7 +12,7 @@ import {ButtonVariant3} from "../../elements/buttons/Button";
 import Show from "../../elements/shared/Show";
 import CompanySectionNavigation from "./CompanySectionNavigation";
 
-const CompanyPreview = ({company, isAdminPreview = false, searchParams = []}) => {
+const CompanyPreview = ({company, isAdmin, isAdminPreview = false, searchParams = []}) => {
     const {industry: {name: industryName}, followers, isLoading} = useQueries({
         queries: companyQuery(company.id, company.industryId).map((value) => ({
             ...value
@@ -115,7 +115,7 @@ const CompanyPreview = ({company, isAdminPreview = false, searchParams = []}) =>
                         </div>
                     </div>
 
-                    <CompanySectionNavigation company={company} searchParams={searchParams}/>
+                    <CompanySectionNavigation company={company} isAdmin={isAdmin} searchParams={searchParams}/>
                 </div>
             </div>
         </>

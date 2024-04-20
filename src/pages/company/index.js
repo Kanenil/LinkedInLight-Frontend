@@ -1,8 +1,7 @@
 import React, {useEffect} from "react"
 import {useParams} from "react-router"
 import {Helmet} from "react-helmet-async"
-import {useQueries, useQueryClient} from "@tanstack/react-query"
-import {companyPageQuery} from "../../constants/combinedQueries"
+import {useQueryClient} from "@tanstack/react-query"
 import {useSearchParams} from "react-router-dom"
 import CompanyPreview from "../../components/company/CompanyPreview"
 import Show from "../../elements/shared/Show";
@@ -10,26 +9,12 @@ import Loader from "../../components/shared/Loader";
 import CompanyIndex from "../../components/company/CompanyIndex";
 import ConfirmationModal from "../../components/shared/modals/ConfirmationModal";
 import CreatePost from "../../components/shared/modals/company/CreatePost";
+import useCompany from "../../hooks/useCompany";
 
 const CompanyPage = () => {
     const {companyId} = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-
-    const {company, followersCount, isAdmin, isLoading} = useQueries({
-        queries: companyPageQuery(companyId).map(value => ({
-            ...value,
-        })),
-        combine: results => {
-            return {
-                company: results[0].data ?? {},
-                followersCount: results[1].data ?? 0,
-                isAdmin: !!([results[2].data, ...(results[3].data ?? [])] ?? []).find(
-                    val => val?.userId === results[4].data?.id,
-                ),
-                isLoading: results.some(val => val.isLoading)
-            }
-        },
-    })
+    const {company, followersCount, isAdmin, isLoading} = useCompany(companyId);
 
     useEffect(() => {
         const preview = searchParams.get("preview")
@@ -62,6 +47,7 @@ const CompanyPage = () => {
                         <CompanyPreview
                             company={company}
                             isAdminPreview={false}
+                            isAdmin={isAdmin}
                             searchParams={[searchParams, setSearchParams]}
                         />
                     </Show.When>
@@ -69,6 +55,7 @@ const CompanyPage = () => {
                     <Show.When isTrue={!!searchParams.get('preview') && isAdmin}>
                         <CompanyPreview
                             company={company}
+                            isAdmin={isAdmin}
                             isAdminPreview={true}
                             searchParams={[searchParams, setSearchParams]}
                         />

@@ -7,7 +7,7 @@ import AddButton from "../../../elements/buttons/AddButton";
 import React from "react";
 import PostItem from "../items/PostItem";
 
-const CompanyPostsSection = ({company, searchParams: [_, setSearchParams]}) => {
+const CompanyPostsSection = ({company, isAdmin, searchParams: [_, setSearchParams]}) => {
     const {data: posts, isLoading, refetch} = useQuery({
         queryFn: ({queryKey}) => CompanyService.posts(queryKey[1]),
         queryKey: ['posts', company.id],
@@ -38,6 +38,7 @@ const CompanyPostsSection = ({company, searchParams: [_, setSearchParams]}) => {
                             <PostItem
                                 key={`post-${post.id}`}
                                 company={company}
+                                isAdmin={isAdmin}
                                 setSearchParams={setSearchParams}
                                 onEdit={() => onEdit(post.id)}
                                 onDelete={() => onDelete(post.id)}

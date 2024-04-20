@@ -9,7 +9,7 @@ const links = [
     'Followers'
 ]
 
-const CompanySectionNavigation = ({company, searchParams}) => {
+const CompanySectionNavigation = ({company, isAdmin, searchParams}) => {
     const [selected, setSelected] = useState(links[0]);
 
     return (
@@ -28,7 +28,7 @@ const CompanySectionNavigation = ({company, searchParams}) => {
 
             <Show>
                 <Show.When isTrue={selected === links[0]}>
-                    <CompanyPostsSection company={company} searchParams={searchParams}/>
+                    <CompanyPostsSection isAdmin={isAdmin} company={company} searchParams={searchParams}/>
                 </Show.When>
 
                 <Show.When isTrue={selected === links[1]}>

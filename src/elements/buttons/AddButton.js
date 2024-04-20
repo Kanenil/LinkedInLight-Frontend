@@ -2,6 +2,7 @@ import React from "react"
 import ConditionalWrapper from "../shared/ConditionalWrapper"
 import { Link } from "react-router-dom"
 import { PlusIcon } from "@heroicons/react/24/solid"
+import {twMerge} from "tailwind-merge";
 
 const AddButton = ({
 	className,
@@ -47,7 +48,7 @@ const AddButton = ({
 const AddButtonVariant2 = ({ className, iconClass, children, ...props }) => {
 	return (
 		<button
-			className={`${className} text-white rounded-full flex flex-row gap-2.5 items-center px-3 py-1 bg-[#3967DB] hover:bg-[#24459A] transition duration-500 ease-in-out`}
+			className={twMerge("text-white rounded-full flex flex-row gap-2.5 items-center px-3 py-1 bg-[#3967DB] hover:bg-[#24459A] transition duration-500 ease-in-out", className)}
 			{...props}
 		>
 			<PlusIcon className={iconClass ? iconClass : "w-5 h-5"} />

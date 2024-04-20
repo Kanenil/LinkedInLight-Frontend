@@ -7,7 +7,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PostOptionButton from "../options/PostOptionButton";
 
-const PostItem = ({id, postedBy, postedAt, visibility, content, image, company, onEdit, onDelete}) => {
+const PostItem = ({isAdmin, postedBy, postedAt, visibility, content, image, company, onEdit, onDelete}) => {
     return (
         <div
             className="w-full h-fit rounded-lg overflow-hidden bg-white p-6"
@@ -24,10 +24,12 @@ const PostItem = ({id, postedBy, postedAt, visibility, content, image, company, 
                         {moment(postedAt).format('DD.MM.YYYY')}
                     </h3>
 
-                    <PostOptionButton
-                        onEdit={onEdit}
-                        onDelete={onDelete}
-                    />
+                    <ConditionalWrapper condition={isAdmin}>
+                        <PostOptionButton
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                        />
+                    </ConditionalWrapper>
                 </div>
             </div>
 
