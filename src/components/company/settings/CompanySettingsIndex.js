@@ -1,6 +1,6 @@
 import CompanyControlMenu from "../CompanyControlMenu";
 import React from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import useCompany from "../../../hooks/useCompany";
 import {Helmet} from "react-helmet-async";
 import Loader from "../../shared/Loader";
@@ -12,10 +12,14 @@ import {ArrowRightIcon} from "@heroicons/react/24/solid";
 const CompanySettingsIndex = () => {
     const {companyId} = useParams();
     const [searchParams] = useSearchParams();
-    const {company, followersCount, isLoading, admins} = useCompany(companyId);
+    const navigator = useNavigate();
+    const {company, followersCount, isAdmin, isLoading, admins} = useCompany(companyId);
 
     if(isLoading)
         return <Loader/>;
+
+    if(!isAdmin)
+        return navigator(-1);
 
     return (
         <>
