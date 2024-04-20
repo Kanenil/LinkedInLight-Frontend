@@ -79,6 +79,8 @@ const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
             handleImageResponse(`${APP_ENV.UPLOADS_URL}/${image}`);
         } else if (isBackground && background) {
             handleImageResponse(`${APP_ENV.UPLOADS_URL}/${background}`);
+        } else {
+            setImage(null);
         }
     }, [data, isBackground])
 
@@ -183,7 +185,7 @@ const AddImage = ({onClose, onSave, onChange, isBackground = false}) => {
             <Show.Else>
                 <Show>
                     <Show.When isTrue={!!image}>
-                        <div className="flex flex-col px-6 py-6 bg-white h-screen w-screen">
+                        <div className="flex flex-col px-6 py-6 bg-white h-[100dvh] w-screen">
                             <div className="flex flex-row py-2.5">
                                 <h1 className="font-jost font-semibold text-[#2D2A33] text-2xl">{isBackground ? "Edit background" : "Edit image"}</h1>
 

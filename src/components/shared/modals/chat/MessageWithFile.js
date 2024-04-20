@@ -54,7 +54,7 @@ const MessageWithFile = ({onSave, onClose, onChange, message, setMessage, file, 
     }
 
     return (
-        <div className="flex flex-col gap-2.5 py-5 px-8 bg-white w-screen h-screen md:h-full md:w-[750px]"
+        <div className="flex flex-col gap-2.5 py-5 px-8 bg-white w-screen h-[100dvh] md:h-full md:w-[750px]"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <ModalHeader
                 title="Message with file"

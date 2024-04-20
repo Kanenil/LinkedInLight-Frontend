@@ -107,7 +107,7 @@ const RequestRecommendation = ({onClose, onChange}) => {
     }
 
     return (
-        <div className="flex flex-col gap-2 px-7 bg-white py-5 w-screen h-screen md:w-[750px] md:h-full"
+        <div className="flex flex-col gap-2 px-7 bg-white py-5 w-screen h-[100dvh] md:w-[750px] md:h-full"
              style={{boxShadow: "0px 0px 8px 2px #00000066"}}>
             <div className="flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]">
                 <h1 className="font-jost font-semibold text-[#2D2A33] text-xl">Request recommendation</h1>

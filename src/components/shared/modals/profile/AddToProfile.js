@@ -89,7 +89,7 @@ const AddToProfile = ({onClose}) => {
             </Show.When>
 
             <Show.Else>
-                <div className="flex flex-col px-6 py-6 bg-white h-screen w-screen">
+                <div className="flex flex-col px-6 py-6 bg-white h-[100dvh] w-screen">
                     <div className="flex flex-row py-2.5">
                         <h1 className="font-jost font-semibold text-[#2D2A33] text-2xl">Add to profile</h1>
 
