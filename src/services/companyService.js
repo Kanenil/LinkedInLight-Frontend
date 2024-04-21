@@ -78,6 +78,18 @@ class CompanyService {
 	followers(companyId) {
 		return axios.get(`${this.#URL}/${companyId}/followers`)
 	}
+
+	visibleForAll(companyId) {
+		return axios.get(`${this.#URL}/${companyId}/visibleForAll`)
+	}
+
+	editVisibleForAll(companyId, isVisibleForAll) {
+		return axios.put(`${this.#URL}/${companyId}/visibleForAll`, null, {
+			params: {
+				isVisibleForAll
+			}
+		})
+	}
 }
 
 export default new CompanyService()
