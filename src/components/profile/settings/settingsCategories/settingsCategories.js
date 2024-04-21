@@ -101,6 +101,7 @@ export const visibilitySettings = [
       {
         name: "Finding your profile by phone number",
         prescription: "Anybody",
+        link: `${settingsRoutes.sections.visibility}/findByPhoneNumber`,
       },
       { name: "Block" },
     ],
