@@ -100,7 +100,7 @@ const HeaderEditPage = ({company}) => {
     return (
         <form onSubmit={handleSubmit} className="bg-white rounded-lg py-6">
             <div className="inline-flex w-full gap-5 pb-2 px-10 border-b-[1px] border-b-[#24459A]/50">
-                <Link to={`/j4y/company/${company.id}/settings`} className="my-auto">
+                <Link to={`/j4y/company/${company.id}/edit`} className="my-auto">
                     <ArrowLeftIcon className="text-[#24459A] stroke-2 w-5 h-5"/>
                 </Link>
 
