@@ -48,7 +48,7 @@ const CompaniesSection = ({user, isOwner}) => {
                     <NavButton onClick={toggleSelect} isActive={!isMyCompanies}>Following</NavButton>
                 </div>
 
-                <div className="mt-5 flex flex-col md:flex-row">
+                <div className="mt-5 flex flex-col md:grid md:grid-cols-2 md:gap-4">
                     <Show>
                         <Show.When isTrue={isMyCompanies}>
                             {userCompanies.map(company => (
