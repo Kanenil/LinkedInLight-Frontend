@@ -58,7 +58,7 @@ export const securitySettings = [
     category: "Access to the account",
     items: [
       { name: "Email", prescription: "test@gmail.com" },
-      { name: "Phone" },
+      { name: "Phone", link: `${settingsRoutes.sections.security}/phone` },
       {
         name: "Change password",
         link: `${settingsRoutes.sections.security}/passwordChange`,
