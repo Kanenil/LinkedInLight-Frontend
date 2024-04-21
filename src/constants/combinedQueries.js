@@ -34,18 +34,18 @@ const headerQuery = () => [
 	},
 ]
 
-const companiesQuery = isOwner => [
+const companiesQuery = user => [
 	{
-		queryFn: () => CompanyService.getUserCompanies(),
-		queryKey: ["userCompanies"],
+		queryFn: ({queryKey}) => CompanyService.getUserCompanies(queryKey[1]),
+		queryKey: ["userCompanies", user.profileUrl],
 		select: ({ data }) => data,
-		enabled: isOwner,
+		enabled: !!user,
 	},
 	{
-		queryFn: () => CompanyService.getFollowedCompanies(),
-		queryKey: ["followedCompanies"],
+		queryFn: ({queryKey}) => CompanyService.getFollowedCompanies(queryKey[1]),
+		queryKey: ["followedCompanies", user.profileUrl],
 		select: ({ data }) => data,
-		enabled: isOwner,
+		enabled: !!user,
 	},
 ]
 

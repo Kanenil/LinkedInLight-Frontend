@@ -19,12 +19,12 @@ class CompanyService {
 		return axios.post(`${this.#URL}/newCompany`, model)
 	}
 
-	getUserCompanies() {
-		return axios.get(`${this.#URL}/userCompanies`)
+	getUserCompanies(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
 
-	getFollowedCompanies() {
-		return axios.get(`${this.#URL}/followedCompanies`)
+	getFollowedCompanies(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/followedCompanies`)
 	}
 
 	getFollowersCount(companyId) {
