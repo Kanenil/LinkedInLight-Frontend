@@ -1,4 +1,5 @@
 import Block from "../Block/Block";
+import Contacts from "../Contacts/Contacts";
 import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
 import FindByPhoneNumber from "../FindByPhoneNumber/FindByPhoneNumber";
 import LanguageBlock from "../Language/LanguageBlock";
@@ -31,6 +32,8 @@ const SettingBlockElement = (block) => {
       return <FindByPhoneNumber />;
     case "block":
       return <Block />;
+    case "conactsVisibility":
+      return <Contacts />;
     default:
       return <></>;
   }
