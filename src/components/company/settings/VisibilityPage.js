@@ -22,7 +22,7 @@ const VisibilityPage = ({company}) => {
         CompanyService
             .visibleForAll(company.id)
             .then(({data}) => setValue(data))
-    }, [])
+    }, [company.id])
 
     return (
         <div className="bg-white rounded-lg py-6">

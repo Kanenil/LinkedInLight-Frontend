@@ -8,6 +8,8 @@ import {Link, useSearchParams} from "react-router-dom";
 import Show from "../../../elements/shared/Show";
 import {pages} from "./settingsPages";
 import {ArrowRightIcon} from "@heroicons/react/24/solid";
+import {useQuery} from "@tanstack/react-query";
+import ProfileService from "../../../services/profileService";
 
 const CompanySettingsIndex = () => {
     const {companyId} = useParams();
