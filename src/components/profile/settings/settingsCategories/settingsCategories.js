@@ -103,7 +103,10 @@ export const visibilitySettings = [
         prescription: "Anybody",
         link: `${settingsRoutes.sections.visibility}/findByPhoneNumber`,
       },
-      { name: "Block" },
+      {
+        name: "Block",
+        link: `${settingsRoutes.sections.visibility}/block`,
+      },
     ],
   },
   {

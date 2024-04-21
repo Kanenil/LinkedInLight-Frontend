@@ -1,3 +1,4 @@
+import Block from "../Block/Block";
 import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
 import FindByPhoneNumber from "../FindByPhoneNumber/FindByPhoneNumber";
 import LanguageBlock from "../Language/LanguageBlock";
@@ -28,6 +29,8 @@ const SettingBlockElement = (block) => {
       return <FindByEmailBlock />;
     case "findByPhoneNumber":
       return <FindByPhoneNumber />;
+    case "block":
+      return <Block />;
     default:
       return <></>;
   }
