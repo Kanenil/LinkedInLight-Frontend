@@ -17,7 +17,7 @@ const HeaderModal = () => {
     const {isMobile} = useMobileDetector();
 
     return (
-        <Modal isOpen={isComponentVisible} position={classNames({
+        <Modal isOpen={isComponentVisible} closeModal={!isComponentVisible} position={classNames({
             'mt-16': modal === 'search',
             'mt-14': modal === 'company' && !isMobile,
         })}

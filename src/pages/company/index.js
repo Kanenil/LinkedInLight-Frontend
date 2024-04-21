@@ -10,6 +10,7 @@ import CompanyIndex from "../../components/company/CompanyIndex";
 import ConfirmationModal from "../../components/shared/modals/ConfirmationModal";
 import CreatePost from "../../components/shared/modals/company/CreatePost";
 import useCompany from "../../hooks/useCompany";
+import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 
 const CompanyPage = () => {
     const {companyId} = useParams()
@@ -55,7 +56,7 @@ const CompanyPage = () => {
                     <Show.When isTrue={!!searchParams.get('preview') && isAdmin}>
                         <CompanyPreview
                             company={company}
-                            isAdmin={true}
+                            isAdmin={false}
                             isAdminPreview={true}
                             searchParams={[searchParams, setSearchParams]}
                         />
@@ -70,21 +71,23 @@ const CompanyPage = () => {
                         />
                     </Show.Else>
                 </Show>
-                <ConfirmationModal
-                    isOpen={searchParams.has('createPost') && isAdmin}
-                    onCloseCallback={() => {
-                        searchParams.delete('createPost');
-                        searchParams.delete('id');
-                        setSearchParams(searchParams);
-                        document.body.classList.remove('modal-open');
-                    }}
-                    onSaveCallback={() => {
-                        queryClient.invalidateQueries(['posts', company.id])
-                    }}
-                    position="mx-auto md:mt-16"
-                >
-                    <CreatePost company={company}/>
-                </ConfirmationModal>
+                <ConditionalWrapper condition={searchParams.has('createPost') && isAdmin}>
+                    <ConfirmationModal
+                        isOpen={true}
+                        onCloseCallback={() => {
+                            searchParams.delete('createPost');
+                            searchParams.delete('id');
+                            setSearchParams(searchParams);
+                            document.body.classList.remove('modal-open');
+                        }}
+                        onSaveCallback={() => {
+                            queryClient.invalidateQueries(['posts', company.id])
+                        }}
+                        position="mx-auto md:mt-16"
+                    >
+                        <CreatePost company={company}/>
+                    </ConfirmationModal>
+                </ConditionalWrapper>
             </main>
         </React.Fragment>
     )
