@@ -36,8 +36,11 @@ const getDateTime = (day = 1, month, year) => {
 
 const getSendingTime = (date) => {
     const today = moment();
+    const dateUtc = moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
+    const stillUtc = moment.utc(dateUtc).toDate();
+    const local = moment(stillUtc).local().format('YYYY-MM-DD HH:mm:ss');
 
-    return today.startOf('day').diff(date, "hours") > 0 ? moment(date).format('D MMM HH:mm') : moment(date).format('HH:mm')
+    return today.startOf('day').diff(local, "hours") > 0 ? moment(local).format('D MMM HH:mm') : moment(local).format('HH:mm')
 };
 
 const getTimeDuration = (endTime) => {
