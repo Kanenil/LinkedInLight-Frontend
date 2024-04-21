@@ -1,3 +1,4 @@
+import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
 import PhoneBlock from "../Phone/Phone";
@@ -22,6 +23,8 @@ const SettingBlockElement = (block) => {
       return <PhoneBlock />;
     case "surname":
       return <SurnameVisibility />;
+    case "findByEmail":
+      return <FindByEmailBlock />;
     default:
       return <></>;
   }

@@ -96,6 +96,7 @@ export const visibilitySettings = [
       {
         name: "Finding your profile by email",
         prescription: "1st level contacts",
+        link: `${settingsRoutes.sections.visibility}/findByEmail`,
       },
       {
         name: "Finding your profile by phone number",

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const SurnameVisibility = () => {
-  const [selectedOption, setSelectedOption] = useState("recent");
+  const [selectedOption, setSelectedOption] = useState("n");
   const selectOption = (val) => {
     setSelectedOption(val);
   };
