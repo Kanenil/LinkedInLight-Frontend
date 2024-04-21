@@ -87,12 +87,16 @@ class RecommendedProfileService {
         return axios.get(`${this.#URL}/pendingRecommendations`);
     }
 
-    givenRecommendations() {
-        return axios.get(`${this.#URL}/givenRecommendations`);
+    givenRecommendations(profileUrl) {
+        return axios.get(`${this.#URL}/${profileUrl}/givenRecommendations`);
     }
 
-    receivedRecommendations() {
-        return axios.get(`${this.#URL}/receivedRecommendations`);
+    recommendationById(id) {
+        return axios.get(`${this.#URL}/recommendation/${id}`);
+    }
+
+    receivedRecommendations(profileUrl) {
+        return axios.get(`${this.#URL}/${profileUrl}/receivedRecommendations`);
     }
 
     giveRecommendation(content, recommendationRequestId ) {

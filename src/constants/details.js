@@ -90,7 +90,8 @@ export const details = [
     {
         route: ["recommendations"],
         props: {
-            hook: useRecommendation,
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            hook: (user, isOwner) => useRecommendation(user, isOwner),
             title: 'Recommendations',
             detail: 'recommendations',
             edit: 'request-recommendation',

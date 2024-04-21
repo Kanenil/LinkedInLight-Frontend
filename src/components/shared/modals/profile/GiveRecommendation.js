@@ -43,11 +43,12 @@ const GiveRecommendation = ({onClose, onSave, onChange, id}) => {
     useEffect(() => {
         if (id) {
             RecommendedProfileService
-                .pendingRecommendations()
-                .then(({data}) => {
-                    const recommendation = data.find(val => val.id === +id);
-
+                .recommendationById(id)
+                .then(({data: recommendation}) => {
                     if(!recommendation)
+                        return onClose();
+
+                    if(recommendation.status !== 'Pending')
                         return onClose();
 
                     const {requester: {firstName, lastName, image, headline}} = recommendation;

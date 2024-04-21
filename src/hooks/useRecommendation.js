@@ -1,14 +1,14 @@
 import {useQueries} from "@tanstack/react-query";
 import {recommendationQuery} from "../constants/combinedQueries";
 
-const useRecommendation = () => {
+const useRecommendation = (user, isOwner) => {
     const recommendation = useQueries({
-        queries: recommendationQuery().map(value => ({
+        queries: recommendationQuery(user.profileUrl).map(value => ({
             ...value,
         })),
         combine: results => {
             return {
-                pendingRecommendations: results[0].data ?? [],
+                pendingRecommendations: isOwner? results[0].data ?? []: [],
                 givenRecommendations: results[1].data ?? [],
                 receivedRecommendations: results[2].data ?? [],
                 isLoading: results.some(val => val.isLoading),

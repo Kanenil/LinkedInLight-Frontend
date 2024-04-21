@@ -3,8 +3,8 @@ import SectionHeaderBlock from "../shared/SectionHeaderBlock";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import RecommendationsList from "../items/RecommendationsList";
 
-const RecommendationSection = ({isOwner}) => {
-    const {isLoading, ...rest} = useRecommendation();
+const RecommendationSection = ({isOwner, user}) => {
+    const {isLoading, ...rest} = useRecommendation(user, isOwner);
 
     if (isLoading)
         return;

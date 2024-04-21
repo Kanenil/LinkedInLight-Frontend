@@ -90,20 +90,20 @@ const companyPageQuery = companyId => [
 	}
 ]
 
-const recommendationQuery = () => [
+const recommendationQuery = (userId) => [
 	{
 		queryFn: () => RecommendedProfileService.pendingRecommendations(),
 		queryKey: ["pendingRecommendations"],
 		select: ({ data }) => data,
 	},
 	{
-		queryFn: () => RecommendedProfileService.givenRecommendations(),
-		queryKey: ["givenRecommendations"],
+		queryFn: ({queryKey}) => RecommendedProfileService.givenRecommendations(queryKey[1]),
+		queryKey: ["givenRecommendations", userId],
 		select: ({ data }) => data,
 	},
 	{
-		queryFn: () => RecommendedProfileService.receivedRecommendations(),
-		queryKey: ["receivedRecommendations"],
+		queryFn: ({queryKey}) => RecommendedProfileService.receivedRecommendations(queryKey[1]),
+		queryKey: ["receivedRecommendations", userId],
 		select: ({ data }) => data,
 	},
 ]

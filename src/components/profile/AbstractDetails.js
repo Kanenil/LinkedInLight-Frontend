@@ -29,7 +29,7 @@ const NoData = ({ title, addPath }) => {
     )
 }
 
-const AbstractDetails = ({onClickBack, promise, hook, detail, edit, itemComponent, title = ""}) => {
+const AbstractDetails = ({onClickBack, promise, hook, detail, edit, itemComponent, user, isOwner, title = ""}) => {
     const { isLoading, data } = useQuery({
         queryFn: () => promise(),
         queryKey: [detail],
@@ -37,7 +37,7 @@ const AbstractDetails = ({onClickBack, promise, hook, detail, edit, itemComponen
         enabled: !hook
     })
 
-    const hookData = hook && hook();
+    const hookData = hook && hook(user, isOwner);
 
     return (
         <div className="flex flex-col gap-2.5 rounded-lg bg-white py-8 px-10">

@@ -8,8 +8,10 @@ import {useLocation} from "react-router";
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
 import moment from "moment";
 
-const RecommendationItem = ({status, requester, content, relationship, requestMessage, dateGiven, id, ...data}) => {
+const RecommendationItem = ({status, sender, requester, content, relationship, requestMessage, dateGiven, id, ...data}) => {
     const location = useLocation();
+
+    const user = status === 'Pending'? requester: sender;
 
     return (
         <div className="flex flex-col gap-3">
@@ -17,14 +19,14 @@ const RecommendationItem = ({status, requester, content, relationship, requestMe
                 <div
                     className="overflow-hidden h-14 w-14 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]">
                     <img className="object-contain"
-                         src={requester?.image ? APP_ENV.UPLOADS_URL + "/" + requester?.image : defaultImage}
+                         src={user?.image ? APP_ENV.UPLOADS_URL + "/" + user?.image : defaultImage}
                          alt="image"/>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <Link to={`/j4y/${requester.profileUrl}`} className="hover:underline font-jost font-medium">{requester.firstName} {requester.lastName}</Link>
+                    <Link to={`/j4y/${user.profileUrl}`} className="hover:underline font-jost font-medium">{user.firstName} {user.lastName}</Link>
 
-                    <h3>{requester.lastPosition}</h3>
+                    <h3>{user.lastPosition}</h3>
 
                     <ConditionalWrapper condition={status === 'Given'}>
                         <h3 className="font-light text-[#BBBBBB] text-sm">
@@ -48,7 +50,7 @@ const RecommendationItem = ({status, requester, content, relationship, requestMe
                         </div>
 
                         <div className="mt-5 font-jost font-light text-sm">
-                            <h3 className="text-[#2D2A33]">Write a recommendation for {requester.firstName} {requester.lastName}</h3>
+                            <h3 className="text-[#2D2A33]">Write a recommendation for {user.firstName} {user.lastName}</h3>
                             <Link to={`${location.pathname}/edit/give-recommendation/${id}`} className="text-[#7D7D7D]">
                                 {`${APP_ENV.FRONTEND_URL}${location.pathname}/edit/give-recommendation/${id}`}
                             </Link>
