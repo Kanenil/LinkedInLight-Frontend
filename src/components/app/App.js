@@ -24,6 +24,7 @@ import Auth from "../../pages/auth";
 import CompanyPage from "../../pages/company";
 import CompanySettingsIndex from "../company/settings/CompanySettingsIndex";
 import AuthRedirect from "../shared/AuthRedirect";
+import CompanyEditIndex from "../company/edit/CompanyEditIndex";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -76,6 +77,7 @@ const App = () => {
                                                     <Route path=":companyId">
                                                         <Route index element={<CompanyPage/>}/>
                                                         <Route path="settings" element={<CompanySettingsIndex/>}/>
+                                                        <Route path="edit" element={<CompanyEditIndex/>}/>
                                                     </Route>
                                                     <Route path="new" element={<CreateCompany/>}/>
                                                 </Route>

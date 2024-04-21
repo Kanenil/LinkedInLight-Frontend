@@ -90,6 +90,10 @@ class CompanyService {
 			}
 		})
 	}
+
+	editCompany(model) {
+		return axios.put(`${this.#URL}/${model.id}/edit`, model)
+	}
 }
 
 export default new CompanyService()

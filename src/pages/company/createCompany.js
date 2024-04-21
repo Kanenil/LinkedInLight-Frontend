@@ -14,9 +14,11 @@ import {ArrowDownTrayIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import Dropzone from "../../components/shared/Dropzone";
 import Show from "../../elements/shared/Show";
 import {readFile} from "../../utils/cropImage";
+import {useAlertContext} from "../../providers/AlertProvider";
 
 const CreateCompany = () => {
     const navigator = useNavigate();
+    const {success} = useAlertContext();
 
     const initialValues = {
         options: {
@@ -138,8 +140,9 @@ const CreateCompany = () => {
 
         CompanyService
             .create(model)
-            .then(({data}) => {
-                navigator(`/j4y/company/${data.id}`);
+            .then(() => {
+                navigator(-1);
+                success("Company successfully created", 5);
             })
             .catch(err => {
                 setIsSubmitted(true);

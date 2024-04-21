@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useParams} from "react-router"
+import {useNavigate, useParams} from "react-router"
 import {Helmet} from "react-helmet-async"
 import {useQueryClient} from "@tanstack/react-query"
 import {useSearchParams} from "react-router-dom"
@@ -15,7 +15,8 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 const CompanyPage = () => {
     const {companyId} = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-    const {company, followersCount, isAdmin, isLoading} = useCompany(companyId);
+    const {company, followersCount, isAdmin, isLoading, isError} = useCompany(companyId);
+    const navigator = useNavigate();
 
     useEffect(() => {
         const preview = searchParams.get("preview")
@@ -34,8 +35,13 @@ const CompanyPage = () => {
 
     const queryClient = useQueryClient();
 
+    if(isError) {
+        navigator('/j4y', {replace:true});
+        return;
+    }
+
     if (isLoading)
-        return <Loader/>
+        return <Loader/>;
 
     return (
         <React.Fragment>
