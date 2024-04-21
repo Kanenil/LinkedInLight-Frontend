@@ -35,10 +35,11 @@ const getDateTime = (day = 1, month, year) => {
 }
 
 const getSendingTime = (date) => {
-    const today = moment();
-    const dateUtc = moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
-    const stillUtc = moment.utc(dateUtc).toDate();
-    const local = moment(stillUtc).local().format('YYYY-MM-DD HH:mm:ss');
+    const today = moment.utc();
+    const dateUtc = moment.utc(date)
+        .add(Math.abs(date.getTimezoneOffset()), 'minutes')
+        .format('YYYY-MM-DD HH:mm:ss');
+    const local = moment(dateUtc).format('YYYY-MM-DD HH:mm:ss');
 
     return today.startOf('day').diff(local, "hours") > 0 ? moment(local).format('D MMM HH:mm') : moment(local).format('HH:mm')
 };
