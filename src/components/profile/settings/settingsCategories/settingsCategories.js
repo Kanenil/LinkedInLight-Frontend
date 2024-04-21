@@ -80,7 +80,10 @@ export const visibilitySettings = [
       { name: "People able to see your email" },
       { name: "Contacts", prescription: "enabled" },
       { name: "People able to see your followings", prescription: "enabled" },
-      { name: "People able to see your surname" },
+      {
+        name: "People able to see your surname",
+        link: `${settingsRoutes.sections.visibility}/surname`,
+      },
       {
         name: "Representation of your organization and interests",
         prescription: "enabled",
