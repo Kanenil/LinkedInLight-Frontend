@@ -1,4 +1,4 @@
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import SignUp from "../../pages/auth/SignUp";
 import SignIn from "../../pages/auth/SignIn";
 import Profile from "../../pages/profile";
@@ -23,6 +23,7 @@ import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
 import CompanyPage from "../../pages/company";
 import CompanySettingsIndex from "../company/settings/CompanySettingsIndex";
+import AuthRedirect from "../shared/AuthRedirect";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -45,6 +46,8 @@ const App = () => {
                                             <Route path="/" element={<Layout/>}>
                                                 <Route index element={<Home/>}/>
                                             </Route>
+
+                                            <Route path="giveRecommendation/:userId" element={<AuthRedirect  to="/j4y/:user/details/recommendations"/>}/>
 
                                             <Route path="/j4y">
                                                 <Route index element={<InLayout/>}/>
