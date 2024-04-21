@@ -19,7 +19,7 @@ const CompanyItem = ({logoImg, companyName, industryId, id,...data}) => {
     });
 
     return (
-        <div className="flex flex-row gap-6 w-fit md:w-[45vw]">
+        <div className="flex flex-row gap-6 w-fit">
             <Show>
                 <Show.When isTrue={!!logoImg}>
                     <div className="flex items-center max-w-[65px] my-auto max-h-[65px] md:max-w-[80px] md:max-h-[80px]">

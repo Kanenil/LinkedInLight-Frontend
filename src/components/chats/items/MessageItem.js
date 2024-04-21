@@ -13,6 +13,20 @@ import Modal from "../../shared/modals/Modal";
 import ConfirmAction from "../../shared/modals/shared/ConfirmAction";
 import classNames from "classnames";
 
+function parseString(inputString) {
+    let parsedString = inputString.replace(/\\r/g, '\t');
+
+    parsedString = parsedString.replace(/\\n/g, '<br>');
+
+    parsedString = parsedString.replace(
+        /(http[s]?:\/\/\S+)/g,
+        `<a href="$1" class="hover:underline">$1</a> <br><span class="text-red-800">(We do not recommend navigating to pages you are not familiar with.)</span>`
+    );
+
+    return parsedString;
+}
+
+
 const DoubleCheck = ({className = 'w-4 h-4'}) => {
     return (
         <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
@@ -82,9 +96,7 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                         "max-w-[20vw]":isMobile,
                         "max-w-[40vw] md:max-w-[20vw]": !isMobile
                     })}>
-                        <h3 className="font-jost text-wrap break-words">
-                            {message.content}
-                        </h3>
+                        <h3 className="font-jost text-wrap break-words" dangerouslySetInnerHTML={{__html: parseString(message.content)}}/>
                     </div>
                 </div>
 
@@ -232,9 +244,7 @@ const MessageItem = ({message, chat, participant, isMobile = false}) => {
                             "max-w-[20vw]":isMobile,
                             "max-w-[40vw] md:max-w-[20vw]": !isMobile
                         })}>
-                            <h3 className="font-jost text-wrap break-words">
-                                {message.content}
-                            </h3>
+                            <h3 className="font-jost text-wrap break-words" dangerouslySetInnerHTML={{__html: parseString(message.content)}}/>
                         </div>
                     </Show.Else>
                 </Show>

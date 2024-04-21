@@ -19,12 +19,12 @@ class CompanyService {
 		return axios.post(`${this.#URL}/newCompany`, model)
 	}
 
-	getUserCompanies() {
-		return axios.get(`${this.#URL}/userCompanies`)
+	getUserCompanies(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
 
-	getFollowedCompanies() {
-		return axios.get(`${this.#URL}/followedCompanies`)
+	getFollowedCompanies(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/followedCompanies`)
 	}
 
 	getFollowersCount(companyId) {
@@ -77,6 +77,22 @@ class CompanyService {
 
 	followers(companyId) {
 		return axios.get(`${this.#URL}/${companyId}/followers`)
+	}
+
+	visibleForAll(companyId) {
+		return axios.get(`${this.#URL}/${companyId}/visibleForAll`)
+	}
+
+	editVisibleForAll(companyId, isVisibleForAll) {
+		return axios.put(`${this.#URL}/${companyId}/visibleForAll`, null, {
+			params: {
+				isVisibleForAll
+			}
+		})
+	}
+
+	editCompany(model) {
+		return axios.put(`${this.#URL}/${model.id}/edit`, model)
 	}
 }
 

@@ -16,7 +16,7 @@ const Modal = ({ isOpen = false, style = {}, isFixed = false, isRounded = true, 
     }, [isOpen])
 
     useEffect(() => {
-        if(!isVisible && !childModal)
+        if(!isVisible && !childModal && closeModal)
             document.body.classList.remove("modal-open")
 
         if(isVisible)
@@ -28,7 +28,6 @@ const Modal = ({ isOpen = false, style = {}, isFixed = false, isRounded = true, 
             document.body.classList.remove("modal-open");
             setIsVisible(false);
         }
-
     }, [closeModal])
 
     return (

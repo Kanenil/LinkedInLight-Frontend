@@ -14,7 +14,9 @@ const useCompany = (companyId) => {
                     val => val?.userId === results[4].data?.id,
                 ),
                 isLoading: results.some(val => val.isLoading),
-                admins: [results[2].data, ...(results[3].data ?? [])] ?? []
+                admins: [results[2].data, ...(results[3].data ?? [])] ?? [],
+                owner: results[2].data,
+                isError: results.some(val => val.isError)
             }
         },
     })

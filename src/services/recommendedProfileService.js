@@ -82,6 +82,30 @@ class RecommendedProfileService {
     sendRequestRecommendation(model) {
         return axios.post(`${this.#URL}/requestRecommendation`, model);
     }
+
+    pendingRecommendations() {
+        return axios.get(`${this.#URL}/pendingRecommendations`);
+    }
+
+    givenRecommendations(profileUrl) {
+        return axios.get(`${this.#URL}/${profileUrl}/givenRecommendations`);
+    }
+
+    recommendationById(id) {
+        return axios.get(`${this.#URL}/recommendation/${id}`);
+    }
+
+    receivedRecommendations(profileUrl) {
+        return axios.get(`${this.#URL}/${profileUrl}/receivedRecommendations`);
+    }
+
+    giveRecommendation(content, recommendationRequestId ) {
+        return axios.post(`${this.#URL}/giveRecommendation/${recommendationRequestId}`, null, {
+            params: {
+                content
+            }
+        });
+    }
 }
 
 export default new RecommendedProfileService();

@@ -31,6 +31,7 @@ const DetailsPage = ({user, isOwner, detail}) => {
 
     const commonProps = {
         user,
+        isOwner,
         onClickBack,
     }
 
@@ -57,7 +58,7 @@ const DetailsPage = ({user, isOwner, detail}) => {
                     </div>
                 </div>
 
-                <div className="flex flex-row my-4 md:my-8 mx-auto w-full md:w-[1170px]">
+                <div className="flex flex-row mt-4 mb-20 md:my-8 mx-auto w-full md:w-[1170px]">
                     <div className="w-full md:w-8/12">
                         {
                             selected &&

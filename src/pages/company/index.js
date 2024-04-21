@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useParams} from "react-router"
+import {useNavigate, useParams} from "react-router"
 import {Helmet} from "react-helmet-async"
 import {useQueryClient} from "@tanstack/react-query"
 import {useSearchParams} from "react-router-dom"
@@ -10,11 +10,13 @@ import CompanyIndex from "../../components/company/CompanyIndex";
 import ConfirmationModal from "../../components/shared/modals/ConfirmationModal";
 import CreatePost from "../../components/shared/modals/company/CreatePost";
 import useCompany from "../../hooks/useCompany";
+import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 
 const CompanyPage = () => {
     const {companyId} = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-    const {company, followersCount, isAdmin, isLoading} = useCompany(companyId);
+    const {company, followersCount, isAdmin, isLoading, isError} = useCompany(companyId);
+    const navigator = useNavigate();
 
     useEffect(() => {
         const preview = searchParams.get("preview")
@@ -33,8 +35,13 @@ const CompanyPage = () => {
 
     const queryClient = useQueryClient();
 
+    if(isError) {
+        navigator('/j4y', {replace:true});
+        return;
+    }
+
     if (isLoading)
-        return <Loader/>
+        return <Loader/>;
 
     return (
         <React.Fragment>
@@ -55,7 +62,7 @@ const CompanyPage = () => {
                     <Show.When isTrue={!!searchParams.get('preview') && isAdmin}>
                         <CompanyPreview
                             company={company}
-                            isAdmin={true}
+                            isAdmin={false}
                             isAdminPreview={true}
                             searchParams={[searchParams, setSearchParams]}
                         />
@@ -70,21 +77,23 @@ const CompanyPage = () => {
                         />
                     </Show.Else>
                 </Show>
-                <ConfirmationModal
-                    isOpen={searchParams.has('createPost') && isAdmin}
-                    onCloseCallback={() => {
-                        searchParams.delete('createPost');
-                        searchParams.delete('id');
-                        setSearchParams(searchParams);
-                        document.body.classList.remove('modal-open');
-                    }}
-                    onSaveCallback={() => {
-                        queryClient.invalidateQueries(['posts', company.id])
-                    }}
-                    position="mx-auto md:mt-16"
-                >
-                    <CreatePost company={company}/>
-                </ConfirmationModal>
+                <ConditionalWrapper condition={searchParams.has('createPost') && isAdmin}>
+                    <ConfirmationModal
+                        isOpen={true}
+                        onCloseCallback={() => {
+                            searchParams.delete('createPost');
+                            searchParams.delete('id');
+                            setSearchParams(searchParams);
+                            document.body.classList.remove('modal-open');
+                        }}
+                        onSaveCallback={() => {
+                            queryClient.invalidateQueries(['posts', company.id])
+                        }}
+                        position="mx-auto md:mt-16"
+                    >
+                        <CreatePost company={company}/>
+                    </ConfirmationModal>
+                </ConditionalWrapper>
             </main>
         </React.Fragment>
     )

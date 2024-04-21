@@ -15,7 +15,7 @@ import {useAlertContext} from "../../../../providers/AlertProvider";
 
 const UserItem = ({image, firstName, lastName, lastPosition, onClick}) => {
     return (
-        <div
+        <button
             className={`flex flex-row gap-3 ${onClick ? 'hover:bg-gray-50 cursor-pointer' : ''}`}
             onClick={onClick}
         >
@@ -31,11 +31,11 @@ const UserItem = ({image, firstName, lastName, lastPosition, onClick}) => {
 
                 <h3 className="font-jost text-sm">{lastPosition}</h3>
             </div>
-        </div>
+        </button>
     )
 }
 
-const RequestRecommendation = ({onClose, onChange}) => {
+const RequestRecommendation = ({onClose, onChange, onSave}) => {
     const initialValues = {
         options: {
             connection: []
@@ -89,21 +89,24 @@ const RequestRecommendation = ({onClose, onChange}) => {
     }
 
     const onNext = async () => {
+        if(!values.connection.hasOwnProperty('id'))
+            return;
+
         if (step === 1)
             return setStep(2);
 
         const model = {
             positionAtTheTime: values.positionAtTheTime,
             relationship: values.positionAtTheTime,
-            senderId: profile.id,
+            senderId: values.connection.id,
             requestMessage: values.requestMessage,
-            requesterId: values.connection.id,
+            requesterId: profile.id,
         }
 
         await RecommendedProfileService.sendRequestRecommendation(model)
 
         success("Your request sent", 5)
-        onClose();
+        onSave();
     }
 
     return (

@@ -1,4 +1,4 @@
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import SignUp from "../../pages/auth/SignUp";
 import SignIn from "../../pages/auth/SignIn";
 import Profile from "../../pages/profile";
@@ -23,6 +23,8 @@ import Alert from "../shared/Alert";
 import Auth from "../../pages/auth";
 import CompanyPage from "../../pages/company";
 import CompanySettingsIndex from "../company/settings/CompanySettingsIndex";
+import AuthRedirect from "../shared/AuthRedirect";
+import CompanyEditIndex from "../company/edit/CompanyEditIndex";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -46,12 +48,16 @@ const App = () => {
                                                 <Route index element={<Home/>}/>
                                             </Route>
 
+                                            <Route path="giveRecommendation/:userId" element={<AuthRedirect  to="/j4y/:user/details/recommendations"/>}/>
+
                                             <Route path="/j4y">
                                                 <Route index element={<InLayout/>}/>
 
                                                 <Route element={<InLayout/>}>
                                                     <Route path=":profileURL" element={<Profile/>}>
-                                                        <Route path="edit/:blockId" element={<Profile/>}/>
+                                                        <Route path="edit/:blockId" element={<Profile/>}>
+                                                            <Route path=":id" element={<Profile/>}/>
+                                                        </Route>
                                                         <Route path="details/:blockId" element={<Profile/>}>
                                                             <Route path="edit/:blockId" element={<Profile/>}>
                                                                 <Route path=":id" element={<Profile/>}/>
@@ -71,6 +77,7 @@ const App = () => {
                                                     <Route path=":companyId">
                                                         <Route index element={<CompanyPage/>}/>
                                                         <Route path="settings" element={<CompanySettingsIndex/>}/>
+                                                        <Route path="edit" element={<CompanyEditIndex/>}/>
                                                     </Route>
                                                     <Route path="new" element={<CreateCompany/>}/>
                                                 </Route>

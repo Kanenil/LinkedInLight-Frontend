@@ -20,9 +20,9 @@ const NavButton = ({children, isActive, onClick}) => {
     )
 }
 
-const CompaniesSection = ({isOwner}) => {
+const CompaniesSection = ({user, isOwner}) => {
     const {userCompanies, followingCompanies} = useQueries({
-        queries: companiesQuery(isOwner).map((value) => ({
+        queries: companiesQuery(user).map((value) => ({
             ...value
         })),
         combine: (results) => {
@@ -37,18 +37,18 @@ const CompaniesSection = ({isOwner}) => {
     const toggleSelect = () => setIsMyCompanies(prev => !prev);
 
     return (
-        <ConditionalWrapper condition={isOwner && (userCompanies.length > 0 || followingCompanies.length > 0)}>
+        <ConditionalWrapper condition={userCompanies.length > 0 || followingCompanies.length > 0}>
             <div id="companies" className="rounded-lg bg-white py-8 px-6 md:px-10">
                 <div className="flex flex-row font-jost">
                     <h1 className="font-medium text-2xl text-[#2D2A33]">Companies</h1>
                 </div>
 
                 <div className="flex flex-row mt-4">
-                    <NavButton onClick={toggleSelect} isActive={isMyCompanies}>My</NavButton>
+                    <NavButton onClick={toggleSelect} isActive={isMyCompanies}>{isOwner?"My":"Own"}</NavButton>
                     <NavButton onClick={toggleSelect} isActive={!isMyCompanies}>Following</NavButton>
                 </div>
 
-                <div className="mt-5 flex flex-col md:flex-row">
+                <div className="mt-5 flex flex-col md:grid md:grid-cols-2 md:gap-4">
                     <Show>
                         <Show.When isTrue={isMyCompanies}>
                             {userCompanies.map(company => (
