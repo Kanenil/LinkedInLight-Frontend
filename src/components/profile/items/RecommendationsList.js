@@ -56,12 +56,14 @@ const RecommendationsList = ({data: array}) => {
                     {
                         lists.map(({data}) => (
                             <Show.When key={`recommended-section-${data}`} isTrue={selected === data}>
-                                {array[data].map(recommendation => (
-                                    <RecommendationItem
-                                        key={`${data}-recommendation-${recommendation.id}`}
-                                        {...recommendation}
-                                    />
-                                ))}
+                                <div className="flex flex-col gap-5">
+                                    {array[data].map(recommendation => (
+                                        <RecommendationItem
+                                            key={`${data}-recommendation-${recommendation.id}`}
+                                            {...recommendation}
+                                        />
+                                    ))}
+                                </div>
                             </Show.When>
                         ))
                     }

@@ -92,7 +92,7 @@ export const details = [
         props: {
             hook: useRecommendation,
             title: 'Recommendations',
-            detail: '',
+            detail: 'recommendations',
             edit: 'request-recommendation',
             itemComponent: <RecommendationsList/>
         }

@@ -37,7 +37,7 @@ const AbstractDetails = ({onClickBack, promise, hook, detail, edit, itemComponen
         enabled: !hook
     })
 
-    const hookData = hook();
+    const hookData = hook && hook();
 
     return (
         <div className="flex flex-col gap-2.5 rounded-lg bg-white py-8 px-10">

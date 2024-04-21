@@ -26,10 +26,10 @@ export const sections = [
     //     children: <AnalyticsSection />,
     // },
     {
-        children: <RecommendationSection />,
+        children: <AboutMeSection />,
     },
     {
-        children: <AboutMeSection />,
+        children: <RecommendationSection />,
     },
     {
         children: <ActivitySection />,

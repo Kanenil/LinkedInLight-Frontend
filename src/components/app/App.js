@@ -54,7 +54,9 @@ const App = () => {
 
                                                 <Route element={<InLayout/>}>
                                                     <Route path=":profileURL" element={<Profile/>}>
-                                                        <Route path="edit/:blockId" element={<Profile/>}/>
+                                                        <Route path="edit/:blockId" element={<Profile/>}>
+                                                            <Route path=":id" element={<Profile/>}/>
+                                                        </Route>
                                                         <Route path="details/:blockId" element={<Profile/>}>
                                                             <Route path="edit/:blockId" element={<Profile/>}>
                                                                 <Route path=":id" element={<Profile/>}/>

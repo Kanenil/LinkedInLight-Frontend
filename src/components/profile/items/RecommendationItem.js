@@ -4,8 +4,13 @@ import React from "react";
 import Show from "../../../elements/shared/Show";
 import {Link} from "react-router-dom";
 import AddButton from "../../../elements/buttons/AddButton";
+import {useLocation} from "react-router";
+import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper";
+import moment from "moment";
 
-const RecommendationItem = ({status, requester, content, relationship, requestMessage, id, ...data}) => {
+const RecommendationItem = ({status, requester, content, relationship, requestMessage, dateGiven, id, ...data}) => {
+    const location = useLocation();
+
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-5">
@@ -17,18 +22,22 @@ const RecommendationItem = ({status, requester, content, relationship, requestMe
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <h1 className="font-jost font-medium">{requester.firstName} {requester.lastName}</h1>
+                    <Link to={`/j4y/${requester.profileUrl}`} className="hover:underline font-jost font-medium">{requester.firstName} {requester.lastName}</Link>
 
                     <h3>{requester.lastPosition}</h3>
 
-                    <h3 className="font-light text-sm">{relationship}</h3>
+                    <ConditionalWrapper condition={status === 'Given'}>
+                        <h3 className="font-light text-[#BBBBBB] text-sm">
+                            Given {moment(dateGiven).format('YYYY, DD MMMM')}
+                        </h3>
+                    </ConditionalWrapper>
                 </div>
             </div>
 
             <div className="md:ml-20 w-fit">
                 <Show>
                     <Show.When isTrue={status === 'Pending'}>
-                        <AddButton to=' ' withIcon={false} className="mb-4 px-5">
+                        <AddButton to={`${location.pathname}/edit/give-recommendation/${id}`} withIcon={false} className="mb-4 px-5">
                             Give recommendation
                         </AddButton>
 
@@ -40,8 +49,8 @@ const RecommendationItem = ({status, requester, content, relationship, requestMe
 
                         <div className="mt-5 font-jost font-light text-sm">
                             <h3 className="text-[#2D2A33]">Write a recommendation for {requester.firstName} {requester.lastName}</h3>
-                            <Link to='' className="text-[#7D7D7D]">
-                                www.job4you.com/in/user-name-01
+                            <Link to={`${location.pathname}/edit/give-recommendation/${id}`} className="text-[#7D7D7D]">
+                                {`${APP_ENV.FRONTEND_URL}${location.pathname}/edit/give-recommendation/${id}`}
                             </Link>
                         </div>
                     </Show.When>
