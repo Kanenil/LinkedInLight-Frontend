@@ -1,5 +1,11 @@
+import Block from "../Block/Block";
+import Contacts from "../Contacts/Contacts";
+import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
+import FindByPhoneNumber from "../FindByPhoneNumber/FindByPhoneNumber";
 import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
+import PhoneBlock from "../Phone/Phone";
+import SurnameVisibility from "../SurnameVisibility/SurnameVisibility";
 import ShowProfilePhotos from "./ShowProfilePhotos/ShowProfilePhotos";
 import SleepMode from "./SleepMode/SleepMode";
 import StringParams from "./StringParams/StringParams";
@@ -16,6 +22,18 @@ const SettingBlockElement = (block) => {
       return <StringParams />;
     case "sleepMode":
       return <SleepMode />;
+    case "phone":
+      return <PhoneBlock />;
+    case "surname":
+      return <SurnameVisibility />;
+    case "findByEmail":
+      return <FindByEmailBlock />;
+    case "findByPhoneNumber":
+      return <FindByPhoneNumber />;
+    case "block":
+      return <Block />;
+    case "conactsVisibility":
+      return <Contacts />;
     default:
       return <></>;
   }

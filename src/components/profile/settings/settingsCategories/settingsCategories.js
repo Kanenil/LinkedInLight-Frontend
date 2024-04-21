@@ -58,7 +58,7 @@ export const securitySettings = [
     category: "Access to the account",
     items: [
       { name: "Email", prescription: "test@gmail.com" },
-      { name: "Phone" },
+      { name: "Phone", link: `${settingsRoutes.sections.security}/phone` },
       {
         name: "Change password",
         link: `${settingsRoutes.sections.security}/passwordChange`,
@@ -78,9 +78,16 @@ export const visibilitySettings = [
       { name: "Profile viewing options", prescription: "Your name and title" },
       { name: "Edit public profile" },
       { name: "People able to see your email" },
-      { name: "Contacts", prescription: "enabled" },
+      {
+        name: "Contacts",
+        prescription: "enabled",
+        link: `${settingsRoutes.sections.visibility}/conactsVisibility`,
+      },
       { name: "People able to see your followings", prescription: "enabled" },
-      { name: "People able to see your surname" },
+      {
+        name: "People able to see your surname",
+        link: `${settingsRoutes.sections.visibility}/surname`,
+      },
       {
         name: "Representation of your organization and interests",
         prescription: "enabled",
@@ -93,12 +100,17 @@ export const visibilitySettings = [
       {
         name: "Finding your profile by email",
         prescription: "1st level contacts",
+        link: `${settingsRoutes.sections.visibility}/findByEmail`,
       },
       {
         name: "Finding your profile by phone number",
         prescription: "Anybody",
+        link: `${settingsRoutes.sections.visibility}/findByPhoneNumber`,
       },
-      { name: "Block" },
+      {
+        name: "Block",
+        link: `${settingsRoutes.sections.visibility}/block`,
+      },
     ],
   },
   {
