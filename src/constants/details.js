@@ -10,6 +10,8 @@ import ProjectItem from "../components/profile/items/ProjectItem";
 import VolunteerExperienceItem from "../components/profile/items/VolunteerExperienceItem";
 import SkillItem from "../components/profile/items/SkillItem";
 import React from "react";
+import RecommendationsList from "../components/profile/items/RecommendationsList";
+import useRecommendation from "../hooks/useRecommendation";
 
 export const details = [
     {
@@ -84,5 +86,15 @@ export const details = [
             edit: 'skill',
             itemComponent: <SkillItem/>
         }
-    }
+    },
+    {
+        route: ["recommendations"],
+        props: {
+            hook: useRecommendation,
+            title: 'Recommendations',
+            detail: '',
+            edit: 'request-recommendation',
+            itemComponent: <RecommendationsList/>
+        }
+    },
 ]

@@ -2,6 +2,7 @@ import ConnectionService from "../services/connectionService"
 import ChatService from "../services/chatService"
 import CompanyService from "../services/companyService"
 import ProfileService from "../services/profileService";
+import RecommendedProfileService from "../services/recommendedProfileService";
 
 const connectedQuery = (userId, isOwner) => [
 	{
@@ -89,10 +90,30 @@ const companyPageQuery = companyId => [
 	}
 ]
 
+const recommendationQuery = () => [
+	{
+		queryFn: () => RecommendedProfileService.pendingRecommendations(),
+		queryKey: ["pendingRecommendations"],
+		select: ({ data }) => data,
+	},
+	{
+		queryFn: () => RecommendedProfileService.givenRecommendations(),
+		queryKey: ["givenRecommendations"],
+		select: ({ data }) => data,
+	},
+	{
+		queryFn: () => RecommendedProfileService.receivedRecommendations(),
+		queryKey: ["receivedRecommendations"],
+		select: ({ data }) => data,
+	},
+]
+
+
 export {
 	connectedQuery,
 	headerQuery,
 	companiesQuery,
 	companyQuery,
 	companyPageQuery,
+	recommendationQuery
 }

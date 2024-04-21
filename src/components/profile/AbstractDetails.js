@@ -7,6 +7,7 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper";
 import defaultImage from '../../assets/empty-messages.png'
 import AddButton from "../../elements/buttons/AddButton";
 import Show from "../../elements/shared/Show";
+import Loader from "../shared/Loader";
 
 const NoData = ({ title, addPath }) => {
     return (
@@ -28,12 +29,15 @@ const NoData = ({ title, addPath }) => {
     )
 }
 
-const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, title = ""}) => {
+const AbstractDetails = ({onClickBack, promise, hook, detail, edit, itemComponent, title = ""}) => {
     const { isLoading, data } = useQuery({
         queryFn: () => promise(),
         queryKey: [detail],
         select: ({data}) => data,
+        enabled: !hook
     })
+
+    const hookData = hook();
 
     return (
         <div className="flex flex-col gap-2.5 rounded-lg bg-white py-8 px-10">
@@ -50,6 +54,12 @@ const AbstractDetails = ({onClickBack, promise, detail, edit, itemComponent, tit
                     </Link>
                 </div>
                 <Show>
+                    <Show.When isTrue={!!hook}>
+                        {React.cloneElement(itemComponent, {
+                            data: hookData
+                        })}
+                    </Show.When>
+
                     <Show.When isTrue={data?.length > 0}>
                         {
                             data?.map((item, index) =>
