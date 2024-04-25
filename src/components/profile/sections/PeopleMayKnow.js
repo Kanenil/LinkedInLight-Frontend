@@ -155,7 +155,7 @@ const MayKnowItem = ({
 								variant='primary'
 								rounded='full'
 								onClick={onConnect}
-								className='items-center gap-2.5 mt-2 px-3'
+								className='items-center gap-2.5 w-fit mt-2 px-3'
 							>
 								<PlusIcon className='w-4 h-4 stroke-2' />
 								Connect
