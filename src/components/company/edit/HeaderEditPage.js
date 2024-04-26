@@ -17,9 +17,9 @@ import Button from "../../../elements/buttons/Button"
 
 const HeaderEditSchema = yup.object({
 	companyName: yup.string().required("Content is required"),
-	linkedinUrl: yup.string().required("Content is required"),
+	linkedinUrl: yup.string().required("Url is required"),
 	logoImg: yup.string(),
-	slogan: yup.string(),
+	tagline: yup.string(),
 })
 
 const initValues = {
@@ -68,15 +68,8 @@ const HeaderEditPage = ({ company }) => {
 		onSubmit: onSubmitFormik,
 	})
 
-	const {
-		values,
-		errors,
-		touched,
-		handleSubmit,
-		handleChange,
-		setErrors,
-		setValues,
-	} = formik
+	const { values, errors, handleSubmit, handleChange, setErrors, setValues } =
+		formik
 
 	const onFileSelect = async e => {
 		let imageDataUrl = null
