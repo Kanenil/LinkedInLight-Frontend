@@ -1,3 +1,4 @@
+import EditCompanyLocation from "./EditCompanyLocation"
 import EditGeneralInformationPage from "./EditGeneralInformationPage"
 import EditWorkSetupPage from "./EditWorkSetupPage"
 import HeaderEditPage from "./HeaderEditPage"
@@ -21,7 +22,7 @@ const pages = [
 	{
 		title: "Location",
 		to: "location",
-		component: <HeaderEditPage />,
+		component: <EditCompanyLocation />,
 	},
 ]
 export { pages }
