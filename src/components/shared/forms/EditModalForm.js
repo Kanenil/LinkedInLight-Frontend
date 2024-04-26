@@ -16,6 +16,7 @@ const EditModalForm = ({
 	removeTitle,
 	saveTitle = "Save",
 	withBorder = true,
+	width = "w-[750px]",
 }) => {
 	const { isOverflow, containerRef, contentRef } = useOverflow()
 	const { isMobile } = useMobileDetector()
@@ -25,7 +26,8 @@ const EditModalForm = ({
 			onSubmit={onSubmit}
 			className={classNames("flex flex-col", {
 				"px-6 py-6 bg-white h-[100dvh] w-screen": isMobile,
-				"gap-2.5 py-5 px-8 w-[750px]": !isMobile,
+				"gap-2.5 py-5 px-8": !isMobile,
+				[width]: !isMobile,
 			})}
 			style={{ boxShadow: "0px 0px 8px 2px #00000066" }}
 		>

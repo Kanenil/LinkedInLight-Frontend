@@ -11,6 +11,7 @@ import { useNavigate } from "react-router"
 const CompanyPostsSection = ({
 	company,
 	isAdmin,
+	isContentAdmin,
 	searchParams: [_, setSearchParams],
 }) => {
 	const {
@@ -47,6 +48,7 @@ const CompanyPostsSection = ({
 							key={`post-${post.id}`}
 							company={company}
 							isAdmin={isAdmin}
+							isContentAdmin={isContentAdmin}
 							setSearchParams={setSearchParams}
 							onEdit={() => onEdit(post.id)}
 							onDelete={() => onDelete(post.id)}
@@ -62,22 +64,30 @@ const CompanyPostsSection = ({
 								className='mx-auto h-[200px] w-[200px]'
 								style={{ backgroundImage: `url(${noPosts})` }}
 							/>
-							<h1 className='text-xl mt-2'>You didn't post anything</h1>
-							<h3 className='text-[#7D7D7D] [&>strong]:font-medium text-sm mt-2'>
-								Engage your audience on <strong>Job for You</strong> and boost
-								your prospects
-							</h3>
+							<h1 className='text-xl mt-2'>
+								{isAdmin ? "You didn't post anything" : "Posts not found"}
+							</h1>
+							<h3
+								className='text-[#7D7D7D] [&>strong]:font-medium text-sm mt-2'
+								dangerouslySetInnerHTML={{
+									__html: isAdmin
+										? "Engage your audience on <strong>Job for You</strong> and boost your prospects"
+										: `Company ${company.companyName} did not publish any posts yet`,
+								}}
+							/>
 
-							<div className='flex justify-center mt-4'>
-								<Button
-									className='px-5 w-fit'
-									variant='tertiary'
-									rounded='full'
-									onClick={() => navigator("?createPost=true")}
-								>
-									Publish your first post
-								</Button>
-							</div>
+							{isAdmin && (
+								<div className='flex justify-center mt-4'>
+									<Button
+										className='px-5 w-fit'
+										variant='tertiary'
+										rounded='full'
+										onClick={() => navigator("?createPost=true")}
+									>
+										Publish your first post
+									</Button>
+								</div>
+							)}
 						</div>
 					</div>
 				</Show.Else>

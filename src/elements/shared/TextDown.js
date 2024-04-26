@@ -1,10 +1,34 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import ChevronDownIcon from "../icons/ChevronDownIcon"
 import useComponentVisible from "../../hooks/useComponentVisible"
 import useOverflow from "../../hooks/useOverflow"
 import ConditionalWrapper from "./ConditionalWrapper"
 import Show from "./Show"
 import useMobileDetector from "../../hooks/useMobileDetector"
+
+const TextDownItem = memo(({ onItemClick, option, item }) => {
+	return (
+		<Show>
+			<Show.When isTrue={!!item}>
+				{item &&
+					React.cloneElement(item, {
+						onClick: () => onItemClick(option),
+						...option,
+					})}
+			</Show.When>
+
+			<Show.Else>
+				<button
+					onClick={() => onItemClick(option)}
+					type='button'
+					className='cursor-pointer text-start active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light'
+				>
+					{option.label}
+				</button>
+			</Show.Else>
+		</Show>
+	)
+})
 
 const TextDown = ({
 	placeHolder,
@@ -57,13 +81,16 @@ const TextDown = ({
 		return selectedValue.label
 	}
 
-	const onItemClick = option => {
-		setSelectedValue(option)
-		setIsComponentVisible(false)
-		onChange(option)
+	const onItemClick = useCallback(
+		option => {
+			setSelectedValue(option)
+			setIsComponentVisible(false)
+			onChange(option)
 
-		if (clearOnSelect) setSearchValue("")
-	}
+			if (clearOnSelect) setSearchValue("")
+		},
+		[clearOnSelect],
+	)
 
 	const onSearch = e => {
 		setSearchValue(e.target.value)
@@ -172,26 +199,13 @@ const TextDown = ({
 				}}
 			>
 				<div className='flex flex-col py-[5px] px-[20px]' ref={contentRef}>
-					{getOptions().map((option, index) => (
-						<Show key={`${option.id || option.value}-${index}`}>
-							<Show.When isTrue={!!item}>
-								{item &&
-									React.cloneElement(item, {
-										onClick: () => onItemClick(option),
-										...option,
-									})}
-							</Show.When>
-
-							<Show.Else>
-								<button
-									onClick={() => onItemClick(option)}
-									type='button'
-									className='cursor-pointer text-start active:font-medium py-1 px-2.5 font-jost text-[#2D2A33] font-sm font-light'
-								>
-									{option.label}
-								</button>
-							</Show.Else>
-						</Show>
+					{getOptions().map(option => (
+						<TextDownItem
+							key={`${option.id || option.value}`}
+							option={option}
+							onItemClick={onItemClick}
+							item={item}
+						/>
 					))}
 				</div>
 			</div>

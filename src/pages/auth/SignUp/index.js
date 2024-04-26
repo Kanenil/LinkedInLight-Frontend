@@ -9,7 +9,7 @@ import GoogleButton from "../../../elements/buttons/GoogleButton"
 import AppleButton from "../../../elements/buttons/AppleButton"
 import FacebookButton from "../../../elements/buttons/FacebookButton"
 import { jwtDecode } from "jwt-decode"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect } from "react"
 import illustration from "../../../assets/signup-illustration.jpg"
 import { authService } from "../../../services/authService"
 import { general } from "../../../constants/general"
@@ -20,29 +20,11 @@ import { XMarkIcon } from "@heroicons/react/24/solid"
 import useMobileDetector from "../../../hooks/useMobileDetector"
 import Show from "../../../elements/shared/Show"
 import Button from "../../../elements/buttons/Button"
+import { useQuery } from "@tanstack/react-query"
 
 const SignUp = () => {
 	const { t } = useTranslation()
-	const [countries, setCountries] = useState([])
-	const [cities, setCities] = useState([])
 	const user = JSON.parse(localStorage.getItem(general.user) || "{}")
-
-	useMemo(async () => {
-		if (!countries.length) {
-			const response = await authService.countries()
-
-			setCountries(response.data)
-		}
-	}, [countries])
-
-	const countryOptions = useMemo(() => {
-		return countries.map(country => {
-			return {
-				label: country.name,
-				value: country.name,
-			}
-		})
-	}, [countries])
 
 	const initValues = {
 		email: "",
@@ -77,6 +59,31 @@ const SignUp = () => {
 		setValues,
 	} = formik
 
+	const { data: countries, isLoading } = useQuery({
+		queryFn: () => authService.countries(),
+		queryKey: ["countries"],
+		select: ({ data }) =>
+			data.map(val => ({
+				value: val.name,
+				label: val.name,
+			})),
+	})
+
+	const {
+		data: cities,
+		isLoading: isCitiesLoading,
+		refetch,
+	} = useQuery({
+		queryFn: ({ queryKey }) => authService.cities(queryKey[1]),
+		queryKey: ["cities", values.country],
+		select: ({ data }) =>
+			Array.from(new Set(data.map(val => val.name))).map(name => ({
+				value: name,
+				label: name,
+			})),
+		enabled: !!values.country,
+	})
+
 	const googleCallback = async response => {
 		const { email, family_name, given_name } = jwtDecode(response.credential)
 
@@ -92,18 +99,7 @@ const SignUp = () => {
 	const { isMobile } = useMobileDetector()
 
 	useEffect(() => {
-		if (values.country.length > 0) {
-			authService.cities(values.country).then(({ data }) => {
-				setCities(
-					data.map(val => {
-						return {
-							label: val.name,
-							value: val.name,
-						}
-					}),
-				)
-			})
-		}
+		if (values.country) refetch()
 	}, [values.country])
 
 	return (
@@ -188,28 +184,47 @@ const SignUp = () => {
 									/>
 
 									<TextDown
-										options={countryOptions}
-										placeHolder={t("auth.selectCountry")}
+										className='gap-[5px]'
+										value={values.country}
+										options={countries}
+										containerWidth={300}
 										containerHeightMax={200}
-										containerWidth={380}
-										onEnterSelect={false}
-										isAbsolute={true}
 										containerClass='rounded-xl border-[1px] border-[#B4BFDD]'
 										containerSizing='py-2 px-[20px]'
-										onChange={e => setValues({ ...values, country: e.label })}
+										placeHolder={t("auth.selectCountry")}
+										hasTools={false}
+										onEnterSelect={false}
+										isAbsolute={true}
+										clearOnSelect={false}
+										onChange={e =>
+											setValues(prev => ({
+												...prev,
+												country: e.label,
+												city: "",
+											}))
+										}
 									/>
 
 									<TextDown
-										options={cities}
-										placeHolder={t("auth.selectCity")}
 										className='mt-[12px]'
+										value={values.city}
+										options={cities ?? []}
+										containerWidth={300}
 										containerHeightMax={200}
-										containerWidth={380}
-										onEnterSelect={false}
-										isAbsolute={true}
 										containerClass='rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]'
 										containerSizing='py-2 px-[20px]'
-										onChange={e => setValues({ ...values, city: e.label })}
+										placeHolder={t("auth.selectCity")}
+										hasTools={false}
+										onEnterSelect={false}
+										isAbsolute={true}
+										clearOnSelect={false}
+										searchAble={true}
+										onChange={e =>
+											setValues(prev => ({
+												...prev,
+												city: e.label,
+											}))
+										}
 									/>
 
 									<div className='mt-[12px]'>
@@ -374,28 +389,47 @@ const SignUp = () => {
 							/>
 
 							<TextDown
-								options={countryOptions}
-								placeHolder={t("auth.selectCountry")}
+								className='gap-[5px]'
+								value={values.country}
+								options={countries}
+								containerWidth={300}
 								containerHeightMax={200}
-								containerWidth={380}
-								onEnterSelect={false}
-								isAbsolute={true}
 								containerClass='rounded-xl border-[1px] border-[#B4BFDD]'
 								containerSizing='py-2 px-[20px]'
-								onChange={e => setValues({ ...values, country: e.label })}
+								placeHolder={t("auth.selectCountry")}
+								hasTools={false}
+								onEnterSelect={false}
+								isAbsolute={true}
+								clearOnSelect={false}
+								onChange={e =>
+									setValues(prev => ({
+										...prev,
+										country: e.label,
+										city: "",
+									}))
+								}
 							/>
 
 							<TextDown
-								options={cities}
-								placeHolder={t("auth.selectCity")}
 								className='mt-[12px]'
+								value={values.city}
+								options={cities ?? []}
+								containerWidth={300}
 								containerHeightMax={200}
-								containerWidth={380}
-								onEnterSelect={false}
-								isAbsolute={true}
 								containerClass='rounded-xl border-[1px] border-[#B4BFDD] active:bg-[#F5F8FF] active:border-[1.5px] active:border-[#24459A]'
 								containerSizing='py-2 px-[20px]'
-								onChange={e => setValues({ ...values, city: e.label })}
+								placeHolder={t("auth.selectCity")}
+								hasTools={false}
+								onEnterSelect={false}
+								isAbsolute={true}
+								clearOnSelect={false}
+								searchAble={true}
+								onChange={e =>
+									setValues(prev => ({
+										...prev,
+										city: e.label,
+									}))
+								}
 							/>
 
 							<div className='mt-[12px]'>

@@ -1,8 +1,8 @@
 import ConnectionService from "../services/connectionService"
 import ChatService from "../services/chatService"
 import CompanyService from "../services/companyService"
-import ProfileService from "../services/profileService";
-import RecommendedProfileService from "../services/recommendedProfileService";
+import ProfileService from "../services/profileService"
+import RecommendedProfileService from "../services/recommendedProfileService"
 
 const connectedQuery = (userId, isOwner) => [
 	{
@@ -36,13 +36,13 @@ const headerQuery = () => [
 
 const companiesQuery = user => [
 	{
-		queryFn: ({queryKey}) => CompanyService.getUserCompanies(queryKey[1]),
+		queryFn: ({ queryKey }) => CompanyService.getUserCompanies(queryKey[1]),
 		queryKey: ["userCompanies", user.profileUrl],
 		select: ({ data }) => data,
 		enabled: !!user,
 	},
 	{
-		queryFn: ({queryKey}) => CompanyService.getFollowedCompanies(queryKey[1]),
+		queryFn: ({ queryKey }) => CompanyService.getFollowedCompanies(queryKey[1]),
 		queryKey: ["followedCompanies", user.profileUrl],
 		select: ({ data }) => data,
 		enabled: !!user,
@@ -87,27 +87,33 @@ const companyPageQuery = companyId => [
 		queryFn: () => ProfileService.getProfile(),
 		queryKey: ["profile"],
 		select: ({ data }) => data,
-	}
+	},
+	{
+		queryFn: ({ queryKey }) => CompanyService.followers(queryKey[1]),
+		queryKey: ["followers", companyId],
+		select: ({ data }) => data,
+	},
 ]
 
-const recommendationQuery = (userId) => [
+const recommendationQuery = userId => [
 	{
 		queryFn: () => RecommendedProfileService.pendingRecommendations(),
 		queryKey: ["pendingRecommendations"],
 		select: ({ data }) => data,
 	},
 	{
-		queryFn: ({queryKey}) => RecommendedProfileService.givenRecommendations(queryKey[1]),
+		queryFn: ({ queryKey }) =>
+			RecommendedProfileService.givenRecommendations(queryKey[1]),
 		queryKey: ["givenRecommendations", userId],
 		select: ({ data }) => data,
 	},
 	{
-		queryFn: ({queryKey}) => RecommendedProfileService.receivedRecommendations(queryKey[1]),
+		queryFn: ({ queryKey }) =>
+			RecommendedProfileService.receivedRecommendations(queryKey[1]),
 		queryKey: ["receivedRecommendations", userId],
 		select: ({ data }) => data,
 	},
 ]
-
 
 export {
 	connectedQuery,
@@ -115,5 +121,5 @@ export {
 	companiesQuery,
 	companyQuery,
 	companyPageQuery,
-	recommendationQuery
+	recommendationQuery,
 }

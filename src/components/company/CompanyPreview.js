@@ -12,11 +12,14 @@ import Show from "../../elements/shared/Show"
 import CompanySectionNavigation from "./CompanySectionNavigation"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router"
+import CompanyDetailInformation from "./CompanyDetailInformation"
+import CompanyCreatePost from "./posts/CompanyCreatePost"
 
 const CompanyPreview = ({
 	company,
 	isAdmin,
 	isAdminPreview = false,
+	isContentAdmin,
 	searchParams = [],
 }) => {
 	const {
@@ -46,7 +49,12 @@ const CompanyPreview = ({
 	})
 	const navigator = useNavigate()
 
-	if (isLoading || isFollowerLoading) return <Loader />
+	if (isLoading || isFollowerLoading)
+		return (
+			<div className='h-[60dvh] flex-grow'>
+				<Loader />
+			</div>
+		)
 
 	const onFollow = () =>
 		!isAdminPreview && CompanyService.follow(company.id).then(refetch)
@@ -98,6 +106,13 @@ const CompanyPreview = ({
 								{company.tagline}
 							</h3>
 
+							{company.showLocation && (
+								<h3 className='font-light text-[#7F7F7F] text-lg break-words text-wrap'>
+									{company.country}
+									{company.city && ", " + company.city}
+								</h3>
+							)}
+
 							<div className='flex flex-row mt-2 gap-0.5 md:gap-2 text-sm md:text-base font-jost text-[#7F7F7F] font-light'>
 								<h4 className='pr-1 border-r-[1px] border-r-[#24459A]'>
 									{industryName}
@@ -139,10 +154,18 @@ const CompanyPreview = ({
 						</div>
 					</div>
 
+					<CompanyDetailInformation company={company} industry={industryName} />
+
+					{isContentAdmin && (
+						<CompanyCreatePost company={company} searchParams={searchParams} />
+					)}
+
 					<CompanySectionNavigation
 						company={company}
 						isAdmin={isAdmin}
+						isContentAdmin={isContentAdmin}
 						searchParams={searchParams}
+						isFollower={isFollower}
 					/>
 				</div>
 			</div>

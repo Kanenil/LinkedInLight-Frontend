@@ -27,8 +27,12 @@ class CompanyService {
 		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
 
-	getFollowedCompanies(profileUrl) {
-		return axios.get(`${this.#URL}/${profileUrl}/followedCompanies`)
+	getCurrentUserCompanies() {
+		return axios.get(`${this.#URL}/userCompanies`)
+	}
+
+	getFollowedCompanies(companyId) {
+		return axios.get(`${this.#URL}/${companyId}/followedCompanies`)
 	}
 
 	getFollowersCount(companyId) {
@@ -125,6 +129,27 @@ class CompanyService {
 				showWorkSetup,
 			},
 		})
+	}
+
+	addAdmin(companyId, userId, role) {
+		return axios.post(`${this.#URL}/${companyId}/addAdmin`, null, {
+			params: {
+				userId,
+				role,
+			},
+		})
+	}
+
+	editAdmin(companyId, userId, role) {
+		return axios.put(`${this.#URL}/${companyId}/updateAdmin/${userId}`, null, {
+			params: {
+				role,
+			},
+		})
+	}
+
+	deleteAdmin(companyId, userId) {
+		return axios.delete(`${this.#URL}/${companyId}/deleteAdmin/${userId}`)
 	}
 }
 
