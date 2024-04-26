@@ -57,9 +57,20 @@ const HeaderEditPage = ({ company }) => {
 			linkedinUrl: values.linkedinUrl,
 			logoImg: values.logoImg,
 			tagline: values.tagline,
-		}).then(() => {
-			success("Information successfully saved", 5)
 		})
+			.then(() => {
+				success("Information successfully saved", 5)
+			})
+			.catch(err => {
+				const { data } = err.response
+
+				if (data.includes("URL already exists"))
+					setErrors({
+						...errors,
+						linkedinUrl: data,
+					})
+				else console.log(err)
+			})
 	}
 
 	const formik = useFormik({
@@ -68,15 +79,8 @@ const HeaderEditPage = ({ company }) => {
 		onSubmit: onSubmitFormik,
 	})
 
-	const {
-		values,
-		errors,
-		touched,
-		handleSubmit,
-		handleChange,
-		setErrors,
-		setValues,
-	} = formik
+	const { values, errors, handleSubmit, handleChange, setErrors, setValues } =
+		formik
 
 	const onFileSelect = async e => {
 		let imageDataUrl = null
@@ -190,15 +194,35 @@ const HeaderEditPage = ({ company }) => {
 					className='gap-[5px]'
 				/>
 
-				<ModalInputFormGroup
-					title={APP_ENV.FRONTEND_URL + "/j4y/company/"}
-					name='linkedinUrl'
-					type='text'
-					value={values.linkedinUrl}
-					onChange={handleChange}
-					placeholder='Add URL'
-					className='gap-[5px]'
-				/>
+				<div className='flex flex-col gap-1'>
+					<label
+						htmlFor='linkedinUrl'
+						className='font-jost text-[#2D2A33] [&>strong]:font-medium'
+					>
+						General URL-address <strong>J4Y</strong>
+					</label>
+
+					<div className='flex flex-row items-center gap-2'>
+						<p className='font-jost text-[#7D7D7D] font-light'>
+							{APP_ENV.FRONTEND_URL + "/j4y/company/"}
+						</p>
+
+						<ModalInputFormGroup
+							name='linkedinUrl'
+							type='text'
+							value={values.linkedinUrl}
+							onChange={handleChange}
+							placeholder='Add URL'
+							className='w-full'
+						/>
+					</div>
+
+					{errors.linkedinUrl && (
+						<h3 className='mt-2 text-[#9E0F20] text-xs'>
+							{errors.linkedinUrl}
+						</h3>
+					)}
+				</div>
 
 				<ModalTextareaFormGroup
 					title='Tagline'
@@ -214,10 +238,12 @@ const HeaderEditPage = ({ company }) => {
 			<div className='flex justify-end mt-5'>
 				<Button
 					disabled={
-						errors.logoImg ||
-						errors.companyName ||
-						errors.tagline ||
-						errors.linkedinUrl
+						!!(
+							errors.logoImg ||
+							errors.companyName ||
+							errors.tagline ||
+							errors.linkedinUrl
+						)
 					}
 					type='submit'
 					variant='primary'
