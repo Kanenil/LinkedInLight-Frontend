@@ -23,7 +23,7 @@ const FollowerItem = ({ image, firstName, lastName, headline, profileUrl }) => {
 						{firstName} {lastName}
 					</h1>
 
-					<h3>{headline}</h3>
+					<h3 className='text-center'>{headline}</h3>
 				</div>
 			</div>
 

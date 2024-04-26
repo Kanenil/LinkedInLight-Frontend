@@ -151,6 +151,7 @@ const CompanyPreview = ({
 						company={company}
 						isAdmin={isAdmin}
 						searchParams={searchParams}
+						isFollower={isFollower}
 					/>
 				</div>
 			</div>
