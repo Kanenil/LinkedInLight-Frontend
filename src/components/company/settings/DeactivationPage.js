@@ -1,20 +1,34 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import React, { useState } from "react"
+
 import ModalCheckFormGroup from "../../shared/forms/ModalCheckFormGroup"
 import { useAlertContext } from "../../../providers/AlertProvider"
 import Button from "../../../elements/buttons/Button"
+import CompanyService from "../../../services/companyService"
 
 const DeactivationPage = ({ company }) => {
 	const [value, setValue] = useState(false)
-	const { error } = useAlertContext()
+	const { error, success } = useAlertContext()
+	const navigator = useNavigate()
 
 	const onChange = async e => {
 		setValue(e.target.checked)
 	}
 
 	const onDelete = () => {
-		error("This functionality currently not implemented", 5)
+		CompanyService.remove(company.id)
+			.then(() => {
+				navigator("/j4y")
+				success(
+					`Company ${company.companyName} was successfully deactivated`,
+					5,
+				)
+			})
+			.catch(err => {
+				console.error(err)
+				error("Something went wrong during deactivating", 5)
+			})
 	}
 
 	return (
