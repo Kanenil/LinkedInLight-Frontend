@@ -1,11 +1,13 @@
 import { useFormik } from "formik"
 import { Link } from "react-router-dom"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import { useQueryClient } from "@tanstack/react-query"
 
 import { useAlertContext } from "../../../providers/AlertProvider"
 import CompanyService from "../../../services/companyService"
 import ModalSelectFormGroup from "../../shared/forms/ModalSelectFormGroup"
 import ToggleInput from "../../shared/forms/ToggleInput"
+import { companyPageQuery } from "../../../constants/combinedQueries"
 
 const workSetups = [
 	{
@@ -24,6 +26,7 @@ const workSetups = [
 
 const EditWorkSetupPage = ({ company }) => {
 	const { success } = useAlertContext()
+	const queryClient = useQueryClient()
 
 	const initValues = {
 		workSetup: company.workSetup || workSetups[0].value,
@@ -31,22 +34,22 @@ const EditWorkSetupPage = ({ company }) => {
 	}
 
 	const handleChange = e => {
-		const model = {
-			...company,
-			...values,
-		}
+		let promise = null
 
 		if (e.target) {
-			model.showWorkSetup = e.target.checked
 			setValues(prev => ({ ...prev, showWorkSetup: e.target.checked }))
+			promise = CompanyService.editShowWorkSetup(company.id, e.target.checked)
 		} else {
-			model.workSetup = e.value
 			setValues(prev => ({ ...prev, workSetup: e.value }))
+			promise = CompanyService.editWorkSetup(company.id, e.value)
 		}
 
-		CompanyService.editCompany(model)
+		promise
 			.then(() => {
 				success("Information successfully saved", 5)
+				queryClient.invalidateQueries(
+					...companyPageQuery(company.id).map(value => value.queryFn),
+				)
 			})
 			.catch(err => {
 				console.error(err)
