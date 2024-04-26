@@ -52,6 +52,7 @@ const AbstractDetails = ({
 		select: ({ data }) => data,
 		enabled: !hook,
 	})
+	const navigator = useNavigate()
 
 	const hookData = hook && hook(user, isOwner)
 
