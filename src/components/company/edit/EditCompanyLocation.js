@@ -28,26 +28,20 @@ const EditCompanyLocation = ({ company }) => {
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
 
-	const onSubmitFormik = values => {
-		Promise.all([
-			CompanyService.editLocation(company.id, {
-				country: values.country,
-				city: values.city || "",
-				street: values.street || "",
-				office: values.office || "",
-				postalCode: values.postalCode || "",
-			}),
-			CompanyService.editShowLocation(company.id, values.showLocation),
-		])
-			.then(() => {
-				success("Information successfully saved", 5)
-				queryClient.invalidateQueries(
-					...companyPageQuery(company.id).map(value => value.queryFn),
-				)
-			})
-			.catch(err => {
-				console.error(err)
-			})
+	const onSubmitFormik = async values => {
+		await CompanyService.editLocation(company.id, {
+			country: values.country,
+			city: values.city || "",
+			street: values.street || "",
+			office: values.office || "",
+			postalCode: values.postalCode || "",
+		})
+		await CompanyService.editShowLocation(company.id, values.showLocation)
+
+		success("Information successfully saved", 5)
+		queryClient.invalidateQueries(
+			...companyPageQuery(company.id).map(value => value.queryFn),
+		)
 	}
 
 	const initValues = {
@@ -57,8 +51,6 @@ const EditCompanyLocation = ({ company }) => {
 		office: company.office || "",
 		postalCode: company.postalCode || "",
 		showLocation: company.showLocation,
-		countries: [],
-		cities: [],
 	}
 
 	const formik = useFormik({
@@ -72,7 +64,11 @@ const EditCompanyLocation = ({ company }) => {
 	const { data: countries, isLoading } = useQuery({
 		queryFn: () => authService.countries(),
 		queryKey: ["countries"],
-		select: ({ data }) => data,
+		select: ({ data }) =>
+			data.map(val => ({
+				value: val.name,
+				label: val.name,
+			})),
 	})
 
 	const {
@@ -82,35 +78,13 @@ const EditCompanyLocation = ({ company }) => {
 	} = useQuery({
 		queryFn: ({ queryKey }) => authService.cities(queryKey[1]),
 		queryKey: ["cities", values.country],
-		select: ({ data }) => data,
+		select: ({ data }) =>
+			Array.from(new Set(data.map(val => val.name))).map(name => ({
+				value: name,
+				label: name,
+			})),
 		enabled: !!values.country,
 	})
-
-	useEffect(() => {
-		if (!isLoading) {
-			setValues(prev => ({
-				...prev,
-				countries: countries.map(val => ({
-					value: val.name,
-					label: val.name,
-				})),
-			}))
-		}
-	}, [isLoading])
-
-	useEffect(() => {
-		if (!isCitiesLoading) {
-			setValues(prev => ({
-				...prev,
-				cities: cities
-					? cities.map(val => ({
-							value: val.name,
-							label: val.name,
-					  }))
-					: [],
-			}))
-		}
-	}, [isCitiesLoading])
 
 	useEffect(() => {
 		if (values.country) refetch()
@@ -158,7 +132,7 @@ const EditCompanyLocation = ({ company }) => {
 							className='gap-[5px]'
 							title='Country'
 							value={values.country}
-							options={values.countries}
+							options={countries}
 							containerWidth={300}
 							containerHeightMax={200}
 							placeHolder='Select from the list'
@@ -170,30 +144,35 @@ const EditCompanyLocation = ({ company }) => {
 								setValues(prev => ({
 									...prev,
 									country: e.label,
+									city: "",
 								}))
 							}
 						/>
 
-						<ModalSelectFormGroup
-							className='gap-[5px]'
-							title='City'
-							value={values.city}
-							options={values.cities}
-							containerWidth={300}
-							containerHeightMax={200}
-							placeHolder='Select from the list'
-							hasTools={false}
-							onEnterSelect={false}
-							isAbsolute={true}
-							clearOnSelect={false}
-							searchAble={true}
-							onChange={e =>
-								setValues(prev => ({
-									...prev,
-									city: e.label,
-								}))
-							}
-						/>
+						{isCitiesLoading ? (
+							<Loader />
+						) : (
+							<ModalSelectFormGroup
+								className='gap-[5px]'
+								title='City'
+								value={values.city}
+								options={cities ?? []}
+								containerWidth={300}
+								containerHeightMax={200}
+								placeHolder='Select from the list'
+								hasTools={false}
+								onEnterSelect={false}
+								isAbsolute={true}
+								clearOnSelect={false}
+								searchAble={true}
+								onChange={e =>
+									setValues(prev => ({
+										...prev,
+										city: e.label,
+									}))
+								}
+							/>
+						)}
 
 						<ModalInputFormGroup
 							title='Street'

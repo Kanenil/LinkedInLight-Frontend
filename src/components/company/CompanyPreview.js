@@ -104,6 +104,13 @@ const CompanyPreview = ({
 								{company.tagline}
 							</h3>
 
+							{company.showLocation && (
+								<h3 className='font-light text-[#7F7F7F] text-lg break-words text-wrap'>
+									{company.country}
+									{company.city && ", " + company.city}
+								</h3>
+							)}
+
 							<div className='flex flex-row mt-2 gap-0.5 md:gap-2 text-sm md:text-base font-jost text-[#7F7F7F] font-light'>
 								<h4 className='pr-1 border-r-[1px] border-r-[#24459A]'>
 									{industryName}
