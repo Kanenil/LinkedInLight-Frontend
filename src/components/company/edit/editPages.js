@@ -1,4 +1,5 @@
 import EditGeneralInformationPage from "./EditGeneralInformationPage"
+import EditWorkSetupPage from "./EditWorkSetupPage"
 import HeaderEditPage from "./HeaderEditPage"
 
 const pages = [
@@ -15,7 +16,7 @@ const pages = [
 	{
 		title: "Work setup",
 		to: "work-setup",
-		component: <HeaderEditPage />,
+		component: <EditWorkSetupPage />,
 	},
 	{
 		title: "Location",
