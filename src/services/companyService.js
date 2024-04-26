@@ -98,6 +98,34 @@ class CompanyService {
 	editCompany(model) {
 		return axios.put(`${this.#URL}/${model.id}/edit`, model)
 	}
+
+	editLocation(companyId, model) {
+		return axios.put(`${this.#URL}/${companyId}/location`, model)
+	}
+
+	editShowLocation(companyId, showLocation) {
+		return axios.put(`${this.#URL}/${companyId}/showLocation`, null, {
+			params: {
+				showLocation,
+			},
+		})
+	}
+
+	editWorkSetup(companyId, workSetup) {
+		return axios.put(`${this.#URL}/${companyId}/workSetup`, null, {
+			params: {
+				workSetup,
+			},
+		})
+	}
+
+	editShowWorkSetup(companyId, showWorkSetup) {
+		return axios.put(`${this.#URL}/${companyId}/showWorkSetup`, null, {
+			params: {
+				showWorkSetup,
+			},
+		})
+	}
 }
 
 export default new CompanyService()

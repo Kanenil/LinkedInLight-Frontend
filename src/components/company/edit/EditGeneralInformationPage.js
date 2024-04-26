@@ -3,7 +3,7 @@ import * as yup from "yup"
 import { useFormik } from "formik"
 import { Link } from "react-router-dom"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
-import { useQueries } from "@tanstack/react-query"
+import { useQueries, useQueryClient } from "@tanstack/react-query"
 
 import { useAlertContext } from "../../../providers/AlertProvider"
 import CompanyService from "../../../services/companyService"
@@ -12,6 +12,7 @@ import ModalTextareaFormGroup from "../../shared/forms/ModalTextareaFormGroup"
 import ModalSelectFormGroup from "../../shared/forms/ModalSelectFormGroup"
 import Button from "../../../elements/buttons/Button"
 import Loader from "../../shared/Loader"
+import { companyPageQuery } from "../../../constants/combinedQueries"
 
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -46,6 +47,7 @@ const companyCommonDataQuery = [
 
 const EditGeneralInformationPage = ({ company }) => {
 	const { success } = useAlertContext()
+	const queryClient = useQueryClient()
 
 	const { isLoading, industries, sizes, types } = useQueries({
 		queries: companyCommonDataQuery,
@@ -97,6 +99,9 @@ const EditGeneralInformationPage = ({ company }) => {
 		})
 			.then(() => {
 				success("Information successfully saved", 5)
+				queryClient.invalidateQueries(
+					...companyPageQuery(company.id).map(value => value.queryFn),
+				)
 			})
 			.catch(err => {
 				console.error(err)

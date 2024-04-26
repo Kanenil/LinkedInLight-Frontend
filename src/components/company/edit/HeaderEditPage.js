@@ -14,6 +14,8 @@ import ModalTextareaFormGroup from "../../shared/forms/ModalTextareaFormGroup"
 import CompanyService from "../../../services/companyService"
 import { useAlertContext } from "../../../providers/AlertProvider"
 import Button from "../../../elements/buttons/Button"
+import { companyPageQuery } from "../../../constants/combinedQueries"
+import { useQueryClient } from "@tanstack/react-query"
 
 const HeaderEditSchema = yup.object({
 	companyName: yup.string().required("Content is required"),
@@ -31,6 +33,7 @@ const initValues = {
 
 const HeaderEditPage = ({ company }) => {
 	const { success } = useAlertContext()
+	const queryClient = useQueryClient()
 
 	useEffect(() => {
 		setValues(prev => ({
@@ -60,6 +63,9 @@ const HeaderEditPage = ({ company }) => {
 		})
 			.then(() => {
 				success("Information successfully saved", 5)
+				queryClient.invalidateQueries(
+					...companyPageQuery(company.id).map(value => value.queryFn),
+				)
 			})
 			.catch(err => {
 				const { data } = err.response

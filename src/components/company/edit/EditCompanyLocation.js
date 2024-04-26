@@ -3,7 +3,7 @@ import * as yup from "yup"
 import { useFormik } from "formik"
 import { Link } from "react-router-dom"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
-import { useQueries, useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { useAlertContext } from "../../../providers/AlertProvider"
 import CompanyService from "../../../services/companyService"
@@ -13,6 +13,7 @@ import Button from "../../../elements/buttons/Button"
 import Loader from "../../shared/Loader"
 import { authService } from "../../../services/authService"
 import ToggleInput from "../../shared/forms/ToggleInput"
+import { companyPageQuery } from "../../../constants/combinedQueries"
 
 const CompanyLocationSchema = yup.object({
 	country: yup.string(),
@@ -25,19 +26,24 @@ const CompanyLocationSchema = yup.object({
 
 const EditCompanyLocation = ({ company }) => {
 	const { success } = useAlertContext()
+	const queryClient = useQueryClient()
 
-	const onSubmitFormik = async values => {
-		CompanyService.editCompany({
-			...company,
-			country: values.country,
-			city: values.city,
-			street: values.street,
-			office: values.office,
-			postalCode: values.postalCode,
-			showLocation: values.showLocation,
-		})
+	const onSubmitFormik = values => {
+		Promise.all([
+			CompanyService.editLocation(company.id, {
+				country: values.country,
+				city: values.city || "",
+				street: values.street || "",
+				office: values.office || "",
+				postalCode: values.postalCode || "",
+			}),
+			CompanyService.editShowLocation(company.id, values.showLocation),
+		])
 			.then(() => {
 				success("Information successfully saved", 5)
+				queryClient.invalidateQueries(
+					...companyPageQuery(company.id).map(value => value.queryFn),
+				)
 			})
 			.catch(err => {
 				console.error(err)
@@ -49,6 +55,7 @@ const EditCompanyLocation = ({ company }) => {
 		city: company.city || "",
 		street: company.street || "",
 		office: company.office || "",
+		postalCode: company.postalCode || "",
 		showLocation: company.showLocation,
 		countries: [],
 		cities: [],
