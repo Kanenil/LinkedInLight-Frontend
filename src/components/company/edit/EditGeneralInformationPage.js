@@ -123,13 +123,13 @@ const EditGeneralInformationPage = ({ company }) => {
 				</h1>
 			</div>
 
-			<div className='flex flex-col rounded-lg gap-5 p-2 mx-4 mt-4 md:mx-20'>
-				{isLoading ? (
-					<div className='h-[300px]'>
-						<Loader />
-					</div>
-				) : (
-					<>
+			{isLoading ? (
+				<div className='h-[300px]'>
+					<Loader />
+				</div>
+			) : (
+				<>
+					<div className='flex flex-col rounded-lg gap-5 p-2 mx-4 mt-4 md:mx-20'>
 						<ModalTextareaFormGroup
 							title='Description'
 							name='description'
@@ -226,21 +226,20 @@ const EditGeneralInformationPage = ({ company }) => {
 							onChange={handleChange}
 							className='gap-[5px]'
 						/>
-					</>
-				)}
-			</div>
-
-			<div className='flex justify-end mt-5'>
-				<Button
-					disabled={errors.industryId}
-					type='submit'
-					variant='primary'
-					rounded='full'
-					className='mr-6 px-5'
-				>
-					Save changes
-				</Button>
-			</div>
+					</div>
+					<div className='flex justify-end mt-5'>
+						<Button
+							disabled={errors.industryId}
+							type='submit'
+							variant='primary'
+							rounded='full'
+							className='mr-6 px-5'
+						>
+							Save changes
+						</Button>
+					</div>
+				</>
+			)}
 		</form>
 	)
 }

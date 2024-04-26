@@ -19,6 +19,10 @@ class CompanyService {
 		return axios.post(`${this.#URL}/newCompany`, model)
 	}
 
+	remove(companyId) {
+		return axios.delete(`${this.#URL}/${companyId}/remove`)
+	}
+
 	getUserCompanies(profileUrl) {
 		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
@@ -86,8 +90,8 @@ class CompanyService {
 	editVisibleForAll(companyId, isVisibleForAll) {
 		return axios.put(`${this.#URL}/${companyId}/visibleForAll`, null, {
 			params: {
-				isVisibleForAll
-			}
+				isVisibleForAll,
+			},
 		})
 	}
 
