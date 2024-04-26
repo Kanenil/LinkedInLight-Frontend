@@ -2,6 +2,7 @@ import PencilButton from "../../../elements/buttons/PencilButton"
 import React from "react"
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import Button from "../../../elements/buttons/Button"
+import { useNavigate } from "react-router"
 
 const SectionHeaderBlock = ({
 	title,
@@ -11,6 +12,8 @@ const SectionHeaderBlock = ({
 	margin = "",
 	isOwner,
 }) => {
+	const navigator = useNavigate()
+
 	return (
 		<div className={`flex flex-row font-jost ${margin}`}>
 			<h1 className='font-medium text-2xl text-[#2D2A33]'>{title}</h1>
@@ -24,14 +27,16 @@ const SectionHeaderBlock = ({
 						className='block md:hidden ml-3.5'
 					/>
 
-					<Button
-						variant='tertiary'
-						className='bg-transparent'
-						rounded='full'
-						onClick={() => navigator(link)}
-					>
-						{buttonTitle}
-					</Button>
+					{link && (
+						<Button
+							variant='tertiary'
+							className='bg-transparent'
+							rounded='full'
+							onClick={() => navigator(link)}
+						>
+							{buttonTitle}
+						</Button>
+					)}
 				</div>
 			</ConditionalWrapper>
 		</div>

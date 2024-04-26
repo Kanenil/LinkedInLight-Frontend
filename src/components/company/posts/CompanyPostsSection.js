@@ -6,6 +6,7 @@ import noPosts from "../../../assets/no-posts.png"
 import React from "react"
 import PostItem from "../items/PostItem"
 import Button from "../../../elements/buttons/Button"
+import { useNavigate } from "react-router"
 
 const CompanyPostsSection = ({
 	company,
@@ -21,6 +22,7 @@ const CompanyPostsSection = ({
 		queryKey: ["posts", company.id],
 		select: ({ data }) => data,
 	})
+	const navigator = useNavigate()
 
 	if (isLoading) return <Loader />
 
