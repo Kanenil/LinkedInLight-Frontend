@@ -12,6 +12,7 @@ import Show from "../../elements/shared/Show"
 import CompanySectionNavigation from "./CompanySectionNavigation"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router"
+import CompanyDetailInformation from "./CompanyDetailInformation"
 
 const CompanyPreview = ({
 	company,
@@ -46,7 +47,12 @@ const CompanyPreview = ({
 	})
 	const navigator = useNavigate()
 
-	if (isLoading || isFollowerLoading) return <Loader />
+	if (isLoading || isFollowerLoading)
+		return (
+			<div className='h-[60dvh] flex-grow'>
+				<Loader />
+			</div>
+		)
 
 	const onFollow = () =>
 		!isAdminPreview && CompanyService.follow(company.id).then(refetch)
@@ -138,6 +144,8 @@ const CompanyPreview = ({
 							</div>
 						</div>
 					</div>
+
+					<CompanyDetailInformation company={company} industry={industryName} />
 
 					<CompanySectionNavigation
 						company={company}
