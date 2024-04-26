@@ -11,6 +11,7 @@ import { useNavigate } from "react-router"
 const CompanyPostsSection = ({
 	company,
 	isAdmin,
+	isContentAdmin,
 	searchParams: [_, setSearchParams],
 }) => {
 	const {
@@ -47,6 +48,7 @@ const CompanyPostsSection = ({
 							key={`post-${post.id}`}
 							company={company}
 							isAdmin={isAdmin}
+							isContentAdmin={isContentAdmin}
 							setSearchParams={setSearchParams}
 							onEdit={() => onEdit(post.id)}
 							onDelete={() => onDelete(post.id)}

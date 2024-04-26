@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import ModalCheckFormGroup from "../../shared/forms/ModalCheckFormGroup"
 import { useAlertContext } from "../../../providers/AlertProvider"
 import Button from "../../../elements/buttons/Button"
 import CompanyService from "../../../services/companyService"
 
-const DeactivationPage = ({ company }) => {
+const DeactivationPage = ({ company, isOwner }) => {
 	const [value, setValue] = useState(false)
 	const { error, success } = useAlertContext()
 	const navigator = useNavigate()
@@ -29,6 +29,14 @@ const DeactivationPage = ({ company }) => {
 				console.error(err)
 				error("Something went wrong during deactivating", 5)
 			})
+	}
+
+	useEffect(() => {
+		if (!isOwner) navigator(" ", { replace: true })
+	}, [isOwner])
+
+	if (!isOwner) {
+		return <></>
 	}
 
 	return (

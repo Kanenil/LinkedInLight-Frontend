@@ -12,6 +12,7 @@ const CompanySectionNavigation = ({
 	isAdmin,
 	searchParams,
 	isFollower,
+	isContentAdmin,
 }) => {
 	const [selected, setSelected] = useState(links[0])
 
@@ -57,6 +58,7 @@ const CompanySectionNavigation = ({
 				<Show.When isTrue={selected === links[0]}>
 					<CompanyPostsSection
 						isAdmin={isAdmin}
+						isContentAdmin={isContentAdmin}
 						company={company}
 						searchParams={searchParams}
 					/>

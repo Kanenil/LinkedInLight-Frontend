@@ -13,11 +13,13 @@ import CompanySectionNavigation from "./CompanySectionNavigation"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router"
 import CompanyDetailInformation from "./CompanyDetailInformation"
+import CompanyCreatePost from "./posts/CompanyCreatePost"
 
 const CompanyPreview = ({
 	company,
 	isAdmin,
 	isAdminPreview = false,
+	isContentAdmin,
 	searchParams = [],
 }) => {
 	const {
@@ -154,9 +156,14 @@ const CompanyPreview = ({
 
 					<CompanyDetailInformation company={company} industry={industryName} />
 
+					{isContentAdmin && (
+						<CompanyCreatePost company={company} searchParams={searchParams} />
+					)}
+
 					<CompanySectionNavigation
 						company={company}
 						isAdmin={isAdmin}
+						isContentAdmin={isContentAdmin}
 						searchParams={searchParams}
 						isFollower={isFollower}
 					/>

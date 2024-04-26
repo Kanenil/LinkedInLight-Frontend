@@ -15,8 +15,14 @@ import ConditionalWrapper from "../../elements/shared/ConditionalWrapper"
 const CompanyPage = () => {
 	const { companyId } = useParams()
 	const [searchParams, setSearchParams] = useSearchParams()
-	const { company, followersCount, isAdmin, isLoading, isError } =
-		useCompany(companyId)
+	const {
+		company,
+		followersCount,
+		isAdmin,
+		isLoading,
+		isError,
+		isContentAdmin,
+	} = useCompany(companyId)
 	const navigator = useNavigate()
 
 	useEffect(() => {
@@ -51,12 +57,16 @@ const CompanyPage = () => {
 			<main className='flex-grow bg-[#E7E7E7]'>
 				<Show>
 					<Show.When
-						isTrue={(!!searchParams.get("preview") && !isAdmin) || !isAdmin}
+						isTrue={
+							(!!searchParams.get("preview") && !isAdmin) ||
+							!isAdmin ||
+							(isAdmin && isContentAdmin)
+						}
 					>
 						<CompanyPreview
 							company={company}
 							isAdminPreview={false}
-							isAdmin={false}
+							isContentAdmin={isContentAdmin}
 							searchParams={[searchParams, setSearchParams]}
 						/>
 					</Show.When>
