@@ -27,6 +27,10 @@ class CompanyService {
 		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
 
+	getCurrentUserCompanies() {
+		return axios.get(`${this.#URL}/userCompanies`)
+	}
+
 	getFollowedCompanies(profileUrl) {
 		return axios.get(`${this.#URL}/${profileUrl}/followedCompanies`)
 	}
