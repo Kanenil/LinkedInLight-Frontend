@@ -18,6 +18,7 @@ import ContactInformation from "../../shared/modals/profile/ContactInformation"
 import useMobileDetector from "../../../hooks/useMobileDetector"
 import Button from "../../../elements/buttons/Button"
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import OpenToWork from "../items/OpenToWork"
 
 const ImageSector = ({ user, isOwner }) => {
 	const backgroundUrl = user?.background
@@ -210,6 +211,10 @@ const InformationSector = ({ user, isOwner }) => {
 						</div>
 					</Show.Else>
 				</Show>
+
+				<div className='flex flex-row flex-wrap gap-4'>
+					<OpenToWork isOwner={isOwner} />
+				</div>
 
 				<Show>
 					<Show.When isTrue={isOwner}>

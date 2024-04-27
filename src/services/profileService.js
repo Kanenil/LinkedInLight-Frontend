@@ -1,133 +1,153 @@
-import axios from "./axios";
+import axios from "./axios"
 
 class ProfileService {
-    #URL = 'api/profile';
+	#URL = "api/profile"
 
-    getProfile() {
-        return axios.get(this.#URL);
-    }
+	getProfile() {
+		return axios.get(this.#URL)
+	}
 
-    getProfileUrl(url) {
-        return axios.get(`${this.#URL}/${url}`);
-    }
+	getProfileUrl(url) {
+		return axios.get(`${this.#URL}/${url}`)
+	}
 
-    changeImage(data, isBackground = false) {
-        return axios.putForm(`${this.#URL}/editImage`, {newImage: data}, {
-            params: {
-                background: isBackground
-            }
-        })
-    }
+	changeImage(data, isBackground = false) {
+		return axios.putForm(
+			`${this.#URL}/editImage`,
+			{ newImage: data },
+			{
+				params: {
+					background: isBackground,
+				},
+			},
+		)
+	}
 
-    getCompanies() {
-        return axios.get(`${this.#URL}/allCompanies`)
-    }
+	getCompanies() {
+		return axios.get(`${this.#URL}/allCompanies`)
+	}
 
-    getPositions() {
-        return axios.get(`${this.#URL}/allPositions`)
-    }
+	getPositions() {
+		return axios.get(`${this.#URL}/allPositions`)
+	}
 
-    openToWork(model) {
-        return axios.post(`${this.#URL}/addOpenToWork`, model)
-    }
+	openToWork(model) {
+		return axios.post(`${this.#URL}/addOpenToWork`, model)
+	}
 
-    getAbout() {
-        return axios.get(`${this.#URL}/edit/about`)
-    }
+	updateOpenToWork(model) {
+		return axios.put(`${this.#URL}/updateOpenToWorkVM`, model)
+	}
 
-    editAbout(newAbout) {
-        return axios.put(`${this.#URL}/edit/about`, newAbout)
-    }
+	getAbout() {
+		return axios.get(`${this.#URL}/edit/about`)
+	}
 
-    getIndustries() {
-        return axios.get(`${this.#URL}/allIndustries`)
-    }
+	editAbout(newAbout) {
+		return axios.put(`${this.#URL}/edit/about`, newAbout)
+	}
 
-    getAllSkills() {
-        return axios.get(`${this.#URL}/allSkills`)
-    }
+	getIndustries() {
+		return axios.get(`${this.#URL}/allIndustries`)
+	}
 
-    getSkillsByProfileUrl(url) {
-        return axios.get(`${this.#URL}/${url}/skills`);
-    }
+	getAllSkills() {
+		return axios.get(`${this.#URL}/allSkills`)
+	}
 
-    getSkills() {
-        return axios.get(`${this.#URL}/userSkills`)
-    }
+	getSkillsByProfileUrl(url) {
+		return axios.get(`${this.#URL}/${url}/skills`)
+	}
 
-    getMainSkills() {
-        return axios.get(`${this.#URL}/mainSkills`)
-    }
+	getSkills() {
+		return axios.get(`${this.#URL}/userSkills`)
+	}
 
-    getMainSkillsByProfileUrl(url) {
-        return axios.get(`${this.#URL}/${url}/mainSkills`)
-    }
+	getMainSkills() {
+		return axios.get(`${this.#URL}/mainSkills`)
+	}
 
-    addSkill(skill, isMainSkill = true) {
-        return axios.post(`${this.#URL}/newSkill`, {
-            skill,
-            skillId: skill.value,
-            applicationUserId: ``,
-            isMainSkill: isMainSkill,
-            id: 0
-        })
-    }
+	getMainSkillsByProfileUrl(url) {
+		return axios.get(`${this.#URL}/${url}/mainSkills`)
+	}
 
-    updateSkill(data, id) {
-        return axios.put(`${this.#URL}/skill/edit/${id}`, data)
-    }
+	addSkill(skill, isMainSkill = true) {
+		return axios.post(`${this.#URL}/newSkill`, {
+			skill,
+			skillId: skill.value,
+			applicationUserId: ``,
+			isMainSkill: isMainSkill,
+			id: 0,
+		})
+	}
 
-    removeSkill(skillId) {
-        return axios.delete(`${this.#URL}/skill/remove/${skillId}`)
-    }
+	updateSkill(data, id) {
+		return axios.put(`${this.#URL}/skill/edit/${id}`, data)
+	}
 
-    getEducations() {
-        return axios.get(`${this.#URL}/userEducations`)
-    }
+	removeSkill(skillId) {
+		return axios.delete(`${this.#URL}/skill/remove/${skillId}`)
+	}
 
-    getEducationsByProfileUrl(url) {
-        return axios.get(`${this.#URL}/${url}/educations`);
-    }
+	getEducations() {
+		return axios.get(`${this.#URL}/userEducations`)
+	}
 
-    getEducation(id) {
-        return axios.get(`${this.#URL}/education/${id}`)
-    }
+	getEducationsByProfileUrl(url) {
+		return axios.get(`${this.#URL}/${url}/educations`)
+	}
 
-    addEducation(data) {
-        return axios.post(`${this.#URL}/newEducation`, data)
-    }
+	getEducation(id) {
+		return axios.get(`${this.#URL}/education/${id}`)
+	}
 
-    updateEducation(data, id) {
-        return axios.put(`${this.#URL}/education/edit/${id}`, data)
-    }
+	addEducation(data) {
+		return axios.post(`${this.#URL}/newEducation`, data)
+	}
 
-    removeEducation(id) {
-        return axios.delete(`${this.#URL}/education/remove/${id}`)
-    }
+	updateEducation(data, id) {
+		return axios.put(`${this.#URL}/education/edit/${id}`, data)
+	}
 
-    getExperiences() {
-        return axios.get(`${this.#URL}/userExperiences`)
-    }
+	removeEducation(id) {
+		return axios.delete(`${this.#URL}/education/remove/${id}`)
+	}
 
-    getExperiencesByProfileUrl(url) {
-        return axios.get(`${this.#URL}/${url}/experiences`);
-    }
+	getExperiences() {
+		return axios.get(`${this.#URL}/userExperiences`)
+	}
 
-    getExperience(id) {
-        return axios.get(`${this.#URL}/experience/${id}`)
-    }
+	getExperiencesByProfileUrl(url) {
+		return axios.get(`${this.#URL}/${url}/experiences`)
+	}
 
-    addExperience(data) {
-        return axios.post(`${this.#URL}/newExperience`, data)
-    }
+	getExperience(id) {
+		return axios.get(`${this.#URL}/experience/${id}`)
+	}
 
-    updateExperience(data, id) {
-        return axios.put(`${this.#URL}/experience/edit/${id}`, data)
-    }
+	addExperience(data) {
+		return axios.post(`${this.#URL}/newExperience`, data)
+	}
 
-    removeExperience(id) {
-        return axios.delete(`${this.#URL}/experience/remove/${id}`)
-    }
+	updateExperience(data, id) {
+		return axios.put(`${this.#URL}/experience/edit/${id}`, data)
+	}
+
+	removeExperience(id) {
+		return axios.delete(`${this.#URL}/experience/remove/${id}`)
+	}
+
+	administratedCompany() {
+		return axios.get(`${this.#URL}/administratedCompany`)
+	}
+
+	getOpenToWork() {
+		return axios.get(`${this.#URL}/getOpenToWorkVM`)
+	}
+
+	deleteOpenToWork() {
+		return axios.delete(`${this.#URL}/deleteOpenToWorkVM`)
+	}
 }
 
-export default new ProfileService();
+export default new ProfileService()
