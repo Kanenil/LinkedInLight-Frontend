@@ -1,215 +1,218 @@
-import XMarkIcon from "../../../../elements/icons/XMarkIcon";
-import React, {useEffect} from "react";
-import PlusIcon from "../../../../elements/icons/PlusIcon";
-import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper";
-import TextDown from "../../../../elements/shared/TextDown";
-import ProfileService from "../../../../services/profileService";
-import useForm from "../../../../hooks/useForm";
-import EditModalForm from "../../forms/EditModalForm";
-import {useAlertContext} from "../../../../providers/AlertProvider";
+import XMarkIcon from "../../../../elements/icons/XMarkIcon"
+import React, { useEffect, useMemo } from "react"
+import PlusIcon from "../../../../elements/icons/PlusIcon"
+import ConditionalWrapper from "../../../../elements/shared/ConditionalWrapper"
+import TextDown from "../../../../elements/shared/TextDown"
+import ProfileService from "../../../../services/profileService"
+import EditModalForm from "../../forms/EditModalForm"
+import { useAlertContext } from "../../../../providers/AlertProvider"
 
-const EditGeneralInformation = ({onClose, onSave, onChange}) => {
-    const initialValues = {
-        options: {
-            skills: []
-        },
-        values: {
-            about: '',
-            userAbout: '',
-            skills: [],
-            userSkills: [],
-            allSkills: [],
-            isAddSkill: false
-        },
-        errors: {
-            about: false,
-            skills: false,
-        },
-    };
-    const {
-        options,
-        values,
-        errors,
-        onChangeInput,
-        setValues,
-        setOptions
-    } = useForm(initialValues, onChange);
-    const {success} = useAlertContext();
+import { useFormik } from "formik"
+import * as yup from "yup"
+import { useQuery } from "@tanstack/react-query"
+import Loader from "../../Loader"
 
-    useEffect(() => {
-        ProfileService
-            .getAllSkills()
-            .then(({data}) => {
-                const mapped = data.map(val => ({
-                    label: val.name,
-                    value: val.id
-                }))
+const GeneralInfoSchema = yup.object({
+	about: yup.string(),
+	skills: yup.array(),
+	isAdd: yup.bool(),
+})
 
-                setValues(prev => ({
-                    ...prev,
-                    allSkills: mapped
-                }))
-                setOptions({
-                    skills: [...mapped]
-                });
-            })
-
-
-        ProfileService.getAbout()
-            .then(({data}) => {
-                setValues(prev => ({
-                    ...prev,
-                    userAbout: data,
-                    about: data
-                }))
-            })
-
-        ProfileService.getMainSkills()
-            .then(({data}) => {
-                const mapped = data.map(val => ({
-                    label: val.skill.name,
-                    value: val.skill.id
-                }))
-
-                setValues(prev => ({
-                    ...prev,
-                    userSkills: data,
-                    skills: mapped
-                }))
-                setOptions(prev => ({
-                    skills: [...prev.skills.filter(opt => !data.map(val => val.skill.name).includes(opt.label))]
-                }))
-            })
-    }, [])
-
-    const onChangeSelect = (e) => {
-        if(values.skills.map(skill => skill.label.toLowerCase()).indexOf(e.label.toLowerCase()) === -1) {
-            const newArray = [...values.skills, e];
-
-            setValues(prev => ({
-                ...prev,
-                skills: newArray,
-                isAddSkill: false
-            }))
-
-            setOptions(prev => ({
-                skills: [...prev.skills.filter(opt => !newArray.map(val => val.label).includes(opt.label))]
-            }))
-
-            onChange();
-        }
-    }
-
-    const onRemoveItem = (skill) => {
-        const newArray = values.skills.filter(val => val !== skill);
-
-        setValues(prev => ({
-            ...prev,
-            skills: newArray
-        }))
-
-        setOptions({
-            skills: [...values.allSkills.filter(opt => !newArray.map(val => val.label).includes(opt.label))]
-        })
-
-        onChange();
-    }
-
-    const onSaveClick = async () => {
-        if(values.userAbout !== values.about)
-            await ProfileService.editAbout(String(values.about));
-
-        for (const skill of values.skills) {
-            if(values.userSkills.filter(userSkill => userSkill.skill.name === skill.label).length === 0)
-                await ProfileService.addSkill({
-                    name: skill.label,
-                    id: skill.value
-                });
-        }
-
-        for (const userSkill of values.userSkills) {
-            if(values.skills.filter(skill => skill.label === userSkill.skill.name).length === 0)
-                await ProfileService.removeSkill(userSkill.id);
-        }
-
-        success('General information successfully saved.', 5);
-        onSave();
-    }
-
-    return (
-        <EditModalForm
-            onSubmit={onSaveClick}
-            onClose={onClose}
-            onRemove={null}
-            isEdit={false}
-            header={"Edit general information"}
-        >
-            <div className="flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-2.5">
-                <h1 className="font-jost font-light text-sm text-[#2D2A33]">
-                    On <span className="font-medium">Job for You</span>, you can share your years of experience, choose
-                    your industry and specify your skills.
-                    Describe your accomplishments and previous work experience to create a complete picture of your
-                    career
-                </h1>
-
-                <textarea
-                    className="mt-[15px] resize-none border-[0.5px] border-[#556DA9] rounded-lg text-sm font-jost font-light"
-                    placeholder="Description..."
-                    name="about"
-                    onChange={onChangeInput}
-                    value={values.about}
-                    rows={7}
-                />
-            </div>
-
-            <div className="flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-[5px]">
-                <h1 className="font-jost text-[#2D2A33] font-semibold">Skills</h1>
-
-                <h3 className="font-jost text-sm text-[#2D2A33] font-light">
-                    Show your strengths - add up to 5 key skills that you would like to be recognized for. They will
-                    automatically appear in your "Skills" section on <span className="font-medium">Job for You</span>
-                </h3>
-
-                {
-                    values.skills.map((val, index) =>
-                        <div key={`skill-${index}`}
-                             className="flex flex-row items-center gap-2.5 pl-2.5 pr-[5px]"
-                        >
-                            <button onClick={() => onRemoveItem(val)}>
-                                <XMarkIcon className="fill-[#7D7D7D] h-3"/>
-                            </button>
-
-
-                            <h1 className="font-jost text-lg font-medium text-[#556DA9]">{val.label}</h1>
-                        </div>
-                    )
-                }
-
-                <ConditionalWrapper condition={values.isAddSkill}>
-                    <TextDown
-                        className="mt-[5px]"
-                        options={options.skills}
-                        placeHolder="Skill (ex: Project management)"
-                        error={errors.skills}
-                        searchAble={true}
-                        hasTools={false}
-                        clearOnSelect={true}
-                        onChange={onChangeSelect}
-                    />
-                </ConditionalWrapper>
-                <ConditionalWrapper condition={!values.isAddSkill && values.skills.length !== 5}>
-                    <button onClick={() => setValues(prev => ({...prev, isAddSkill: true}))}
-                            className="group flex flex-row gap-2.5 items-center mt-2.5 w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF]">
-                        <PlusIcon
-                            className="fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-3"/>
-                        Add skill
-                    </button>
-                </ConditionalWrapper>
-                <ConditionalWrapper condition={values.skills.length === 5}>
-                    <h3 className="text-[#2D2A33] font-light font-sm">You reached maximum of 5 skills</h3>
-                </ConditionalWrapper>
-            </div>
-        </EditModalForm>
-    )
+const initValues = {
+	about: "",
+	skills: [],
+	isAdd: false,
 }
-export default EditGeneralInformation;
+
+const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
+	const { success } = useAlertContext()
+
+	const { data: userSkills, isLoading: userSkillsLoading } = useQuery({
+		queryFn: () => ProfileService.getSkills(),
+		queryKey: ["userSkills"],
+		select: ({ data }) => data,
+	})
+
+	const { data: about, isLoading: aboutLoading } = useQuery({
+		queryFn: () => ProfileService.getAbout(),
+		queryKey: ["about"],
+		select: ({ data }) => data,
+	})
+
+	useEffect(() => {
+		if (!aboutLoading) {
+			setValues(prev => ({
+				...prev,
+				about,
+			}))
+		}
+	}, [aboutLoading])
+
+	useEffect(() => {
+		if (!userSkillsLoading) {
+			setValues(prev => ({
+				...prev,
+				skills: userSkills
+					.filter(val => val.isMainSkill)
+					.map(val => ({ label: val.skill.name, value: val.id })),
+			}))
+		}
+	}, [userSkillsLoading])
+
+	const onSubmitFormik = async () => {
+		if (about !== values.about) await ProfileService.editAbout(values.about)
+
+		for (const userSkill of userSkills) {
+			const skill = values.skills.find(skill => skill.value === userSkill.id)
+
+			if (skill && !userSkill.isMainSkill) {
+				await ProfileService.updateSkill(
+					{
+						...userSkill,
+						isMainSkill: true,
+					},
+					skill.value,
+				)
+			} else if (!skill && userSkill.isMainSkill) {
+				await ProfileService.updateSkill(
+					{
+						...userSkill,
+						isMainSkill: false,
+					},
+					userSkill.id,
+				)
+			}
+		}
+
+		success("General information successfully saved.", 5)
+		onSave()
+	}
+
+	const formik = useFormik({
+		initialValues: initValues,
+		validationSchema: GeneralInfoSchema,
+		onSubmit: onSubmitFormik,
+	})
+
+	const { values, errors, handleSubmit, handleChange, setValues, setErrors } =
+		formik
+
+	const filtered = useMemo(
+		() =>
+			userSkills
+				?.filter(val => !values.skills.map(v => v.value).includes(val.id))
+				.map(val => ({ label: val.skill.name, value: val.id })),
+		[values.skills, userSkills],
+	)
+
+	const onRemoveItem = skill => {
+		const newArray = values.skills.filter(val => val !== skill)
+
+		setValues(prev => ({
+			...prev,
+			skills: newArray,
+		}))
+
+		onChange()
+	}
+
+	return (
+		<EditModalForm
+			onSubmit={handleSubmit}
+			onClose={onClose}
+			onRemove={null}
+			isEdit={false}
+			header={"Edit general information"}
+		>
+			{userSkillsLoading || aboutLoading ? (
+				<div className='h-[300px]'>
+					<Loader />
+				</div>
+			) : (
+				<>
+					<div className='flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-2.5'>
+						<h1 className='font-jost font-light text-sm text-[#2D2A33]'>
+							On <span className='font-medium'>Job for You</span>, you can share
+							your years of experience, choose your industry and specify your
+							skills. Describe your accomplishments and previous work experience
+							to create a complete picture of your career
+						</h1>
+
+						<textarea
+							className='mt-[15px] resize-none border-[0.5px] border-[#556DA9] rounded-lg text-sm font-jost font-light'
+							placeholder='Description...'
+							name='about'
+							onChange={handleChange}
+							value={values.about}
+							rows={7}
+						/>
+					</div>
+
+					<div className='flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-[5px]'>
+						<h1 className='font-jost text-[#2D2A33] font-semibold'>Skills</h1>
+
+						<h3 className='font-jost text-sm text-[#2D2A33] font-light'>
+							Show your strengths - add up to 5 key skills that you would like
+							to be recognized for. They will automatically appear in your
+							"Skills" section on{" "}
+							<span className='font-medium'>Job for You</span>
+						</h3>
+
+						{values.skills.map((val, index) => (
+							<div
+								key={`skill-${index}`}
+								className='flex flex-row items-center gap-2.5 pl-2.5 pr-[5px]'
+							>
+								<button type='button' onClick={() => onRemoveItem(val)}>
+									<XMarkIcon className='fill-[#7D7D7D] h-3' />
+								</button>
+
+								<h1 className='font-jost text-lg font-medium text-[#556DA9]'>
+									{val.label}
+								</h1>
+							</div>
+						))}
+
+						<ConditionalWrapper condition={values.isAdd}>
+							<TextDown
+								className='mt-[5px]'
+								options={filtered}
+								placeHolder='Skill (ex: Project management)'
+								error={errors.skills}
+								searchAble={true}
+								hasTools={false}
+								onEnterSelect={false}
+								clearOnSelect={true}
+								onChange={e => {
+									setValues(prev => ({
+										...prev,
+										isAdd: false,
+										skills: [...prev.skills, e],
+									}))
+									onChange()
+								}}
+							/>
+						</ConditionalWrapper>
+						<ConditionalWrapper
+							condition={!values.isAdd && values.skills.length !== 5}
+						>
+							<button
+								onClick={() => setValues(prev => ({ ...prev, isAdd: true }))}
+								className='group flex flex-row gap-2.5 items-center mt-2.5 w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF]'
+							>
+								<PlusIcon className='fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-3' />
+								Add skill
+							</button>
+						</ConditionalWrapper>
+						<ConditionalWrapper condition={values.skills.length === 5}>
+							<h3 className='text-[#2D2A33] font-light font-sm'>
+								You reached maximum of 5 skills
+							</h3>
+						</ConditionalWrapper>
+					</div>
+				</>
+			)}
+		</EditModalForm>
+	)
+}
+export default EditGeneralInformation
