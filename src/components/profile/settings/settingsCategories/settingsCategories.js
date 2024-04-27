@@ -25,21 +25,7 @@ export const accountParams = [
         name: "String params",
         link: `${settingsRoutes.sections.params}/stringParams`,
       },
-      { name: "People who also have seen", prescription: "enabled" },
-      { name: "People you stopped following", prescription: "enabled" },
     ],
-  },
-  {
-    category: "Synchronization parameters",
-    items: [{ name: "Synchronize calendar" }, { name: "Synchronize contacts" }],
-  },
-  {
-    category: "Subscription and payment",
-    items: [{ name: "Free plan" }, { name: "View purchase history" }],
-  },
-  {
-    category: "Partners and services",
-    items: [{ name: "Microsoft" }],
   },
   {
     category: "Account management",
@@ -63,9 +49,6 @@ export const securitySettings = [
         name: "Change password",
         link: `${settingsRoutes.sections.security}/passwordChange`,
       },
-      { name: "Access keys" },
-      { name: "Log in locations" },
-      { name: "Devices where your password has been saved" },
       { name: "Two factory authentication", prescription: "disabled" },
     ],
   },
@@ -89,15 +72,6 @@ export const visibilitySettings = [
         link: `${settingsRoutes.sections.visibility}/surname`,
       },
       {
-        name: "Representation of your organization and interests",
-        prescription: "enabled",
-      },
-      {
-        name: "The owners of the company page export your data",
-        prescription: "enabled",
-      },
-      { name: "Finding ad visibility of your profile outside j4Y" },
-      {
         name: "Finding your profile by email",
         prescription: "1st level contacts",
         link: `${settingsRoutes.sections.visibility}/findByEmail`,
@@ -115,21 +89,6 @@ export const visibilitySettings = [
   },
   {
     category: "j4Y activity visibility",
-    items: [
-      { name: "Manage activity status", prescription: "Contacts only" },
-      {
-        name: "Granting shared access to profile updates online",
-        prescription: "enabled",
-      },
-      {
-        name: "Notify contacts about your appearance in news",
-        prescription: "enabled",
-      },
-      {
-        name: "Mention or tags",
-        prescription: "enabled",
-      },
-      { name: "Followers" },
-    ],
+    items: [{ name: "Manage activity status", prescription: "Contacts only" }],
   },
 ];
