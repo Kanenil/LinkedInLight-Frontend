@@ -137,11 +137,6 @@ const CreateCompany = () => {
 		const img = new Image()
 		img.src = imageDataUrl
 		img.onload = () => {
-			setErrors(prev => ({
-				...prev,
-				logoImg: "",
-			}))
-
 			setValues(prev => ({
 				...prev,
 				logoImg: imageDataUrl,
@@ -320,7 +315,10 @@ const CreateCompany = () => {
 
 											<div className='flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'>
 												<div className='flex items-center max-w-[150px] max-h-[150px]'>
-													<img className='object-contain' src={values.logo} />
+													<img
+														className='object-contain'
+														src={values.logoImg}
+													/>
 												</div>
 
 												<button
