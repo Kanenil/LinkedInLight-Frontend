@@ -103,14 +103,9 @@ const HeaderEditPage = ({ company }) => {
 		const img = new Image()
 		img.src = imageDataUrl
 		img.onload = () => {
-			setErrors(prev => ({
-				...prev,
-				logo: "",
-			}))
-
 			setValues(prev => ({
 				...prev,
-				logo: imageDataUrl,
+				logoImg: imageDataUrl,
 			}))
 		}
 	}
