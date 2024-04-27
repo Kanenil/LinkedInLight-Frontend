@@ -1,6 +1,6 @@
 import moment from "moment/moment"
 import { APP_ENV } from "../../../env"
-import defaultImage from "../../../assets/default-image.jpg"
+import defaultImage from "../../../assets/default-company-image.jpg"
 import { getTimeDuration } from "../../../utils/date"
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import React from "react"

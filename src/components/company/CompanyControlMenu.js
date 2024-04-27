@@ -1,6 +1,6 @@
 import defaultBg from "../../assets/default-background.jpg"
 import { APP_ENV } from "../../env"
-import defaultImage from "../../assets/default-image.jpg"
+import defaultImage from "../../assets/default-company-image.jpg"
 import { NavLink, useNavigate } from "react-router-dom"
 import classNames from "classnames"
 import React from "react"
