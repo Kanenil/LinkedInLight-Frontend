@@ -175,15 +175,17 @@ const InformationSector = ({ user, isOwner }) => {
 						{user?.headline}
 					</h1>
 				</ConditionalWrapper>
-				<div className='flex flex-row mt-1.5 font-jost text-sm'>
-					<h3 className='text-[#7F7F7F]'>
-						{user?.city}
-						{", " + user?.country}
-					</h3>
+				<div className='flex flex-row mt-1.5 gap-6 font-jost text-sm'>
+					{user?.country && (
+						<h3 className='text-[#7F7F7F]'>
+							{user?.country}
+							{user.city ? ", " + user.city : ""}
+						</h3>
+					)}
 
 					<button
 						onClick={onShowContactInformation}
-						className='ml-6 text-[#24459A] font-medium hover:underline'
+						className='text-[#24459A] font-medium hover:underline'
 					>
 						Contact information
 					</button>
