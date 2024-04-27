@@ -177,7 +177,8 @@ const InformationSector = ({ user, isOwner }) => {
 				</ConditionalWrapper>
 				<div className='flex flex-row mt-1.5 font-jost text-sm'>
 					<h3 className='text-[#7F7F7F]'>
-						{user?.city}, {user?.country}
+						{user?.city}
+						{", " + user?.country}
 					</h3>
 
 					<button
