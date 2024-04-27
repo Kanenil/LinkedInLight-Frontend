@@ -20,10 +20,10 @@ const useForm = (initialValues, onChangeCallback) => {
 			...touched,
 			[field]: true,
 		})
-		setErrors({
-			...errors,
+		setErrors(prev => ({
+			...prev,
 			[field]: !(e?.label || e),
-		})
+		}))
 
 		if (!store || !e) return
 
