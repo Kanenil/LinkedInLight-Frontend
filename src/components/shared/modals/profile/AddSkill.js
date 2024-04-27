@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import ProfileService from "../../../../services/profileService"
 import EditModalForm from "../../forms/EditModalForm"
 import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup"
-import ModalCheckFormGroup from "../../forms/ModalCheckFormGroup"
 import { useAlertContext } from "../../../../providers/AlertProvider"
 
 import { useFormik } from "formik"
@@ -112,8 +111,7 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 		onSubmit: onSubmitFormik,
 	})
 
-	const { values, errors, handleSubmit, handleChange, setValues, setErrors } =
-		formik
+	const { values, errors, handleSubmit, setValues, setErrors } = formik
 
 	const onRemoveClick = async () => {
 		await ProfileService.removeSkill(id)
@@ -170,19 +168,6 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 							<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.skill}</h3>
 						}
 					/>
-
-					{/* <ModalCheckFormGroup
-						className='pb-[10px] pr-[20px] gap-[5px]'
-						name='isMain'
-						onChange={handleChange}
-						error={errors.isMain}
-						value={values.isMain}
-						disabled={errors.isMain}
-						title='Is it your main skill?'
-						errorChildren={
-							<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.isMain}</h3>
-						}
-					/> */}
 				</>
 			)}
 		</EditModalForm>

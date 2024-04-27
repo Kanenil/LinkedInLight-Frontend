@@ -1,9 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import { useNavigate } from "react-router"
 import { Helmet } from "react-helmet-async"
 import ModalInputFormGroup from "../../components/shared/forms/ModalInputFormGroup"
-import useForm from "../../hooks/useForm"
 import { APP_ENV } from "../../env"
 import { slugify } from "../../utils/converters"
 import CompanyService from "../../services/companyService"
@@ -16,72 +15,112 @@ import { readFile } from "../../utils/cropImage"
 import { useAlertContext } from "../../providers/AlertProvider"
 import Button from "../../elements/buttons/Button"
 import { PlusIcon } from "@heroicons/react/24/outline"
+import { useFormik } from "formik"
+import * as yup from "yup"
+import { useQuery } from "@tanstack/react-query"
+import Loader from "../../components/shared/Loader"
+
+const CreateCompanySchema = yup.object({
+	companyName: yup.string().required(),
+	linkedinUrl: yup.string().required(),
+	industry: yup.object().required(),
+	organizationType: yup.object().required(),
+	organizationSize: yup.object().required(),
+	websiteUrl: yup.string().notRequired(),
+	logoImg: yup.string().notRequired(),
+	tagline: yup.string().notRequired(),
+	terms: yup.bool().isTrue(),
+})
+
+const initValues = {
+	companyName: "",
+	linkedinUrl: "",
+	industry: "",
+	organizationType: "",
+	organizationSize: "",
+	websiteUrl: "",
+	logoImg: "",
+	tagline: "",
+	terms: false,
+}
 
 const CreateCompany = () => {
 	const navigator = useNavigate()
 	const { success } = useAlertContext()
 
-	const initialValues = {
-		options: {
-			industry: [],
-			organizationType: [],
-			organizationSize: [],
-		},
-		values: {
-			companyName: "",
-			linkedinUrl: "",
-			industry: "",
-			organizationType: "",
-			organizationSize: "",
-			websiteUrl: "",
-			logo: "",
-			tagline: "",
-			terms: false,
-		},
-		errors: {
-			companyName: true,
-			linkedinUrl: true,
-			industry: true,
-			organizationType: true,
-			organizationSize: true,
-			terms: true,
-		},
+	const { data: industries, isLoading: industriesLoading } = useQuery({
+		queryFn: () => CompanyService.getIndustries(),
+		queryKey: ["allIndustries"],
+		select: ({ data }) =>
+			data.map(val => ({
+				label: val.name,
+				value: val.id,
+			})),
+	})
+
+	const { data: types, isLoading: typesLoading } = useQuery({
+		queryFn: () => CompanyService.getTypes(),
+		queryKey: ["allTypes"],
+		select: ({ data }) =>
+			data.map(val => ({
+				label: val,
+				value: val,
+			})),
+	})
+
+	const { data: sizes, isLoading: sizesLoading } = useQuery({
+		queryFn: () => CompanyService.getSizes(),
+		queryKey: ["allSizes"],
+		select: ({ data }) =>
+			data.map(val => ({
+				label: val,
+				value: val,
+			})),
+	})
+
+	const onSubmitFormik = values => {
+		const model = {
+			id: 0,
+			companyName: values.companyName,
+			linkedinUrl: values.linkedinUrl,
+			websiteUrl: values.websiteUrl,
+			organizationSize: values.organizationSize.value,
+			organizationType: values.organizationType.value,
+			logoImg: values.logo,
+			tagline: values.tagline,
+			applicationUserId: "",
+			industryId: values.industry.value,
+		}
+
+		CompanyService.create(model)
+			.then(() => {
+				navigator(-1)
+				success("Company successfully created", 5)
+			})
+			.catch(err => {
+				if (err.response.data === "This URL already exists")
+					setErrors(prev => ({
+						...prev,
+						linkedinUrl: "This URL already exists",
+					}))
+			})
 	}
+
+	const formik = useFormik({
+		initialValues: initValues,
+		validationSchema: CreateCompanySchema,
+		onSubmit: onSubmitFormik,
+	})
+
 	const {
-		options,
 		values,
 		errors,
-		isSubmitted,
-		handleChangeSelect,
-		onChangeInput,
-		onSubmit,
-		setErrors,
+		handleSubmit,
+		handleChange,
 		setValues,
-		setOptions,
 		touched,
-		setIsSubmitted,
-	} = useForm(initialValues, () => {})
-
-	useEffect(() => {
-		CompanyService.getIndustries().then(({ data }) => {
-			setOptions(prev => ({
-				...prev,
-				industry: data.map(val => ({ value: val.id, label: val.name })),
-			}))
-		})
-		CompanyService.getTypes().then(({ data }) => {
-			setOptions(prev => ({
-				...prev,
-				organizationType: data.map(val => ({ value: val, label: val })),
-			}))
-		})
-		CompanyService.getSizes().then(({ data }) => {
-			setOptions(prev => ({
-				...prev,
-				organizationSize: data.map(val => ({ value: val, label: val })),
-			}))
-		})
-	}, [])
+		setErrors,
+	} = formik
 
 	const onFileSelect = async e => {
 		let imageDataUrl = null
@@ -100,50 +139,14 @@ const CreateCompany = () => {
 		img.onload = () => {
 			setErrors(prev => ({
 				...prev,
-				logo: "",
+				logoImg: "",
 			}))
 
 			setValues(prev => ({
 				...prev,
-				logo: imageDataUrl,
+				logoImg: imageDataUrl,
 			}))
 		}
-	}
-
-	const handleSubmit = () => {
-		if (!values.terms)
-			return setErrors(prev => ({
-				...prev,
-				terms: true,
-			}))
-
-		const model = {
-			id: 0,
-			companyName: values.companyName,
-			linkedinUrl: values.linkedinUrl,
-			websiteUrl: values.websiteUrl,
-			organizationSize: values.organizationSize,
-			organizationType: values.organizationType,
-			logoImg: values.logo,
-			tagline: values.tagline,
-			applicationUserId: "",
-			industryId: options.industry.find(val => val.label === values.industry)
-				.value,
-		}
-
-		CompanyService.create(model)
-			.then(() => {
-				navigator(-1)
-				success("Company successfully created", 5)
-			})
-			.catch(err => {
-				setIsSubmitted(true)
-				if (err.response.data === "This URL already exists")
-					setErrors(prev => ({
-						...prev,
-						linkedinUrl: "This URL already exists",
-					}))
-			})
 	}
 
 	return (
@@ -175,218 +178,231 @@ const CreateCompany = () => {
 					</h3>
 
 					<div className='flex flex-col md:flex-row mt-1.5'>
-						<form
-							onSubmit={e => onSubmit(e, handleSubmit)}
-							className='w-full md:w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white'
-						>
-							<ModalInputFormGroup
-								title='Company name *'
-								name='companyName'
-								type='text'
-								value={values.companyName}
-								onChange={e => {
-									onChangeInput(e)
-									if (!touched.linkedinUrl) {
+						{industriesLoading || typesLoading || sizesLoading ? (
+							<div className='h-full'>
+								<Loader />
+							</div>
+						) : (
+							<form
+								onSubmit={handleSubmit}
+								className='w-full md:w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white'
+							>
+								<ModalInputFormGroup
+									title='Company name *'
+									name='companyName'
+									type='text'
+									value={values.companyName}
+									onChange={e => {
 										setValues(prev => ({
 											...prev,
 											linkedinUrl: slugify(e.target.value),
+											companyName: e.target.value,
 										}))
-										setErrors(prev => ({
+									}}
+									placeholder='Enter name of your company'
+									className='gap-[5px]'
+									error={touched.companyName && errors.companyName}
+									errorChildren={
+										<p className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.companyName}
+										</p>
+									}
+								/>
+
+								<ModalInputFormGroup
+									title={APP_ENV.FRONTEND_URL + "/j4y/company/"}
+									name='linkedinUrl'
+									type='text'
+									value={values.linkedinUrl}
+									onChange={handleChange}
+									placeholder='Add URL'
+									className='gap-[5px]'
+									error={touched.linkedinUrl && errors.linkedinUrl}
+									errorChildren={
+										<p className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.linkedinUrl}
+										</p>
+									}
+								/>
+
+								<ModalSelectFormGroup
+									className='gap-[5px]'
+									title='Industry *'
+									value={values.industry.label || ""}
+									options={industries}
+									containerWidth={300}
+									containerHeightMax={200}
+									placeHolder='ex: Software Development'
+									error={touched.industry && errors.industry}
+									hasTools={false}
+									onEnterSelect={false}
+									isAbsolute={true}
+									clearOnSelect={false}
+									onChange={e =>
+										setValues(prev => ({
 											...prev,
-											linkedinUrl: e.target.value.length === 0,
+											industry: e,
 										}))
 									}
-								}}
-								placeholder='Enter name of your company'
-								className='gap-[5px]'
-								error={isSubmitted && errors.companyName}
-								errorChildren={
-									<p className='mt-2 text-[#9E0F20] text-xs'>
-										This field is required
-									</p>
-								}
-							/>
+									errorChildren={
+										<h3 className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.industry}
+										</h3>
+									}
+								/>
 
-							<ModalInputFormGroup
-								title={APP_ENV.FRONTEND_URL + "/j4y/company/"}
-								name='linkedinUrl'
-								type='text'
-								value={values.linkedinUrl}
-								onChange={onChangeInput}
-								placeholder='Add URL'
-								className='gap-[5px]'
-								error={isSubmitted && !!errors.linkedinUrl}
-								errorChildren={
-									<p className='mt-2 text-[#9E0F20] text-xs'>
-										{typeof errors.linkedinUrl == "string"
-											? errors.linkedinUrl
-											: "This field is required"}
-									</p>
-								}
-							/>
+								<ModalSelectFormGroup
+									className='gap-[5px]'
+									title='Organization type *'
+									value={values.organizationType?.label || ""}
+									options={types}
+									containerWidth={300}
+									containerHeightMax={200}
+									placeHolder='Select from the list'
+									error={touched.organizationType && errors.organizationType}
+									hasTools={false}
+									onEnterSelect={false}
+									isAbsolute={true}
+									clearOnSelect={false}
+									onChange={e =>
+										setValues(prev => ({
+											...prev,
+											organizationType: e,
+										}))
+									}
+									errorChildren={
+										<h3 className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.organizationType}
+										</h3>
+									}
+								/>
 
-							<ModalSelectFormGroup
-								className='gap-[5px]'
-								title='Industry *'
-								value={values.industry}
-								options={options.industry}
-								containerWidth={300}
-								containerHeightMax={200}
-								placeHolder='ex: Software Development'
-								error={isSubmitted && errors["industry"]}
-								hasTools={false}
-								onEnterSelect={false}
-								isAbsolute={true}
-								clearOnSelect={false}
-								onChange={e => handleChangeSelect(e, "industry")}
-								errorChildren={
-									<h3 className='mt-2 text-[#9E0F20] text-xs'>
-										This field is required
-									</h3>
-								}
-							/>
+								<ModalSelectFormGroup
+									className='gap-[5px]'
+									title='Organization size *'
+									value={values.organizationSize?.label || ""}
+									options={sizes}
+									containerWidth={300}
+									containerHeightMax={200}
+									placeHolder='Select from the list'
+									error={touched.organizationSize && errors.organizationSize}
+									hasTools={false}
+									onEnterSelect={false}
+									isAbsolute={true}
+									clearOnSelect={false}
+									onChange={e =>
+										setValues(prev => ({
+											...prev,
+											organizationSize: e,
+										}))
+									}
+									errorChildren={
+										<h3 className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.organizationSize}
+										</h3>
+									}
+								/>
 
-							<ModalSelectFormGroup
-								className='gap-[5px]'
-								title='Organization type *'
-								value={values.organizationType}
-								options={options.organizationType}
-								containerWidth={300}
-								containerHeightMax={200}
-								placeHolder='Select from the list'
-								error={isSubmitted && errors["organizationType"]}
-								hasTools={false}
-								onEnterSelect={false}
-								isAbsolute={true}
-								clearOnSelect={false}
-								onChange={e => handleChangeSelect(e, "organizationType")}
-								errorChildren={
-									<h3 className='mt-2 text-[#9E0F20] text-xs'>
-										This field is required
-									</h3>
-								}
-							/>
+								<ModalInputFormGroup
+									title='Website'
+									name='websiteUrl'
+									type='url'
+									value={values.websiteUrl}
+									onChange={handleChange}
+									placeholder='http:// or https://'
+									className='gap-[5px]'
+								/>
 
-							<ModalSelectFormGroup
-								className='gap-[5px]'
-								title='Organization size *'
-								value={values.organizationSize}
-								options={options.organizationSize}
-								containerWidth={300}
-								containerHeightMax={200}
-								placeHolder='Select from the list'
-								error={isSubmitted && errors["organizationSize"]}
-								hasTools={false}
-								onEnterSelect={false}
-								isAbsolute={true}
-								clearOnSelect={false}
-								onChange={e => handleChangeSelect(e, "organizationSize")}
-								errorChildren={
-									<h3 className='mt-2 text-[#9E0F20] text-xs'>
-										This field is required
-									</h3>
-								}
-							/>
+								<Show>
+									<Show.When isTrue={!!values.logoImg}>
+										<div>
+											<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
 
-							<ModalInputFormGroup
-								title='Website'
-								name='websiteUrl'
-								type='url'
-								value={values.websiteUrl}
-								onChange={onChangeInput}
-								placeholder='http:// or https://'
-								className='gap-[5px]'
-							/>
+											<div className='flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'>
+												<div className='flex items-center max-w-[150px] max-h-[150px]'>
+													<img className='object-contain' src={values.logo} />
+												</div>
 
-							<Show>
-								<Show.When isTrue={!!values.logo}>
-									<div>
-										<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
-
-										<div className='flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'>
-											<div className='flex items-center max-w-[150px] max-h-[150px]'>
-												<img className='object-contain' src={values.logo} />
+												<button
+													type='button'
+													onClick={() =>
+														setValues(prev => ({ ...prev, logoImg: "" }))
+													}
+													className='ml-auto mb-auto mr-4 hover:text-gray-600'
+												>
+													<XMarkIcon className='w-6 h-6' />
+												</button>
 											</div>
-
-											<button
-												type='button'
-												onClick={() =>
-													setValues(prev => ({ ...prev, logo: "" }))
-												}
-												className='ml-auto mb-auto mr-4 hover:text-gray-600'
-											>
-												<XMarkIcon className='w-6 h-6' />
-											</button>
 										</div>
-									</div>
-								</Show.When>
+									</Show.When>
 
-								<Show.Else>
-									<label htmlFor='logo'>
-										<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
-										<input
-											id='logo'
-											onChange={onFileSelect}
-											className='hidden'
-											type='file'
-											accept='image/jpeg, image/jpg, image/png'
-										/>
+									<Show.Else>
+										<label htmlFor='logo'>
+											<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
+											<input
+												id='logo'
+												onChange={onFileSelect}
+												className='hidden'
+												type='file'
+												accept='image/jpeg, image/jpg, image/png'
+											/>
 
-										<Dropzone
-											onFileSelect={onFileSelect}
-											className='flex flex-col rounded-lg justify-center items-center border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'
-										>
-											<div className='flex flex-row items-center gap-3'>
-												<ArrowDownTrayIcon className='w-6 h-6 text-[#24459A]' />
+											<Dropzone
+												onFileSelect={onFileSelect}
+												className='flex flex-col rounded-lg justify-center items-center border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'
+											>
+												<div className='flex flex-row items-center gap-3'>
+													<ArrowDownTrayIcon className='w-6 h-6 text-[#24459A]' />
 
-												<span className='text-[#2D2A33] font-jost text-lg'>
-													Upload logo
-												</span>
-											</div>
+													<span className='text-[#2D2A33] font-jost text-lg'>
+														Upload logo
+													</span>
+												</div>
 
-											<h3 className='font-extralight font-jost mt-2.5'>
-												Upload the file to preview
-											</h3>
-										</Dropzone>
-										{errors.logo && (
-											<h3 className='mt-2 text-[#9E0F20] text-xs'>
-												{errors.logo}
-											</h3>
-										)}
-									</label>
-								</Show.Else>
-							</Show>
+												<h3 className='font-extralight font-jost mt-2.5'>
+													Upload the file to preview
+												</h3>
+											</Dropzone>
+											{errors.logoImg && (
+												<h3 className='mt-2 text-[#9E0F20] text-xs'>
+													{errors.logoImg}
+												</h3>
+											)}
+										</label>
+									</Show.Else>
+								</Show>
 
-							<ModalInputFormGroup
-								title='Tagline'
-								name='tagline'
-								type='text'
-								value={values.tagline}
-								onChange={onChangeInput}
-								placeholder=''
-								className='gap-[5px]'
-							/>
+								<ModalInputFormGroup
+									title='Tagline'
+									name='tagline'
+									type='text'
+									value={values.tagline}
+									onChange={handleChange}
+									placeholder=''
+									className='gap-[5px]'
+								/>
 
-							<ModalCheckFormGroup
-								className='gap-[5px]'
-								name='terms'
-								onChange={onChangeInput}
-								value={values.terms}
-								error={isSubmitted && errors.terms}
-								errorChildren={
-									<h3 className='mt-2 text-[#9E0F20] text-xs'>
-										This is required
-									</h3>
-								}
-								title='I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.'
-							/>
+								<ModalCheckFormGroup
+									className='gap-[5px]'
+									name='terms'
+									onChange={handleChange}
+									value={values.terms}
+									error={touched.terms && errors.terms}
+									errorChildren={
+										<h3 className='mt-2 text-[#9E0F20] text-xs'>
+											{errors.terms}
+										</h3>
+									}
+									title='I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.'
+								/>
 
-							<div className='ml-auto pt-4 pb-1'>
-								<Button type='submit' variant='primary' rounded='full'>
-									Create company
-								</Button>
-							</div>
-						</form>
+								<div className='ml-auto pt-4 pb-1'>
+									<Button type='submit' variant='primary' rounded='full'>
+										Create company
+									</Button>
+								</div>
+							</form>
+						)}
 
 						<div className='w-full md:w-5/12 mt-6 md:mt-0 md:ml-6 flex flex-col h-fit rounded-lg overflow-hidden border-[1px] border-[#B4BFDD]'>
 							<div className='border-b-[1px] border-b-[#24459A] px-5 py-3.5 bg-white'>
@@ -398,9 +414,9 @@ const CreateCompany = () => {
 							<div className='px-5 pt-5 pb-6 bg-[#F0F1F3]'>
 								<div className='flex flex-col gap-2.5 p-5 border-[1px] border-[#E7E7E7] bg-white rounded-xl'>
 									<Show>
-										<Show.When isTrue={!!values.logo}>
+										<Show.When isTrue={!!values.logoImg}>
 											<div className='flex items-center max-w-[150px] max-h-[150px]'>
-												<img className='object-contain' src={values.logo} />
+												<img className='object-contain' src={values.logoImg} />
 											</div>
 										</Show.When>
 
