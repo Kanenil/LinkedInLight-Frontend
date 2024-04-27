@@ -186,7 +186,7 @@ const SignUp = () => {
 									<TextDown
 										className='gap-[5px]'
 										value={values.country}
-										options={countries}
+										options={countries ?? []}
 										containerWidth={300}
 										containerHeightMax={200}
 										containerClass='rounded-xl border-[1px] border-[#B4BFDD]'
@@ -391,7 +391,7 @@ const SignUp = () => {
 							<TextDown
 								className='gap-[5px]'
 								value={values.country}
-								options={countries}
+								options={countries ?? []}
 								containerWidth={300}
 								containerHeightMax={200}
 								containerClass='rounded-xl border-[1px] border-[#B4BFDD]'
