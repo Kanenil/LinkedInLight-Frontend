@@ -1,104 +1,104 @@
-import {useState} from "react";
-import {objectMap} from "../utils/converters";
+import { useState } from "react"
+import { objectMap } from "../utils/converters"
 
 const useForm = (initialValues, onChangeCallback) => {
-    const [options, setOptions] = useState(initialValues.options);
-    const [values, setValues] = useState(initialValues.values);
-    const [errors, setErrors] = useState(initialValues.errors);
-    const [touched, setTouched] = useState(objectMap(initialValues.values, () => false));
-    const [isSubmitted, setIsSubmitted] = useState(false);
+	const [options, setOptions] = useState(initialValues.options)
+	const [values, setValues] = useState(initialValues.values)
+	const [errors, setErrors] = useState(initialValues.errors)
+	const [touched, setTouched] = useState(
+		objectMap(initialValues.values, () => false),
+	)
+	const [isSubmitted, setIsSubmitted] = useState(false)
 
-    const handleChangeSelect = (e, field, store) => {
-        onChangeCallback();
-        setValues({
-            ...values,
-            [field]: e?.label || e
-        });
-        setTouched({
-            ...touched,
-            [field]: true
-        })
-        setErrors({
-            ...errors,
-            [field]: !(e?.label || e)
-        });
+	const handleChangeSelect = (e, field, store) => {
+		onChangeCallback()
+		setValues(prev => ({
+			...prev,
+			[field]: e?.label || e,
+		}))
+		setTouched({
+			...touched,
+			[field]: true,
+		})
+		setErrors(prev => ({
+			...prev,
+			[field]: !(e?.label || e),
+		}))
 
-        if (!store || !e)
-            return;
+		if (!store || !e) return
 
-        const saveInStorage = (arr) => {
-            localStorage.setItem(store, JSON.stringify(arr));
-            setOptions({
-                ...options,
-                [field]: arr
-            });
-        };
+		const saveInStorage = arr => {
+			localStorage.setItem(store, JSON.stringify(arr))
+			setOptions({
+				...options,
+				[field]: arr,
+			})
+		}
 
-        if (options[field].length === 0 && e.label.length > 0) {
-            saveInStorage([e]);
-        }
+		if (options[field].length === 0 && e.label.length > 0) {
+			saveInStorage([e])
+		}
 
-        if (
-            initialValues.values[field].length > 0 &&
-            e.label.length > 0 &&
-            initialValues.values[field].filter(
-                (option) =>
-                    option.label.toLowerCase() === e.label.toLowerCase()
-            ).length === 0
-        ) {
-            saveInStorage([...initialValues.values[field], e]);
-        }
-    };
+		if (
+			initialValues.values[field].length > 0 &&
+			e.label.length > 0 &&
+			initialValues.values[field].filter(
+				option => option.label.toLowerCase() === e.label.toLowerCase(),
+			).length === 0
+		) {
+			saveInStorage([...initialValues.values[field], e])
+		}
+	}
 
-    const onChangeInput = (e) => {
-        const {value, type, checked, name} = e.target;
+	const onChangeInput = e => {
+		const { value, type, checked, name } = e.target
 
-        setValues({
-            ...values,
-            [name]: type === "checkbox" ? checked : value
-        })
+		setValues({
+			...values,
+			[name]: type === "checkbox" ? checked : value,
+		})
 
-        setTouched({
-            ...touched,
-            [name]: true
-        })
+		setTouched({
+			...touched,
+			[name]: true,
+		})
 
-        if (errors[name]) {
-            setErrors({
-                ...errors,
-                [name]: type === "checkbox" ? !checked : value.length === 0
-            })
-        }
+		if (errors[name]) {
+			setErrors({
+				...errors,
+				[name]: type === "checkbox" ? !checked : value.length === 0,
+			})
+		}
 
-        onChangeCallback();
-    }
+		onChangeCallback()
+	}
 
-    const onSubmit = (e, callback) => {
-        e.preventDefault();
+	const onSubmit = (e, callback) => {
+		e.preventDefault()
 
-        const hasErrors = Object.values(errors).some(error => error);
+		const hasErrors = Object.values(errors).some(error => error)
 
-        if (hasErrors) {
-            setIsSubmitted(true);
-            return;
-        }
+		if (hasErrors) {
+			setIsSubmitted(true)
+			return
+		}
 
-        callback();
-    }
+		callback()
+	}
 
-    return {
-        options,
-        values,
-        errors,
-        isSubmitted,
-        handleChangeSelect,
-        onChangeInput,
-        onSubmit,
-        setErrors,
-        setValues,
-        setOptions,
-        setIsSubmitted,
-        touched
-    };
+	return {
+		options,
+		values,
+		errors,
+		isSubmitted,
+		handleChangeSelect,
+		onChangeInput,
+		onSubmit,
+		setErrors,
+		setValues,
+		setOptions,
+		setIsSubmitted,
+		touched,
+	}
 }
-export default useForm;
+export default useForm

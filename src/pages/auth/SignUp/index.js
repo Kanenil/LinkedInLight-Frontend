@@ -59,7 +59,7 @@ const SignUp = () => {
 		setValues,
 	} = formik
 
-	const { data: countries, isLoading } = useQuery({
+	const { data: countries } = useQuery({
 		queryFn: () => authService.countries(),
 		queryKey: ["countries"],
 		select: ({ data }) =>
@@ -69,11 +69,7 @@ const SignUp = () => {
 			})),
 	})
 
-	const {
-		data: cities,
-		isLoading: isCitiesLoading,
-		refetch,
-	} = useQuery({
+	const { data: cities, refetch } = useQuery({
 		queryFn: ({ queryKey }) => authService.cities(queryKey[1]),
 		queryKey: ["cities", values.country],
 		select: ({ data }) =>
