@@ -111,6 +111,7 @@ const TextDown = ({
 
 	const handleKeyDown = event => {
 		if (event.keyCode === 13 && onEnterSelect && searchValue.length > 0) {
+			event.preventDefault()
 			onItemClick({ label: searchValue, value: searchValue })
 		}
 	}
