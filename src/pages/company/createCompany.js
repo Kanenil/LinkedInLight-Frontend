@@ -86,7 +86,7 @@ const CreateCompany = () => {
 			websiteUrl: values.websiteUrl,
 			organizationSize: values.organizationSize.value,
 			organizationType: values.organizationType.value,
-			logoImg: values.logo,
+			logoImg: values.logoImg,
 			tagline: values.tagline,
 			applicationUserId: "",
 			industryId: values.industry.value,
