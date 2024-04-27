@@ -37,40 +37,49 @@ const Settings = () => {
     }
   }, [selectedSection, block]);
   return (
-    <div className="bg-[#E7E7E7] w-full py-24 flex justify-center">
-      <div className="w-1/4 bg-white h-[900px] rounded-lg overflow-hidden py-8 px-6 inline-block">
-        <img
-          className="w-[45px] h-[45px] rounded-full  hover:opacity-45 transition duration-300 ease-in-out"
-          src="https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg"
-          alt="noData"
-        ></img>
-        <div className="my-3 text-2xl font-semibold">Settings</div>
+    <div className="bg-[#E7E7E7] w-full h-[1000px] py-24 px-5 sm:px-0 sm:flex sm:justify-center">
+      <div className="w-full sm:w-1/4 bg-white h-[150px] sm:h-[900px] rounded-lg overflow-hidden py-8 px-6 sm:inline-block text-center sm:text-left">
+        <div className="text-left flex sm:block justify-center items-center">
+          <img
+            className="w-[45px] h-[45px] rounded-full hover:opacity-45 transition duration-300 ease-in-out inline-block sm:block"
+            src="https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg"
+            alt="noData"
+          ></img>
+          <div className="sm:mt-3 text-2xl font-semibold inline-block sm:block ml-3 sm:ml-0">
+            Settings
+          </div>
+        </div>
+
         <Link
           to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.params}`}
           className={`text-${getColor(
             settingsRoutes.sections.params
-          )} my-7 w-2/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}
+          )} my-7 w-fit hover:text-indigo-500 transition duration-300 ease-in-out inline-block sm:block float-left`}
         >
           <UserIcon className="inline-block pb-[4px] w-[33px] h-[33px]" />
-          <div className="ml-[10px] inline-block">Account parameters</div>
+          <div className="ml-[10px] hidden sm:inline-block">
+            Account parameters
+          </div>
         </Link>
         <Link
           to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.security}`}
           className={`text-${getColor(
             settingsRoutes.sections.security
-          )} my-7 w-2/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}
+          )} my-7 w-fit hover:text-indigo-500 transition duration-300 ease-in-out inline-block sm:block`}
         >
           <LockClosedIcon className="inline-block pb-[4px] w-[33px] h-[33px]" />
-          <div className="ml-[10px] inline-block">Sign-in and Security</div>
+          <div className="ml-[10px] hidden sm:inline-block">
+            Sign-in and Security
+          </div>
         </Link>
         <Link
           to={`/j4y${settingsRoutes.settings}${settingsRoutes.sections.visibility}`}
           className={`text-${getColor(
             settingsRoutes.sections.visibility
-          )} my-7 w-1/3 hover:text-indigo-500 transition duration-300 ease-in-out block`}
+          )} my-7 w-fit hover:text-indigo-500 transition duration-300 ease-in-out inline-block sm:block float-right sm:float-none`}
         >
           <EyeIcon className="inline-block pb-[4px] w-[35px] h-[35px]" />
-          <div className="ml-[10px] inline-block">Visibility</div>
+          <div className="ml-[10px] hidden sm:inline-block">Visibility</div>
         </Link>
       </div>
       <SettingsTable settings={currentSettings} block={block} />
