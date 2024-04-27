@@ -17,7 +17,7 @@ const OpenToWork = ({ isOwner }) => {
 		retry: false,
 	})
 
-	if (isLoading || positionLoading) return <></>
+	if (isLoading || positionLoading || !data?.openToWorkPositions) return <></>
 
 	const dot = (
 		<svg
