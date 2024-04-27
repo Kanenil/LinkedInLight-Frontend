@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import CompanyService from "../../../../services/companyService"
 import Loader from "../../Loader"
 import Show from "../../../../elements/shared/Show"
+import ProfileService from "../../../../services/profileService"
 
 const options = [
 	{
@@ -39,6 +40,13 @@ const StartCompany = forwardRef(({ setIsComponentVisible }, ref) => {
 		queryKey: ["currentUserCompanies"],
 		select: ({ data }) => data,
 	})
+	const { data: administratedCompany, isLoading: administratedLoading } =
+		useQuery({
+			queryFn: () => ProfileService.administratedCompany(),
+			queryKey: ["administratedCompany"],
+			select: ({ data }) => data,
+			retry: false,
+		})
 
 	const navigator = useNavigate()
 
@@ -62,11 +70,17 @@ const StartCompany = forwardRef(({ setIsComponentVisible }, ref) => {
 			</div>
 
 			<Show>
-				<Show.When isTrue={isLoading}>
+				<Show.When isTrue={isLoading || administratedLoading}>
 					<Loader />
 				</Show.When>
 
-				<Show.When isTrue={!isLoading && companies.length > 0}>
+				<Show.When
+					isTrue={
+						!isLoading &&
+						!administratedLoading &&
+						(companies.length > 0 || !!administratedCompany)
+					}
+				>
 					<div className='flex flex-col pb-2.5 rounded-lg overflow-hidden'>
 						<div className='bg-[#F7F7F7] p-2.5'>
 							<h1 className='text-[#2D2A33] font-jost font-medium text-lg'>
@@ -75,6 +89,16 @@ const StartCompany = forwardRef(({ setIsComponentVisible }, ref) => {
 						</div>
 
 						<div className='flex flex-col border-[#F7F7F7] border-[1px] gap-1 px-2.5 py-1.5'>
+							<Button
+								onClick={() => {
+									setIsComponentVisible(false)
+									navigator(`/j4y/company/${administratedCompany?.id}`)
+								}}
+								variant='primaryText'
+								className='group items-center justify-start gap-2.5 text-[#7D88A4] hover:text-[#24459A] text-lg font-normal'
+							>
+								{administratedCompany?.companyName}
+							</Button>
 							{companies?.map((company, index) => (
 								<Button
 									key={`company-${company.id}-${index}`}
