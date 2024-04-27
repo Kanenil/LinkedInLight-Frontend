@@ -48,7 +48,7 @@ const SettingsTable = ({ settings, block }) => {
     });
   };
   return (
-    <div className="inline-block mx-10 w-1/2">
+    <div className="sm:inline-block mx-auto sm:mx-10 w-full sm:w-1/2 mt-4 sm:mt-0">
       {block ? SettingBlockElement(block) : getData()}
     </div>
   );
