@@ -15,7 +15,6 @@ import ChatsLayout from "../shared/layouts/ChatsLayout"
 import React from "react"
 import ImageCropProvider from "../../providers/ImageCropProvider"
 import MyNetwork from "../../pages/network"
-import Connections from "../../pages/network/connections"
 import ChatProvider from "../../providers/ChatProvider"
 import CreateCompany from "../../pages/company/createCompany"
 import AlertProvider from "../../providers/AlertProvider"
@@ -75,14 +74,12 @@ const App = () => {
 													</Route>
 												</Route>
 
-												<Route path='my-network' element={<MyNetwork />} />
-												<Route
-													path='my-network/connections'
-													element={<Connections />}
-												/>
-
 												<Route path='*' element={<Navigate to='not-found' />} />
 												<Route path='not-found' element={<NotFound />} />
+											</Route>
+
+											<Route path='my-network' element={<ChatsLayout />}>
+												<Route index element={<MyNetwork />} />
 											</Route>
 
 											<Route path='chats' element={<ChatsLayout />}>
