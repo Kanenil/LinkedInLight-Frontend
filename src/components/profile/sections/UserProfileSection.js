@@ -67,7 +67,7 @@ const CONNECTIONREQUEST = "connectionRequest"
 const CONNECTIONREVOKE = "connectionRevoke"
 const CONTACTINFORMATION = "contactInformation"
 
-const InformationSector = ({ user, isOwner }) => {
+const InformationSector = ({ user, isOwner, isPreview }) => {
 	const queryClient = useQueryClient()
 	const { isConnected, isConnectionRequested } = useQueries({
 		queries: connectedQuery(user.id, isOwner).map(value => ({
@@ -104,6 +104,8 @@ const InformationSector = ({ user, isOwner }) => {
 	}
 
 	const onShowContactInformation = () => {
+		if (isPreview) return
+
 		setConfirmModal(CONTACTINFORMATION)
 		setIsVisible(true)
 	}
@@ -213,7 +215,11 @@ const InformationSector = ({ user, isOwner }) => {
 				</Show>
 
 				<div className='flex flex-row flex-wrap gap-4'>
-					<OpenToWork isOwner={isOwner} />
+					{!isPreview && (
+						<>
+							<OpenToWork isOwner={isOwner} />
+						</>
+					)}
 				</div>
 
 				<Show>
@@ -232,60 +238,62 @@ const InformationSector = ({ user, isOwner }) => {
 
 					<Show.Else>
 						<div className='mt-3'>
-							<Show>
-								<Show.When isTrue={isConnected}>
-									<Button
-										variant='primary'
-										rounded='full'
-										className='items-center w-fit gap-2.5 px-3'
-										onClick={onRemoveConnection}
-									>
-										Remove connection
-										<XMarkIcon className='h-5 fill-white' />
-									</Button>
-								</Show.When>
+							{!isPreview && (
+								<Show>
+									<Show.When isTrue={isConnected}>
+										<Button
+											variant='primary'
+											rounded='full'
+											className='items-center w-fit gap-2.5 px-3'
+											onClick={onRemoveConnection}
+										>
+											Remove connection
+											<XMarkIcon className='h-5 fill-white' />
+										</Button>
+									</Show.When>
 
-								<Show.When
-									isTrue={
-										!!isConnectionRequested &&
-										isConnectionRequested.status === "Rejected"
-									}
-								>
-									<Button
-										variant='primary'
-										rounded='full'
-										className='items-center w-fit gap-2.5 px-3'
-										onClick={onRevokeConnectionRequest}
+									<Show.When
+										isTrue={
+											!!isConnectionRequested &&
+											isConnectionRequested.status === "Rejected"
+										}
 									>
-										Requested connection
-										<XMarkIcon className='h-5 fill-white' />
-									</Button>
-								</Show.When>
+										<Button
+											variant='primary'
+											rounded='full'
+											className='items-center w-fit gap-2.5 px-3'
+											onClick={onRevokeConnectionRequest}
+										>
+											Requested connection
+											<XMarkIcon className='h-5 fill-white' />
+										</Button>
+									</Show.When>
 
-								<Show.When isTrue={!!isConnectionRequested}>
-									<Button
-										variant='primary'
-										rounded='full'
-										className='items-center w-fit gap-2.5 px-3'
-										onClick={onRemoveConnectionRequest}
-									>
-										Requested connection
-										<XMarkIcon className='h-5 fill-white' />
-									</Button>
-								</Show.When>
+									<Show.When isTrue={!!isConnectionRequested}>
+										<Button
+											variant='primary'
+											rounded='full'
+											className='items-center w-fit gap-2.5 px-3'
+											onClick={onRemoveConnectionRequest}
+										>
+											Requested connection
+											<XMarkIcon className='h-5 fill-white' />
+										</Button>
+									</Show.When>
 
-								<Show.Else>
-									<Button
-										variant='primary'
-										rounded='full'
-										onClick={onConnect}
-										className='items-center gap-2.5 mt-2 px-3'
-									>
-										<PlusIcon className='w-4 h-4 stroke-2' />
-										Connect
-									</Button>
-								</Show.Else>
-							</Show>
+									<Show.Else>
+										<Button
+											variant='primary'
+											rounded='full'
+											onClick={onConnect}
+											className='items-center gap-2.5 mt-2 px-3'
+										>
+											<PlusIcon className='w-4 h-4 stroke-2' />
+											Connect
+										</Button>
+									</Show.Else>
+								</Show>
+							)}
 						</div>
 					</Show.Else>
 				</Show>
@@ -340,12 +348,12 @@ const InformationSector = ({ user, isOwner }) => {
 	)
 }
 
-const UserProfileSection = ({ user, isOwner }) => {
+const UserProfileSection = ({ user, isOwner, isPreview }) => {
 	return (
 		<div className='flex flex-col bg-white rounded-b-lg'>
 			<ImageSector user={user} isOwner={isOwner} />
 
-			<InformationSector user={user} isOwner={isOwner} />
+			<InformationSector user={user} isOwner={isOwner} isPreview={isPreview} />
 		</div>
 	)
 }

@@ -15,13 +15,13 @@ const defaultRoutes = [
 		title: "Settings & Privacy",
 	},
 	{
-		to: "/j4y",
+		to: "/j4y/settings/params/language",
 		title: "Language",
 	},
-	{
-		to: "/j4y",
-		title: "Help",
-	},
+	// {
+	// 	to: "/j4y",
+	// 	title: "Help",
+	// },
 ]
 
 const AccountButton = () => {
@@ -114,10 +114,6 @@ const AccountButton = () => {
 								{...route}
 							/>
 						))}
-					</div>
-
-					<div className='mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]'>
-						<LinkedText to='/j4y' title='Posts & Activity' />
 					</div>
 
 					<div className='mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]'>
