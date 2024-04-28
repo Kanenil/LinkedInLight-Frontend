@@ -37,11 +37,11 @@ jobs:
         run: find build/ -print
 
       - name: 📂 Sync files
-        uses: milanmk/actions-file-deployer@master
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          remote-protocol: ftp
-          remote-host: ${{ secrets.FTP_HOST }}
-          remote-user: ${{ secrets.FTP_USER }}
-          remote-password: ${{ secrets.FTP_PASSWORD }}
-          remote-path: /app
-          remote-port: 21
+          protocol: ftp
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: build/
+          server-dir: /app
