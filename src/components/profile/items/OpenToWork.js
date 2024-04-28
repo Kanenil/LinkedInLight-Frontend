@@ -82,7 +82,12 @@ const OpenToWork = ({ isOwner }) => {
 					to='edit/job-opportunity'
 				/>
 			)}
-			<Modal position='sm:mt-20 mx-auto' isOpen={isOpen} closeModal={!isOpen}>
+			<Modal
+				position='sm:mt-20 mx-auto'
+				isOpen={isOpen}
+				closeModal={!isOpen}
+				onClose={() => setIsOpen(false)}
+			>
 				<OpenToWorkDetails
 					preferences={data}
 					positions={positions}
