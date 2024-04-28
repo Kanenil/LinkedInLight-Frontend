@@ -3,36 +3,29 @@ import { Link } from "react-router-dom"
 import ConditionalWrapper from "../shared/ConditionalWrapper"
 import useMobileDetector from "../../hooks/useMobileDetector"
 import Modal from "../../components/shared/modals/Modal"
-import React, { useEffect } from "react"
+import React from "react"
 import Button from "./Button"
 import ProfileService from "../../services/profileService"
-import { useState } from "react"
-import { asyncFilter } from "../../utils/converters"
+import { useQueries } from "@tanstack/react-query"
 
 const statuses = [
 	{
 		title: "Finding a new work",
 		description: "Show recruiters and others that you're open to work",
 		to: "edit/job-opportunity",
-		condition: async () => {
-			try {
-				return !(await ProfileService.getOpenToWork())
-			} catch (err) {
-				return true
-			}
-		},
+		condition: 0,
 	},
 	{
 		title: "Hiring",
 		description: "Share that you're hiring and attract qualified candidates",
 		to: " ",
-		condition: true,
+		condition: 1,
 	},
 	{
 		title: "Providing services",
 		description: "Showcase services you offer so new client can discover you",
 		to: " ",
-		condition: true,
+		condition: 2,
 	},
 ]
 
@@ -55,20 +48,31 @@ const OpenToButton = () => {
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useComponentVisible(false)
 
-	const [filteredStatuses, setFilteredStatuses] = useState([])
-
-	useEffect(() => {
-		asyncFilter(statuses, async status => {
-			if (typeof status.condition === "function")
-				return await status.condition()
-
-			return await new Promise(resolve => {
-				resolve(status.condition)
-			})
-		}).then(resp => {
-			setFilteredStatuses(resp)
-		})
-	}, [])
+	const { data } = useQueries({
+		queries: [
+			{
+				queryFn: () => ProfileService.getOpenToWork(),
+				queryKey: ["openToWork"],
+				select: ({ data }) => data,
+				retry: false,
+			},
+			{
+				queryFn: () => ProfileService.getOpenToHire(),
+				queryKey: ["openToHire"],
+				select: ({ data }) => data,
+				retry: false,
+			},
+			{
+				queryFn: () => ProfileService.getServices(),
+				queryKey: ["openToServices"],
+				select: ({ data }) => data,
+				retry: false,
+			},
+		],
+		combine: results => ({
+			data: results,
+		}),
+	})
 
 	const { isMobile } = useMobileDetector()
 
@@ -90,9 +94,13 @@ const OpenToButton = () => {
 					className='absolute flex flex-col gap-1 bg-white left-0 rounded-r-lg rounded-b-lg top-10 py-2 z-20'
 					style={{ boxShadow: "0px 1px 6px 0px #00000040" }}
 				>
-					{filteredStatuses.map((status, index) => (
-						<ChoiceItem key={`OpenToStatus-${index}`} {...status} />
-					))}
+					{statuses.map(
+						(status, index) =>
+							(data[status.condition].isError ||
+								!data[status.condition].data) && (
+								<ChoiceItem key={`OpenToStatus-${index}`} {...status} />
+							),
+					)}
 				</div>
 			</ConditionalWrapper>
 			<ConditionalWrapper condition={isComponentVisible && isMobile}>
@@ -107,13 +115,17 @@ const OpenToButton = () => {
 								onClick={onClose}
 							/>
 
-							{filteredStatuses.map((status, index) => (
-								<ChoiceItem
-									key={`OpenToStatus-${index}`}
-									{...status}
-									onClick={onClose}
-								/>
-							))}
+							{statuses.map(
+								(status, index) =>
+									(data[status.condition].isError ||
+										!data[status.condition].data) && (
+										<ChoiceItem
+											key={`OpenToStatus-${index}`}
+											{...status}
+											onClick={onClose}
+										/>
+									),
+							)}
 						</div>
 					</div>
 				</Modal>
