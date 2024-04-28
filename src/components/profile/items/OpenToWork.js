@@ -1,8 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
+
 import ProfileService from "../../../services/profileService"
 import PencilButton from "../../../elements/buttons/PencilButton"
+import Modal from "../../shared/modals/Modal"
+import OpenToWorkDetails from "../../shared/modals/profile/OpenToWorkDetails"
+import { useState } from "react"
+import { authService } from "../../../services/authService"
 
 const OpenToWork = ({ isOwner }) => {
+	const [isOpen, setIsOpen] = useState(false)
+
 	const { data, isLoading, isError } = useQuery({
 		queryFn: () => ProfileService.getOpenToWork(),
 		queryKey: ["openToWork"],
@@ -17,7 +24,14 @@ const OpenToWork = ({ isOwner }) => {
 		retry: false,
 	})
 
-	if (isLoading || positionLoading || isError) return <></>
+	const { data: countries, isLoading: countriesLoading } = useQuery({
+		queryFn: () => authService.countries(),
+		queryKey: ["allCountries"],
+		select: ({ data }) => data,
+		retry: false,
+	})
+
+	if (isLoading || positionLoading || countriesLoading || isError) return <></>
 
 	const dot = (
 		<svg
@@ -55,9 +69,12 @@ const OpenToWork = ({ isOwner }) => {
 				</div>
 			</div>
 
-			<div className='flex flex-row font-medium mt-1 font-jost text-[#24459A] text-sm w-fit'>
+			<button
+				onClick={() => setIsOpen(true)}
+				className='flex flex-row hover:underline font-medium mt-1 font-jost text-[#24459A] text-sm w-fit'
+			>
 				Details
-			</div>
+			</button>
 
 			{isOwner && (
 				<PencilButton
@@ -65,6 +82,15 @@ const OpenToWork = ({ isOwner }) => {
 					to='edit/job-opportunity'
 				/>
 			)}
+			<Modal position='sm:mt-20 mx-auto' isOpen={isOpen} closeModal={!isOpen}>
+				<OpenToWorkDetails
+					preferences={data}
+					positions={positions}
+					countries={countries}
+					dot={dot}
+					onClose={() => setIsOpen(false)}
+				/>
+			</Modal>
 		</div>
 	)
 }
