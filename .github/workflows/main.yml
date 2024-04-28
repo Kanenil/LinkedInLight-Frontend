@@ -39,8 +39,9 @@ jobs:
       - name: 📂 Sync files
         uses: milanmk/actions-file-deployer@master
         with:
-          remote-protocol: sftp
+          remote-protocol: ftp
           remote-host: ${{ secrets.FTP_HOST }}
           remote-user: ${{ secrets.FTP_USER }}
           remote-password: ${{ secrets.FTP_PASSWORD }}
           remote-path: /app
+          remote-port: 21
