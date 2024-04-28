@@ -148,6 +148,14 @@ class ProfileService {
 	deleteOpenToWork() {
 		return axios.delete(`${this.#URL}/deleteOpenToWorkVM`)
 	}
+
+	getServices() {
+		return axios.get(`${this.#URL}/getServices`)
+	}
+
+	getOpenToHire() {
+		return axios.get(`${this.#URL}/IsOpenToHire`)
+	}
 }
 
 export default new ProfileService()

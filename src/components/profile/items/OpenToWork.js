@@ -3,7 +3,7 @@ import ProfileService from "../../../services/profileService"
 import PencilButton from "../../../elements/buttons/PencilButton"
 
 const OpenToWork = ({ isOwner }) => {
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError } = useQuery({
 		queryFn: () => ProfileService.getOpenToWork(),
 		queryKey: ["openToWork"],
 		select: ({ data }) => data,
@@ -17,7 +17,7 @@ const OpenToWork = ({ isOwner }) => {
 		retry: false,
 	})
 
-	if (isLoading || positionLoading || !data?.openToWorkPositions) return <></>
+	if (isLoading || positionLoading || isError) return <></>
 
 	const dot = (
 		<svg

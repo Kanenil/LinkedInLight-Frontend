@@ -5,7 +5,7 @@ import Show from "../../../../elements/shared/Show"
 import ProfileService from "../../../../services/profileService"
 import { authService } from "../../../../services/authService"
 import ModalRadioInput from "../../forms/ModalRadioInput"
-import { useQueries } from "@tanstack/react-query"
+import { useQueries, useQueryClient } from "@tanstack/react-query"
 import { useAlertContext } from "../../../../providers/AlertProvider"
 import EditModalForm from "../../forms/EditModalForm"
 import { PlusIcon } from "@heroicons/react/24/outline"
@@ -73,6 +73,7 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 		onSubmit,
 	} = useForm(initialValues, onChange)
 	const { success } = useAlertContext()
+	const queryClient = useQueryClient()
 
 	const onRadioChange = ({ target: { name, value } }) => {
 		setValues(prev => ({
@@ -227,6 +228,8 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 			await ProfileService.openToWork(model)
 		}
 
+		queryClient.invalidateQueries(["openToWork"])
+
 		success("Open to work successfully saved.", 5)
 		onSave()
 	}
@@ -287,6 +290,7 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 
 	const onRemove = async () => {
 		await ProfileService.deleteOpenToWork()
+		queryClient.invalidateQueries(["openToWork"])
 
 		success("Open to work status successfully removed.", 5)
 		onSave()
