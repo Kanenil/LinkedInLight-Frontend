@@ -29,6 +29,7 @@ jobs:
           REACT_APP_UPLOADS_URL: https://api.kanenil.space/uploads
           REACT_APP_CHAT_URL: https://api.kanenil.space/chat
           REACT_APP_CONNECTION_URL: https://api.kanenil.space/connection
+          CI: false
 
       - name: List output files
         run: find build/ -print
