@@ -26,6 +26,7 @@ import CompanySettingsIndex from "../company/settings/CompanySettingsIndex"
 import AuthRedirect from "../shared/AuthRedirect"
 import CompanyEditIndex from "../company/edit/CompanyEditIndex"
 import NotFound from "../../pages/404/NotFound"
+import PublicProfile from "../profile/PublicProfile"
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -60,7 +61,10 @@ const App = () => {
 											<Route index element={<InLayout />} />
 
 											<Route element={<InLayout />}>
-												<Route path=':profileURL' element={<Profile />}>
+												<Route path=':profileURL'>
+													<Route index element={<Profile />} />
+													<Route path='public' element={<PublicProfile />} />
+
 													<Route path='edit/:blockId' element={<Profile />}>
 														<Route path=':id' element={<Profile />} />
 													</Route>

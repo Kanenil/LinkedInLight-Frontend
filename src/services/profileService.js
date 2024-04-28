@@ -156,6 +156,14 @@ class ProfileService {
 	getOpenToHire() {
 		return axios.get(`${this.#URL}/IsOpenToHire`)
 	}
+
+	editUrl(newUrl) {
+		return axios.put(`${this.#URL}/editUrl`, null, {
+			params: {
+				newUrl,
+			},
+		})
+	}
 }
 
 export default new ProfileService()
