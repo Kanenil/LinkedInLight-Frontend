@@ -2,8 +2,7 @@ name: 🚀 Deploy website
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   web-deploy:
@@ -11,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
 
       - name: Use Node.js 22.0.0
         uses: actions/setup-node@v2
