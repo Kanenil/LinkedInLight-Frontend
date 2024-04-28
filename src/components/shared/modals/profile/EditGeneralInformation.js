@@ -40,24 +40,16 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 	})
 
 	useEffect(() => {
-		if (!aboutLoading) {
-			setValues(prev => ({
-				...prev,
-				about,
-			}))
-		}
-	}, [aboutLoading])
-
-	useEffect(() => {
-		if (!userSkillsLoading) {
+		if (!userSkillsLoading && !aboutLoading) {
 			setValues(prev => ({
 				...prev,
 				skills: userSkills
 					.filter(val => val.isMainSkill)
 					.map(val => ({ label: val.skill.name, value: val.id })),
+				about,
 			}))
 		}
-	}, [userSkillsLoading])
+	}, [userSkillsLoading, aboutLoading])
 
 	const onSubmitFormik = async () => {
 		if (about !== values.about) await ProfileService.editAbout(values.about)
