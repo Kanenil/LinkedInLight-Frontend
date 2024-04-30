@@ -4,6 +4,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import PencilButton from "../../../elements/buttons/PencilButton"
 import Show from "../../../elements/shared/Show"
 import { APP_ENV } from "../../../env"
+import { Link } from "react-router-dom"
 
 const ExperienceItem = ({
 	editPath,
@@ -14,6 +15,7 @@ const ExperienceItem = ({
 	company,
 	description,
 	title,
+	id,
 }) => {
 	const [showMore, setShowMore] = useState(false)
 
@@ -46,7 +48,12 @@ const ExperienceItem = ({
 			</Show>
 
 			<div className='pb-[5px] font-jost'>
-				<h1 className='font-medium text-[#2D2A33]'>{company.companyName}</h1>
+				<Link
+					to={`/j4y/company/${id}`}
+					className='font-medium text-[#2D2A33] hover:text-gray-600'
+				>
+					{company.companyName}
+				</Link>
 				<h3 className='font-light font-normal text-[#2D2A33] text-sm'>
 					{title}
 				</h3>

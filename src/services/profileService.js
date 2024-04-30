@@ -145,6 +145,10 @@ class ProfileService {
 		return axios.get(`${this.#URL}/getOpenToWorkVM`)
 	}
 
+	getOpenToWorkByURL(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/getOpenToWorkVM`)
+	}
+
 	deleteOpenToWork() {
 		return axios.delete(`${this.#URL}/deleteOpenToWorkVM`)
 	}
@@ -153,8 +157,16 @@ class ProfileService {
 		return axios.get(`${this.#URL}/getServices`)
 	}
 
+	getServicesByURL(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/getServices`)
+	}
+
 	getOpenToHire() {
 		return axios.get(`${this.#URL}/IsOpenToHire`)
+	}
+
+	getOpenToHireByURL(profileUrl) {
+		return axios.get(`${this.#URL}/${profileUrl}/IsOpenToHire`)
 	}
 
 	editUrl(newUrl) {

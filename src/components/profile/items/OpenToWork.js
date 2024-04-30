@@ -7,12 +7,12 @@ import OpenToWorkDetails from "../../shared/modals/profile/OpenToWorkDetails"
 import { useState } from "react"
 import { authService } from "../../../services/authService"
 
-const OpenToWork = ({ isOwner }) => {
+const OpenToWork = ({ isOwner, user }) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const { data, isLoading, isError } = useQuery({
-		queryFn: () => ProfileService.getOpenToWork(),
-		queryKey: ["openToWork"],
+		queryFn: ({ queryKey }) => ProfileService.getOpenToWorkByURL(queryKey[1]),
+		queryKey: ["openToWork", user.profileUrl],
 		select: ({ data }) => data,
 		retry: false,
 	})
