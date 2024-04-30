@@ -5,6 +5,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import useMobileDetector from "../../../hooks/useMobileDetector"
 import classNames from "classnames"
 import Button from "../../../elements/buttons/Button"
+import { useTranslation } from "react-i18next"
 
 const EditModalForm = ({
 	header,
@@ -14,12 +15,13 @@ const EditModalForm = ({
 	onRemove,
 	onSubmit,
 	removeTitle,
-	saveTitle = "Save",
+	saveTitle,
 	withBorder = true,
 	width = "w-[750px]",
 }) => {
 	const { isOverflow, containerRef, contentRef } = useOverflow()
 	const { isMobile } = useMobileDetector()
+	const { t } = useTranslation()
 
 	return (
 		<form
@@ -31,7 +33,7 @@ const EditModalForm = ({
 			})}
 			style={{ boxShadow: "0px 0px 8px 2px #00000066" }}
 		>
-			<ModalHeader title={header} onClose={onClose} />
+			<ModalHeader title={t(header)} onClose={onClose} />
 
 			<div
 				id='container'
@@ -65,7 +67,7 @@ const EditModalForm = ({
 							},
 						)}
 					>
-						Remove {removeTitle}
+						{t("profile.modal.remove", { removeTitle })}
 					</button>
 				</ConditionalWrapper>
 
@@ -75,7 +77,7 @@ const EditModalForm = ({
 					rounded='full'
 					variant='primary'
 				>
-					{saveTitle}
+					{t("profile.modal.save", { title: saveTitle })}
 				</Button>
 			</div>
 		</form>

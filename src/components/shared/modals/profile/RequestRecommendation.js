@@ -4,7 +4,7 @@ import ModalSelectFormGroup from "../../forms/ModalSelectFormGroup"
 import useForm from "../../../../hooks/useForm"
 import { APP_ENV } from "../../../../env"
 import defaultImage from "../../../../assets/default-image.jpg"
-import Button, { ButtonVariant1 } from "../../../../elements/buttons/Button"
+import Button from "../../../../elements/buttons/Button"
 import Show from "../../../../elements/shared/Show"
 import ModalInputFormGroup from "../../forms/ModalInputFormGroup"
 import ModalTextareaFormGroup from "../../forms/ModalTextareaFormGroup"
@@ -12,6 +12,7 @@ import RecommendedProfileService from "../../../../services/recommendedProfileSe
 import { useQuery } from "@tanstack/react-query"
 import ProfileService from "../../../../services/profileService"
 import { useAlertContext } from "../../../../providers/AlertProvider"
+import { Trans, useTranslation } from "react-i18next"
 
 const UserItem = ({ image, firstName, lastName, lastPosition, onClick }) => {
 	return (
@@ -64,10 +65,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 		isSubmitted,
 		handleChangeSelect,
 		onChangeInput,
-		onSubmit,
-		setErrors,
 		setValues,
-		setIsSubmitted,
 		setOptions,
 	} = useForm(initialValues, onChange)
 	const [step, setStep] = useState(1)
@@ -77,6 +75,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 		select: ({ data }) => data,
 	})
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		RecommendedProfileService.requestRecommendation().then(({ data }) => {
@@ -108,7 +107,12 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 
 		await RecommendedProfileService.sendRequestRecommendation(model)
 
-		success("Your request sent", 5)
+		success(
+			t("profile.modal.request.requestSend", {
+				name: stringifyUser(values.connection),
+			}),
+			5,
+		)
 		onSave()
 	}
 
@@ -119,7 +123,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 		>
 			<div className='flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]'>
 				<h1 className='font-jost font-semibold text-[#2D2A33] text-xl'>
-					Request recommendation
+					{t("profile.modal.request.title")}
 				</h1>
 
 				<button onClick={onClose} className='ml-auto'>
@@ -128,19 +132,19 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 			</div>
 
 			<h3 className='mt-4 font-jost text-[#2D2A33] font-light text-sm'>
-				Required fields are marked with *
+				{t("validation.requiredField")}
 			</h3>
 
 			<Show>
 				<Show.When isTrue={step === 1}>
 					<div className='mt-4 flex flex-col'>
 						<h1 className='font-jost font-light text-[#2D2A33] text-lg'>
-							Who can write for you recommendation?
+							{t("profile.modal.request.canWrite")}
 						</h1>
 
 						<ModalSelectFormGroup
 							className='mt-4 pt-[5px] pb-[10px] pr-[20px] gap-[5px]'
-							title='Search connection *'
+							title={t("profile.modal.request.search")}
 							value={stringifyUser(values.connection)}
 							options={options.connection}
 							containerWidth={665}
@@ -164,7 +168,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 							}}
 							errorChildren={
 								<h3 className='mt-2 text-[#9E0F20] text-xs'>
-									This field is required
+									{t("validation.required")}
 								</h3>
 							}
 						/>
@@ -176,15 +180,15 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 						<UserItem {...values.connection} />
 
 						<h1 className='font-jost text-lg font-light mt-4'>
-							From where you know{" "}
-							<strong className='font-semibold'>
-								{stringifyUser(values.connection)}
-							</strong>
-							?
+							<Trans
+								i18nKey='profile.modal.request.whereKnow'
+								components={{ strong: <strong className='font-semibold' /> }}
+								values={{ value: stringifyUser(values.connection) }}
+							/>
 						</h1>
 
 						<ModalInputFormGroup
-							title='Relationship *'
+							title={t("profile.modal.request.relationship")}
 							name='relationship'
 							type='text'
 							value={values.relationship}
@@ -193,7 +197,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 						/>
 
 						<ModalInputFormGroup
-							title='Position at the time *'
+							title={t("profile.modal.request.position")}
 							name='positionAtTheTime'
 							type='text'
 							value={values.positionAtTheTime}
@@ -202,7 +206,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 						/>
 
 						<ModalTextareaFormGroup
-							title='Message'
+							title={t("profile.modal.request.message")}
 							name='requestMessage'
 							className='pb-[10px] pr-[20px] gap-[5px]'
 							onChange={onChangeInput}
@@ -214,7 +218,9 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 			</Show>
 
 			<div className='flex flex-row mt-auto mb-10 md:mb-0 md:mt-4'>
-				<h1 className='font-jost text-lg'>Step {step}</h1>
+				<h1 className='font-jost text-lg'>
+					{t("profile.modal.request.step", { value: step })}
+				</h1>
 
 				<Button
 					variant='primary'
@@ -222,7 +228,7 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 					onClick={onNext}
 					className='ml-auto'
 				>
-					{step === 1 ? "Continue" : "Send"}
+					{t(`profile.modal.request.${step === 1 ? "continue" : "send"}`)}
 				</Button>
 			</div>
 		</div>

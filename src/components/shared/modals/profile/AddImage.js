@@ -17,6 +17,7 @@ import Show from "../../../../elements/shared/Show"
 import useMobileDetector from "../../../../hooks/useMobileDetector"
 import XMarkIcon from "../../../../elements/icons/XMarkIcon"
 import Button from "../../../../elements/buttons/Button"
+import { Trans, useTranslation } from "react-i18next"
 
 const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 	const { data } = useQuery({
@@ -28,6 +29,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 		useImageCropContext()
 	const [error, setError] = useState("")
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const handleFileChange = async ({ target: { files } }) => {
 		const file = files && files[0]
@@ -42,7 +44,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 			setError("")
 
 			if (isBackground && img.width < 800) {
-				setError("Background width must be at least 800px!")
+				setError(t("profile.modal.image.wrongWidthError", { value: "800" }))
 				return
 			}
 
@@ -60,7 +62,11 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 			ProfileService.changeImage(base64data, isBackground).then(() => {
 				onSave()
 				success(
-					`${isBackground ? "Background image" : "Image"} successfully saved.`,
+					t("alert.onSuccess", {
+						value: t(
+							`profile.modal.image.${isBackground ? "background1" : "image1"}`,
+						),
+					}),
 					5,
 				)
 				setImage(null)
@@ -107,15 +113,11 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 					style={{ boxShadow: "0px 0px 8px 2px #00000066" }}
 				>
 					<ModalHeader
-						title={
-							image
-								? isBackground
-									? "Edit background"
-									: "Edit image "
-								: isBackground
-								? "Add background"
-								: "Add image"
-						}
+						title={t(`profile.modal.${image ? "edit" : "add"}`, {
+							title: t(
+								`profile.modal.image.${isBackground ? "background" : "image"}`,
+							),
+						})}
 						onClose={onClose}
 						withBorder={false}
 					/>
@@ -132,10 +134,10 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 							/>
 
 							<h3 className='font-jost font-light text-sm py-1 text-center'>
-								At <strong>Job for You</strong>, we embrace your authenticity!
-								Take a photo or upload an existing one to make your profile as
-								realistic as possible. We support your unique presentation,
-								without editing or filters – here, it's all about you!
+								<Trans
+									i18nKey='profile.modal.image.description'
+									components={{ strong: <strong /> }}
+								/>
 							</h3>
 						</Dropzone>
 
@@ -154,7 +156,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 									variant='primary'
 									onClick={() => document.getElementById("upload").click()}
 								>
-									Upload image
+									{t("profile.modal.image.upload")}
 								</Button>
 								<ConditionalWrapper condition={error}>
 									<h3 className='text-red-500 text-sm'>{error}</h3>
@@ -203,7 +205,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 									className='py-1'
 									onClick={() => document.querySelector("#changeImage").click()}
 								>
-									Change image
+									{t("profile.modal.image.change")}
 								</Button>
 								<input
 									id='changeImage'
@@ -215,7 +217,9 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 								/>
 
 								<Button rounded='full' variant='primary' onClick={handleDone}>
-									Save image
+									{t("profile.modal.save", {
+										title: t("profile.modal.image.image"),
+									})}
 								</Button>
 							</div>
 
@@ -233,7 +237,13 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 						<div className='flex flex-col px-6 py-6 bg-white h-[100dvh] w-screen'>
 							<div className='flex flex-row py-2.5'>
 								<h1 className='font-jost font-semibold text-[#2D2A33] text-2xl'>
-									{isBackground ? "Edit background" : "Edit image"}
+									{t(`profile.modal.edit`, {
+										title: t(
+											`profile.modal.image.${
+												isBackground ? "background" : "image"
+											}`,
+										),
+									})}
 								</h1>
 
 								<button onClick={onClose} className='ml-auto'>
@@ -283,7 +293,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 											document.querySelector("#changeImage").click()
 										}
 									>
-										Change image
+										{t("profile.modal.image.change")}
 									</Button>
 									<input
 										id='changeImage'
@@ -295,7 +305,9 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 									/>
 
 									<Button rounded='full' variant='primary' onClick={handleDone}>
-										Save image
+										{t("profile.modal.save", {
+											title: t("profile.modal.image.image"),
+										})}
 									</Button>
 								</div>
 
@@ -318,7 +330,13 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 								/>
 
 								<h1 className='font-jost font-semibold text-[#2D2A33] text-xl'>
-									{isBackground ? "Add background" : "Add image"}
+									{t(`profile.modal.add`, {
+										title: t(
+											`profile.modal.image.${
+												isBackground ? "background" : "image"
+											}`,
+										),
+									})}
 								</h1>
 
 								<button
@@ -349,12 +367,12 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 									</div>
 
 									<div className='flex flex-col gap-1.5 font-jost text-[#2D2A33] text-start'>
-										<h1 className='font-semibold'>Select from gallery</h1>
+										<h1 className='font-semibold'>
+											{t("profile.modal.image.gallery")}
+										</h1>
 
 										<h3 className='font-light text-sm'>
-											Upload a photo to make your profile as real as possible.
-											We support your unique representation, without editing or
-											filters - it's all about you here!
+											{t("profile.modal.image.mobileDescription")}
 										</h3>
 									</div>
 								</button>
