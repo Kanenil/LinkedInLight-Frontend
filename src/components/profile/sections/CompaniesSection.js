@@ -1,6 +1,6 @@
 import { useQueries } from "@tanstack/react-query"
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { companiesQuery } from "../../../constants/combinedQueries"
 import classNames from "classnames"
 import Show from "../../../elements/shared/Show"
@@ -24,7 +24,7 @@ const NavButton = ({ children, isActive, onClick }) => {
 }
 
 const CompaniesSection = ({ user, isOwner }) => {
-	const { userCompanies, followingCompanies } = useQueries({
+	const { userCompanies, followingCompanies, isLoading } = useQueries({
 		queries: companiesQuery(user).map(value => ({
 			...value,
 		})),
@@ -32,12 +32,24 @@ const CompaniesSection = ({ user, isOwner }) => {
 			return {
 				userCompanies: results[0].data ?? [],
 				followingCompanies: results[1].data ?? [],
+				isLoading: results.some(v => v.isLoading),
 			}
 		},
 	})
 	const [isMyCompanies, setIsMyCompanies] = useState(true)
 
-	const toggleSelect = () => setIsMyCompanies(prev => !prev)
+	useEffect(() => {
+		if (!isLoading) {
+			setIsMyCompanies(userCompanies.length > 0)
+		}
+	}, [isLoading, userCompanies.length])
+
+	if (isLoading) return <></>
+
+	const toggleSelect = () =>
+		setIsMyCompanies(prev =>
+			userCompanies.length > 0 && followingCompanies.length > 0 ? !prev : prev,
+		)
 
 	return (
 		<ConditionalWrapper
@@ -49,12 +61,16 @@ const CompaniesSection = ({ user, isOwner }) => {
 				</div>
 
 				<div className='flex flex-row mt-4'>
-					<NavButton onClick={toggleSelect} isActive={isMyCompanies}>
-						{isOwner ? "My" : "Own"}
-					</NavButton>
-					<NavButton onClick={toggleSelect} isActive={!isMyCompanies}>
-						Following
-					</NavButton>
+					{userCompanies.length > 0 && (
+						<NavButton onClick={toggleSelect} isActive={isMyCompanies}>
+							{isOwner ? "My" : "Own"}
+						</NavButton>
+					)}
+					{followingCompanies.length > 0 && (
+						<NavButton onClick={toggleSelect} isActive={!isMyCompanies}>
+							Following
+						</NavButton>
+					)}
 				</div>
 
 				<div className='mt-5 flex flex-col md:grid md:grid-cols-2 gap-4'>

@@ -46,14 +46,14 @@ const ImageSector = ({ user, isOwner }) => {
 				<Show.When isTrue={isOwner}>
 					<Link
 						to='edit/image'
-						className='absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'
+						className='absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'
 					>
 						<img className='object-contain' src={imageUrl} alt='image' />
 					</Link>
 				</Show.When>
 
 				<Show.Else>
-					<div className='absolute left-16 overflow-hidden -bottom-12 h-32 w-32 bg-white rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'>
+					<div className='absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'>
 						<img className='object-contain' src={imageUrl} alt='image' />
 					</div>
 				</Show.Else>
@@ -217,7 +217,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 				<div className='flex flex-row flex-wrap gap-4'>
 					{!isPreview && (
 						<>
-							<OpenToWork isOwner={isOwner} />
+							<OpenToWork isOwner={isOwner} user={user} />
 						</>
 					)}
 				</div>
