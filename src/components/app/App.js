@@ -73,8 +73,9 @@ const App = () => {
 														</Route>
 													</Route>
 												</Route>
+											</Route>
 
-												<Route path='*' element={<Navigate to='not-found' />} />
+											<Route element={<ChatsLayout />}>
 												<Route path='not-found' element={<NotFound />} />
 											</Route>
 
@@ -104,6 +105,8 @@ const App = () => {
 													element={<Settings />}
 												/>
 											</Route>
+
+											<Route path='*' element={<Navigate to='not-found' />} />
 										</Route>
 
 										<Route path='/auth' element={<AuthLayout />}>

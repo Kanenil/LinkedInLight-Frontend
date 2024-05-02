@@ -1,25 +1,43 @@
 import { Helmet } from "react-helmet-async"
-import { Link } from "react-router-dom"
+import { Trans, useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+
+import notFound from "../../assets/not-found.png"
+import Button from "../../elements/buttons/Button"
 
 const NotFound = () => {
+	const { t } = useTranslation()
+	const navigator = useNavigate()
+
 	return (
 		<>
 			<Helmet>
-				<title>Not found</title>
+				<title>{t("notFound.heading")}</title>
 			</Helmet>
-			<div class='flex flex-grow items-center justify-center bg-gray-50'>
-				<div class='rounded-lg bg-white p-8 text-center shadow-xl'>
-					<h1 class='mb-4 text-4xl font-bold'>404</h1>
-					<p class='text-gray-600'>
-						Oops! The page you are looking for could not be found.
+			<div class='flex items-center justify-center flex-grow bg-[#F7F7F7]'>
+				<div className='flex flex-col justify-center items-center -mt-10 mx-4 font-jost'>
+					<div className='relative'>
+						<img src={notFound} alt='not-found' />
+						<div className='absolute top-0 left-0 w-full h-full bg-transparent' />
+					</div>
+
+					<h1 className='text-3xl font-medium text-[#2D2A33] -mt-5'>
+						{t("notFound.title")}
+					</h1>
+					<p className='text-lg text-center text-[#2D2A33] mt-2'>
+						<Trans
+							i18nKey='notFound.text'
+							components={{ strong: <strong className='font-semibold' /> }}
+						/>
 					</p>
-					<Link
-						to='/'
-						class='mt-4 inline-block rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600'
+					<Button
+						variant='primary'
+						onClick={() => navigator("/j4y")}
+						className='mt-8'
+						rounded='full'
 					>
-						{" "}
-						Go back to Home{" "}
-					</Link>
+						{t("notFound.link")}
+					</Button>
 				</div>
 			</div>
 		</>

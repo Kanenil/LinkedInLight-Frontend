@@ -712,5 +712,11 @@
 		"openTo": "Open to",
 		"connections": "Connections",
 		"details": "Details"
+	},
+	"notFound": {
+		"heading": "Oops! Not found",
+		"title": "Oops! Page not found",
+		"text": "Please check the specified URL or return to the <strong>J4Y</strong> Homepage",
+		"link": "Back to home"
 	}
 }
