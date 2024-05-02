@@ -189,6 +189,7 @@ const AddProject = ({ onClose, onSave, onChange, id }) => {
 				onChange={onChange}
 				endTitle={t("profile.modal.project.endDate")}
 				isEndDateDisabled={values.currentlyWorking}
+				isExpected={false}
 			/>
 		</EditModalForm>
 	)

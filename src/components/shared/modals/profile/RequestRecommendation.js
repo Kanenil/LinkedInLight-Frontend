@@ -82,7 +82,6 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 			setOptions({
 				connection: data.connections,
 			})
-			setValues(prev => ({ ...prev, requestMessage: data.requestMessage }))
 		})
 	}, [])
 
@@ -157,6 +156,9 @@ const RequestRecommendation = ({ onClose, onChange, onSave }) => {
 								setValues(prev => ({
 									...prev,
 									positionAtTheTime: e.lastPosition || "",
+									requestMessage: t("profile.modal.request.defaultMessage", {
+										name: e.firstName,
+									}),
 								}))
 							}}
 							item={<UserItem />}

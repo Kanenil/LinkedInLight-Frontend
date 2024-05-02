@@ -411,7 +411,7 @@
 				"title": "experience",
 				"title1": "Experience",
 				"jobTitle": "Title *",
-				"jobTitlePlaceholder": "ex: Retail Sales Manager",
+				"titlePlaceholder": "ex: Retail Sales Manager",
 				"company": "Company *",
 				"companyPlaceholder": "ex: Microsoft",
 				"industry": "Industry *",
@@ -419,11 +419,13 @@
 				"currentlyWorking": "I am currently working in this role",
 				"description": "Description",
 				"headline": "Profile headline",
-				"headlineDescription": "Appears below your name at the top of the profile"
+				"headlineDescription": "Appears below your name at the top of the profile",
+				"endDate": "End date *"
 			},
 			"skill": {
 				"title": "skill",
-				"title1": "Skill"
+				"title1": "Skill",
+				"single": "skill"
 			},
 			"certification": {
 				"title": "certification",
@@ -464,7 +466,8 @@
 				"relationship": "Relationship",
 				"position": "Position at the time",
 				"message": "Message",
-				"requestSend": "Your request sent to {{ name }}"
+				"requestSend": "Your request sent to {{ name }}",
+				"defaultMessage": "Hi {{ name }}, would you write me a recommendation please?"
 			},
 			"volunteer": {
 				"title": "volunteer experience",

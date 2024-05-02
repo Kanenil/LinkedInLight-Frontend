@@ -147,7 +147,7 @@ const AddVolunteerExperience = ({ onClose, onSave, onChange, id }) => {
 			</h3>
 
 			<ModalInputFormGroup
-				title={t("profile.modal.volunteer.title")}
+				title={t("profile.modal.volunteer.organization")}
 				name='organization'
 				type='text'
 				value={values.organization}
@@ -201,6 +201,7 @@ const AddVolunteerExperience = ({ onClose, onSave, onChange, id }) => {
 				onChange={onChange}
 				endTitle={t("profile.modal.volunteer.endDate")}
 				isEndDateDisabled={values.currentlyVolunteering}
+				isExpected={false}
 			/>
 
 			<ModalTextareaFormGroup

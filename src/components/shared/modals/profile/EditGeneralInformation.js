@@ -202,7 +202,7 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 							>
 								<PlusIcon className='fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-3' />
 								{t("profile.modal.add", {
-									value: t("profile.modal.skill.title"),
+									title: t("profile.modal.skill.single"),
 								})}
 							</button>
 						</ConditionalWrapper>

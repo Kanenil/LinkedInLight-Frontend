@@ -13,10 +13,13 @@ const StartEndDateForm = ({
 	isEndDateDisabled,
 	startTitle = "profile.modal.shared.startDate",
 	endTitle = "profile.modal.shared.endDate",
+	isExpected = true,
 }) => {
 	const months = getMonths()
 	const years = getYears()
-	const endYears = getYears(new Date(new Date().getFullYear() + 10, 1))
+	const endYears = isExpected
+		? getYears(new Date(new Date().getFullYear() + 10, 1))
+		: getYears(new Date(new Date().getFullYear(), 1))
 	const { t } = useTranslation()
 
 	useEffect(() => {

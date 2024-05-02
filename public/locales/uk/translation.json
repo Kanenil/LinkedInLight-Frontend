@@ -361,7 +361,7 @@
 					"image": "Додайте зображення профілю",
 					"general": "Додайте загальну інформацію",
 					"education": "Додайте освіту",
-					"experience": "Додайте досвіду",
+					"experience": "Додайте досвід",
 					"skills": "Додайте навички"
 				},
 				"recommended": {
@@ -379,7 +379,7 @@
 				}
 			},
 			"image": {
-				"wrongWidthError": "Ширина фону має бути не менше {{value}}px!",
+				"wrongWidthError": "Ширина фону має бути не менше {{value}} пікселів!",
 				"image": "зображення",
 				"image1": "Зображення",
 				"background": "фон",
@@ -388,55 +388,57 @@
 				"change": "Змінити зображення",
 				"zoom": "Збільшити",
 				"straighten": "Випрямити",
-				"description": "на <strong>Job For You</strong>, ми цінуємо вашу автентичність! ",
+				"description": "На <strong>Job For You</strong>, ми цінуємо вашу автентичність! Зробіть фотографію або завантажте наявну, щоб зробити свій профіль максимально реалістичним. Ми підтримуємо вашу унікальну презентацію, без редагування та фільтрів – тут все про вас!",
 				"gallery": "Виберіть із галереї",
 				"mobileDescription": "Завантажте фотографію, щоб ваш профіль був максимально реальним. "
 			},
 			"general": {
 				"title": "загальну інформацію",
 				"title1": "Загальна інформація",
-				"description": "Увімкнено <strong>Job For You</strong>, ви можете поділитися своїм багаторічним досвідом, вибрати свою галузь і вказати свої навички. ",
+				"description": "На <strong>Job For You</strong>, ви можете поділитися своїм багаторічним досвідом, вибрати свою галузь і вказати свої навички. ",
 				"skills": "Навички",
-				"skillsDescription": "Покажіть свої сильні сторони - додайте до 5 ключових навичок, за які ви хотіли б бути визнаними.  <strong>Job For You</strong>",
+				"skillsDescription": "Покажіть свої сильні сторони - додайте до 5 ключових навичок, за які ви хотіли б бути визнаними на <strong>Job For You</strong>",
 				"maximum": "Ви досягли максимум 5 навичок"
 			},
 			"education": {
-				"title": "освіти",
+				"title": "освіту",
 				"title1": "Освіта",
 				"school": "Школа *",
 				"schoolPlaceholder": "наприклад: Бостонський університет",
-				"degree": "ступінь *",
+				"degree": "Ступінь *",
 				"degreePlaceholder": "наприклад: ступінь бакалавра",
 				"field": "Сфера навчання *",
 				"fieldPlaceholder": "наприклад: Бізнес",
 				"currentlyStudying": "Зараз я навчаюся в цій школі",
 				"grade": "Оцінка",
-				"description": "опис"
+				"description": "Опис"
 			},
 			"experience": {
 				"title": "досвід",
 				"title1": "Досвід",
 				"jobTitle": "Назва *",
-				"jobTitlePlaceholder": "наприклад: Менеджер з роздрібних продажів",
+				"titlePlaceholder": "наприклад: Менеджер з роздрібних продажів",
 				"company": "Компанія *",
 				"companyPlaceholder": "наприклад: Microsoft",
-				"industry": "промисловість *",
+				"industry": "Промисловість *",
 				"industryPlaceholder": "наприклад: Розробка програмного забезпечення",
 				"currentlyWorking": "Зараз я працюю на цій посаді",
-				"description": "опис",
+				"description": "Опис",
 				"headline": "Заголовок профілю",
-				"headlineDescription": "Відображається під вашим іменем у верхній частині профілю"
+				"headlineDescription": "Відображається під вашим іменем у верхній частині профілю",
+				"endDate": "Дата закінчення *"
 			},
 			"skill": {
-				"title": "майстерність",
-				"title1": "Майстерність"
+				"title": "навичку",
+				"single": "навичку",
+				"title1": "Навичка"
 			},
 			"certification": {
-				"title": "атестація",
-				"title1": "Атестація",
-				"name": "Ім'я *",
+				"title": "сертифікацію",
+				"title1": "Сертифікація",
+				"name": "Назва *",
 				"namePlaceholder": "наприклад: Сертифікована мережева безпека Microsoft",
-				"issuing": "Організація, що видає *",
+				"issuing": "Організація, що видала *",
 				"issuingPlaceholder": "наприклад: Microsoft",
 				"expiration": "Термін придатності *",
 				"issue": "Дата випуску *",
@@ -444,49 +446,50 @@
 				"credentialUrl": "URL-адреса облікових даних"
 			},
 			"project": {
-				"title": "демонструвати",
-				"title1": "Демонструвати",
-				"name": "Ім'я *",
+				"title": "проект",
+				"title1": "Проект",
+				"name": "Назва *",
 				"associated": "Асоціюється з",
-				"description": "опис",
+				"description": "Опис",
 				"currentlyWorking": "Зараз я працюю над цим проектом",
 				"endDate": "Дата закінчення"
 			},
 			"course": {
 				"title": "курс",
 				"title1": "курс",
-				"name": "Ім'я *",
+				"name": "Назва *",
 				"number": "Номер",
 				"associated": "Асоціюється з"
 			},
 			"request": {
 				"title": "Запит рекомендації",
 				"canWrite": "Хто може написати для вас рекомендацію?",
-				"search": "Пошук підключення *",
+				"search": "Пошук контактів *",
 				"step": "Крок {{ value }}",
 				"continue": "Продовжити",
 				"send": "Надіслати",
 				"whereKnow": "Звідки ти знаєш <strong>{{ value }}</strong>?",
-				"relationship": "стосунки",
+				"relationship": "Стосунки",
 				"position": "Позиція на той час",
-				"message": "повідомлення",
-				"requestSend": "Ваш запит надіслано до {{ name }}"
+				"message": "Повідомлення",
+				"requestSend": "Ваш запит надіслано до {{ name }}",
+				"defaultMessage": "Привіт {{ name }}. Напиши будь ласка мені рекомендацію"
 			},
 			"volunteer": {
 				"title": "волонтерський досвід",
 				"title1": "Волонтерський досвід",
 				"organization": "Організація *",
-				"role": "роль *",
-				"cause": "причина",
+				"role": "Роль *",
+				"cause": "Причина",
 				"currentlyVolunteering": "Зараз я займаюся волонтерством у цій ролі",
 				"endDate": "Дата закінчення *",
-				"description": "опис"
+				"description": "Опис"
 			},
 			"language": {
 				"title": "мова",
 				"title1": "Мова",
 				"language": "Мова *",
-				"proficiency": "кваліфікація *",
+				"proficiency": "Кваліфікація *",
 				"selectList": "Виберіть зі списку",
 				"proficiencies": [
 					{

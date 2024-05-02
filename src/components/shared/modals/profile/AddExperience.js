@@ -171,7 +171,7 @@ const AddExperience = ({ onClose, onSave, onChange, id }) => {
 
 			<ModalSelectFormGroup
 				className='pt-[5px] pb-[10px] pr-[20px] gap-[5px]'
-				title={t("profile.modal.experience.title")}
+				title={t("profile.modal.experience.jobTitle")}
 				value={values.title}
 				options={options.title}
 				containerWidth={665}
@@ -239,6 +239,8 @@ const AddExperience = ({ onClose, onSave, onChange, id }) => {
 				errors={errors}
 				onChange={onChange}
 				isEndDateDisabled={values.currentlyWorking}
+				endTitle={t("profile.modal.experience.endDate")}
+				isExpected={false}
 			/>
 
 			<ModalTextareaFormGroup
