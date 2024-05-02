@@ -52,7 +52,6 @@ const AbstractDetails = ({
 		select: ({ data }) => data,
 		enabled: !hook,
 	})
-	const navigator = useNavigate()
 
 	const hookData = hook && hook(user, isOwner)
 
@@ -67,9 +66,7 @@ const AbstractDetails = ({
 						/>
 					</button>
 
-					<h1 className='font-medium text-2xl text-[#2D2A33]'>
-						{title ? title : detail}
-					</h1>
+					<h1 className='font-medium text-2xl text-[#2D2A33]'>{title()}</h1>
 
 					<Link to={`edit/${edit}`} className='ml-auto'>
 						<PlusIcon className='w-4 fill-[#556DA9]' />

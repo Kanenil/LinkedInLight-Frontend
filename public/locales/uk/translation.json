@@ -619,5 +619,62 @@
 		"discard": "Відкинути зміни",
 		"discardChanges": "Відкинути зміни",
 		"discardChangesText": "Ви впевнені, що хочете відкинути всі зміни?"
+	},
+	"certificationsSection": {
+		"title": "Сертифікації",
+		"add": "Додати сертифікацію",
+		"issued": "Видано",
+		"credentialId": "Ідентифікатор облікових даних",
+		"showCredential": "Показати облікові дані"
+	},
+	"companiesSection": {
+		"title": "Компанії",
+		"my": "Мої",
+		"own": "Власні",
+		"following": "Слідуючі",
+		"followers": "підписників"
+	},
+	"educationsSection": {
+		"title": "Освіта",
+		"add": "Додати освіту",
+		"present": "До тепер",
+		"grade": "Оцінка: ",
+		"seeMore": "...більше"
+	},
+	"experiencesSection": {
+		"title": "Досвід",
+		"add": "Додати досвід"
+	},
+	"languagesSection": {
+		"title": "Мови"
+	},
+	"projectsSection": {
+		"title": "Проекти",
+		"add": "Додати проект"
+	},
+	"recommendationsSection": {
+		"title": "Рекомендації",
+		"received": "Отримані",
+		"given": "Надані",
+		"pending": "Очікувані"
+	},
+	"volunteerExperiencesSection": {
+		"title": "Волонтерський досвід",
+		"add": "Додати волонтерський досвід"
+	},
+	"connections": {
+		"connectionsText": "Контакти",
+		"singular": "контакт",
+		"add": "Додати",
+		"request": "Запит очікується",
+		"remove": "Видалити контакт"
+	},
+	"peopleMayKnow": {
+		"title": "Люди, яких ви можливо знаєте",
+		"showAll": "Показати всі"
+	},
+	"rightEditSection": {
+		"languages": "Мови",
+		"public": "Публічний профіль та адреса"
 	}
 }

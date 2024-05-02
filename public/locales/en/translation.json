@@ -601,5 +601,62 @@
 		"discard": "Discard",
 		"discardChanges": "Discard changes",
 		"discardChangesText": "Are you sure you want to discard changes?"
+	},
+	"certificationsSection": {
+		"title": "Certifications",
+		"add": "Add certification",
+		"issued": "Issued",
+		"credentialId": "Credential ID",
+		"showCredential": "Show credential"
+	},
+	"companiesSection": {
+		"title": "Companies",
+		"my": "My",
+		"own": "Own",
+		"following": "Following",
+		"followers": "followers"
+	},
+	"educationsSection": {
+		"title": "Education",
+		"add": "Add education",
+		"present": "Present",
+		"grade": "Grade: ",
+		"seeMore": "...see more"
+	},
+	"experiencesSection": {
+		"title": "Experience",
+		"add": "Add experience"
+	},
+	"languagesSection": {
+		"title": "Languages"
+	},
+	"projectsSection": {
+		"title": "Projects",
+		"add": "Add project"
+	},
+	"recommendationsSection": {
+		"title": "Recommendations",
+		"received": "Received",
+		"given": "Given",
+		"pending": "Pending"
+	},
+	"volunteerExperiencesSection": {
+		"title": "Volunteer experience",
+		"add": "Add volunteer experience"
+	},
+	"connections": {
+		"connectionsText": "Your connections",
+		"singular": "connection",
+		"add": "Connect",
+		"request": "Request connection",
+		"remove": "Remove connection"
+	},
+	"peopleMayKnow": {
+		"title": "People you may know",
+		"showAll": "Show all"
+	},
+	"rightEditSection": {
+		"languages": "Languages",
+		"public": "Public profile & URL"
 	}
 }

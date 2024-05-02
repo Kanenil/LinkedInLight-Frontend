@@ -5,6 +5,7 @@ import { companiesQuery } from "../../../constants/combinedQueries"
 import classNames from "classnames"
 import Show from "../../../elements/shared/Show"
 import CompanyItem from "../items/CompanyItem"
+import { useTranslation } from "react-i18next"
 
 const NavButton = ({ children, isActive, onClick }) => {
 	return (
@@ -24,6 +25,8 @@ const NavButton = ({ children, isActive, onClick }) => {
 }
 
 const CompaniesSection = ({ user, isOwner }) => {
+	const { t } = useTranslation()
+
 	const { userCompanies, followingCompanies, isLoading } = useQueries({
 		queries: companiesQuery(user).map(value => ({
 			...value,
@@ -57,18 +60,20 @@ const CompaniesSection = ({ user, isOwner }) => {
 		>
 			<div id='companies' className='rounded-lg bg-white py-8 px-6 md:px-10'>
 				<div className='flex flex-row font-jost'>
-					<h1 className='font-medium text-2xl text-[#2D2A33]'>Companies</h1>
+					<h1 className='font-medium text-2xl text-[#2D2A33]'>
+						{t("companiesSection.title")}
+					</h1>
 				</div>
 
 				<div className='flex flex-row mt-4'>
 					{userCompanies.length > 0 && (
 						<NavButton onClick={toggleSelect} isActive={isMyCompanies}>
-							{isOwner ? "My" : "Own"}
+							{t(`companiesSection.${isOwner ? "my" : "own"}`)}
 						</NavButton>
 					)}
 					{followingCompanies.length > 0 && (
 						<NavButton onClick={toggleSelect} isActive={!isMyCompanies}>
-							Following
+							{t("companiesSection.following")}
 						</NavButton>
 					)}
 				</div>

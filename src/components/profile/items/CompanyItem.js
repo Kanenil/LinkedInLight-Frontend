@@ -1,54 +1,61 @@
-import Show from "../../../elements/shared/Show";
-import React from "react";
-import {APP_ENV} from "../../../env";
-import {useQueries} from "@tanstack/react-query";
-import {companyQuery} from "../../../constants/combinedQueries";
-import {Link} from "react-router-dom";
+import Show from "../../../elements/shared/Show"
+import React from "react"
+import { APP_ENV } from "../../../env"
+import { useQueries } from "@tanstack/react-query"
+import { companyQuery } from "../../../constants/combinedQueries"
+import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-const CompanyItem = ({logoImg, companyName, industryId, id,...data}) => {
-    const {industry: {name: industryName}, followers} = useQueries({
-        queries: companyQuery(id, industryId).map((value) => ({
-            ...value
-        })),
-        combine: (results) => {
-            return {
-                industry: results[0].data ?? {},
-                followers: results[1].data ?? 0
-            }
-        },
-    });
+const CompanyItem = ({ logoImg, companyName, industryId, id, ...data }) => {
+	const { t } = useTranslation()
 
-    return (
-        <div className="flex flex-row gap-6 w-fit">
-            <Show>
-                <Show.When isTrue={!!logoImg}>
-                    <div className="flex items-center max-w-[65px] my-auto max-h-[65px] md:max-w-[80px] md:max-h-[80px]">
-                        <img className="object-contain" src={`${APP_ENV.UPLOADS_URL}/${logoImg}`} alt="company-logo"/>
-                    </div>
-                </Show.When>
+	const {
+		industry: { name: industryName },
+		followers,
+	} = useQueries({
+		queries: companyQuery(id, industryId).map(value => ({
+			...value,
+		})),
+		combine: results => {
+			return {
+				industry: results[0].data ?? {},
+				followers: results[1].data ?? 0,
+			}
+		},
+	})
 
-                <Show.Else>
-                    <div
-                        className="flex items-center justify-center w-[80px] h-[80px] bg-[#F0F1F3]">
-                        <h3 className="text-[#2D2A33] font-semibold font-jost">logo</h3>
-                    </div>
-                </Show.Else>
-            </Show>
+	return (
+		<div className='flex flex-row gap-6 w-fit'>
+			<Show>
+				<Show.When isTrue={!!logoImg}>
+					<div className='flex items-center max-w-[65px] my-auto max-h-[65px] md:max-w-[80px] md:max-h-[80px]'>
+						<img
+							className='object-contain'
+							src={`${APP_ENV.UPLOADS_URL}/${logoImg}`}
+							alt='company-logo'
+						/>
+					</div>
+				</Show.When>
 
-            <div className="flex flex-col font-jost text-[#2D2A33]">
-                <Link to={`/j4y/company/${id}`} className="font-semibold text-lg">
-                    {companyName}
-                </Link>
+				<Show.Else>
+					<div className='flex items-center justify-center w-[80px] h-[80px] bg-[#F0F1F3]'>
+						<h3 className='text-[#2D2A33] font-semibold font-jost'>logo</h3>
+					</div>
+				</Show.Else>
+			</Show>
 
-                <h2 className="font-light break-words text-wrap">
-                    {industryName}
-                </h2>
+			<div className='flex flex-col font-jost text-[#2D2A33]'>
+				<Link to={`/j4y/company/${id}`} className='font-semibold text-lg'>
+					{companyName}
+				</Link>
 
-                <h1 className="text-[#556DA9] font-light">
-                    {followers} followers
-                </h1>
-            </div>
-        </div>
-    )
+				<h2 className='font-light break-words text-wrap'>{industryName}</h2>
+
+				<h1 className='text-[#556DA9] font-light'>
+					{followers} {t("companiesSection.followers")}
+				</h1>
+			</div>
+		</div>
+	)
 }
-export default CompanyItem;
+export default CompanyItem

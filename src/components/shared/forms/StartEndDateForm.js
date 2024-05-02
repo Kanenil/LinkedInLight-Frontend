@@ -15,6 +15,9 @@ const StartEndDateForm = ({
 	endTitle = "profile.modal.shared.endDate",
 	isExpected = true,
 }) => {
+	const isDefaultStartDate = startTitle !== "profile.modal.shared.startDate"
+	const isDefaultEndDate = endTitle !== "profile.modal.shared.endDate"
+
 	const months = getMonths()
 	const years = getYears()
 	const endYears = isExpected
@@ -91,7 +94,9 @@ const StartEndDateForm = ({
 	return (
 		<React.Fragment>
 			<div className='pb-[10px] pr-[20px] gap-[5px]'>
-				<h1 className='font-jost text-[#2D2A33]'>{t(startTitle)}</h1>
+				<h1 className='font-jost text-[#2D2A33]'>
+					{!isDefaultStartDate ? t(startTitle) : startTitle}
+				</h1>
 
 				<div className='flex flex-row gap-2.5 w-full'>
 					<FormSelector
@@ -155,7 +160,9 @@ const StartEndDateForm = ({
 			</div>
 
 			<div className='pb-[10px] pr-[20px] gap-[5px]'>
-				<h1 className='font-jost text-[#2D2A33]'>{t(endTitle)}</h1>
+				<h1 className='font-jost text-[#2D2A33]'>
+					{!isDefaultEndDate ? t(endTitle) : endTitle}
+				</h1>
 
 				<div className='flex flex-row gap-2.5 w-full'>
 					<FormSelector

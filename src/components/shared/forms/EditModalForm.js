@@ -34,7 +34,7 @@ const EditModalForm = ({
 			})}
 			style={{ boxShadow: "0px 0px 8px 2px #00000066" }}
 		>
-			<ModalHeader title={t(header)} onClose={onClose} />
+			<ModalHeader title={header} onClose={onClose} />
 
 			<div
 				id='container'
