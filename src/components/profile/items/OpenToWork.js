@@ -6,8 +6,10 @@ import Modal from "../../shared/modals/Modal"
 import OpenToWorkDetails from "../../shared/modals/profile/OpenToWorkDetails"
 import { useState } from "react"
 import { authService } from "../../../services/authService"
+import { useTranslation } from "react-i18next"
 
 const OpenToWork = ({ isOwner, user }) => {
+	const { t } = useTranslation()
 	const [isOpen, setIsOpen] = useState(false)
 
 	const { data, isLoading, isError } = useQuery({
@@ -50,10 +52,14 @@ const OpenToWork = ({ isOwner, user }) => {
 
 	return (
 		<div className='relative flex flex-col my-2 bg-[#F7F7F7] font-jost w-[300px] rounded-lg p-2'>
-			<h1 className='text-[#2D2A33] font-semibold'>Looking for work</h1>
+			<h1 className='text-[#2D2A33] font-semibold'>
+				{t("profile.modal.jobPreferences.lookingForJob")}
+			</h1>
 
 			<div className='flex flex-row mt-1'>
-				<h1 className='text-[#2D2A33] font-semibold text-sm'>Positions:</h1>
+				<h1 className='text-[#2D2A33] font-semibold text-sm'>
+					{t("profile.modal.jobPreferences.plural.positions")}:
+				</h1>
 				<div className='inline-flex flex-wrap gap-1.5'>
 					{data.openToWorkPositions.map((position, index, arr) => (
 						<div
@@ -73,7 +79,7 @@ const OpenToWork = ({ isOwner, user }) => {
 				onClick={() => setIsOpen(true)}
 				className='flex flex-row hover:underline font-medium mt-1 font-jost text-[#24459A] text-sm w-fit'
 			>
-				Details
+				{t("profileSection.details")}
 			</button>
 
 			{isOwner && (

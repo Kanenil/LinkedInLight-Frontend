@@ -723,5 +723,12 @@
 				"button": "Додайте опис"
 			}
 		}
+	},
+	"profileSection": {
+		"contactInformation": "Контактна інформація",
+		"addProfileSection": "Додати розділ профілю",
+		"openTo": "Відкритий для",
+		"connections": "Контакти",
+		"details": "Деталі"
 	}
 }

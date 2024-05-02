@@ -705,5 +705,12 @@
 				"button": "Add description"
 			}
 		}
+	},
+	"profileSection": {
+		"contactInformation": "Contact information",
+		"addProfileSection": "Add profile section",
+		"openTo": "Open to",
+		"connections": "Connections",
+		"details": "Details"
 	}
 }

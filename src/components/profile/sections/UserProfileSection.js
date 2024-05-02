@@ -19,6 +19,7 @@ import useMobileDetector from "../../../hooks/useMobileDetector"
 import Button from "../../../elements/buttons/Button"
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import OpenToWork from "../items/OpenToWork"
+import { useTranslation } from "react-i18next"
 
 const ImageSector = ({ user, isOwner }) => {
 	const backgroundUrl = user?.background
@@ -48,13 +49,13 @@ const ImageSector = ({ user, isOwner }) => {
 						to='edit/image'
 						className='absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'
 					>
-						<img className='object-contain' src={imageUrl} alt='image' />
+						<img className='object-contain' src={imageUrl} alt='' />
 					</Link>
 				</Show.When>
 
 				<Show.Else>
 					<div className='absolute left-8 md:left-16 overflow-hidden -bottom-12 h-32 w-32 rounded-full border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'>
-						<img className='object-contain' src={imageUrl} alt='image' />
+						<img className='object-contain' src={imageUrl} alt='' />
 					</div>
 				</Show.Else>
 			</Show>
@@ -68,6 +69,8 @@ const CONNECTIONREVOKE = "connectionRevoke"
 const CONTACTINFORMATION = "contactInformation"
 
 const InformationSector = ({ user, isOwner, isPreview }) => {
+	const { t } = useTranslation()
+
 	const queryClient = useQueryClient()
 	const { isConnected, isConnectionRequested } = useQueries({
 		queries: connectedQuery(user.id, isOwner).map(value => ({
@@ -190,7 +193,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 						onClick={onShowContactInformation}
 						className='text-[#24459A] font-medium hover:underline'
 					>
-						Contact information
+						{t("profileSection.contactInformation")}
 					</button>
 				</div>
 				<Show>
@@ -199,7 +202,9 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 							to='/j4y/my-network/connections'
 							className='flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline w-fit'
 						>
-							<h3 className='font-medium'>Connections:</h3>
+							<h3 className='font-medium'>
+								{t("profileSection.connections")}:
+							</h3>
 
 							<h4 className='ml-4'>{connectionsCount}</h4>
 						</Link>
@@ -207,7 +212,9 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 
 					<Show.Else>
 						<div className='flex flex-row mt-1 font-jost text-[#24459A] text-sm w-fit'>
-							<h3 className='font-medium'>Connections:</h3>
+							<h3 className='font-medium'>
+								{t("profileSection.connections")}:
+							</h3>
 
 							<h4 className='ml-4'>{connectionsCount}</h4>
 						</div>
@@ -231,7 +238,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 								rounded='full'
 								onClick={onShowAddToProfile}
 							>
-								Add profile section
+								{t("profileSection.addProfileSection")}
 							</Button>
 						</div>
 					</Show.When>

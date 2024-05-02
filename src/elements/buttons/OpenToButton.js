@@ -7,6 +7,7 @@ import React from "react"
 import Button from "./Button"
 import ProfileService from "../../services/profileService"
 import { useQueries } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next"
 
 const statuses = [
 	{
@@ -45,6 +46,7 @@ const ChoiceItem = ({ title, description, to, onClick }) => {
 }
 
 const OpenToButton = () => {
+	const { t } = useTranslation()
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useComponentVisible(false)
 
@@ -87,7 +89,7 @@ const OpenToButton = () => {
 				variant='primary'
 				rounded='full'
 			>
-				Open to
+				{t("profileSection.openTo")}
 			</Button>
 			<ConditionalWrapper condition={isComponentVisible && !isMobile}>
 				<div
