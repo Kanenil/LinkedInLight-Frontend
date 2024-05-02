@@ -57,12 +57,15 @@ const LanguagesSection = ({ user, isOwner }) => {
 						</ConditionalWrapper>
 					</div>
 
-					<div className='flex flex-row flex-wrap justify-start items-center mt-2.5 gap-[25px] py-[5px]'>
+					<div className='grid grid-cols-1 sm:grid-cols-2 justify-start mt-2.5 gap-[25px] py-[5px]'>
 						{data.map((language, index) => (
-							<React.Fragment key={`languages-${language.name}-${index}`}>
+							<div
+								className='inline-flex items-center gap-5'
+								key={`languages-${language.name}-${index}`}
+							>
 								<div className='hidden md:block'>{dot}</div>
 
-								<div className='flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-[40vw] md:w-[280px]'>
+								<div className='flex flex-col border-b-[0.5px] border-[#24459A80] text-[#2D2A33] gap-[5px] pb-2.5 w-full'>
 									<h1 className='font-jost font-medium'>
 										{language.language.name}
 									</h1>
@@ -74,7 +77,7 @@ const LanguagesSection = ({ user, isOwner }) => {
 										}
 									</h3>
 								</div>
-							</React.Fragment>
+							</div>
 						))}
 					</div>
 				</div>

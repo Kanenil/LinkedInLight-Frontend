@@ -486,7 +486,7 @@
 				"description": "Опис"
 			},
 			"language": {
-				"title": "мова",
+				"title": "мову",
 				"title1": "Мова",
 				"language": "Мова *",
 				"proficiency": "Кваліфікація *",

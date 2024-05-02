@@ -51,11 +51,15 @@ const AddLanguage = ({ onClose, onSave, onChange, id }) => {
 					name: values.language,
 					id: languageId,
 				},
-				proficiency: values.proficiency,
+				proficiency: options.proficiency.find(
+					val => val.label === values.proficiency,
+				).value,
 			})
 		} else {
 			await AdditionalProfileService.addLanguage({
-				proficiency: values.proficiency,
+				proficiency: options.proficiency.find(
+					val => val.label === values.proficiency,
+				).value,
 				languageId: languageId,
 				language: {
 					name: values.language,
