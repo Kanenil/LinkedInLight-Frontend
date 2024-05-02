@@ -594,5 +594,12 @@
 		"required": "This field is required!",
 		"atLeast": "Select at least one {{ name }}",
 		"atLeast2": "Select at least one {{ name }}"
+	},
+	"modal": {
+		"cancel": "Cancel",
+		"confirm": "Confirm",
+		"discard": "Discard",
+		"discardChanges": "Discard changes",
+		"discardChangesText": "Are you sure you want to discard changes?"
 	}
 }

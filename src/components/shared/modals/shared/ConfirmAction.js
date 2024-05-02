@@ -1,8 +1,11 @@
 import XMarkIcon from "../../../../elements/icons/XMarkIcon"
 import React from "react"
 import Button from "../../../../elements/buttons/Button"
+import { useTranslation } from "react-i18next"
 
 const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
+	const { t } = useTranslation()
+
 	return (
 		<div
 			className='flex flex-col gap-1 bg-white p-5 w-screen mt-[30vh] md:mt-0 md:w-[351px]'
@@ -10,7 +13,7 @@ const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
 		>
 			<div className='flex flex-row py-2.5'>
 				<h1 className='font-jost font-semibold text-[#2D2A33] text-xl'>
-					{title}
+					{t(title)}
 				</h1>
 
 				<button onClick={onClose} className='ml-auto'>
@@ -19,7 +22,7 @@ const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
 			</div>
 
 			<h3 className='border-t-[0.5px] border-[#24459A80] pt-6 pb-4 text-sm'>
-				{action}
+				{t(action)}
 			</h3>
 
 			<div className='flex justify-end pt-2.5 pb-1 gap-2'>
@@ -29,7 +32,7 @@ const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
 					rounded='full'
 					onClick={onClose}
 				>
-					Cancel
+					{t("modal.cancel")}
 				</Button>
 
 				<Button
@@ -38,7 +41,7 @@ const ConfirmAction = ({ onClose, onConfirm, action, title }) => {
 					rounded='full'
 					onClick={onConfirm}
 				>
-					Confirm
+					{t("modal.confirm")}
 				</Button>
 			</div>
 		</div>
