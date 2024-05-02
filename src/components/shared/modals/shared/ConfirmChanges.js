@@ -1,8 +1,11 @@
 import XMarkIcon from "../../../../elements/icons/XMarkIcon"
 import React from "react"
 import Button from "../../../../elements/buttons/Button"
+import { useTranslation } from "react-i18next"
 
 const ConfirmChanges = ({ onClose, onConfirm }) => {
+	const { t } = useTranslation()
+
 	return (
 		<div
 			className='flex flex-col gap-1 p-5 w-[351px]'
@@ -10,7 +13,7 @@ const ConfirmChanges = ({ onClose, onConfirm }) => {
 		>
 			<div className='flex flex-row py-2.5'>
 				<h1 className='font-jost font-semibold text-[#2D2A33] text-xl'>
-					Discard changes
+					{t("modal.discardChanges")}
 				</h1>
 
 				<button onClick={onClose} className='ml-auto'>
@@ -19,7 +22,7 @@ const ConfirmChanges = ({ onClose, onConfirm }) => {
 			</div>
 
 			<h3 className='border-t-[0.5px] border-[#24459A80] pt-6 pb-4 text-sm'>
-				Are you want discard changes?
+				{t("modal.discardChangesText")}
 			</h3>
 
 			<div className='flex justify-end pt-2.5 pb-1 gap-2'>
@@ -29,7 +32,7 @@ const ConfirmChanges = ({ onClose, onConfirm }) => {
 					rounded='full'
 					onClick={onClose}
 				>
-					Cancel
+					{t("modal.cancel")}
 				</Button>
 
 				<Button
@@ -38,7 +41,7 @@ const ConfirmChanges = ({ onClose, onConfirm }) => {
 					rounded='full'
 					onClick={onConfirm}
 				>
-					Discard
+					{t("modal.discard")}
 				</Button>
 			</div>
 		</div>

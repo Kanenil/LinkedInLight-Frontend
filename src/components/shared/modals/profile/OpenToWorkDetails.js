@@ -3,29 +3,7 @@ import { APP_ENV } from "../../../../env"
 import useUrlUser from "../../../../hooks/useUrlUser"
 import Loader from "../../Loader"
 import defaultImage from "../../../../assets/default-image.jpg"
-
-const employmentTypes = [
-	{
-		value: "fullTime",
-		label: "Full-time",
-	},
-	{
-		value: "partTime",
-		label: "Part-time",
-	},
-	{
-		value: "internship",
-		label: "Internship",
-	},
-	{
-		value: "contract",
-		label: "Contract",
-	},
-	{
-		value: "temporary",
-		label: "Temporary",
-	},
-]
+import { useTranslation } from "react-i18next"
 
 const OpenToWorkDetails = ({
 	preferences,
@@ -35,6 +13,15 @@ const OpenToWorkDetails = ({
 	onClose,
 }) => {
 	const { profile, isLoading } = useUrlUser()
+	const { t } = useTranslation()
+
+	const employmentTypes = t("profile.modal.jobPreferences.employmentTypes", {
+		returnObjects: true,
+	})
+
+	const startDate = t("profile.modal.jobPreferences.startDate", {
+		returnObjects: true,
+	})
 
 	return (
 		<div
@@ -43,7 +30,7 @@ const OpenToWorkDetails = ({
 		>
 			<div className='flex flex-row py-2.5 border-b-[1px] border-b-[#24459A]'>
 				<h1 className='font-jost font-semibold text-[#2D2A33] text-2xl md:text-xl'>
-					Job preferences
+					{t("profile.modal.jobPreferences.title")}
 				</h1>
 
 				<button onClick={onClose} className='ml-auto'>
@@ -66,7 +53,7 @@ const OpenToWorkDetails = ({
 										? APP_ENV.UPLOADS_URL + "/" + profile.image
 										: defaultImage
 								}
-								alt='image'
+								alt=''
 							/>
 						</div>
 
@@ -75,13 +62,17 @@ const OpenToWorkDetails = ({
 								{profile.firstName} {profile.lastName}
 							</h1>
 
-							<h3 className='font-jost text-sm'>Looking for job</h3>
+							<h3 className='font-jost text-sm'>
+								{t("profile.modal.jobPreferences.lookingForJob")}
+							</h3>
 						</div>
 					</div>
 
 					<div className='grid grid-cols-2 gap-4 my-4 font-jost'>
 						<div className='flex flex-col gap-2'>
-							<h1 className='font-medium text-[#2D2A33]'>Positions</h1>
+							<h1 className='font-medium text-[#2D2A33]'>
+								{t("profile.modal.jobPreferences.plural.positions")}
+							</h1>
 
 							<div className='inline-flex flex-wrap gap-1.5'>
 								{preferences.openToWorkPositions.map((position, index, arr) => (
@@ -102,7 +93,9 @@ const OpenToWorkDetails = ({
 						</div>
 
 						<div className='flex flex-col gap-2'>
-							<h1 className='font-medium text-[#2D2A33]'>Regions</h1>
+							<h1 className='font-medium text-[#2D2A33]'>
+								{t("profile.modal.jobPreferences.plural.regions")}
+							</h1>
 
 							<div className='inline-flex flex-wrap gap-1.5'>
 								{preferences.openToWorkCountries.map((country, index, arr) => (
@@ -120,19 +113,27 @@ const OpenToWorkDetails = ({
 						</div>
 
 						<div className='flex flex-col gap-2'>
-							<h1 className='font-medium text-[#2D2A33]'>Start date</h1>
+							<h1 className='font-medium text-[#2D2A33]'>
+								{t("profile.modal.jobPreferences.plural.startDate")}
+							</h1>
 
 							<div className='inline-flex flex-wrap gap-1.5'>
 								<h3 className='text-sm mr-1 font-light'>
-									{preferences.canStartImmediately
-										? "Immediately"
-										: "After time"}
+									{
+										startDate.find(
+											v =>
+												v.condition ===
+												preferences.canStartImmediately.toString(),
+										)?.title
+									}
 								</h3>
 							</div>
 						</div>
 
 						<div className='flex flex-col gap-2'>
-							<h1 className='font-medium text-[#2D2A33]'>Employment types</h1>
+							<h1 className='font-medium text-[#2D2A33]'>
+								{t("profile.modal.jobPreferences.plural.employmentTypes")}
+							</h1>
 
 							<div className='inline-flex items-center flex-wrap gap-1.5'>
 								{employmentTypes.map(

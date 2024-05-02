@@ -11,6 +11,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { useQuery } from "@tanstack/react-query"
 import Loader from "../../Loader"
+import { Trans, useTranslation } from "react-i18next"
 
 const GeneralInfoSchema = yup.object({
 	about: yup.string(),
@@ -26,6 +27,7 @@ const initValues = {
 
 const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const { data: userSkills, isLoading: userSkillsLoading } = useQuery({
 		queryFn: () => ProfileService.getSkills(),
@@ -76,7 +78,10 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 			}
 		}
 
-		success("General information successfully saved.", 5)
+		success(
+			t("alert.onSuccess", { name: t("profile.modal.general.title1") }),
+			5,
+		)
 		onSave()
 	}
 
@@ -86,8 +91,7 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 		onSubmit: onSubmitFormik,
 	})
 
-	const { values, errors, handleSubmit, handleChange, setValues, setErrors } =
-		formik
+	const { values, errors, handleSubmit, handleChange, setValues } = formik
 
 	const filtered = useMemo(
 		() =>
@@ -114,7 +118,9 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 			onClose={onClose}
 			onRemove={null}
 			isEdit={false}
-			header={"Edit general information"}
+			header={t("profile.modal.edit", {
+				title: t("profile.modal.general.title"),
+			})}
 		>
 			{userSkillsLoading || aboutLoading ? (
 				<div className='h-[300px]'>
@@ -124,15 +130,15 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 				<>
 					<div className='flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-2.5'>
 						<h1 className='font-jost font-light text-sm text-[#2D2A33]'>
-							On <span className='font-medium'>Job for You</span>, you can share
-							your years of experience, choose your industry and specify your
-							skills. Describe your accomplishments and previous work experience
-							to create a complete picture of your career
+							<Trans
+								i18nKey='profile.modal.general.description'
+								components={{ strong: <strong className='font-medium' /> }}
+							/>
 						</h1>
 
 						<textarea
 							className='mt-[15px] resize-none border-[0.5px] border-[#556DA9] rounded-lg text-sm font-jost font-light'
-							placeholder='Description...'
+							placeholder={t("placeholders.description")}
 							name='about'
 							onChange={handleChange}
 							value={values.about}
@@ -141,13 +147,15 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 					</div>
 
 					<div className='flex flex-col pt-[5px] pl-[20px] pr-[15px] pb-[10px] gap-[5px]'>
-						<h1 className='font-jost text-[#2D2A33] font-semibold'>Skills</h1>
+						<h1 className='font-jost text-[#2D2A33] font-semibold'>
+							{t("profile.modal.general.skills")}
+						</h1>
 
 						<h3 className='font-jost text-sm text-[#2D2A33] font-light'>
-							Show your strengths - add up to 5 key skills that you would like
-							to be recognized for. They will automatically appear in your
-							"Skills" section on{" "}
-							<span className='font-medium'>Job for You</span>
+							<Trans
+								i18nKey='profile.modal.general.skillsDescription'
+								components={{ strong: <strong className='font-medium' /> }}
+							/>
 						</h3>
 
 						{values.skills.map((val, index) => (
@@ -193,12 +201,14 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 								className='group flex flex-row gap-2.5 items-center mt-2.5 w-fit px-2.5 py-[5px] text-sm rounded-full border-[1px] border-[#7D88A4] text-[#7D88A4] hover:border-[#24459A] hover:text-[#556DA9] active:text-[#24459A] active:border-[#24459A] active:border-[1.5px]  active:bg-[#E4EAFF]'
 							>
 								<PlusIcon className='fill-[#7D88A4] group-hover:fill-[#556DA9] group-active:fill-[#24459A] h-3' />
-								Add skill
+								{t("profile.modal.add", {
+									title: t("profile.modal.skill.single"),
+								})}
 							</button>
 						</ConditionalWrapper>
 						<ConditionalWrapper condition={values.skills.length === 5}>
 							<h3 className='text-[#2D2A33] font-light font-sm'>
-								You reached maximum of 5 skills
+								{t("profile.modal.general.maximum")}
 							</h3>
 						</ConditionalWrapper>
 					</div>

@@ -8,6 +8,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { useQuery } from "@tanstack/react-query"
 import Loader from "../../Loader"
+import { useTranslation } from "react-i18next"
 
 const SkillSchema = yup.object({
 	skill: yup.object(),
@@ -21,6 +22,7 @@ const initValues = {
 
 const AddSkill = ({ onClose, onSave, onChange, id }) => {
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const { data: skills, isLoading: allSkillsLoading } = useQuery({
 		queryFn: () => ProfileService.getAllSkills(),
@@ -95,7 +97,10 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 				)
 			}
 
-			success(`Skill ${label} saved.`, 5)
+			success(
+				t("alert.onSuccess", { name: t("profile.modal.skill.title1") }),
+				5,
+			)
 			onSave()
 		} catch (err) {
 			if (err.response.data === "You can only have 5 main skills.") {
@@ -116,7 +121,7 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 	const onRemoveClick = async () => {
 		await ProfileService.removeSkill(id)
 
-		success(`Skill successfully removed.`, 5)
+		success(t("alert.onRemoved", { name: t("profile.modal.skill.title1") }), 5)
 		onSave()
 	}
 
@@ -128,7 +133,10 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 			onClose={onClose}
 			onRemove={onRemoveClick}
 			isEdit={id ?? false}
-			header={id ? "Edit skill" : "Add skill"}
+			header={t(`profile.modal.${id ? "edit" : "add"}`, {
+				title: t("profile.modal.skill.title"),
+			})}
+			removeTitle={t("profile.modal.skill.title")}
 		>
 			{userSkillsLoading || allSkillsLoading ? (
 				<div className='h-[300px]'>
@@ -137,12 +145,12 @@ const AddSkill = ({ onClose, onSave, onChange, id }) => {
 			) : (
 				<>
 					<h3 className='font-jost text-[#2D2A33] text-sm'>
-						Required fields are marked with *
+						{t("validation.requiredField")}
 					</h3>
 
 					<ModalSelectFormGroup
 						className='pt-[5px] pb-[10px] pr-[20px] gap-[5px]'
-						title='Skill *'
+						title={t("profile.modal.skill.title1") + " *"}
 						value={stringifySkill(values.skill)}
 						options={filteredSkills()}
 						containerWidth={400}

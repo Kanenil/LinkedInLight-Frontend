@@ -5,6 +5,7 @@ import PencilButton from "../../../elements/buttons/PencilButton"
 import Show from "../../../elements/shared/Show"
 import { APP_ENV } from "../../../env"
 import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 const ExperienceItem = ({
 	editPath,
@@ -17,6 +18,8 @@ const ExperienceItem = ({
 	title,
 	id,
 }) => {
+	const { t } = useTranslation()
+
 	const [showMore, setShowMore] = useState(false)
 
 	const start = new Date(startDate)
@@ -24,7 +27,7 @@ const ExperienceItem = ({
 
 	const period = `${getShortMonth(start.getMonth())} ${start.getFullYear()} - ${
 		currentlyWorking
-			? "Present"
+			? t("educationsSection.present")
 			: `${getShortMonth(end.getMonth())} ${end.getFullYear()}`
 	}`
 
@@ -36,6 +39,7 @@ const ExperienceItem = ({
 						<img
 							className='object-contain'
 							src={APP_ENV.UPLOADS_URL + "/" + company.logoImg}
+							alt=''
 						/>
 					</div>
 				</Show.When>
@@ -71,7 +75,7 @@ const ExperienceItem = ({
 									onClick={() => setShowMore(true)}
 									className='hover:text-blue-400'
 								>
-									...see more
+									{t("educationsSection.seeMore")}
 								</button>
 							</ConditionalWrapper>
 							<ConditionalWrapper

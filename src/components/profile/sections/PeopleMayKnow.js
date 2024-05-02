@@ -13,6 +13,7 @@ import AddToProfile from "../../shared/modals/profile/AddToProfile"
 import Modal from "../../shared/modals/Modal"
 import Button from "../../../elements/buttons/Button"
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { useTranslation } from "react-i18next"
 
 const CONNECTION = "connection"
 const CONNECTIONREQUEST = "connectionRequest"
@@ -26,6 +27,8 @@ const MayKnowItem = ({
 	profileUrl,
 	image,
 }) => {
+	const { t } = useTranslation()
+
 	const { isConnected, isConnectionRequested } = useQueries({
 		queries: connectedQuery(id, false).map(value => ({
 			...value,
@@ -97,7 +100,7 @@ const MayKnowItem = ({
 					<img
 						className='object-contain'
 						src={image ? `${APP_ENV.UPLOADS_URL}/${image}` : defaultImage}
-						alt='image'
+						alt=''
 					/>
 				</div>
 
@@ -116,7 +119,7 @@ const MayKnowItem = ({
 								className='items-center w-fit gap-2.5 px-3'
 								onClick={onRemoveConnection}
 							>
-								Remove connection
+								{t("connections.remove")}
 								<XMarkIcon className='h-5 fill-white' />
 							</Button>
 						</Show.When>
@@ -133,7 +136,7 @@ const MayKnowItem = ({
 								className='items-center w-fit gap-2.5 px-3'
 								onClick={onRevokeConnectionRequest}
 							>
-								Requested connection
+								{t("connections.request")}
 								<XMarkIcon className='h-5 fill-white' />
 							</Button>
 						</Show.When>
@@ -145,7 +148,7 @@ const MayKnowItem = ({
 								className='items-center w-fit gap-2.5 px-3'
 								onClick={onRemoveConnectionRequest}
 							>
-								Requested connection
+								{t("connections.request")}
 								<XMarkIcon className='h-5 fill-white' />
 							</Button>
 						</Show.When>
@@ -158,7 +161,7 @@ const MayKnowItem = ({
 								className='items-center gap-2.5 w-fit mt-2 px-3'
 							>
 								<PlusIcon className='w-4 h-4 stroke-2' />
-								Connect
+								{t("connections.add")}
 							</Button>
 						</Show.Else>
 					</Show>
@@ -203,6 +206,8 @@ const MayKnowItem = ({
 }
 
 const PeopleMayKnow = ({ margin = "mt-2.5" }) => {
+	const { t } = useTranslation()
+
 	const { data: suggestions, isLoading } = useQuery({
 		queryFn: () => ConnectionService.suggestions(),
 		queryKey: ["suggestions"],
@@ -214,7 +219,7 @@ const PeopleMayKnow = ({ margin = "mt-2.5" }) => {
 	return (
 		<div className={`flex flex-col bg-white rounded-lg px-5 pt-5 ${margin}`}>
 			<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-				People you may know
+				{t("peopleMayKnow.title")}
 			</h1>
 
 			{suggestions.map((person, index) => (
@@ -223,10 +228,10 @@ const PeopleMayKnow = ({ margin = "mt-2.5" }) => {
 
 			<ConditionalWrapper condition={suggestions.length > 5}>
 				<Link
-					to=''
+					to='/j4y/my-network'
 					className='mt-2.5 py-3 border-[#A7ACBA] border-t-[0.5px] flex flex-row justify-center gap-4 font-jost text-[#2D2A33] font-light'
 				>
-					Show all
+					{t("peopleMayKnow.showAll")}
 					<ArrowRightIcon className='fill-[#2D2A33] w-2.5' />
 				</Link>
 			</ConditionalWrapper>

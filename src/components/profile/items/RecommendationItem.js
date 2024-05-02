@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router"
 import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import moment from "moment"
 import Button from "../../../elements/buttons/Button"
+import { useTranslation } from "react-i18next"
 
 const RecommendationItem = ({
 	status,
@@ -21,6 +22,7 @@ const RecommendationItem = ({
 }) => {
 	const location = useLocation()
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	const user = status === "Pending" ? requester : sender
 
@@ -35,7 +37,7 @@ const RecommendationItem = ({
 								? APP_ENV.UPLOADS_URL + "/" + user?.image
 								: defaultImage
 						}
-						alt='image'
+						alt=''
 					/>
 				</div>
 
@@ -51,7 +53,8 @@ const RecommendationItem = ({
 
 					<ConditionalWrapper condition={status === "Given"}>
 						<h3 className='font-light text-[#BBBBBB] text-sm'>
-							Given {moment(dateGiven).format("YYYY, DD MMMM")}
+							{t("recommendationsSection.given")}{" "}
+							{moment(dateGiven).format("YYYY, DD MMMM")}
 						</h3>
 					</ConditionalWrapper>
 				</div>
@@ -68,7 +71,7 @@ const RecommendationItem = ({
 								navigator(`${location.pathname}/edit/give-recommendation/${id}`)
 							}
 						>
-							Give recommendation
+							{t("recommendationsSection.give")}
 						</Button>
 
 						<div className='border-r-[1px] border-l-[1px] px-3 py-2 rounded-lg border-[#24459A] text-[#2D2A33] font-jost'>
@@ -77,7 +80,9 @@ const RecommendationItem = ({
 
 						<div className='mt-5 font-jost font-light text-sm'>
 							<h3 className='text-[#2D2A33]'>
-								Write a recommendation for {user.firstName} {user.lastName}
+								{t("recommendationsSection.write", {
+									fullName: user.firstName + " " + user.lastName,
+								})}
 							</h3>
 							<Link
 								to={`${location.pathname}/edit/give-recommendation/${id}`}

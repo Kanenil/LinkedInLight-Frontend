@@ -52,7 +52,6 @@ const AbstractDetails = ({
 		select: ({ data }) => data,
 		enabled: !hook,
 	})
-	const navigator = useNavigate()
 
 	const hookData = hook && hook(user, isOwner)
 
@@ -67,14 +66,9 @@ const AbstractDetails = ({
 						/>
 					</button>
 
-					<h1 className='font-medium text-2xl text-[#2D2A33]'>
-						{title ? title : detail}
-					</h1>
+					<h1 className='font-medium text-2xl text-[#2D2A33]'>{title()}</h1>
 
-					<Link
-						to={`details/${detail.toLowerCase()}/edit/${edit}`}
-						className='ml-auto'
-					>
+					<Link to={`edit/${edit}`} className='ml-auto'>
 						<PlusIcon className='w-4 fill-[#556DA9]' />
 					</Link>
 				</div>
@@ -89,19 +83,14 @@ const AbstractDetails = ({
 						{data?.map((item, index) =>
 							React.cloneElement(itemComponent, {
 								key: `abstractDetail-${index}`,
-								editPath: `details/${detail.toLowerCase()}/edit/${edit}/${
-									item.id
-								}`,
+								editPath: `edit/${edit}/${item.id}`,
 								...item,
 							}),
 						)}
 					</Show.When>
 
 					<Show.Else>
-						<NoData
-							title={edit}
-							addPath={`details/${detail.toLowerCase()}/edit/${edit}`}
-						/>
+						<NoData title={edit} addPath={`edit/${edit}`} />
 					</Show.Else>
 				</Show>
 			</ConditionalWrapper>

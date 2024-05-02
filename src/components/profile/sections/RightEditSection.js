@@ -3,14 +3,21 @@ import PencilButton from "../../../elements/buttons/PencilButton"
 import React from "react"
 import useAuthUser from "../../../hooks/useAuthUser"
 import { APP_ENV } from "../../../env"
+import { useTranslation } from "react-i18next"
 
 const RightEditSection = () => {
+	const { t } = useTranslation()
+
 	const { profile, isLoading } = useAuthUser()
 
 	const blocks = [
-		{ title: "Language", border: "", to: "/j4y/settings/params/language" },
 		{
-			title: "Public profile & URL",
+			title: t("rightEditSection.languages"),
+			border: "",
+			to: "/j4y/settings/params/language",
+		},
+		{
+			title: t("rightEditSection.public"),
 			border: "pt-3 border-t-[0.5px] border-[#24459A80]",
 			to: "public",
 			optional: APP_ENV.FRONTEND_URL + "/j4y/" + profile.profileUrl,

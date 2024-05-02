@@ -4,6 +4,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import PencilButton from "../../../elements/buttons/PencilButton"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
+import { useTranslation } from "react-i18next"
 
 const CertificationItem = ({
 	editPath,
@@ -14,11 +15,13 @@ const CertificationItem = ({
 	credentialId,
 	credentialURL,
 }) => {
+	const { t } = useTranslation()
+
 	const start = new Date(issueDate)
 	const end = new Date(expirationDate)
 	const navigator = useNavigate()
 
-	const period = `Issued ${getShortMonth(
+	const period = `${t("certificationsSection.issued")} ${getShortMonth(
 		start.getMonth(),
 	)} ${start.getFullYear()} ${
 		expirationDate
@@ -42,17 +45,20 @@ const CertificationItem = ({
 
 				<ConditionalWrapper condition={credentialId}>
 					<h3 className='font-light font-normal text-[#2D2A33] mt-2 text-sm'>
-						Credential ID {credentialId}
+						{t("certificationsSection.credentialId")} {credentialId}
 					</h3>
 				</ConditionalWrapper>
 
-				<ConditionalWrapper>
+				<ConditionalWrapper condition={credentialURL}>
 					<Button
 						variant='tertiary'
 						rounded='full'
-						onClick={() => navigator(credentialURL)}
+						className='mt-2'
+						onClick={() => {
+							window.open(credentialURL, "_blank")
+						}}
 					>
-						Show credential
+						{t("certificationsSection.showCredential")}
 					</Button>
 				</ConditionalWrapper>
 			</div>

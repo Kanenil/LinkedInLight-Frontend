@@ -342,7 +342,376 @@
 		"generalSkills": "General skills",
 		"skills": "Skills",
 		"showAll": "Show all",
-		"courses": "Courses"
+		"courses": "Courses",
+		"modal": {
+			"remove": "Remove {{ removeTitle }}",
+			"edit": "Edit {{ title }}",
+			"add": "Add {{ title }}",
+			"save": "Save {{ title }}",
+			"addToProfile": {
+				"title": "Add to profile",
+				"main": {
+					"title": "Main information",
+					"image": "Add profile image",
+					"general": "Add general information",
+					"education": "Add education",
+					"experience": "Add experience",
+					"skills": "Add skills"
+				},
+				"recommended": {
+					"title": "Recommended",
+					"certificates": "Add certificates",
+					"projects": "Add projects",
+					"courses": "Add courses",
+					"recommendations": "Add recommendations"
+				},
+				"additional": {
+					"title": "Additional information",
+					"volunteerExperience": "Add volunteer experience",
+					"languages": "Add languages",
+					"contact": "Add contact information"
+				}
+			},
+			"image": {
+				"wrongWidthError": "Background width must be at least {{value}}px!",
+				"image": "image",
+				"image1": "Image",
+				"background": "background",
+				"background1": "Background",
+				"upload": "Upload image",
+				"change": "Change image",
+				"zoom": "Zoom",
+				"straighten": "Straighten",
+				"description": "At <strong>Job for You</strong>, we embrace your authenticity! Take a photo or upload an existing one to make your profile as realistic as possible. We support your unique presentation, without editing or filters – here, it's all about you!",
+				"gallery": "Select from gallery",
+				"mobileDescription": "Upload a photo to make your profile as real as possible. We support your unique representation, without editing or filters - it's all about you here!"
+			},
+			"general": {
+				"title": "general information",
+				"title1": "General information",
+				"description": "On <strong>Job for You</strong>, you can share your years of experience, choose your industry and specify your skills. Describe your accomplishments and previous work experience to create a complete picture of your career",
+				"skills": "Skills",
+				"skillsDescription": "Show your strengths - add up to 5 key skills that you would like to be recognized for. They will automatically appear in your \"Skills\" section on <strong>Job for You</strong>",
+				"maximum": "You reached maximum of 5 skills"
+			},
+			"education": {
+				"title": "education",
+				"title1": "Education",
+				"school": "School *",
+				"schoolPlaceholder": "ex: Boston University",
+				"degree": "Degree *",
+				"degreePlaceholder": "ex: Bachelor's degree",
+				"field": "Field of study *",
+				"fieldPlaceholder": "ex: Business",
+				"currentlyStudying": "I am currently studying at this school",
+				"grade": "Grade",
+				"description": "Description"
+			},
+			"experience": {
+				"title": "experience",
+				"title1": "Experience",
+				"jobTitle": "Title *",
+				"titlePlaceholder": "ex: Retail Sales Manager",
+				"company": "Company *",
+				"companyPlaceholder": "ex: Microsoft",
+				"industry": "Industry *",
+				"industryPlaceholder": "ex: Software Development",
+				"currentlyWorking": "I am currently working in this role",
+				"description": "Description",
+				"headline": "Profile headline",
+				"headlineDescription": "Appears below your name at the top of the profile",
+				"endDate": "End date *"
+			},
+			"skill": {
+				"title": "skill",
+				"title1": "Skill",
+				"single": "skill"
+			},
+			"certification": {
+				"title": "certification",
+				"title1": "Certification",
+				"name": "Name *",
+				"namePlaceholder": "ex: Microsoft certified network associate security",
+				"issuing": "Issuing organization *",
+				"issuingPlaceholder": "ex: Microsoft",
+				"expiration": "Expiration date *",
+				"issue": "Issue date *",
+				"credentialId": "Credential ID",
+				"credentialUrl": "Credential URL"
+			},
+			"project": {
+				"title": "project",
+				"title1": "Project",
+				"name": "Name *",
+				"associated": "Associated with",
+				"description": "Description",
+				"currentlyWorking": "I am currently working on this project",
+				"endDate": "End date"
+			},
+			"course": {
+				"title": "course",
+				"title1": "Course",
+				"name": "Name *",
+				"number": "Number",
+				"associated": "Associated with"
+			},
+			"request": {
+				"title": "Request recommendation",
+				"canWrite": "Who can write for you recommendation?",
+				"search": "Search connection *",
+				"step": "Step {{ value }}",
+				"continue": "Continue",
+				"send": "Send",
+				"whereKnow": "From where you know <strong>{{ value }}</strong>?",
+				"relationship": "Relationship",
+				"position": "Position at the time",
+				"message": "Message",
+				"requestSend": "Your request sent to {{ name }}",
+				"defaultMessage": "Hi {{ name }}, would you write me a recommendation please?"
+			},
+			"volunteer": {
+				"title": "volunteer experience",
+				"title1": "Volunteer experience",
+				"organization": "Organization *",
+				"role": "Role *",
+				"cause": "Cause",
+				"currentlyVolunteering": "I am currently volunteering in this role",
+				"endDate": "End date *",
+				"description": "Description"
+			},
+			"language": {
+				"title": "language",
+				"title1": "Language",
+				"language": "Language *",
+				"proficiency": "Proficiency *",
+				"selectList": "Select from list",
+				"proficiencies": [
+					{ "label": "Elementary proficiency", "value": "Elementary" },
+					{ "label": "Limited working proficiency", "value": "Limited" },
+					{
+						"label": "Professional working proficiency",
+						"value": "Professional"
+					},
+					{ "label": "Full professional proficiency", "value": "Full" },
+					{ "label": "Native", "value": "Native" }
+				]
+			},
+			"intro": {
+				"title": "intro",
+				"title1": "Intro",
+				"firstName": "First name *",
+				"lastName": "Last name *",
+				"additionalName": "Additional name",
+				"headline": "Headline",
+				"country": "Country *",
+				"exampleCountry": "ex: United States",
+				"city": "City *",
+				"exampleCity": "ex: New York",
+				"lastPosition": "Last position"
+			},
+			"giveRecommendation": {
+				"writeFor": "Write a recommendation for {{ fullName }}",
+				"willShownIn": "This recommendation will be shown in {{ firstName }}'s profile",
+				"title": "Add recommendation *"
+			},
+			"shared": {
+				"startDate": "Start date *",
+				"endDate": "End date (or expected)",
+				"notFuture": "Start date can't be in the future",
+				"notEarlier": "End date can't be earlier than start date",
+				"enter": "Please enter a {{ value }}",
+				"year": "year",
+				"month": "month",
+				"months": []
+			},
+			"jobPreferences": {
+				"title": "Job preferences",
+				"lookingForJob": "Looking for job",
+				"labels": {
+					"employmentTypes": "Employment types *",
+					"startDate": "Start date",
+					"region": "Region *",
+					"positions": "Positions *",
+					"visibility": "Visibility (who can see view you're open to work) *"
+				},
+				"startDate": [
+					{ "title": "Immediately", "condition": "true" },
+					{ "title": "After time", "condition": "false" }
+				],
+				"visibility": [
+					{ "title": "Only recruiters", "condition": "true" },
+					{ "title": "All Job For You members", "condition": "false" }
+				],
+				"add": {
+					"position": "Add position",
+					"region": "Add region"
+				},
+				"singular": {
+					"position": "position",
+					"region": "region",
+					"employmentType": "employment type"
+				},
+				"plural": {
+					"positions": "Positions",
+					"regions": "Regions",
+					"startDate": "Start date",
+					"employmentTypes": "Employment types"
+				},
+				"employmentTypes": [
+					{
+						"value": "fullTime",
+						"label": "Full-time"
+					},
+					{
+						"value": "partTime",
+						"label": "Part-time"
+					},
+					{
+						"value": "internship",
+						"label": "Internship"
+					},
+					{
+						"value": "contract",
+						"label": "Contract"
+					},
+					{
+						"value": "temporary",
+						"label": "Temporary"
+					}
+				]
+			}
+		}
+	},
+	"alert": {
+		"onSuccess": "{{ name }} successfully saved.",
+		"onRemoved": "{{ name }} successfully removed."
+	},
+	"placeholders": {
+		"description": "Description..."
+	},
+	"validation": {
+		"requiredField": "Required fields are marked with *",
+		"required": "This field is required!",
+		"atLeast": "Select at least one {{ name }}",
+		"atLeast2": "Select at least one {{ name }}"
+	},
+	"modal": {
+		"cancel": "Cancel",
+		"confirm": "Confirm",
+		"discard": "Discard",
+		"discardChanges": "Discard changes",
+		"discardChangesText": "Are you sure you want to discard changes?"
+	},
+	"certificationsSection": {
+		"title": "Certifications",
+		"add": "Add certification",
+		"issued": "Issued",
+		"credentialId": "Credential ID",
+		"showCredential": "Show credential"
+	},
+	"companiesSection": {
+		"title": "Companies",
+		"my": "My",
+		"own": "Own",
+		"following": "Following",
+		"followers": "followers"
+	},
+	"educationsSection": {
+		"title": "Education",
+		"add": "Add education",
+		"present": "Present",
+		"grade": "Grade: ",
+		"seeMore": "...see more"
+	},
+	"experiencesSection": {
+		"title": "Experience",
+		"add": "Add experience"
+	},
+	"languagesSection": {
+		"title": "Languages"
+	},
+	"projectsSection": {
+		"title": "Projects",
+		"add": "Add project"
+	},
+	"recommendationsSection": {
+		"title": "Recommendations",
+		"statuses": [
+			{
+				"title": "Received",
+				"data": "receivedRecommendations"
+			},
+			{
+				"title": "Given",
+				"data": "givenRecommendations"
+			},
+			{
+				"title": "Pending",
+				"data": "pendingRecommendations"
+			}
+		],
+		"given": "Given",
+		"give": "Give recommendation",
+		"write": "Write a recommendation for {{ fullName }}"
+	},
+	"volunteerExperiencesSection": {
+		"title": "Volunteer experience",
+		"add": "Add volunteer experience"
+	},
+	"connections": {
+		"connectionsText": "Your connections",
+		"singular": "connection",
+		"add": "Connect",
+		"request": "Request connection",
+		"remove": "Remove connection"
+	},
+	"peopleMayKnow": {
+		"title": "People you may know",
+		"showAll": "Show all"
+	},
+	"rightEditSection": {
+		"languages": "Languages",
+		"public": "Public profile & URL"
+	},
+	"profileStatus": {
+		"title": "Profile status",
+		"visibleForMe": "This section is only visible to you",
+		"level": "Level",
+		"description": "Level up your <strong>Job For You</strong> experience by filling in all your details and find the perfect job for you",
+		"suggestions": {
+			"one": {
+				"title": "Where do you currently work?",
+				"description": "Add at least one position and become more visible to potential employers on <strong>Job for You!</strong>",
+				"button": "Add position"
+			},
+			"two": {
+				"title": "What is your field of work?",
+				"description": "By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
+				"button": "Add field of work"
+			},
+			"three": {
+				"title": "Add a profile picture",
+				"description": "Add a photo and make your profile more visible to employers on <strong>Job for You!</strong>",
+				"button": "Add photo"
+			},
+			"four": {
+				"title": "Add skills",
+				"description": "Highlight your key competencies and unique abilities, catching the attention of potential employers",
+				"button": "Add skills"
+			},
+			"five": {
+				"title": "Highlight your uniqueness",
+				"description": "Add a short description to highlight your personality or work experience",
+				"button": "Add description"
+			}
+		}
+	},
+	"profileSection": {
+		"contactInformation": "Contact information",
+		"addProfileSection": "Add profile section",
+		"openTo": "Open to",
+		"connections": "Connections",
+		"details": "Details"
 	},
 	"notFound": {
 		"heading": "Oops! Not found",

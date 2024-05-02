@@ -342,13 +342,394 @@
 	},
 	"profile": {
 		"aboutMe": "Про мене",
-		"visibleForMe": "Ця секція видна лише для вас",
+		"visibleForMe": "Цей розділ бачите лише ви",
 		"generalInformation": "Загальна інформація",
-		"defaultText": "Тут буде описана інформація про вас...",
+		"defaultText": "Тут буде показано ваш самоопис...",
 		"generalSkills": "Загальні навички",
 		"skills": "Навички",
-		"showAll": "Показати всі",
-		"courses": "Курси"
+		"showAll": "Покажи все",
+		"courses": "Курси",
+		"modal": {
+			"remove": "Видалити {{ removeTitle }}",
+			"edit": "Редагувати {{ title }}",
+			"add": "Додати {{ title }}",
+			"save": "Зберегти {{ title }}",
+			"addToProfile": {
+				"title": "Додати в профіль",
+				"main": {
+					"title": "Основна інформація",
+					"image": "Додайте зображення профілю",
+					"general": "Додайте загальну інформацію",
+					"education": "Додайте освіту",
+					"experience": "Додайте досвід",
+					"skills": "Додайте навички"
+				},
+				"recommended": {
+					"title": "Рекомендовано",
+					"certificates": "Додайте сертифікати",
+					"projects": "Додайте проекти",
+					"courses": "Додайте курси",
+					"recommendations": "Додайте рекомендації"
+				},
+				"additional": {
+					"title": "Додаткова інформація",
+					"volunteerExperience": "Додати волонтерський досвід",
+					"languages": "Додайте мови",
+					"contact": "Додайте контактну інформацію"
+				}
+			},
+			"image": {
+				"wrongWidthError": "Ширина фону має бути не менше {{value}} пікселів!",
+				"image": "зображення",
+				"image1": "Зображення",
+				"background": "фон",
+				"background1": "Фон",
+				"upload": "Завантажити зображення",
+				"change": "Змінити зображення",
+				"zoom": "Збільшити",
+				"straighten": "Випрямити",
+				"description": "На <strong>Job For You</strong>, ми цінуємо вашу автентичність! Зробіть фотографію або завантажте наявну, щоб зробити свій профіль максимально реалістичним. Ми підтримуємо вашу унікальну презентацію, без редагування та фільтрів – тут все про вас!",
+				"gallery": "Виберіть із галереї",
+				"mobileDescription": "Завантажте фотографію, щоб ваш профіль був максимально реальним. "
+			},
+			"general": {
+				"title": "загальну інформацію",
+				"title1": "Загальна інформація",
+				"description": "На <strong>Job For You</strong>, ви можете поділитися своїм багаторічним досвідом, вибрати свою галузь і вказати свої навички. ",
+				"skills": "Навички",
+				"skillsDescription": "Покажіть свої сильні сторони - додайте до 5 ключових навичок, за які ви хотіли б бути визнаними на <strong>Job For You</strong>",
+				"maximum": "Ви досягли максимум 5 навичок"
+			},
+			"education": {
+				"title": "освіту",
+				"title1": "Освіта",
+				"school": "Школа *",
+				"schoolPlaceholder": "наприклад: Бостонський університет",
+				"degree": "Ступінь *",
+				"degreePlaceholder": "наприклад: ступінь бакалавра",
+				"field": "Сфера навчання *",
+				"fieldPlaceholder": "наприклад: Бізнес",
+				"currentlyStudying": "Зараз я навчаюся в цій школі",
+				"grade": "Оцінка",
+				"description": "Опис"
+			},
+			"experience": {
+				"title": "досвід",
+				"title1": "Досвід",
+				"jobTitle": "Назва *",
+				"titlePlaceholder": "наприклад: Менеджер з роздрібних продажів",
+				"company": "Компанія *",
+				"companyPlaceholder": "наприклад: Microsoft",
+				"industry": "Промисловість *",
+				"industryPlaceholder": "наприклад: Розробка програмного забезпечення",
+				"currentlyWorking": "Зараз я працюю на цій посаді",
+				"description": "Опис",
+				"headline": "Заголовок профілю",
+				"headlineDescription": "Відображається під вашим іменем у верхній частині профілю",
+				"endDate": "Дата закінчення *"
+			},
+			"skill": {
+				"title": "навичку",
+				"single": "навичку",
+				"title1": "Навичка"
+			},
+			"certification": {
+				"title": "сертифікацію",
+				"title1": "Сертифікація",
+				"name": "Назва *",
+				"namePlaceholder": "наприклад: Сертифікована мережева безпека Microsoft",
+				"issuing": "Організація, що видала *",
+				"issuingPlaceholder": "наприклад: Microsoft",
+				"expiration": "Термін придатності *",
+				"issue": "Дата випуску *",
+				"credentialId": "Ідентифікатор облікових даних",
+				"credentialUrl": "URL-адреса облікових даних"
+			},
+			"project": {
+				"title": "проект",
+				"title1": "Проект",
+				"name": "Назва *",
+				"associated": "Асоціюється з",
+				"description": "Опис",
+				"currentlyWorking": "Зараз я працюю над цим проектом",
+				"endDate": "Дата закінчення"
+			},
+			"course": {
+				"title": "курс",
+				"title1": "курс",
+				"name": "Назва *",
+				"number": "Номер",
+				"associated": "Асоціюється з"
+			},
+			"request": {
+				"title": "Запит рекомендації",
+				"canWrite": "Хто може написати для вас рекомендацію?",
+				"search": "Пошук контактів *",
+				"step": "Крок {{ value }}",
+				"continue": "Продовжити",
+				"send": "Надіслати",
+				"whereKnow": "Звідки ти знаєш <strong>{{ value }}</strong>?",
+				"relationship": "Стосунки",
+				"position": "Позиція на той час",
+				"message": "Повідомлення",
+				"requestSend": "Ваш запит надіслано до {{ name }}",
+				"defaultMessage": "Привіт {{ name }}. Напиши будь ласка мені рекомендацію"
+			},
+			"volunteer": {
+				"title": "волонтерський досвід",
+				"title1": "Волонтерський досвід",
+				"organization": "Організація *",
+				"role": "Роль *",
+				"cause": "Причина",
+				"currentlyVolunteering": "Зараз я займаюся волонтерством у цій ролі",
+				"endDate": "Дата закінчення *",
+				"description": "Опис"
+			},
+			"language": {
+				"title": "мова",
+				"title1": "Мова",
+				"language": "Мова *",
+				"proficiency": "Кваліфікація *",
+				"selectList": "Виберіть зі списку",
+				"proficiencies": [
+					{
+						"label": "Елементарна майстерність",
+						"value": "Elementary"
+					},
+					{
+						"label": "Обмежені навички роботи",
+						"value": "Limited"
+					},
+					{
+						"label": "Професійне володіння",
+						"value": "Professional"
+					},
+					{
+						"label": "Повна професійна підготовка",
+						"value": "Full"
+					},
+					{
+						"label": "Рідна",
+						"value": "Native"
+					}
+				]
+			},
+			"intro": {
+				"title": "ваш розділ",
+				"title1": "Ваш розділ",
+				"firstName": "Ім'я *",
+				"lastName": "Прізвище *",
+				"additionalName": "Додаткове ім'я",
+				"headline": "Заголовок профілю",
+				"country": "Країна *",
+				"city": "Місто *",
+				"exampleCountry": "наприклад: Україна",
+				"exampleCity": "наприклад: Київ",
+				"lastPosition": "Остання позиція"
+			},
+			"giveRecommendation": {
+				"writeFor": "Напишіть рекомендацію для {{ fullName }}",
+				"willShownIn": "Ця рекомендація буде показана в профілі {{ firstName }}",
+				"title": "Ваша рекомендація *"
+			},
+			"shared": {
+				"startDate": "Дата початку *",
+				"endDate": "Дата завершення (або очікувана)",
+				"notFuture": "Дата початку не може бути в майбутньому",
+				"notEarlier": "Дата завершення не може передувати даті початку",
+				"enter": "Будь ласка, введіть a {{ value }}",
+				"year": "рік",
+				"month": "місяць",
+				"months": []
+			},
+			"jobPreferences": {
+				"title": "Вподобання щодо роботи",
+				"lookingForJob": "В пошуках роботи",
+				"labels": {
+					"employmentTypes": "Типи зайнятості *",
+					"startDate": "Дата початку *",
+					"region": "Регіон *",
+					"positions": "Посади *",
+					"visibility": "Видимість (для рекрутерів або всіх користувачів Job For You) *"
+				},
+				"startDate": [
+					{ "title": "Відразу", "condition": "true" },
+					{ "title": "Через час", "condition": "false" }
+				],
+				"visibility": [
+					{ "title": "Тільки рекрутери", "condition": "true" },
+					{ "title": "Всі користувачі Job For You", "condition": "false" }
+				],
+				"add": {
+					"position": "Додати позицію",
+					"region": "Додати регіон"
+				},
+				"singular": {
+					"position": "позицію",
+					"region": "регіон",
+					"employmentType": "тип зайнятості"
+				},
+				"plural": {
+					"positions": "Позиції",
+					"regions": "Регіони",
+					"startDate": "Дата початку",
+					"employmentTypes": "Типи зайнятості"
+				},
+				"employmentTypes": [
+					{
+						"value": "fullTime",
+						"label": "Повний робочий день"
+					},
+					{
+						"value": "partTime",
+						"label": "Часткова зайнятість"
+					},
+					{
+						"value": "internship",
+						"label": "Стажування"
+					},
+					{
+						"value": "contract",
+						"label": "За контрактом"
+					},
+					{
+						"value": "temporary",
+						"label": "Тимчасова зайнятість"
+					}
+				]
+			}
+		}
+	},
+	"alert": {
+		"onSuccess": "{{ name }} успішно збережено.",
+		"onRemoved": "{{ name }} успішно видалено."
+	},
+	"placeholders": {
+		"description": "Опис..."
+	},
+	"validation": {
+		"requiredField": "Обов'язкові поля позначені *",
+		"required": "Це поле є обов'язковим!",
+		"atLeast": "Виберіть як мінімум один {{ name }}",
+		"atLeast2": "Виберіть як мінімум одну {{ name }}"
+	},
+	"modal": {
+		"cancel": "Скасувати",
+		"confirm": "Підтвердити",
+		"discard": "Відкинути зміни",
+		"discardChanges": "Відкинути зміни",
+		"discardChangesText": "Ви впевнені, що хочете відкинути всі зміни?"
+	},
+	"certificationsSection": {
+		"title": "Сертифікації",
+		"add": "Додати сертифікацію",
+		"issued": "Видано",
+		"credentialId": "Ідентифікатор облікових даних",
+		"showCredential": "Показати облікові дані"
+	},
+	"companiesSection": {
+		"title": "Компанії",
+		"my": "Мої",
+		"own": "Власні",
+		"following": "Слідуючі",
+		"followers": "підписників"
+	},
+	"educationsSection": {
+		"title": "Освіта",
+		"add": "Додати освіту",
+		"present": "До тепер",
+		"grade": "Оцінка: ",
+		"seeMore": "...більше"
+	},
+	"experiencesSection": {
+		"title": "Досвід",
+		"add": "Додати досвід"
+	},
+	"languagesSection": {
+		"title": "Мови"
+	},
+	"projectsSection": {
+		"title": "Проекти",
+		"add": "Додати проект"
+	},
+	"recommendationsSection": {
+		"title": "Рекомендації",
+		"statuses": [
+			{
+				"title": "Отримані",
+				"data": "receivedRecommendations"
+			},
+			{
+				"title": "Надані",
+				"data": "givenRecommendations"
+			},
+			{
+				"title": "Очікувані",
+				"data": "pendingRecommendations"
+			}
+		],
+		"given": "Надано",
+		"give": "Надати рекомендацію",
+		"write": "Написати рекомендацію для {{ fullName }}"
+	},
+	"volunteerExperiencesSection": {
+		"title": "Волонтерський досвід",
+		"add": "Додати волонтерський досвід"
+	},
+	"connections": {
+		"connectionsText": "Контакти",
+		"singular": "контакт",
+		"add": "Додати",
+		"request": "Запит очікується",
+		"remove": "Видалити контакт"
+	},
+	"peopleMayKnow": {
+		"title": "Люди, яких ви можливо знаєте",
+		"showAll": "Показати всі"
+	},
+	"rightEditSection": {
+		"languages": "Мови",
+		"public": "Публічний профіль та адреса"
+	},
+	"profileStatus": {
+		"title": "Статус профілю",
+		"visibleForMe": "Цей розділ бачите лише ви",
+		"level": "Рівень",
+		"description": "Отримайте максимум від досвіду <strong>Job For You</strong>, заповнивши всі ваші дані та знайшовши ідеальну посаду",
+		"suggestions": {
+			"one": {
+				"title": "Де ви зараз працюєте?",
+				"description": "Додайте хоча б одну вакансію та станьте більш помітними для потенційних роботодавців на <strong>Job for You!</strong>",
+				"button": "Додайте посаду"
+			},
+			"two": {
+				"title": "Яка ваша сфера роботи?",
+				"description": "Вказавши сферу діяльності, ви маєте шанс отримати в 2,5 рази більше переглядів вашого профілю",
+				"button": "Додати сферу роботи"
+			},
+			"three": {
+				"title": "Додайте зображення профілю",
+				"description": "Додайте фото і зробіть свій профіль більш видимим для роботодавців на <strong>Job for You!</strong>",
+				"button": "Додайте фото"
+			},
+			"four": {
+				"title": "Додайте навички",
+				"description": "Підкресліть свої ключові компетенції та унікальні здібності, привернувши увагу потенційних роботодавців",
+				"button": "Додайте навички"
+			},
+			"five": {
+				"title": "Підкресліть свою унікальність",
+				"description": "Додайте короткий опис, щоб підкреслити вашу особистість або досвід роботи",
+				"button": "Додайте опис"
+			}
+		}
+	},
+	"profileSection": {
+		"contactInformation": "Контактна інформація",
+		"addProfileSection": "Додати розділ профілю",
+		"openTo": "Відкритий для",
+		"connections": "Контакти",
+		"details": "Деталі"
 	},
 	"notFound": {
 		"heading": "Упс! Сторінка не активна",
