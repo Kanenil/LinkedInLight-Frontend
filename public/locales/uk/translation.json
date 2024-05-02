@@ -514,6 +514,24 @@
 					}
 				]
 			},
+			"intro": {
+				"title": "ваш розділ",
+				"title1": "Ваш розділ",
+				"firstName": "Ім'я *",
+				"lastName": "Прізвище *",
+				"additionalName": "Додаткове ім'я",
+				"headline": "Заголовок профілю",
+				"country": "Країна *",
+				"city": "Місто *",
+				"exampleCountry": "наприклад: Україна",
+				"exampleCity": "наприклад: Київ",
+				"lastPosition": "Остання позиція"
+			},
+			"giveRecommendation": {
+				"writeFor": "Напишіть рекомендацію для {{ fullName }}",
+				"willShownIn": "Ця рекомендація буде показана в профілі {{ firstName }}",
+				"title": "Ваша рекомендація *"
+			},
 			"shared": {
 				"startDate": "Дата початку *",
 				"endDate": "Дата завершення (або очікувана)",
@@ -523,6 +541,62 @@
 				"year": "рік",
 				"month": "місяць",
 				"months": []
+			},
+			"jobPreferences": {
+				"title": "Вподобання щодо роботи",
+				"lookingForJob": "В пошуках роботи",
+				"labels": {
+					"employmentTypes": "Типи зайнятості *",
+					"startDate": "Дата початку *",
+					"region": "Регіон *",
+					"positions": "Посади *",
+					"visibility": "Видимість (для рекрутерів або всіх користувачів Job For You) *"
+				},
+				"startDate": [
+					{ "title": "Відразу", "condition": "true" },
+					{ "title": "Через час", "condition": "false" }
+				],
+				"visibility": [
+					{ "title": "Тільки рекрутери", "condition": "true" },
+					{ "title": "Всі користувачі Job For You", "condition": "false" }
+				],
+				"add": {
+					"position": "Додати позицію",
+					"region": "Додати регіон"
+				},
+				"singular": {
+					"position": "позицію",
+					"region": "регіон",
+					"employmentType": "тип зайнятості"
+				},
+				"plural": {
+					"positions": "Позиції",
+					"regions": "Регіони",
+					"startDate": "Дата початку",
+					"employmentTypes": "Типи зайнятості"
+				},
+				"employmentTypes": [
+					{
+						"value": "fullTime",
+						"label": "Повний робочий день"
+					},
+					{
+						"value": "partTime",
+						"label": "Часткова зайнятість"
+					},
+					{
+						"value": "internship",
+						"label": "Стажування"
+					},
+					{
+						"value": "contract",
+						"label": "За контрактом"
+					},
+					{
+						"value": "temporary",
+						"label": "Тимчасова зайнятість"
+					}
+				]
 			}
 		}
 	},
@@ -535,6 +609,8 @@
 	},
 	"validation": {
 		"requiredField": "Обов'язкові поля позначені *",
-		"required": "Це поле є обов'язковим!"
+		"required": "Це поле є обов'язковим!",
+		"atLeast": "Виберіть як мінімум один {{ name }}",
+		"atLeast2": "Виберіть як мінімум одну {{ name }}"
 	}
 }

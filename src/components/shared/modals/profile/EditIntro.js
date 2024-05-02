@@ -9,15 +9,16 @@ import { useAlertContext } from "../../../../providers/AlertProvider"
 import { useQuery } from "@tanstack/react-query"
 import { useFormik } from "formik"
 import * as yup from "yup"
+import { useTranslation } from "react-i18next"
 
 const IntroSchema = yup.object({
 	id: yup.string(),
-	firstName: yup.string().required("This field is required!"),
-	lastName: yup.string().required("This field is required!"),
+	firstName: yup.string().required("validation.required"),
+	lastName: yup.string().required("validation.required"),
 	additionalName: yup.string(),
-	country: yup.string().required("This field is required!"),
+	country: yup.string().required("validation.required"),
 	headline: yup.string(),
-	city: yup.string().required("This field is required!"),
+	city: yup.string().required("validation.required"),
 	image: yup.string().default(""),
 	address: yup.string(),
 	lastPosition: yup.string(),
@@ -44,11 +45,15 @@ const initValues = {
 
 const EditIntro = ({ onClose, onSave, onChange }) => {
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const onSubmitFormik = async values => {
 		await AdditionalProfileService.updateIntro(values)
 
-		success("Intro successfully saved.", 5)
+		success(
+			t("alert.onSuccess", { name: t("profile.modal.general.title1") }),
+			5,
+		)
 		onSave()
 	}
 
@@ -108,40 +113,42 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 			onClose={onClose}
 			onRemove={null}
 			isEdit={false}
-			header={"Edit intro"}
+			header={t("profile.modal.edit", {
+				title: t("profile.modal.intro.title"),
+			})}
 		>
 			<h3 className='font-jost text-[#2D2A33] text-sm'>
-				Required fields are marked with *
+				{t("validation.requiredField")}
 			</h3>
 
 			<ModalInputFormGroup
-				title='First name *'
+				title={t("profile.modal.intro.firstName")}
 				name='firstName'
 				type='text'
 				value={values.firstName}
-				error={errors.firstName && touched}
+				error={errors.firstName && touched.firstName}
 				onChange={handleChange}
 				className='pb-[10px] pr-[20px] gap-[5px]'
 				errorChildren={
-					<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.lastName}</h3>
+					<h3 className='mt-2 text-[#9E0F20] text-xs'>{t(errors.firstName)}</h3>
 				}
 			/>
 
 			<ModalInputFormGroup
-				title='Last name *'
+				title={t("profile.modal.intro.lastName")}
 				name='lastName'
 				type='text'
 				value={values.lastName}
-				error={errors.lastName && touched}
+				error={errors.lastName && touched.lastName}
 				onChange={handleChange}
 				className='pb-[10px] pr-[20px] gap-[5px]'
 				errorChildren={
-					<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.lastName}</h3>
+					<h3 className='mt-2 text-[#9E0F20] text-xs'>{t(errors.lastName)}</h3>
 				}
 			/>
 
 			<ModalInputFormGroup
-				title='Additional Name'
+				title={t("profile.modal.intro.additionalName")}
 				name='additionalName'
 				type='text'
 				value={values.additionalName}
@@ -150,7 +157,7 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 			/>
 
 			<ModalInputFormGroup
-				title='Headline'
+				title={t("profile.modal.intro.headline")}
 				name='headline'
 				type='text'
 				value={values.headline}
@@ -160,13 +167,13 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 
 			<ModalSelectFormGroup
 				className='pt-[5px] pb-[10px] pr-[20px] gap-[5px]'
-				title='Country *'
+				title={t("profile.modal.intro.country")}
 				value={values.country}
 				options={countries ?? []}
 				containerWidth={300}
 				containerHeightMax={150}
-				placeHolder='ex: USA'
-				error={errors.country}
+				placeHolder={t("profile.modal.intro.exampleCountry")}
+				error={errors.country && touched.country}
 				hasTools={false}
 				isAbsolute={true}
 				clearOnSelect={false}
@@ -179,19 +186,19 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 					}))
 				}}
 				errorChildren={
-					<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.country}</h3>
+					<h3 className='mt-2 text-[#9E0F20] text-xs'>{t(errors.country)}</h3>
 				}
 			/>
 
 			<ModalSelectFormGroup
 				className='pt-[5px] pb-[10px] pr-[20px] gap-[5px]'
-				title='City *'
+				title={t("profile.modal.intro.city")}
 				value={values.city || ""}
 				options={cities ?? []}
 				containerWidth={300}
 				containerHeightMax={150}
-				placeHolder='ex: Washington'
-				error={errors.city}
+				placeHolder={t("profile.modal.intro.exampleCity")}
+				error={errors.city && touched.city}
 				hasTools={false}
 				isAbsolute={true}
 				clearOnSelect={false}
@@ -203,12 +210,12 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 					}))
 				}
 				errorChildren={
-					<h3 className='mt-2 text-[#9E0F20] text-xs'>{errors.city}</h3>
+					<h3 className='mt-2 text-[#9E0F20] text-xs'>{t(errors.city)}</h3>
 				}
 			/>
 
 			<ModalInputFormGroup
-				title='Last Position'
+				title={t("profile.modal.intro.lastPosition")}
 				name='lastPosition'
 				type='text'
 				value={values.lastPosition}
@@ -216,7 +223,7 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 				className='pb-[10px] pr-[20px] gap-[5px]'
 			/>
 
-			<div className='flex flex-col pt-[5px] pr-[15px] pb-[10px] gap-[5px]'>
+			{/* <div className='flex flex-col pt-[5px] pr-[15px] pb-[10px] gap-[5px]'>
 				<h1 className='font-jost text-[#2D2A33] text-lg font-semibold'>
 					Contact information
 				</h1>
@@ -231,7 +238,7 @@ const EditIntro = ({ onClose, onSave, onChange }) => {
 				>
 					Contact information
 				</Link>
-			</div>
+			</div> */}
 		</EditModalForm>
 	)
 }

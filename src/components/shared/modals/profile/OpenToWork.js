@@ -11,29 +11,7 @@ import EditModalForm from "../../forms/EditModalForm"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import Button from "../../../../elements/buttons/Button"
 import Loader from "../../Loader"
-
-const employmentTypes = [
-	{
-		value: "fullTime",
-		label: "Full-time",
-	},
-	{
-		value: "partTime",
-		label: "Part-time",
-	},
-	{
-		value: "internship",
-		label: "Internship",
-	},
-	{
-		value: "contract",
-		label: "Contract",
-	},
-	{
-		value: "temporary",
-		label: "Temporary",
-	},
-]
+import { useTranslation } from "react-i18next"
 
 const OpenToWork = ({ onClose, onChange, onSave }) => {
 	const initialValues = {
@@ -74,6 +52,19 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 	} = useForm(initialValues, onChange)
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
+	const { t } = useTranslation()
+
+	const employmentTypes = t("profile.modal.jobPreferences.employmentTypes", {
+		returnObjects: true,
+	})
+
+	const startDate = t("profile.modal.jobPreferences.startDate", {
+		returnObjects: true,
+	})
+
+	const visibility = t("profile.modal.jobPreferences.visibility", {
+		returnObjects: true,
+	})
 
 	const onRadioChange = ({ target: { name, value } }) => {
 		setValues(prev => ({
@@ -230,7 +221,10 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 
 		queryClient.invalidateQueries(["openToWork"])
 
-		success("Open to work successfully saved.", 5)
+		success(
+			t("alert.onSuccess", { name: t("profile.modal.jobPreferences.title") }),
+			5,
+		)
 		onSave()
 	}
 
@@ -292,7 +286,10 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 		await ProfileService.deleteOpenToWork()
 		queryClient.invalidateQueries(["openToWork"])
 
-		success("Open to work status successfully removed.", 5)
+		success(
+			t("alert.onRemoved", { name: t("profile.modal.jobPreferences.title") }),
+			5,
+		)
 		onSave()
 	}
 
@@ -303,7 +300,7 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 			onRemove={onRemove}
 			isEdit={values.id}
 			withBorder={false}
-			header='Job preferences'
+			header={t("profile.modal.jobPreferences.title")}
 		>
 			{isLoading ? (
 				<div className='h-[400px]'>
@@ -312,11 +309,13 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 			) : (
 				<div className='flex flex-col gap-2.5'>
 					<h3 className='mt-3 font-jost text-[#2D2A33] font-light text-sm'>
-						Required fields are marked with *
+						{t("validation.requiredField")}
 					</h3>
 
 					<div className='flex flex-col gap-1 mt-2.5'>
-						<h3 className='font-jost text-[#2D2A33]'>Positions *</h3>
+						<h3 className='font-jost text-[#2D2A33]'>
+							{t("profile.modal.jobPreferences.labels.positions")}
+						</h3>
 
 						<div className='flex flex-row flex-wrap gap-2.5'>
 							{values.positions.map(position => (
@@ -360,20 +359,24 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 									}
 								>
 									<PlusIcon className='h-4 stroke-2' />
-									Add position
+									{t("profile.modal.jobPreferences.add.position")}
 								</Button>
 							</Show.Else>
 						</Show>
 
 						{errors.positions && isSubmitted && (
 							<p className='mt-2 text-[#9E0F20] text-xs'>
-								Select at least one position
+								{t("validation.atLeast2", {
+									name: t("profile.modal.jobPreferences.singular.position"),
+								})}
 							</p>
 						)}
 					</div>
 
 					<div className='flex flex-col gap-1 mt-2.5'>
-						<h3 className='font-jost text-[#2D2A33]'>Region *</h3>
+						<h3 className='font-jost text-[#2D2A33]'>
+							{t("profile.modal.jobPreferences.labels.region")}
+						</h3>
 
 						<div className='flex flex-row gap-2.5'>
 							{values.regions.map(region => (
@@ -413,42 +416,42 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 									}
 								>
 									<PlusIcon className='h-4 stroke-2' />
-									Add region
+									{t("profile.modal.jobPreferences.add.region")}
 								</Button>
 							</Show.Else>
 						</Show>
 
 						{errors.regions && isSubmitted && (
 							<p className='mt-2 text-[#9E0F20] text-xs'>
-								Select at least one region
+								{t("validation.atLeast", {
+									name: t("profile.modal.jobPreferences.singular.region"),
+								})}
 							</p>
 						)}
 					</div>
 
 					<div className='flex flex-col gap-1 mt-2.5'>
-						<h3 className='font-jost text-[#2D2A33]'>Start date</h3>
+						<h3 className='font-jost text-[#2D2A33]'>
+							{t("profile.modal.jobPreferences.labels.startDate")}
+						</h3>
 
 						<div className='flex flex-row gap-12 mt-2'>
-							<ModalRadioInput
-								onChange={onRadioChange}
-								name='canStartImmediately'
-								condition={true}
-								title='Immediately'
-								value={values.canStartImmediately}
-							/>
-
-							<ModalRadioInput
-								onChange={onRadioChange}
-								condition={false}
-								name='canStartImmediately'
-								title='After time'
-								value={values.canStartImmediately}
-							/>
+							{startDate.map(({ condition, title }) => (
+								<ModalRadioInput
+									onChange={onRadioChange}
+									name='canStartImmediately'
+									condition={condition}
+									title={title}
+									value={values.canStartImmediately}
+								/>
+							))}
 						</div>
 					</div>
 
 					<div className='flex flex-col gap-1 mt-2.5'>
-						<h3 className='font-jost text-[#2D2A33]'>Employment types *</h3>
+						<h3 className='font-jost text-[#2D2A33]'>
+							{t("profile.modal.jobPreferences.labels.employmentTypes")}
+						</h3>
 
 						<div className='flex flex-row flex-wrap gap-3'>
 							{employmentTypes.map(({ value, label }) => (
@@ -465,32 +468,30 @@ const OpenToWork = ({ onClose, onChange, onSave }) => {
 						</div>
 						{errors.employmentTypes && isSubmitted && (
 							<p className='mt-2 text-[#9E0F20] text-xs'>
-								Select at least one employment type
+								{t("validation.atLeast", {
+									name: t(
+										"profile.modal.jobPreferences.singular.employmentType",
+									),
+								})}
 							</p>
 						)}
 					</div>
 
 					<div className='flex flex-col gap-1 mt-2.5'>
 						<h3 className='font-jost text-[#2D2A33]'>
-							Visibility (who can view you’re open to work) *
+							{t("profile.modal.jobPreferences.labels.visibility")}
 						</h3>
 
 						<div className='flex flex-col gap-4 mt-2'>
-							<ModalRadioInput
-								onChange={onRadioChange}
-								name='visibleForAll'
-								condition={true}
-								title='Only recruiters'
-								value={values.visibleForAll}
-							/>
-
-							<ModalRadioInput
-								onChange={onRadioChange}
-								condition={false}
-								name='visibleForAll'
-								title='All Job For You members'
-								value={values.visibleForAll}
-							/>
+							{visibility.map(({ condition, title }) => (
+								<ModalRadioInput
+									onChange={onRadioChange}
+									name='visibleForAll'
+									condition={condition}
+									title={title}
+									value={values.visibleForAll}
+								/>
+							))}
 						</div>
 					</div>
 				</div>

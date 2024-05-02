@@ -18,6 +18,7 @@ const EditModalForm = ({
 	saveTitle,
 	withBorder = true,
 	width = "w-[750px]",
+	isSave = true,
 }) => {
 	const { isOverflow, containerRef, contentRef } = useOverflow()
 	const { isMobile } = useMobileDetector()
@@ -77,7 +78,9 @@ const EditModalForm = ({
 					rounded='full'
 					variant='primary'
 				>
-					{t("profile.modal.save", { title: saveTitle })}
+					{isSave
+						? t("profile.modal.save", { title: saveTitle })
+						: t(saveTitle)}
 				</Button>
 			</div>
 		</form>

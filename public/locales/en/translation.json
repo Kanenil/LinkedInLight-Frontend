@@ -496,6 +496,24 @@
 					{ "label": "Native", "value": "Native" }
 				]
 			},
+			"intro": {
+				"title": "intro",
+				"title1": "Intro",
+				"firstName": "First name *",
+				"lastName": "Last name *",
+				"additionalName": "Additional name",
+				"headline": "Headline",
+				"country": "Country *",
+				"exampleCountry": "ex: United States",
+				"city": "City *",
+				"exampleCity": "ex: New York",
+				"lastPosition": "Last position"
+			},
+			"giveRecommendation": {
+				"writeFor": "Write a recommendation for {{ fullName }}",
+				"willShownIn": "This recommendation will be shown in {{ firstName }}'s profile",
+				"title": "Add recommendation *"
+			},
 			"shared": {
 				"startDate": "Start date *",
 				"endDate": "End date (or expected)",
@@ -505,6 +523,62 @@
 				"year": "year",
 				"month": "month",
 				"months": []
+			},
+			"jobPreferences": {
+				"title": "Job preferences",
+				"lookingForJob": "Looking for job",
+				"labels": {
+					"employmentTypes": "Employment types *",
+					"startDate": "Start date",
+					"region": "Region *",
+					"positions": "Positions *",
+					"visibility": "Visibility (who can see view you're open to work) *"
+				},
+				"startDate": [
+					{ "title": "Immediately", "condition": "true" },
+					{ "title": "After time", "condition": "false" }
+				],
+				"visibility": [
+					{ "title": "Only recruiters", "condition": "true" },
+					{ "title": "All Job For You members", "condition": "false" }
+				],
+				"add": {
+					"position": "Add position",
+					"region": "Add region"
+				},
+				"singular": {
+					"position": "position",
+					"region": "region",
+					"employmentType": "employment type"
+				},
+				"plural": {
+					"positions": "Positions",
+					"regions": "Regions",
+					"startDate": "Start date",
+					"employmentTypes": "Employment types"
+				},
+				"employmentTypes": [
+					{
+						"value": "fullTime",
+						"label": "Full-time"
+					},
+					{
+						"value": "partTime",
+						"label": "Part-time"
+					},
+					{
+						"value": "internship",
+						"label": "Internship"
+					},
+					{
+						"value": "contract",
+						"label": "Contract"
+					},
+					{
+						"value": "temporary",
+						"label": "Temporary"
+					}
+				]
 			}
 		}
 	},
@@ -517,6 +591,8 @@
 	},
 	"validation": {
 		"requiredField": "Required fields are marked with *",
-		"required": "This field is required!"
+		"required": "This field is required!",
+		"atLeast": "Select at least one {{ name }}",
+		"atLeast2": "Select at least one {{ name }}"
 	}
 }
