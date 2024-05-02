@@ -8,13 +8,11 @@ import { useQueryClient } from "@tanstack/react-query"
 import useMobileDetector from "../../../hooks/useMobileDetector"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
+import { Trans, useTranslation } from "react-i18next"
 
 const suggestions = [
 	{
-		title: "Where do you currently work?",
-		description:
-			'Add at least one position and become more visible to potential employers on <span className="font-medium">Job for You!</span>',
-		buttonTitle: "Add position",
+		id: "one",
 		to: "edit/experience",
 		width: 220,
 		condition: async function (queryClient, user) {
@@ -27,28 +25,19 @@ const suggestions = [
 		},
 	},
 	{
-		title: "What is your field of work?",
-		description:
-			"By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
-		buttonTitle: "Add field of work",
+		id: "two",
 		to: "edit/intro",
 		width: 220,
 		condition: "industry",
 	},
 	{
-		title: "Add a profile picture",
-		description:
-			'Add a photo and make your profile more visible to employers on <span className="font-medium">Job for You!</span>\n',
-		buttonTitle: "Add photo",
+		id: "three",
 		to: "edit/image",
 		width: 220,
 		condition: "image",
 	},
 	{
-		title: "Add skills",
-		description:
-			"Highlight your key competencies and unique abilities, catching the attention of potential employers",
-		buttonTitle: "Add skills",
+		id: "four",
 		to: "edit/skill",
 		width: 220,
 		condition: async function (queryClient, user) {
@@ -61,27 +50,29 @@ const suggestions = [
 		},
 	},
 	{
-		title: "Highlight your uniqueness",
-		description:
-			"Add a short description to highlight your personality or work experience",
-		buttonTitle: "Add description",
+		id: "five",
 		to: "edit/general-information",
 		width: 220,
 		condition: "about",
 	},
 ]
 
-const SliderItem = ({ title, description, buttonTitle, to }) => {
+const SliderItem = ({ id, to }) => {
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	return (
 		<div className='bg-[#F3F5F9] border-[1px] border-[#24459A33] w-[220px] h-[160px] font-jost text-black py-4 px-2.5 rounded-lg'>
-			<h1 className='font-medium text-sm'>{title}</h1>
+			<h1 className='font-medium text-sm'>
+				{t(`profileStatus.suggestions.${id}.title`)}
+			</h1>
 
-			<h3
-				dangerouslySetInnerHTML={{ __html: description }}
-				className='min-h-[48px] mt-2.5 text-xs font-light'
-			/>
+			<h3 className='min-h-[48px] mt-2.5 text-xs font-light'>
+				<Trans
+					i18nKey={`profileStatus.suggestions.${id}.description`}
+					components={{ strong: <strong className='font-medium' /> }}
+				/>
+			</h3>
 
 			<div className='flex justify-center mt-4 mb-4'>
 				<Button
@@ -90,7 +81,7 @@ const SliderItem = ({ title, description, buttonTitle, to }) => {
 					rounded='full'
 					onClick={() => navigator(to)}
 				>
-					{buttonTitle}
+					{t(`profileStatus.suggestions.${id}.button`)}
 				</Button>
 			</div>
 		</div>
@@ -98,6 +89,8 @@ const SliderItem = ({ title, description, buttonTitle, to }) => {
 }
 
 const ProfileStatus = ({ user, isOwner }) => {
+	const { t } = useTranslation()
+
 	const [filteredSuggestions, setFilteredSuggestions] = useState([])
 	const queryClient = useQueryClient()
 
@@ -128,20 +121,20 @@ const ProfileStatus = ({ user, isOwner }) => {
 			<div className='rounded-lg bg-white overflow-hidden px-6 md:px-10 py-8'>
 				<div>
 					<h1 className='font-jost font-medium text-2xl text-[#2D2A33]'>
-						Profile status
+						{t("profileStatus.title")}
 					</h1>
 
 					<div className='flex flex-row items-center gap-2.5 mt-2'>
 						<EyeIcon className='h-4' />
 
 						<h3 className='text-sm font-roboto font-light text-[#7D7D7D]'>
-							This section is only visible to you
+							{t("profileStatus.visibleForMe")}
 						</h3>
 					</div>
 
 					<div className='pt-4'>
 						<div className='flex flex-row font-roboto font-medium '>
-							<h1 className='text-[#2D2A33]'>Level:</h1>
+							<h1 className='text-[#2D2A33]'>{t("profileStatus.level")}:</h1>
 
 							<h3 className='ml-6 text-[#24459A]'>
 								{maxLevel - filteredSuggestions.length}
@@ -174,9 +167,10 @@ const ProfileStatus = ({ user, isOwner }) => {
 						</div>
 
 						<h3 className='mt-2.5 font-jost font-light'>
-							Level up your <span className='font-medium'>Job For You</span>{" "}
-							experience by filling in all your details and find the perfect job
-							for you
+							<Trans
+								i18nKey='profileStatus.description'
+								components={{ strong: <strong className='font-medium' /> }}
+							/>
 						</h3>
 					</div>
 				</div>

@@ -636,9 +636,23 @@
 	},
 	"recommendationsSection": {
 		"title": "Recommendations",
-		"received": "Received",
+		"statuses": [
+			{
+				"title": "Received",
+				"data": "receivedRecommendations"
+			},
+			{
+				"title": "Given",
+				"data": "givenRecommendations"
+			},
+			{
+				"title": "Pending",
+				"data": "pendingRecommendations"
+			}
+		],
 		"given": "Given",
-		"pending": "Pending"
+		"give": "Give recommendation",
+		"write": "Write a recommendation for {{ fullName }}"
 	},
 	"volunteerExperiencesSection": {
 		"title": "Volunteer experience",
@@ -658,5 +672,38 @@
 	"rightEditSection": {
 		"languages": "Languages",
 		"public": "Public profile & URL"
+	},
+	"profileStatus": {
+		"title": "Profile status",
+		"visibleForMe": "This section is only visible to you",
+		"level": "Level",
+		"description": "Level up your <strong>Job For You</strong> experience by filling in all your details and find the perfect job for you",
+		"suggestions": {
+			"one": {
+				"title": "Where do you currently work?",
+				"description": "Add at least one position and become more visible to potential employers on <strong>Job for You!</strong>",
+				"button": "Add position"
+			},
+			"two": {
+				"title": "What is your field of work?",
+				"description": "By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
+				"button": "Add field of work"
+			},
+			"three": {
+				"title": "Add a profile picture",
+				"description": "Add a photo and make your profile more visible to employers on <strong>Job for You!</strong>",
+				"button": "Add photo"
+			},
+			"four": {
+				"title": "Add skills",
+				"description": "Highlight your key competencies and unique abilities, catching the attention of potential employers",
+				"button": "Add skills"
+			},
+			"five": {
+				"title": "Highlight your uniqueness",
+				"description": "Add a short description to highlight your personality or work experience",
+				"button": "Add description"
+			}
+		}
 	}
 }
