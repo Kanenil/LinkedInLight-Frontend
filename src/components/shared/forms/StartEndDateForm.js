@@ -40,7 +40,7 @@ const StartEndDateForm = ({
 		)
 		const endDate = getDateTime(1, values.endDateMonth, values.endDateYear)
 
-		if (startDate && endDate && startDate > endDate) {
+		if (startDate && endDate && startDate > endDate && !isEndDateDisabled) {
 			setErrors(values => {
 				return {
 					...values,
