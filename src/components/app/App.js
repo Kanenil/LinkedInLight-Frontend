@@ -26,6 +26,7 @@ import AuthRedirect from "../shared/AuthRedirect"
 import CompanyEditIndex from "../company/edit/CompanyEditIndex"
 import NotFound from "../../pages/404/NotFound"
 import PublicProfile from "../profile/PublicProfile"
+import MainPage from "../../pages/main"
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -57,7 +58,9 @@ const App = () => {
 										/>
 
 										<Route path='/j4y'>
-											<Route index element={<InLayout />} />
+											<Route element={<ChatsLayout />}>
+												<Route index element={<MainPage />} />
+											</Route>
 
 											<Route element={<InLayout />}>
 												<Route path=':profileURL'>

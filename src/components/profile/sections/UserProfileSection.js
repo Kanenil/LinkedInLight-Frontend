@@ -254,7 +254,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 											className='items-center w-fit gap-2.5 px-3'
 											onClick={onRemoveConnection}
 										>
-											Remove connection
+											{t("connections.remove")}
 											<XMarkIcon className='h-5 fill-white' />
 										</Button>
 									</Show.When>
@@ -271,7 +271,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 											className='items-center w-fit gap-2.5 px-3'
 											onClick={onRevokeConnectionRequest}
 										>
-											Requested connection
+											{t("connections.request")}
 											<XMarkIcon className='h-5 fill-white' />
 										</Button>
 									</Show.When>
@@ -283,7 +283,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 											className='items-center w-fit gap-2.5 px-3'
 											onClick={onRemoveConnectionRequest}
 										>
-											Requested connection
+											{t("connections.request")}
 											<XMarkIcon className='h-5 fill-white' />
 										</Button>
 									</Show.When>
@@ -296,7 +296,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 											className='items-center gap-2.5 mt-2 px-3'
 										>
 											<PlusIcon className='w-4 h-4 stroke-2' />
-											Connect
+											{t("connections.add")}
 										</Button>
 									</Show.Else>
 								</Show>
@@ -317,8 +317,10 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 						<ConfirmAction
 							onConfirm={onConfirm}
 							onClose={closeModal}
-							title='Remove connection?'
-							action={`Do you want to remove your connection with ${user?.firstName} ${user?.lastName}?`}
+							title={t("connections.removeAgreeTitle")}
+							action={t("connections.removeAgreeAction", {
+								fullName: `${user?.firstName} ${user?.lastName}`,
+							})}
 						/>
 					</Show.When>
 
@@ -331,8 +333,8 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 						<ConfirmAction
 							onConfirm={onConfirm}
 							onClose={closeModal}
-							title='Remove connection request?'
-							action='Do you want to remove your connection request?'
+							title={t("connections.removeRequestAgreeTitle")}
+							action={t("connections.removeRequestAgreeAction")}
 						/>
 					</Show.When>
 

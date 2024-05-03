@@ -663,7 +663,11 @@
 		"singular": "connection",
 		"add": "Connect",
 		"request": "Request connection",
-		"remove": "Remove connection"
+		"remove": "Remove connection",
+		"removeRequestAgreeTitle": "Remove connection request?",
+		"removeRequestAgreeAction": "Do you want to remove your connection request?",
+		"removeAgreeTitle": "Remove connection?",
+		"removeAgreeAction": "Do you want to remove your connection with {{ fullName }}?"
 	},
 	"peopleMayKnow": {
 		"title": "People you may know",
@@ -755,6 +759,16 @@
 		},
 		"backToSettings": "Back to settings",
 		"preview": "Public profile preview"
+	},
+	"main": {
+		"title": "Home",
+		"viewProfile": "View Profile",
+		"viewCompany": "View Company",
+		"myCompanies": "My Companies",
+		"contacts": "Connections",
+		"noPosts": "No any news feeds yet",
+		"noPostsDescription": "Seems like you don't have any news yet. Share your thoughts, ideas, and news with your connections",
+		"followedCompanies": "Followed companies"
 	},
 	"notFound": {
 		"heading": "Oops! Not found",

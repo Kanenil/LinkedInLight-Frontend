@@ -27,6 +27,10 @@ class CompanyService {
 		return axios.get(`${this.#URL}/${profileUrl}/userCompanies`)
 	}
 
+	getNewsFeed() {
+		return axios.get(`${this.#URL}/newsFeed`)
+	}
+
 	getCurrentUserCompanies() {
 		return axios.get(`${this.#URL}/userCompanies`)
 	}
