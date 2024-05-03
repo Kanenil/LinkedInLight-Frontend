@@ -711,7 +711,26 @@
 		"addProfileSection": "Add profile section",
 		"openTo": "Open to",
 		"connections": "Connections",
-		"details": "Details"
+		"details": "Details",
+		"statuses": {
+			"work": {
+				"title": "Finding a new work",
+				"description": "Show recruiters and others that you're open to work"
+			},
+			"hiring": {
+				"title": "Hiring",
+				"description": "Share that you're hiring and attract qualified candidates"
+			},
+			"services": {
+				"title": "Providing services",
+				"description": "Showcase services you offer so new client can discover you"
+			}
+		},
+		"yourProfile": "Your profile",
+		"profile": "Profile",
+		"address": "Address",
+		"email": "Email",
+		"everyBody": "Everybody in <strong>Job For You</strong>"
 	},
 	"notFound": {
 		"heading": "Oops! Not found",
