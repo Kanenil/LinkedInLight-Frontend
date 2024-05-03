@@ -48,23 +48,24 @@ const MobileHeader = ({ pendingRequests, unReadMessages }) => {
 					end
 					to='/j4y'
 					className={({ isActive }) =>
-						classNames("p-2", {
-							"border-b-2 border-b-[#24459A]": isActive,
+						classNames("group p-2", {
+							active: isActive,
 						})
 					}
 				>
-					<HomeIcon className='fill-[#2D2A33] h-5' />
+					<HomeIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 				</NavLink>
 
 				<NavLink
 					to='/j4y/my-network'
 					className={({ isActive }) =>
-						classNames("p-2", {
-							"border-b-2 border-b-[#24459A]": isActive,
+						classNames("group p-2", {
+							active: isActive,
 						})
 					}
 				>
 					<GroupsIcon
+						className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]'
 						number={pendingRequests?.length > 0 && pendingRequests.length}
 					/>
 				</NavLink>
@@ -72,34 +73,37 @@ const MobileHeader = ({ pendingRequests, unReadMessages }) => {
 				<NavLink
 					to='/j4y/chats'
 					className={({ isActive }) =>
-						classNames("p-2", {
-							"border-b-2 border-b-[#24459A]": isActive,
+						classNames("group p-2", {
+							active: isActive,
 						})
 					}
 				>
-					<MessagesIcon number={unReadMessages || null} />
+					<MessagesIcon
+						className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]'
+						number={unReadMessages || null}
+					/>
 				</NavLink>
 
 				<NavLink
 					to='/j4y/jobs'
 					className={({ isActive }) =>
-						classNames("p-2", {
-							"border-b-2 border-b-[#24459A]": isActive,
+						classNames("group p-2", {
+							active: isActive,
 						})
 					}
 				>
-					<JobsIcon />
+					<JobsIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 				</NavLink>
 
 				<NavLink
 					to='/j4y/notifications'
 					className={({ isActive }) =>
-						classNames("p-2", {
-							"border-b-2 border-b-[#24459A]": isActive,
+						classNames("group p-2", {
+							active: isActive,
 						})
 					}
 				>
-					<BellIcon />
+					<BellIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 				</NavLink>
 			</nav>
 		</>
@@ -144,23 +148,24 @@ const InHeader = () => {
 									end
 									to='/j4y'
 									className={({ isActive }) =>
-										classNames("p-2", {
-											"border-b-2 border-b-[#24459A]": isActive,
+										classNames("group p-2", {
+											active: isActive,
 										})
 									}
 								>
-									<HomeIcon />
+									<HomeIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 								</NavLink>
 
 								<NavLink
 									to='/j4y/my-network'
 									className={({ isActive }) =>
-										classNames("p-2", {
-											"border-b-2 border-b-[#24459A]": isActive,
+										classNames("group p-2", {
+											active: isActive,
 										})
 									}
 								>
 									<GroupsIcon
+										className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]'
 										number={
 											pendingRequests?.length > 0 && pendingRequests.length
 										}
@@ -170,34 +175,37 @@ const InHeader = () => {
 								<NavLink
 									to='/j4y/jobs'
 									className={({ isActive }) =>
-										classNames("p-2", {
-											"border-b-2 border-b-[#24459A]": isActive,
+										classNames("group p-2", {
+											active: isActive,
 										})
 									}
 								>
-									<JobsIcon />
+									<JobsIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 								</NavLink>
 
 								<NavLink
 									to='/j4y/chats'
 									className={({ isActive }) =>
-										classNames("p-2", {
-											"border-b-2 border-b-[#24459A]": isActive,
+										classNames("group p-2", {
+											active: isActive,
 										})
 									}
 								>
-									<MessagesIcon number={unReadMessages || null} />
+									<MessagesIcon
+										className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]'
+										number={unReadMessages || null}
+									/>
 								</NavLink>
 
 								<NavLink
 									to='/j4y/notifications'
 									className={({ isActive }) =>
-										classNames("p-2", {
-											"border-b-2 border-b-[#24459A]": isActive,
+										classNames("group p-2", {
+											active: isActive,
 										})
 									}
 								>
-									<BellIcon />
+									<BellIcon className='h-5 fill-[#2D2A33] group-[.active]:fill-[#24459A]' />
 								</NavLink>
 							</div>
 

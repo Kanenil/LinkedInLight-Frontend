@@ -175,8 +175,10 @@ const MayKnowItem = ({
 								<ConfirmAction
 									onConfirm={onConfirm}
 									onClose={closeModal}
-									title='Remove connection?'
-									action={`Do you want to remove your connection with ${firstName} ${lastName}?`}
+									title={t("connections.removeAgreeTitle")}
+									action={t("connections.removeAgreeAction", {
+										fullName: `${firstName} ${lastName}`,
+									})}
 								/>
 							</Show.When>
 
@@ -189,8 +191,8 @@ const MayKnowItem = ({
 								<ConfirmAction
 									onConfirm={onConfirm}
 									onClose={closeModal}
-									title='Remove connection request?'
-									action='Do you want to remove your connection request?'
+									title={t("connections.removeRequestAgreeTitle")}
+									action={t("connections.removeRequestAgreeAction")}
 								/>
 							</Show.When>
 
