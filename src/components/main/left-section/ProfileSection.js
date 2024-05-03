@@ -6,9 +6,11 @@ import { imageUrl } from "../../../utils/converters"
 import defaultBg from "../../../assets/default-background.jpg"
 import defaultImage from "../../../assets/default-image.jpg"
 import Button from "../../../elements/buttons/Button"
+import { useNavigate } from "react-router"
 
 const ProfileSection = ({ profile }) => {
 	const { t } = useTranslation()
+	const navigator = useNavigate()
 
 	const { data: connectionsCount } = useQuery({
 		queryFn: ({ queryKey }) =>
@@ -38,7 +40,12 @@ const ProfileSection = ({ profile }) => {
 					{profile?.headline}
 				</h3>
 			</div>
-			<Button variant='tertiary' rounded='full' className='w-fit mx-auto my-5'>
+			<Button
+				variant='tertiary'
+				rounded='full'
+				className='w-fit mx-auto my-5'
+				onClick={() => navigator(`/j4y/${profile?.profileUrl}`)}
+			>
 				{t("main.viewProfile")}
 			</Button>
 

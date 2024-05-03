@@ -118,6 +118,8 @@ const App = () => {
 											<Route path='sign-in' element={<SignIn />} />
 											<Route path='confirm-email' element={<ConfirmEmail />} />
 										</Route>
+
+										<Route path='*' element={<Navigate to='/' />} />
 									</Routes>
 								</BrowserRouter>
 								<Alert />
