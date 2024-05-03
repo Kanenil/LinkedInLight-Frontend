@@ -711,7 +711,50 @@
 		"addProfileSection": "Add profile section",
 		"openTo": "Open to",
 		"connections": "Connections",
-		"details": "Details"
+		"details": "Details",
+		"statuses": {
+			"work": {
+				"title": "Finding a new work",
+				"description": "Show recruiters and others that you're open to work"
+			},
+			"hiring": {
+				"title": "Hiring",
+				"description": "Share that you're hiring and attract qualified candidates"
+			},
+			"services": {
+				"title": "Providing services",
+				"description": "Showcase services you offer so new client can discover you"
+			}
+		},
+		"yourProfile": "Your profile",
+		"profile": "Profile",
+		"address": "Address",
+		"email": "Email",
+		"everyBody": "Everybody in <strong>Job For You</strong>"
+	},
+	"publicProfile": {
+		"title": "Profile visibility settings",
+		"description": "You have full control over your profile and can set restrictions on the display of your information in search engines and other services. Users without an account can only see a limited part of your profile",
+		"editUrl": "Edit your URL address",
+		"content": {
+			"title": "Edit profile content",
+			"description": "To edit sections, go to Personal Profile",
+			"button": "Edit content"
+		},
+		"visibility": {
+			"title": "Edit profile visibility",
+			"description": "You have complete control over the appearance of your profile for those who do not have an account on our site. The restrictions you set here affect how your information appears in search engines",
+			"sections": {
+				"title": "Profile visibility",
+				"header": "Header",
+				"description": "Description",
+				"languages": "Languages",
+				"education": "Education",
+				"experience": "Experience"
+			}
+		},
+		"backToSettings": "Back to settings",
+		"preview": "Public profile preview"
 	},
 	"notFound": {
 		"heading": "Oops! Not found",

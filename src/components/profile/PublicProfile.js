@@ -19,6 +19,7 @@ import ProfileService from "../../services/profileService"
 import PrivacySettingsService from "../../services/privacySettingsService"
 import { Helmet } from "react-helmet-async"
 import { useAlertContext } from "../../providers/AlertProvider"
+import { useTranslation } from "react-i18next"
 
 const UrlSchema = yup.object({
 	profileUrl: yup.string(),
@@ -28,6 +29,7 @@ const PublicProfile = () => {
 	const [isPreview, setIsPreview] = useState(false)
 	const [isEditUrl, setIsEditUrl] = useState(false)
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const navigator = useNavigate()
 	const queryClient = useQueryClient()
@@ -112,19 +114,14 @@ const PublicProfile = () => {
 							className='inline-flex items-center gap-3 text-xl font-medium font-jost text-[#2D2A33]'
 						>
 							<ArrowLeftIcon className='text-[#24459A] stroke-2 h-5' />
-							Back to settings
+							{t("publicProfile.backToSettings")}
 						</button>
 					</div>
 					<div className='hidden sm:flex flex-col font-jost text-[#2D2A33] gap-2 mb-5'>
-						<h1 className='font-medium text-2xl'>
-							Profile visibility settings
-						</h1>
+						<h1 className='font-medium text-2xl'>{t("publicProfile.title")}</h1>
 
 						<h3 className='font-light text-lg'>
-							You have full control over your profile and can set restrictions
-							on the display of your information in search engines and other
-							services. Users without an account can only see a limited part of
-							your profile
+							{t("publicProfile.description")}
 						</h3>
 					</div>
 					<LeftProfileSection
@@ -141,7 +138,7 @@ const PublicProfile = () => {
 					<div className='flex flex-col sm:hidden bg-white px-5'>
 						<div className='flex flex-row pt-2.5 pb-5 border-b-[0.5px] border-[#24459A80]'>
 							<h1 className='font-jost font-semibold text-[#2D2A33] text-xl'>
-								Profile visibility settings
+								{t("publicProfile.title")}
 							</h1>
 
 							<button
@@ -155,14 +152,11 @@ const PublicProfile = () => {
 
 						<div className='bg-[#E8EBF3] mt-5 p-2.5 flex flex-col font-jost text-[#2D2A33] gap-2'>
 							<h1 className='font-medium text-2xl'>
-								Profile visibility settings
+								{t("publicProfile.title")}
 							</h1>
 
 							<h3 className='font-light text-lg'>
-								You have full control over your profile and can set restrictions
-								on the display of your information in search engines and other
-								services. Users without an account can only see a limited part
-								of your profile
+								{t("publicProfile.description")}
 							</h3>
 						</div>
 					</div>
@@ -183,7 +177,7 @@ const PublicProfile = () => {
 								</svg>
 
 								<h1 className='font-jost font-medium text-[#2D2A33] text-lg'>
-									Edit your URL address
+									{t("publicProfile.editUrl")}
 								</h1>
 							</div>
 
@@ -204,7 +198,7 @@ const PublicProfile = () => {
 
 									<div className='inline-flex gap-4 ml-auto'>
 										<Button type='submit' variant='primary' rounded='lg'>
-											Save
+											{t("profile.modal.save", { title: "" })}
 										</Button>
 
 										<Button
@@ -216,7 +210,7 @@ const PublicProfile = () => {
 											variant='tertiary'
 											rounded='lg'
 										>
-											Cancel
+											{t("modal.cancel")}
 										</Button>
 									</div>
 								</form>
@@ -271,13 +265,13 @@ const PublicProfile = () => {
 								</svg>
 
 								<h1 className='font-jost font-medium text-[#2D2A33] text-lg'>
-									Edit profile content
+									{t("publicProfile.content.title")}
 								</h1>
 							</div>
 
 							<div className='flex flex-row gap-2'>
 								<h3 className='font-jost font-light text-[#2D2A33] text-wrap'>
-									To edit sections, go to Personal Profile
+									{t("publicProfile.content.description")}
 								</h3>
 							</div>
 
@@ -287,7 +281,7 @@ const PublicProfile = () => {
 								rounded='full'
 								onClick={() => navigator(`/j4y/${authUser.profileUrl}`)}
 							>
-								Edit content
+								{t("publicProfile.content.button")}
 							</Button>
 						</div>
 
@@ -296,22 +290,21 @@ const PublicProfile = () => {
 								<EyeIcon className='w-5 h-5 text-[#24459A]' />
 
 								<h1 className='font-jost font-medium text-[#2D2A33] text-lg'>
-									Edit profile visibility
+									{t("publicProfile.visibility.title")}
 								</h1>
 							</div>
 
 							<div className='flex flex-row gap-2'>
 								<h3 className='font-jost font-light text-[#2D2A33] text-wrap'>
-									You have complete control over the appearance of your profile
-									for those who do not have an account on our site. The
-									restrictions you set here affect how your information appears
-									in search engines
+									{t("publicProfile.visibility.description")}
 								</h3>
 							</div>
 
 							<div className='flex flex-col gap-3 mt-5 font-jost text-[#2D2A33]'>
 								<div className='flex flex-row py-1 px-3 bg-[#F7F7F7] rounded-lg'>
-									<h1 className='font-medium text-lg'>Profile visibility</h1>
+									<h1 className='font-medium text-lg'>
+										{t("publicProfile.visibility.sections.title")}
+									</h1>
 								</div>
 
 								<div className='flex flex-col mt-2 pb-3 gap-1.5 border-[#E8EBF3] rounded-b-2xl border-b-2 border-x-2'>
@@ -322,7 +315,7 @@ const PublicProfile = () => {
 									) : (
 										<>
 											<div className='flex flex-row px-8'>
-												<h1>Header</h1>
+												<h1>{t("publicProfile.visibility.sections.header")}</h1>
 
 												<ToggleInput
 													name='showHeadline'
@@ -334,7 +327,9 @@ const PublicProfile = () => {
 											</div>
 
 											<div className='flex flex-row px-8'>
-												<h1>Description</h1>
+												<h1>
+													{t("publicProfile.visibility.sections.description")}
+												</h1>
 
 												<ToggleInput
 													name='showDescription'
@@ -346,7 +341,9 @@ const PublicProfile = () => {
 											</div>
 
 											<div className='flex flex-row px-8'>
-												<h1>Languages</h1>
+												<h1>
+													{t("publicProfile.visibility.sections.languages")}
+												</h1>
 
 												<ToggleInput
 													name='showLanguages'
@@ -358,7 +355,9 @@ const PublicProfile = () => {
 											</div>
 
 											<div className='flex flex-row px-8'>
-												<h1>Education</h1>
+												<h1>
+													{t("publicProfile.visibility.sections.education")}
+												</h1>
 
 												<ToggleInput
 													name='showEducation'
@@ -370,7 +369,9 @@ const PublicProfile = () => {
 											</div>
 
 											<div className='flex flex-row px-8'>
-												<h1>Experience</h1>
+												<h1>
+													{t("publicProfile.visibility.sections.experience")}
+												</h1>
 
 												<ToggleInput
 													name='showExperience'
@@ -396,7 +397,7 @@ const PublicProfile = () => {
 							}}
 						>
 							<EyeIcon className='text-[#24459A] w-5 h-5' />
-							<h1 className='ml-2 text-lg'>Public profile preview</h1>
+							<h1 className='ml-2 text-lg'>{t("publicProfile.preview")}</h1>
 						</Button>
 					</div>
 				</div>

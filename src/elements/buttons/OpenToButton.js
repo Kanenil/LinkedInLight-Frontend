@@ -11,35 +11,37 @@ import { useTranslation } from "react-i18next"
 
 const statuses = [
 	{
-		title: "Finding a new work",
-		description: "Show recruiters and others that you're open to work",
+		title: "profileSection.statuses.work.title",
+		description: "profileSection.statuses.work.description",
 		to: "edit/job-opportunity",
 		condition: 0,
 	},
 	{
-		title: "Hiring",
-		description: "Share that you're hiring and attract qualified candidates",
+		title: "profileSection.statuses.hiring.title",
+		description: "profileSection.statuses.hiring.description",
 		to: " ",
 		condition: 1,
 	},
 	{
-		title: "Providing services",
-		description: "Showcase services you offer so new client can discover you",
+		title: "profileSection.statuses.services.title",
+		description: "profileSection.statuses.services.description",
 		to: " ",
 		condition: 2,
 	},
 ]
 
 const ChoiceItem = ({ title, description, to, onClick }) => {
+	const { t } = useTranslation()
+
 	return (
 		<Link
 			to={to}
 			onClick={onClick}
 			className='py-1 px-5 md:w-[240px] font-roboto text-[#2D2A33] hover:bg-[#F5F8FF]'
 		>
-			<h1 className='font-medium text-base md:text-sm'>{title}</h1>
+			<h1 className='font-medium text-base md:text-sm'>{t(title)}</h1>
 			<h3 className='font-light font-jost text-base md:text-sm'>
-				{description}
+				{t(description)}
 			</h3>
 		</Link>
 	)
