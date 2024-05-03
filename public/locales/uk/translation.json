@@ -347,7 +347,7 @@
 		"defaultText": "Тут буде показано ваш самоопис...",
 		"generalSkills": "Загальні навички",
 		"skills": "Навички",
-		"showAll": "Покажи все",
+		"showAll": "Показати всі",
 		"courses": "Курси",
 		"modal": {
 			"remove": "Видалити {{ removeTitle }}",

@@ -90,7 +90,7 @@ export const details = [
 		route: ["skills"],
 		props: {
 			promise: async () => await ProfileService.getSkills(),
-			title: () => i18next.t("skillsSection.title"),
+			title: () => i18next.t("profile.skills"),
 			detail: "Skills",
 			edit: "skill",
 			itemComponent: <SkillItem />,
