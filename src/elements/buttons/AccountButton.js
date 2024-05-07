@@ -8,23 +8,11 @@ import { useAuth } from "../../hooks/useAuth"
 import ConditionalWrapper from "../shared/ConditionalWrapper"
 import { APP_ENV } from "../../env"
 import { useQuery } from "@tanstack/react-query"
-
-const defaultRoutes = [
-	{
-		to: "/j4y/settings",
-		title: "Settings & Privacy",
-	},
-	{
-		to: "/j4y/settings/params/language",
-		title: "Language",
-	},
-	// {
-	// 	to: "/j4y",
-	// 	title: "Help",
-	// },
-]
+import { useTranslation } from "react-i18next"
 
 const AccountButton = () => {
+	const { t } = useTranslation()
+
 	const { data } = useQuery({
 		queryFn: () => ProfileService.getProfile(),
 		queryKey: ["profile"],
@@ -37,6 +25,21 @@ const AccountButton = () => {
 	const imageUrl = data?.image
 		? APP_ENV.UPLOADS_URL + "/" + data?.image
 		: defaultImage
+
+	const defaultRoutes = [
+		{
+			to: "/j4y/settings",
+			title: t("main.settings"),
+		},
+		{
+			to: "/j4y/settings/params/language",
+			title: t("main.language"),
+		},
+		// {
+		// 	to: "/j4y",
+		// 	title: "Help",
+		// },
+	]
 
 	const LinkedText = ({ to, title, onClickHandler }) => {
 		return (
@@ -73,7 +76,7 @@ const AccountButton = () => {
 				className='flex flex-row items-end'
 			>
 				<div className='w-8 h-8 overflow-hidden rounded-full my-auto border-2 border-[#2D2A33]'>
-					<img alt='image' className='object-contain' src={imageUrl} />
+					<img alt='' className='object-contain' src={imageUrl} />
 				</div>
 
 				<ArrowDownIcon className='ml-1 w-3.5 fill-[#24459A]' />
@@ -85,7 +88,7 @@ const AccountButton = () => {
 				>
 					<div className='flex flex-row gap-2.5'>
 						<div className='rounded-full min-w-10 overflow-hidden border-[1px] border-[#2D2A33] w-10 h-10'>
-							<img alt='image' className='object-contain' src={imageUrl} />
+							<img alt='' className='object-contain' src={imageUrl} />
 						</div>
 
 						<div className='font-jost'>
@@ -103,7 +106,7 @@ const AccountButton = () => {
 						to={`/j4y/${data?.profileUrl}`}
 						onClick={() => setIsComponentVisible(false)}
 					>
-						View Profile
+						{t("main.viewProfile")}
 					</Link>
 
 					<div className='flex flex-col gap-1 mt-1 mb-1 pb-1 pt-2.5 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]'>
@@ -117,7 +120,10 @@ const AccountButton = () => {
 					</div>
 
 					<div className='mt-1 pt-2.5 mb-1 pb-1 border-t-[0.5px] border-[#24459A80] font-jost font-light text-[#2D2A33]'>
-						<LinkedText onClickHandler={() => logout()} title='Exit' />
+						<LinkedText
+							onClickHandler={() => logout()}
+							title={t("main.exit")}
+						/>
 					</div>
 				</div>
 			</ConditionalWrapper>

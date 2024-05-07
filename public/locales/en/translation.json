@@ -773,7 +773,10 @@
 		"contacts": "Connections",
 		"noPosts": "No any news feeds yet",
 		"noPostsDescription": "Seems like you don't have any news yet. Share your thoughts, ideas, and news with your connections",
-		"followedCompanies": "Followed companies"
+		"followedCompanies": "Followed companies",
+		"settings": "Settings & Privacy",
+		"language": "Language",
+		"exit": "Exit"
 	},
 	"jobs": {
 		"jobsForYou": "Jobs for you",
