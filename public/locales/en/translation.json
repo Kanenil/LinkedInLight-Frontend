@@ -770,6 +770,14 @@
 		"noPostsDescription": "Seems like you don't have any news yet. Share your thoughts, ideas, and news with your connections",
 		"followedCompanies": "Followed companies"
 	},
+	"jobs": {
+		"jobsForYou": "Jobs for you",
+		"publishJob": "Publish job",
+		"jobs": "Jobs",
+		"publishDate": "Publish date",
+		"experienceLevel": "Experience level",
+		"company": "Company"
+	},
 	"notFound": {
 		"heading": "Oops! Not found",
 		"title": "Oops! Page not found",
