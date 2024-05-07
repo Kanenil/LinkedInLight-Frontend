@@ -685,7 +685,12 @@
 		"removeRequestAgreeTitle": "Видалити запит на дружбу?",
 		"removeRequestAgreeAction": "Ви дійсно хочете видалити цей запит на дружбу?",
 		"removeAgreeTitle": "Видалити контакт?",
-		"removeAgreeAction": "Ви дійсно хочете видалити {{ fullName }} з своїх контактів?"
+		"removeAgreeAction": "Ви дійсно хочете видалити {{ fullName }} з своїх контактів?",
+		"rejectRequestTitle": "Відхилити запит на дружбу?",
+		"rejectRequestAction": "Ви дійсно хочете відхилити запит на дружбу?",
+		"noConnections": "У вас немає контактів",
+		"reject": "Відхилити запит",
+		"message": "Повідомлення"
 	},
 	"peopleMayKnow": {
 		"title": "Люди, яких ви можливо знаєте",

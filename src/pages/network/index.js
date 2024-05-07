@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import ConnectionService from "../../services/connectionService"
-import ChatService from "../../services/chatService"
 import Loader from "../../components/shared/Loader"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "../../elements/buttons/Button"
@@ -14,9 +13,12 @@ import ConfirmAction from "../../components/shared/modals/shared/ConfirmAction"
 import { useChatContext } from "../../providers/ChatProvider"
 import useMobileDetector from "../../hooks/useMobileDetector"
 import noConnections from "../../assets/no-connections.png"
+import { useTranslation } from "react-i18next"
 
 const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 	const data = sender ? sender : user
+
+	const { t } = useTranslation()
 
 	return (
 		<div className='border-[#B4BFDD] p-2 border-[1px] rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 h-fit'>
@@ -29,7 +31,7 @@ const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 								? APP_ENV.UPLOADS_URL + "/" + data?.image
 								: defaultImage
 						}
-						alt='image'
+						alt=''
 					/>
 				</div>
 
@@ -59,7 +61,7 @@ const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 								onClick={onConfirm}
 							>
 								<PlusIcon className='h-4 stroke-2' />
-								Add connection
+								{t("connections.connect")}
 							</Button>
 						</div>
 
@@ -70,7 +72,7 @@ const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 								rounded='full'
 								onClick={onReject}
 							>
-								Reject
+								{t("connections.reject")}
 							</Button>
 						</div>
 					</>
@@ -83,7 +85,7 @@ const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 								rounded='full'
 								onClick={onConfirm}
 							>
-								Message
+								{t("connections.message")}
 							</Button>
 						</div>
 
@@ -109,6 +111,7 @@ const MyNetwork = () => {
 	const { setSelectedChatByUserId } = useChatContext()
 	const { isMobile } = useMobileDetector()
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	const {
 		data: connectionsList,
@@ -134,8 +137,8 @@ const MyNetwork = () => {
 		setSelected(val)
 		setIsVisible(true)
 		setIsRemove(false)
-		setTitle("Reject connection request?")
-		setDescription("Do you want to reject connection request?")
+		setTitle(t("connections.rejectRequestTitle"))
+		setDescription(t("connections.rejectRequestAction"))
 	}
 
 	const onConfirm = async () => {
@@ -170,21 +173,25 @@ const MyNetwork = () => {
 		setSelected(val)
 		setIsRemove(true)
 		setIsVisible(true)
-		setTitle("Remove connection?")
+		setTitle(t("connections.removeAgreeTitle"))
 		setDescription(
-			`Do you want to remove connection with ${selected?.user.firstName} ${selected?.user.lastName}?`,
+			t("connections.removeAgreeAction", {
+				fullName: val.firstName + " " + val.lastName,
+			}),
 		)
 	}
 
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>My Network</title>
+				<title>{t("connections.connectionsText")}</title>
 			</Helmet>
 			<main className='flex-grow bg-[#E7E7E7]'>
 				<div className='flex flex-col bg-white rounded-lg mt-2 mb-20 sm:my-8 sm:mx-auto sm:container md:w-[1170px]'>
 					<div className='flex flex-row gap-5 sm:gap-10 px-5 py-3 font-jost border-b-[1px] border-b-[#B4BFDD]'>
-						<h1 className='text-black text-lg'>Connections</h1>
+						<h1 className='text-black text-lg'>
+							{t("connections.connectionsText")}
+						</h1>
 					</div>
 					{pendingRequestsListLoading || connectionsListLoading ? (
 						<Loader />
@@ -204,7 +211,7 @@ const MyNetwork = () => {
 									{connectionsList.map(item => (
 										<ConnectionItem
 											key={`connection-${item.id}`}
-											onReject={() => onRemove(item.id)}
+											onReject={() => onRemove(item.user)}
 											onConfirm={() => onMessage(item.user)}
 											{...item}
 										/>
@@ -219,7 +226,7 @@ const MyNetwork = () => {
 									/>
 
 									<h3 className='text-[#7D7D7D] text-lg sm:text-2xl text-center'>
-										You have no connections yet
+										{t("connections.noConnections")}
 									</h3>
 								</div>
 							)}
@@ -241,20 +248,6 @@ const MyNetwork = () => {
 					action={description}
 				/>
 			</Modal>
-			{/* <main className='flex-grow bg-[#E7E7E7]'>
-                <div className="flex flex-row my-8 mx-auto w-[1170px]">
-                    <div className="w-3/12">
-                        <div className="rounded-t-lg overflow-hidden">
-                            <div className="flex flex-col gap-2.5">
-                                <ManageNetwork/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-9/12 ml-10">
-                        <PendingRequests/>
-                    </div>
-                </div>
-            </main> */}
 		</React.Fragment>
 	)
 }

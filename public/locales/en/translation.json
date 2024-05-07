@@ -667,7 +667,12 @@
 		"removeRequestAgreeTitle": "Remove connection request?",
 		"removeRequestAgreeAction": "Do you want to remove your connection request?",
 		"removeAgreeTitle": "Remove connection?",
-		"removeAgreeAction": "Do you want to remove your connection with {{ fullName }}?"
+		"removeAgreeAction": "Do you want to remove your connection with {{ fullName }}?",
+		"rejectRequestTitle": "Reject connection request?",
+		"rejectRequestAction": "Do you want to reject connection request?",
+		"noConnections": "You don't have any connections yet",
+		"reject": "Reject",
+		"message": "Message"
 	},
 	"peopleMayKnow": {
 		"title": "People you may know",
