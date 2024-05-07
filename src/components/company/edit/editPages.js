@@ -5,22 +5,22 @@ import HeaderEditPage from "./HeaderEditPage"
 
 const pages = [
 	{
-		title: "Page header",
+		title: "company.editPages.header.title",
 		to: "header",
 		component: <HeaderEditPage />,
 	},
 	{
-		title: "General information",
+		title: "company.editPages.generalInformation.title",
 		to: "general-information",
 		component: <EditGeneralInformationPage />,
 	},
 	{
-		title: "Work setup",
+		title: "company.editPages.workSetup.title",
 		to: "work-setup",
 		component: <EditWorkSetupPage />,
 	},
 	{
-		title: "Location",
+		title: "company.editPages.location.title",
 		to: "location",
 		component: <EditCompanyLocation />,
 	},

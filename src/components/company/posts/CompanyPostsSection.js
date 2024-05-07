@@ -7,6 +7,7 @@ import React from "react"
 import PostItem from "../items/PostItem"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
+import { useTranslation } from "react-i18next"
 
 const CompanyPostsSection = ({
 	company,
@@ -14,6 +15,8 @@ const CompanyPostsSection = ({
 	isContentAdmin,
 	searchParams: [_, setSearchParams],
 }) => {
+	const { t } = useTranslation()
+
 	const {
 		data: posts,
 		isLoading,
@@ -64,15 +67,11 @@ const CompanyPostsSection = ({
 								className='mx-auto h-[200px] w-[200px]'
 								style={{ backgroundImage: `url(${noPosts})` }}
 							/>
-							<h1 className='text-xl mt-2'>
-								{isAdmin ? "You didn't post anything" : "Posts not found"}
-							</h1>
+							<h1 className='text-xl mt-2'>{t("company.noPosts")}</h1>
 							<h3
 								className='text-[#7D7D7D] [&>strong]:font-medium text-sm mt-2'
 								dangerouslySetInnerHTML={{
-									__html: isAdmin
-										? "Engage your audience on <strong>Job for You</strong> and boost your prospects"
-										: `Company ${company.companyName} did not publish any posts yet`,
+									__html: t("company.noPostsDescription"),
 								}}
 							/>
 
@@ -84,7 +83,7 @@ const CompanyPostsSection = ({
 										rounded='full'
 										onClick={() => navigator("?createPost=true")}
 									>
-										Publish your first post
+										{t("company.publishFirstPost")}
 									</Button>
 								</div>
 							)}

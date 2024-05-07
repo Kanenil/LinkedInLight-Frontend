@@ -5,23 +5,25 @@ import { NavLink, useNavigate } from "react-router-dom"
 import classNames from "classnames"
 import React from "react"
 import Button from "../../elements/buttons/Button"
+import { useTranslation } from "react-i18next"
 
 const CompanyControlMenu = ({ company, followersCount }) => {
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	const links = [
 		{
-			title: "Home",
+			title: t("company.home"),
 			to: `/j4y/company/${company.id}`,
 			isHasBorder: false,
 		},
 		{
-			title: "Settings",
+			title: t("company.settings"),
 			to: `/j4y/company/${company.id}/settings`,
 			isHasBorder: true,
 		},
 		{
-			title: "Edit page",
+			title: t("company.editPage"),
 			to: `/j4y/company/${company.id}/edit`,
 		},
 	]
@@ -52,7 +54,7 @@ const CompanyControlMenu = ({ company, followersCount }) => {
 			</div>
 
 			<h4 className='mx-6 mt-4 font-jost text-[#7F7F7F] font-light'>
-				{followersCount} followers
+				{followersCount} {t("company.followers")}
 			</h4>
 
 			<div className='mt-5 mx-4'>
@@ -62,7 +64,7 @@ const CompanyControlMenu = ({ company, followersCount }) => {
 					rounded='full'
 					onClick={() => navigator(`/j4y/company/${company.id}?preview=true`)}
 				>
-					Preview as user
+					{t("company.previewAsUser")}
 				</Button>
 			</div>
 

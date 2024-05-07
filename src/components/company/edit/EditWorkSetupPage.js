@@ -8,25 +8,16 @@ import CompanyService from "../../../services/companyService"
 import ModalSelectFormGroup from "../../shared/forms/ModalSelectFormGroup"
 import ToggleInput from "../../shared/forms/ToggleInput"
 import { companyPageQuery } from "../../../constants/combinedQueries"
-
-const workSetups = [
-	{
-		value: "Office",
-		label: "All employees work from office",
-	},
-	{
-		value: "Hybrid",
-		label: "Employees work from office and from home",
-	},
-	{
-		value: "Remote",
-		label: "Employees work from home",
-	},
-]
+import { useTranslation } from "react-i18next"
 
 const EditWorkSetupPage = ({ company }) => {
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
+	const { t } = useTranslation()
+
+	const workSetups = t("company.editPages.workSetup.workSetups", {
+		returnObjects: true,
+	})
 
 	const initValues = {
 		workSetup: company.workSetup || workSetups[0].value,
@@ -80,7 +71,7 @@ const EditWorkSetupPage = ({ company }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Edit work setup
+					{t("company.editPages.workSetup.title")}
 				</h1>
 			</div>
 
@@ -88,12 +79,11 @@ const EditWorkSetupPage = ({ company }) => {
 				<div className='flex flex-row rounded-lg'>
 					<div className='flex flex-col gap-1 font-jost max-w-[60%] text-start'>
 						<h1 className='text-[#2D2A33] font-medium text-lg'>
-							Work setup visibility
+							{t("company.editPages.workSetup.visibility")}
 						</h1>
 
 						<h3 className='text-[#A7A7A7] font-light'>
-							Specify the type of employment in the workplace and attract the
-							most suitable candidates
+							{t("company.editPages.workSetup.description")}
 						</h3>
 					</div>
 
@@ -107,7 +97,7 @@ const EditWorkSetupPage = ({ company }) => {
 
 				<ModalSelectFormGroup
 					className='gap-[5px]'
-					title='Work setup'
+					title={t("company.editPages.workSetup.title")}
 					value={values.workSetup}
 					options={workSetups}
 					item={<WorkSetupItem />}

@@ -19,17 +19,18 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { useQuery } from "@tanstack/react-query"
 import Loader from "../../components/shared/Loader"
+import { Trans, useTranslation } from "react-i18next"
 
 const CreateCompanySchema = yup.object({
-	companyName: yup.string().required(),
-	linkedinUrl: yup.string().required(),
-	industry: yup.object().required(),
-	organizationType: yup.object().required(),
-	organizationSize: yup.object().required(),
+	companyName: yup.string().required("validation.required"),
+	linkedinUrl: yup.string().required("validation.required"),
+	industry: yup.object().required("validation.required"),
+	organizationType: yup.object().required("validation.required"),
+	organizationSize: yup.object().required("validation.required"),
 	websiteUrl: yup.string().notRequired(),
 	logoImg: yup.string().notRequired(),
 	tagline: yup.string().notRequired(),
-	terms: yup.bool().isTrue(),
+	terms: yup.bool().isTrue("validation.required"),
 })
 
 const initValues = {
@@ -47,6 +48,7 @@ const initValues = {
 const CreateCompany = () => {
 	const navigator = useNavigate()
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const { data: industries, isLoading: industriesLoading } = useQuery({
 		queryFn: () => CompanyService.getIndustries(),
@@ -99,10 +101,10 @@ const CreateCompany = () => {
 			})
 			.catch(err => {
 				if (err.response.data === "This URL already exists")
-					setErrors(prev => ({
-						...prev,
-						linkedinUrl: "This URL already exists",
-					}))
+					setErrors({
+						...errors,
+						linkedinUrl: "company.newCompany.urlExists",
+					})
 			})
 	}
 
@@ -147,7 +149,7 @@ const CreateCompany = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>New company</title>
+				<title>{t("company.newCompany.title")}</title>
 			</Helmet>
 			<main className='flex-grow bg-[#E7E7E7]'>
 				<section className='bg-white'>
@@ -158,18 +160,23 @@ const CreateCompany = () => {
 						>
 							<ArrowLeftIcon className='text-[#24459A] w-7 h-7' />
 
-							<span className='font-jost font-medium text-2xl'>Back</span>
+							<span className='font-jost font-medium text-2xl'>
+								{t("company.newCompany.back")}
+							</span>
 						</button>
 
 						<h3 className='font-jost text-[#2D2A33] text-lg'>
-							Let’s get started with a few details about your company
+							<Trans
+								i18nKey='company.newCompany.description'
+								components={{ strong: <strong className='font-medium' /> }}
+							/>
 						</h3>
 					</div>
 				</section>
 
 				<section className='flex flex-col mx-auto md:container lg:w-[1170px] mt-7 mb-16'>
 					<h3 className='text-[#2D2A33] font-jost font-light text-sm'>
-						Required fields marked as *
+						{t("validation.requiredField")}
 					</h3>
 
 					<div className='flex flex-col md:flex-row mt-1.5'>
@@ -183,7 +190,7 @@ const CreateCompany = () => {
 								className='w-full md:w-7/12 flex flex-col gap-2.5 p-4 rounded-lg bg-white'
 							>
 								<ModalInputFormGroup
-									title='Company name *'
+									title={t("company.newCompany.companyName") + " *"}
 									name='companyName'
 									type='text'
 									value={values.companyName}
@@ -194,12 +201,12 @@ const CreateCompany = () => {
 											companyName: e.target.value,
 										}))
 									}}
-									placeholder='Enter name of your company'
+									placeholder={t("company.newCompany.companyNamePlaceholder")}
 									className='gap-[5px]'
 									error={touched.companyName && errors.companyName}
 									errorChildren={
 										<p className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.companyName}
+											{t(errors.companyName)}
 										</p>
 									}
 								/>
@@ -210,24 +217,24 @@ const CreateCompany = () => {
 									type='text'
 									value={values.linkedinUrl}
 									onChange={handleChange}
-									placeholder='Add URL'
+									placeholder={t("company.newCompany.addUrl")}
 									className='gap-[5px]'
 									error={touched.linkedinUrl && errors.linkedinUrl}
 									errorChildren={
 										<p className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.linkedinUrl}
+											{t(errors.linkedinUrl)}
 										</p>
 									}
 								/>
 
 								<ModalSelectFormGroup
 									className='gap-[5px]'
-									title='Industry *'
+									title={t("company.newCompany.industry") + " *"}
 									value={values.industry.label || ""}
 									options={industries}
 									containerWidth={300}
 									containerHeightMax={200}
-									placeHolder='ex: Software Development'
+									placeHolder={t("company.newCompany.industryPlaceholder")}
 									error={touched.industry && errors.industry}
 									hasTools={false}
 									onEnterSelect={false}
@@ -241,19 +248,19 @@ const CreateCompany = () => {
 									}
 									errorChildren={
 										<h3 className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.industry}
+											{t(errors.industry)}
 										</h3>
 									}
 								/>
 
 								<ModalSelectFormGroup
 									className='gap-[5px]'
-									title='Organization type *'
+									title={t("company.newCompany.organizationType") + " *"}
 									value={values.organizationType?.label || ""}
 									options={types}
 									containerWidth={300}
 									containerHeightMax={200}
-									placeHolder='Select from the list'
+									placeHolder={t("company.newCompany.selectFromList")}
 									error={touched.organizationType && errors.organizationType}
 									hasTools={false}
 									onEnterSelect={false}
@@ -267,19 +274,19 @@ const CreateCompany = () => {
 									}
 									errorChildren={
 										<h3 className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.organizationType}
+											{t(errors.organizationType)}
 										</h3>
 									}
 								/>
 
 								<ModalSelectFormGroup
 									className='gap-[5px]'
-									title='Organization size *'
+									title={t("company.newCompany.organizationSize") + " *"}
 									value={values.organizationSize?.label || ""}
 									options={sizes}
 									containerWidth={300}
 									containerHeightMax={200}
-									placeHolder='Select from the list'
+									placeHolder={t("company.newCompany.selectFromList")}
 									error={touched.organizationSize && errors.organizationSize}
 									hasTools={false}
 									onEnterSelect={false}
@@ -293,31 +300,34 @@ const CreateCompany = () => {
 									}
 									errorChildren={
 										<h3 className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.organizationSize}
+											{t(errors.organizationSize)}
 										</h3>
 									}
 								/>
 
 								<ModalInputFormGroup
-									title='Website'
+									title={t("company.newCompany.website")}
 									name='websiteUrl'
 									type='url'
 									value={values.websiteUrl}
 									onChange={handleChange}
-									placeholder='http:// or https://'
+									placeholder={t("company.newCompany.websitePlaceholder")}
 									className='gap-[5px]'
 								/>
 
 								<Show>
 									<Show.When isTrue={!!values.logoImg}>
 										<div>
-											<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
+											<h1 className='font-jost text-[#2D2A33]'>
+												{t("company.newCompany.logo")}
+											</h1>
 
 											<div className='flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'>
 												<div className='flex items-center max-w-[150px] max-h-[150px]'>
 													<img
 														className='object-contain'
 														src={values.logoImg}
+														alt=''
 													/>
 												</div>
 
@@ -336,7 +346,9 @@ const CreateCompany = () => {
 
 									<Show.Else>
 										<label htmlFor='logo'>
-											<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
+											<h1 className='font-jost text-[#2D2A33]'>
+												{t("company.newCompany.logo")}
+											</h1>
 											<input
 												id='logo'
 												onChange={onFileSelect}
@@ -353,12 +365,12 @@ const CreateCompany = () => {
 													<ArrowDownTrayIcon className='w-6 h-6 text-[#24459A]' />
 
 													<span className='text-[#2D2A33] font-jost text-lg'>
-														Upload logo
+														{t("company.newCompany.uploadLogo")}
 													</span>
 												</div>
 
 												<h3 className='font-extralight font-jost mt-2.5'>
-													Upload the file to preview
+													{t("company.newCompany.uploadLogoDescription")}
 												</h3>
 											</Dropzone>
 											{errors.logoImg && (
@@ -371,7 +383,7 @@ const CreateCompany = () => {
 								</Show>
 
 								<ModalInputFormGroup
-									title='Tagline'
+									title={t("company.newCompany.tagline")}
 									name='tagline'
 									type='text'
 									value={values.tagline}
@@ -388,15 +400,15 @@ const CreateCompany = () => {
 									error={touched.terms && errors.terms}
 									errorChildren={
 										<h3 className='mt-2 text-[#9E0F20] text-xs'>
-											{errors.terms}
+											{t(errors.terms)}
 										</h3>
 									}
-									title='I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.'
+									title={t("company.newCompany.terms")}
 								/>
 
 								<div className='ml-auto pt-4 pb-1'>
 									<Button type='submit' variant='primary' rounded='full'>
-										Create company
+										{t("company.newCompany.create")}
 									</Button>
 								</div>
 							</form>
@@ -405,7 +417,7 @@ const CreateCompany = () => {
 						<div className='w-full md:w-5/12 mt-6 md:mt-0 md:ml-6 flex flex-col h-fit rounded-lg overflow-hidden border-[1px] border-[#B4BFDD]'>
 							<div className='border-b-[1px] border-b-[#24459A] px-5 py-3.5 bg-white'>
 								<h3 className='text-lg text-[#2D2A33] font-jost font-semibold'>
-									Preview
+									{t("company.newCompany.preview")}
 								</h3>
 							</div>
 
@@ -414,14 +426,18 @@ const CreateCompany = () => {
 									<Show>
 										<Show.When isTrue={!!values.logoImg}>
 											<div className='flex items-center max-w-[150px] max-h-[150px]'>
-												<img className='object-contain' src={values.logoImg} />
+												<img
+													className='object-contain'
+													src={values.logoImg}
+													alt=''
+												/>
 											</div>
 										</Show.When>
 
 										<Show.Else>
 											<div className='flex items-center justify-center w-[80px] h-[80px] bg-[#F0F1F3]'>
 												<h3 className='text-[#2D2A33] font-semibold font-jost'>
-													logo
+													{t("company.newCompany.logo")}
 												</h3>
 											</div>
 										</Show.Else>
@@ -431,17 +447,19 @@ const CreateCompany = () => {
 										<h1 className='font-semibold text-lg'>
 											{values.companyName.length > 0
 												? values.companyName
-												: "Company name"}
+												: t("company.newCompany.companyName")}
 										</h1>
 
 										<h2 className='font-light break-words text-wrap'>
-											{values.tagline.length > 0 ? values.tagline : "Tagline"}
+											{values.tagline.length > 0
+												? values.tagline
+												: t("company.newCompany.tagline")}
 										</h2>
 
 										<h1 className='text-[#BBBBBB] font-light'>
-											{values.industry.length > 0
-												? values.industry
-												: "Industry"}
+											{values.industry?.label?.length > 0
+												? values.industry.label
+												: t("company.newCompany.industry")}
 										</h1>
 									</div>
 
@@ -452,7 +470,7 @@ const CreateCompany = () => {
 											className='items-center gap-2.5 text-sm px-4'
 										>
 											<PlusIcon className='w-4 h-4 text-white stroke-2' />
-											Follow
+											{t("company.follow")}
 										</Button>
 									</div>
 								</div>

@@ -4,17 +4,22 @@ import React, { useEffect, useState } from "react"
 import ToggleInput from "../../shared/forms/ToggleInput"
 import CompanyService from "../../../services/companyService"
 import { useAlertContext } from "../../../providers/AlertProvider"
+import { useTranslation } from "react-i18next"
 
 const VisibilityPage = ({ company }) => {
 	const [value, setValue] = useState(true)
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const onChange = async e => {
 		setValue(e.target.checked)
 
 		await CompanyService.editVisibleForAll(company.id, e.target.checked)
 
-		success("Visibility successfully saved", 5)
+		success(
+			t("alert.onSuccess", { name: t("company.settingsPage.page2.text") }),
+			5,
+		)
 	}
 
 	useEffect(() => {
@@ -29,19 +34,18 @@ const VisibilityPage = ({ company }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Page Visibility Settings
+					{t("company.settingsPage.page2.title")}
 				</h1>
 			</div>
 
 			<div className='flex flex-row rounded-lg p-2 mx-4 mt-4 md:mx-10'>
 				<div className='flex flex-col gap-1 font-jost max-w-[60%] text-start'>
 					<h1 className='text-[#2D2A33] font-medium text-lg'>
-						Company page visibility
+						{t("company.settingsPage.page2.visibility")}
 					</h1>
 
 					<h3 className='text-[#A7A7A7] font-light'>
-						Permit users who are not subscribed to your page to view company
-						content
+						{t("company.settingsPage.page2.visibilityDescription")}
 					</h3>
 				</div>
 

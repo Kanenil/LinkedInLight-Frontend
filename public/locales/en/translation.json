@@ -667,7 +667,12 @@
 		"removeRequestAgreeTitle": "Remove connection request?",
 		"removeRequestAgreeAction": "Do you want to remove your connection request?",
 		"removeAgreeTitle": "Remove connection?",
-		"removeAgreeAction": "Do you want to remove your connection with {{ fullName }}?"
+		"removeAgreeAction": "Do you want to remove your connection with {{ fullName }}?",
+		"rejectRequestTitle": "Reject connection request?",
+		"rejectRequestAction": "Do you want to reject connection request?",
+		"noConnections": "You don't have any connections yet",
+		"reject": "Reject",
+		"message": "Message"
 	},
 	"peopleMayKnow": {
 		"title": "People you may know",
@@ -768,7 +773,10 @@
 		"contacts": "Connections",
 		"noPosts": "No any news feeds yet",
 		"noPostsDescription": "Seems like you don't have any news yet. Share your thoughts, ideas, and news with your connections",
-		"followedCompanies": "Followed companies"
+		"followedCompanies": "Followed companies",
+		"settings": "Settings & Privacy",
+		"language": "Language",
+		"exit": "Exit"
 	},
 	"jobs": {
 		"jobsForYou": "Jobs for you",
@@ -778,10 +786,178 @@
 		"experienceLevel": "Experience level",
 		"company": "Company"
 	},
+	"company": {
+		"startCompany": {
+			"title": "For business",
+			"exploreMore": "Explore more for business",
+			"options": [
+				{
+					"title": "Attract top talent",
+					"description": "Find and hire qualified candidates for your business"
+				},
+				{
+					"title": "Promote your services",
+					"description": "Tell people about your business and offer your services"
+				},
+				{
+					"title": "Post a job for free",
+					"description": "Present your job opening to a wide range of candidates"
+				},
+				{
+					"title": "Place an ad",
+					"description": "Attract customer attention with advertising on our website"
+				},
+				{
+					"title": "Learn and grow",
+					"description": "Get access to useful materials and courses for professional development"
+				}
+			],
+			"createCompany": "Create a company"
+		},
+		"newCompany": {
+			"title": "New company",
+			"back": "Back",
+			"description": "Let’s get started with a few details about your company",
+			"preview": "Preview",
+			"companyName": "Company name",
+			"companyNamePlaceholder": "Enter name of your company",
+			"addUrl": "Add URL",
+			"industry": "Industry",
+			"industryPlaceholder": "ex: Software Development",
+			"organizationType": "Organization type",
+			"selectFromList": "Select from the list",
+			"organizationSize": "Organization size",
+			"website": "Website",
+			"websitePlaceholder": "http:// or https://",
+			"logo": "Logo",
+			"uploadLogo": "Upload logo",
+			"uploadLogoDescription": "Upload file to preview",
+			"tagline": "Tagline",
+			"terms": "I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.",
+			"create": "Create company",
+			"urlExists": "This URL already exists"
+		},
+		"follow": "Follow",
+		"unfollow": "Unfollow",
+		"followers": "followers",
+		"followers2": "Followers",
+		"previewAsUser": "Preview as user",
+		"previewAsAdmin": "Preview as admin",
+		"home": "Home",
+		"settings": "Settings",
+		"editPage": "Edit page",
+		"posts": {
+			"title": "Posts",
+			"publish": "Publish post",
+			"everybodyCanWatch": "Everybody can watch",
+			"shareYourThoughts": "Share your thoughts, ideas, and news with your followers",
+			"create": "Create post"
+		},
+		"post": {
+			"postedBy": "Posted by",
+			"Everybody": "Everybody",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"hidden": {
+			"title": "Content hidden",
+			"description": "Company {{ companyName }} decided to hide their content from unfollowed users"
+		},
+		"noFollowers": "No followers yet",
+		"noFollowersDescription": "Seems like this company don't have any followers yet. Share your thoughts, ideas, and news with your followers",
+		"publishFirstPost": "Publish first post",
+		"noPosts": "No any posts yet",
+		"noPostsDescription": "Seems like this company don't have any news yet.",
+		"generalInformation": "General information",
+		"preview": "Preview",
+		"industry": "Industry",
+		"companySize": "Company size",
+		"noDescription": "No description",
+		"settingsPage": {
+			"title": "Settings",
+			"page1": {
+				"title": "Page Access Management",
+				"description": "Control who manages your page here.",
+				"cols": ["User profile", "Status", "Action"],
+				"statuses": {
+					"Owner": "Owner",
+					"chief": "Chief editor",
+					"content": "Content editor"
+				},
+				"pageAdmins": "Page administrations",
+				"addAdmin": "Add administrator",
+				"editAdmin": "Edit administrator",
+				"selectAdminStatus": "Select administrator status",
+				"adminStatuses": [
+					{
+						"label": "Chief editor",
+						"description": "this status allows you to manage everything on the page",
+						"value": "chief"
+					},
+					{
+						"label": "Content editor",
+						"description": "this status allows you to post and manage content, comments on behalf of the page, and reply to messages",
+						"value": "content"
+					}
+				],
+				"administrator": "Administrator",
+				"deleteTitle": "Delete administrator",
+				"deleteAction": "Do you want to delete administrator {{ name }}?"
+			},
+			"page2": {
+				"title": "Page Visibility Settings",
+				"description": "Configure restrictions on how your page information is displayed in search engines and other services, as well as content visibility for non-subscribers.",
+				"visibility": "Company page visibility",
+				"visibilityDescription": "Permit users who are not subscribed to your page to view company content",
+				"text": "Visibility"
+			},
+			"page3": {
+				"title": "Page Deactivation",
+				"description": "Delete your page here.",
+				"deactivate": "It's unfortunate that you're leaving",
+				"deactivateDescription": "Deactivation will result in the complete deletion of the page from <strong>Job For You</strong>. After deactivation, you and other administrators will no longer have access to the page.",
+				"terms": "By clicking 'Deactivate', I confirm that I understand the consequences of deactivating the page.",
+				"button": "Deactivate"
+			}
+		},
+		"editPages": {
+			"title": "Edit page",
+			"header": {
+				"title": "Header"
+			},
+			"generalInformation": {
+				"title": "General information"
+			},
+			"workSetup": {
+				"title": "Work setup",
+				"visibility": "Work setup visibility",
+				"description": "Specify the type of employment in the workplace and attract the most suitable candidates",
+				"workSetups": [
+					{
+						"value": "Office",
+						"label": "All employees work from office"
+					},
+					{
+						"value": "Hybrid",
+						"label": "Employees work from office and from home"
+					},
+					{
+						"value": "Remote",
+						"label": "Employees work from home"
+					}
+				]
+			},
+			"location": {
+				"title": "Location"
+			}
+		}
+	},
 	"notFound": {
 		"heading": "Oops! Not found",
 		"title": "Oops! Page not found",
 		"text": "Please check the specified URL or return to the <strong>J4Y</strong> Homepage",
 		"link": "Back to home"
-	}
+	},
+	"on": "On",
+	"off": "Off"
 }

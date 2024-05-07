@@ -6,11 +6,13 @@ import ModalCheckFormGroup from "../../shared/forms/ModalCheckFormGroup"
 import { useAlertContext } from "../../../providers/AlertProvider"
 import Button from "../../../elements/buttons/Button"
 import CompanyService from "../../../services/companyService"
+import { Trans, useTranslation } from "react-i18next"
 
 const DeactivationPage = ({ company, isOwner }) => {
 	const [value, setValue] = useState(false)
 	const { error, success } = useAlertContext()
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	const onChange = async e => {
 		setValue(e.target.checked)
@@ -47,20 +49,21 @@ const DeactivationPage = ({ company, isOwner }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Page Deactivation
+					{t("company.settingsPage.page3.title")}
 				</h1>
 			</div>
 
 			<div className='flex flex-col rounded-lg p-2 mx-4 mt-4 md:mx-10'>
 				<div className='flex flex-col gap-1 font-jost text-start'>
 					<h1 className='text-[#2D2A33] font-medium text-lg'>
-						It's unfortunate that you're leaving
+						{t("company.settingsPage.page3.deactivate")}
 					</h1>
 
 					<h3 className='text-[#A7A7A7] font-light'>
-						Deactivation will result in the complete deletion of the page from
-						Job For You. After deactivation, you and other administrators will
-						no longer have access to the page.
+						<Trans
+							i18nKey='company.settingsPage.page3.deactivateDescription'
+							components={{ strong: <strong className='font-medium' /> }}
+						/>
 					</h3>
 				</div>
 
@@ -69,7 +72,7 @@ const DeactivationPage = ({ company, isOwner }) => {
 					name='deactivation'
 					onChange={onChange}
 					value={value}
-					title="By clicking 'Deactivate', I confirm that I understand the consequences of deactivating the page."
+					title={t("company.settingsPage.page3.terms")}
 				/>
 
 				<Button
@@ -79,7 +82,7 @@ const DeactivationPage = ({ company, isOwner }) => {
 					rounded='full'
 					className='ml-auto px-5 mt-5'
 				>
-					Deactivate
+					{t("company.settingsPage.page3.button")}
 				</Button>
 			</div>
 		</div>

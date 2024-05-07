@@ -8,6 +8,7 @@ import { Link, useSearchParams } from "react-router-dom"
 import Show from "../../../elements/shared/Show"
 import { pages } from "./settingsPages"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
+import { useTranslation } from "react-i18next"
 
 const CompanySettingsIndex = () => {
 	const { companyId } = useParams()
@@ -25,6 +26,7 @@ const CompanySettingsIndex = () => {
 		isOwner,
 		refetch,
 	} = useCompany(companyId)
+	const { t } = useTranslation()
 
 	if (isLoading) return <Loader />
 
@@ -49,7 +51,7 @@ const CompanySettingsIndex = () => {
 								<div className='bg-white rounded-lg px-7 py-6'>
 									<div className='pb-4 border-b-[1px] border-b-[#24459A]/50'>
 										<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-											Settings
+											{t("company.settingsPage.title")}
 										</h1>
 									</div>
 
@@ -65,11 +67,11 @@ const CompanySettingsIndex = () => {
 												>
 													<div className='flex flex-col gap-1 font-jost max-w-[60%] text-start'>
 														<h1 className='text-[#2D2A33] font-medium text-lg'>
-															{title}
+															{t(title)}
 														</h1>
 
 														<h3 className='text-[#A7A7A7] font-light'>
-															{description}
+															{t(description)}
 														</h3>
 													</div>
 

@@ -10,6 +10,7 @@ import { APP_ENV } from "../../../../env"
 import defaultImage from "../../../../assets/default-image.jpg"
 import CompanyService from "../../../../services/companyService"
 import { useAlertContext } from "../../../../providers/AlertProvider"
+import { useTranslation } from "react-i18next"
 
 const ManageAdminSchema = yup.object({
 	user: yup.object().required(),
@@ -29,7 +30,7 @@ const UserItem = ({ image, firstName, lastName, lastPosition, onClick }) => {
 				<img
 					className='object-contain'
 					src={image ? APP_ENV.UPLOADS_URL + "/" + image : defaultImage}
-					alt='image'
+					alt=''
 				/>
 			</div>
 
@@ -54,6 +55,7 @@ const ManageAdmin = ({
 	selectedUser,
 }) => {
 	const { success } = useAlertContext()
+	const { t } = useTranslation()
 
 	const filtered = useMemo(
 		() =>
@@ -68,13 +70,16 @@ const ManageAdmin = ({
 	const onSubmitFormik = async values => {
 		if (selectedUser) {
 			await CompanyService.editAdmin(company.id, values.user.id, values.role)
-
-			success("Administrator successfully saved!", 5)
 		} else {
 			await CompanyService.addAdmin(company.id, values.user.id, values.role)
-
-			success("New administrator successfully saved!", 5)
 		}
+
+		success(
+			t("alert.onSuccess", {
+				name: t("company.settingsPage.page1.administrator"),
+			}),
+			5,
+		)
 
 		onSave()
 	}
@@ -90,10 +95,15 @@ const ManageAdmin = ({
 	const stringifyUser = data =>
 		data?.firstName ? `${data.firstName} ${data.lastName}` : ""
 
+	const adminStatuses = t("company.settingsPage.page1.adminStatuses", {
+		returnObjects: true,
+	})
+
 	return (
 		<EditModalForm
-			saveTitle='Save'
-			header={selectedUser ? "Edit administrator" : "Add administrator"}
+			header={t(
+				`company.settingsPage.page1.${selectedUser ? "editAdmin" : "addAdmin"}`,
+			)}
 			withBorder={false}
 			onClose={onClose}
 			onSubmit={handleSubmit}
@@ -106,7 +116,7 @@ const ManageAdmin = ({
 					options={filtered}
 					containerWidth={300}
 					containerHeightMax={200}
-					placeHolder='Select from the list'
+					placeHolder={t("company.newCompany.selectFromList")}
 					hasTools={false}
 					onEnterSelect={false}
 					isAbsolute={true}
@@ -129,7 +139,7 @@ const ManageAdmin = ({
 					error={errors.user}
 					errorChildren={
 						<p className='mt-2 text-[#9E0F20] text-xs'>
-							This field is required
+							{t("validation.required")}
 						</p>
 					}
 				/>
@@ -156,40 +166,25 @@ const ManageAdmin = ({
 
 			<div className='w-full border-y-[#24459a50] border-y-[1px] py-2.5'>
 				<h1 className='font-jost text-[#7D88A4]'>
-					Select administrator status
+					{t("company.settingsPage.page1.selectAdminStatus")}
 				</h1>
 			</div>
 
-			<ModalRadioInput
-				onChange={handleChange}
-				name='role'
-				condition='chief'
-				value={values.role}
-				disabled={!values.user}
-			>
-				<div className='flex flex-col font-jost'>
-					<h1 className='text-[#2D2A33] font-medium'>Chief admin</h1>
-					<h3 className='text-[#ACACAC] font-light'>
-						this status allows you to manage everything on the page
-					</h3>
-				</div>
-			</ModalRadioInput>
-
-			<ModalRadioInput
-				onChange={handleChange}
-				name='role'
-				condition='content'
-				value={values.role}
-				disabled={!values.user}
-			>
-				<div className='flex flex-col font-jost'>
-					<h1 className='text-[#2D2A33] font-medium'>Content admin</h1>
-					<h3 className='text-[#ACACAC] font-light'>
-						this status allows you to post and manage content, comments on
-						behalf of the page, and reply to messages
-					</h3>
-				</div>
-			</ModalRadioInput>
+			{adminStatuses.map(({ value, label, description }) => (
+				<ModalRadioInput
+					key={value}
+					onChange={handleChange}
+					name='role'
+					condition={value}
+					value={values.role}
+					disabled={!values.user}
+				>
+					<div className='flex flex-col font-jost'>
+						<h1 className='text-[#2D2A33] font-medium'>{label}</h1>
+						<h3 className='text-[#ACACAC] font-light'>{description}</h3>
+					</div>
+				</ModalRadioInput>
+			))}
 		</EditModalForm>
 	)
 }

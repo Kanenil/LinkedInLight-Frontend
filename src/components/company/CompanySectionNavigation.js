@@ -4,8 +4,9 @@ import CompanyPostsSection from "./posts/CompanyPostsSection"
 import React, { useState } from "react"
 import CompanyFollowersSection from "./CompanyFollowersSection"
 import noPosts from "../../assets/no-posts.png"
+import { useTranslation } from "react-i18next"
 
-const links = ["Posts", "Followers"]
+const links = ["company.posts.title", "company.followers2"]
 
 const CompanySectionNavigation = ({
 	company,
@@ -15,6 +16,7 @@ const CompanySectionNavigation = ({
 	isContentAdmin,
 }) => {
 	const [selected, setSelected] = useState(links[0])
+	const { t } = useTranslation()
 
 	if (
 		!isFollower &&
@@ -30,10 +32,11 @@ const CompanySectionNavigation = ({
 							className='mx-auto h-[200px] w-[200px]'
 							style={{ backgroundImage: `url(${noPosts})` }}
 						/>
-						<h1 className='text-xl mt-2'>Content hidden</h1>
+						<h1 className='text-xl mt-2'>{t("company.hidden.title")}</h1>
 						<h3 className='text-[#7D7D7D] [&>strong]:font-medium text-sm mt-2'>
-							Company {company.companyName} decided to hide their content from
-							unfollowed users
+							{t("company.hidden.description", {
+								companyName: company.companyName,
+							})}
 						</h3>
 					</div>
 				</div>
@@ -49,7 +52,7 @@ const CompanySectionNavigation = ({
 						onClick={() => setSelected(link)}
 						isActive={selected === link}
 					>
-						{link}
+						{t(link)}
 					</CompanyNavButton>
 				))}
 			</div>

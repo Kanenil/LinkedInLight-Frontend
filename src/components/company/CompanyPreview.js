@@ -14,6 +14,7 @@ import { PlusIcon } from "@heroicons/react/24/outline"
 import { useNavigate } from "react-router"
 import CompanyDetailInformation from "./CompanyDetailInformation"
 import CompanyCreatePost from "./posts/CompanyCreatePost"
+import { useTranslation } from "react-i18next"
 
 const CompanyPreview = ({
 	company,
@@ -22,6 +23,8 @@ const CompanyPreview = ({
 	isContentAdmin,
 	searchParams = [],
 }) => {
+	const { t } = useTranslation()
+
 	const {
 		industry: { name: industryName },
 		followers,
@@ -66,7 +69,7 @@ const CompanyPreview = ({
 				<div className='bg-white'>
 					<div className='w-full md:container lg:w-[1170px] flex flex-row mx-auto py-4'>
 						<h1 className='text-[#2D2A33] font-jost text-2xl'>
-							Preview as user
+							{t("company.previewAsUser")}
 						</h1>
 
 						<Button
@@ -75,7 +78,7 @@ const CompanyPreview = ({
 							rounded='full'
 							onClick={() => navigator(`/j4y/company/${company.id}`)}
 						>
-							Preview as admin
+							{t("company.previewAsAdmin")}
 						</Button>
 					</div>
 				</div>
@@ -119,7 +122,7 @@ const CompanyPreview = ({
 								</h4>
 
 								<h4 className='px-1 border-r-[1px] border-r-[#24459A]'>
-									{followers} followers
+									{followers} {t("company.followers")}
 								</h4>
 
 								<h4>{company.organizationSize}</h4>
@@ -134,7 +137,7 @@ const CompanyPreview = ({
 											className='px-5 py-1'
 											onClick={onUnfollow}
 										>
-											Unfollow
+											{t("company.unfollow")}
 										</Button>
 									</Show.When>
 
@@ -146,7 +149,7 @@ const CompanyPreview = ({
 											className='px-5 gap-2.5'
 										>
 											<PlusIcon className='w-5 h-5 stroke-2' />
-											Follow
+											{t("company.follow")}
 										</Button>
 									</Show.Else>
 								</Show>
