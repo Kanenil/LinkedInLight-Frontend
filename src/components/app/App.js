@@ -27,6 +27,7 @@ import CompanyEditIndex from "../company/edit/CompanyEditIndex"
 import NotFound from "../../pages/404/NotFound"
 import PublicProfile from "../profile/PublicProfile"
 import MainPage from "../../pages/main"
+import JobsPage from "../../pages/jobs"
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -84,6 +85,10 @@ const App = () => {
 
 											<Route path='my-network' element={<ChatsLayout />}>
 												<Route index element={<MyNetwork />} />
+											</Route>
+
+											<Route path='jobs' element={<ChatsLayout />}>
+												<Route index element={<JobsPage />} />
 											</Route>
 
 											<Route path='chats' element={<ChatsLayout />}>
