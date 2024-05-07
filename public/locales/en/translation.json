@@ -786,6 +786,59 @@
 		"experienceLevel": "Experience level",
 		"company": "Company"
 	},
+	"company": {
+		"startCompany": {
+			"title": "For business",
+			"exploreMore": "Explore more for business",
+			"options": [
+				{
+					"title": "Attract top talent",
+					"description": "Find and hire qualified candidates for your business"
+				},
+				{
+					"title": "Promote your services",
+					"description": "Tell people about your business and offer your services"
+				},
+				{
+					"title": "Post a job for free",
+					"description": "Present your job opening to a wide range of candidates"
+				},
+				{
+					"title": "Place an ad",
+					"description": "Attract customer attention with advertising on our website"
+				},
+				{
+					"title": "Learn and grow",
+					"description": "Get access to useful materials and courses for professional development"
+				}
+			],
+			"createCompany": "Create a company"
+		},
+		"newCompany": {
+			"title": "New company",
+			"back": "Back",
+			"description": "Let’s get started with a few details about your company",
+			"preview": "Preview",
+			"companyName": "Company name",
+			"companyNamePlaceholder": "Enter name of your company",
+			"addUrl": "Add URL",
+			"industry": "Industry",
+			"industryPlaceholder": "ex: Software Development",
+			"organizationType": "Organization type",
+			"selectFromList": "Select from the list",
+			"organizationSize": "Organization size",
+			"website": "Website",
+			"websitePlaceholder": "http:// or https://",
+			"logo": "Logo",
+			"uploadLogo": "Upload logo",
+			"uploadLogoDescription": "Upload file to preview",
+			"tagline": "Tagline",
+			"terms": "I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.",
+			"create": "Create company",
+			"urlExists": "This URL already exists"
+		},
+		"follow": "Follow"
+	},
 	"notFound": {
 		"heading": "Oops! Not found",
 		"title": "Oops! Page not found",
