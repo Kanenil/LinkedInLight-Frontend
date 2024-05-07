@@ -1,11 +1,14 @@
 import { APP_ENV } from "../../../env"
 import defaultImage from "../../../assets/default-company-image.jpg"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 const CompanyCreatePost = ({
 	company,
 	searchParams: [searchParams, setSearchParams],
 }) => {
+	const { t } = useTranslation()
+
 	const onFocus = e => {
 		e.preventDefault()
 		if (!searchParams.get("createPost")) {
@@ -33,7 +36,7 @@ const CompanyCreatePost = ({
 			<input
 				onFocus={onFocus}
 				className='w-full border-[1px] border-[#7D88A4] rounded-full font-roboto text-[#7D7D7D] font-light px-5 py-2.5'
-				placeholder='Create post'
+				placeholder={t("company.posts.create")}
 			/>
 		</section>
 	)

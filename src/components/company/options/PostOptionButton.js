@@ -1,10 +1,11 @@
 import useComponentVisible from "../../../hooks/useComponentVisible"
 import React, { useRef } from "react"
 import BurgerMenuIcon from "../../../elements/icons/BurgerMenuIcon"
+import { useTranslation } from "react-i18next"
 
 const options = [
-	{ label: "Edit", value: "edit" },
-	{ label: "Delete", value: "delete" },
+	{ label: "company.post.edit", value: "edit" },
+	{ label: "company.post.delete", value: "delete" },
 ]
 
 const PostOptionButton = ({ onDelete, onEdit }) => {
@@ -12,6 +13,7 @@ const PostOptionButton = ({ onDelete, onEdit }) => {
 		useComponentVisible(false)
 	const dropdownContentRef = useRef(null)
 	const menuRef = useRef()
+	const { t } = useTranslation()
 
 	const onChange = async e => {
 		const { value } = e
@@ -52,7 +54,7 @@ const PostOptionButton = ({ onDelete, onEdit }) => {
 							key={index}
 							className='w-full flex items-end px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
 						>
-							{option.label}
+							{t(option.label)}
 						</button>
 					))}
 				</div>

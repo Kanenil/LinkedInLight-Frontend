@@ -54,23 +54,12 @@ const getSendingTime = date => {
 }
 
 const getTimeDuration = endTime => {
-	let start = moment.utc(endTime)
-	let end = moment.utc()
+	let start = moment.utc(endTime).locale(i18next.language)
+	let end = moment.utc().locale(i18next.language)
 
 	let duration = moment.duration(end.diff(start))
 
-	let days = duration.days()
-	let hours = duration.hours()
-	let minutes = duration.minutes()
-	let secs = duration.seconds()
-
-	return days >= 1
-		? `${days} days`
-		: hours >= 1
-		? `${hours} hr`
-		: minutes >= 1
-		? `${minutes} min`
-		: `${secs} sec`
+	return duration.humanize()
 }
 
 export {

@@ -13,8 +13,7 @@ import ConfirmAction from "../../shared/modals/shared/ConfirmAction"
 import Modal from "../../shared/modals/Modal"
 import CompanyService from "../../../services/companyService"
 import useMobileDetector from "../../../hooks/useMobileDetector"
-
-const cols = ["User profile", "Status", "Action"]
+import { useTranslation } from "react-i18next"
 
 const PermissionsPage = ({
 	company,
@@ -28,6 +27,9 @@ const PermissionsPage = ({
 	const [selectedUser, setSelectedUser] = useState(undefined)
 	const [deleteId, setDeleteId] = useState(undefined)
 	const { isMobile } = useMobileDetector()
+	const { t } = useTranslation()
+
+	const cols = t("company.settingsPage.page1.cols", { returnObjects: true })
 
 	return (
 		<div className='bg-white rounded-lg py-6'>
@@ -37,7 +39,7 @@ const PermissionsPage = ({
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Page Access Management
+					{t("company.settingsPage.page1.title")}
 				</h1>
 			</div>
 
@@ -46,7 +48,7 @@ const PermissionsPage = ({
 					className='w-full md:w-fit px-2 md:px-5 border-b-2'
 					isActive={true}
 				>
-					Page administrators
+					{t("company.settingsPage.page1.pageAdmins")}
 				</CompanyNavButton>
 
 				<Button
@@ -59,7 +61,7 @@ const PermissionsPage = ({
 					}}
 				>
 					<PlusIcon className='w-4 h-4 stroke-2' />
-					Add administrator
+					{t("company.settingsPage.page1.addAdmin")}
 				</Button>
 			</div>
 
@@ -84,7 +86,7 @@ const PermissionsPage = ({
 											src={
 												image ? APP_ENV.UPLOADS_URL + "/" + image : defaultImage
 											}
-											alt='image'
+											alt=''
 										/>
 									</div>
 
@@ -98,8 +100,8 @@ const PermissionsPage = ({
 								</div>
 
 								<div className='max-w-[25%] my-auto'>
-									<div className='w-fit px-2 py-1 rounded-lg capitalize bg-[#F0F1F3] text-[#2D2A33] font-medium font-jost'>
-										{role}
+									<div className='w-fit px-2 py-1 rounded-lg bg-[#F0F1F3] text-[#2D2A33] font-medium font-jost'>
+										{t(`company.settingsPage.page1.statuses.${role}`)}
 									</div>
 								</div>
 
@@ -176,12 +178,12 @@ const PermissionsPage = ({
 							refetch()
 							setDeleteId(undefined)
 						}}
-						title='Delete admin'
-						action={`Are you sure that you want remove ${
-							admins
+						title={t("company.settingsPage.page1.deleteTitle")}
+						action={t("company.settingsPage.page1.deleteAction", {
+							name: admins
 								.filter(val => val.userId === deleteId)
-								.map(val => val.firstName + " " + val.lastName)[0]
-						} from administrator`}
+								.map(val => val.firstName + " " + val.lastName)[0],
+						})}
 					/>
 				</Modal>
 			)}

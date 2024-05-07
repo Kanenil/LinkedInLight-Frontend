@@ -837,7 +837,82 @@
 			"create": "Create company",
 			"urlExists": "This URL already exists"
 		},
-		"follow": "Follow"
+		"follow": "Follow",
+		"unfollow": "Unfollow",
+		"followers": "followers",
+		"followers2": "Followers",
+		"previewAsUser": "Preview as user",
+		"previewAsAdmin": "Preview as admin",
+		"home": "Home",
+		"settings": "Settings",
+		"editPage": "Edit page",
+		"posts": {
+			"title": "Posts",
+			"publish": "Publish post",
+			"everybodyCanWatch": "Everybody can watch",
+			"shareYourThoughts": "Share your thoughts, ideas, and news with your followers",
+			"create": "Create post"
+		},
+		"post": {
+			"postedBy": "Posted by",
+			"Everybody": "Everybody",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"hidden": {
+			"title": "Content hidden",
+			"description": "Company {{ companyName }} decided to hide their content from unfollowed users"
+		},
+		"noFollowers": "No followers yet",
+		"noFollowersDescription": "Seems like this company don't have any followers yet. Share your thoughts, ideas, and news with your followers",
+		"publishFirstPost": "Publish first post",
+		"noPosts": "No any posts yet",
+		"noPostsDescription": "Seems like this company don't have any news yet.",
+		"generalInformation": "General information",
+		"preview": "Preview",
+		"industry": "Industry",
+		"companySize": "Company size",
+		"noDescription": "No description",
+		"settingsPage": {
+			"title": "Settings",
+			"page1": {
+				"title": "Page Access Management",
+				"description": "Control who manages your page here.",
+				"cols": ["User profile", "Status", "Action"],
+				"statuses": {
+					"Owner": "Owner",
+					"chief": "Chief editor",
+					"content": "Content editor"
+				},
+				"pageAdmins": "Page administrations",
+				"addAdmin": "Add administrator",
+				"editAdmin": "Edit administrator",
+				"selectAdminStatus": "Select administrator status",
+				"adminStatuses": [
+					{
+						"label": "Chief editor",
+						"description": "this status allows you to manage everything on the page",
+						"value": "chief"
+					},
+					{
+						"label": "Content editor",
+						"description": "this status allows you to post and manage content, comments on behalf of the page, and reply to messages",
+						"value": "content"
+					}
+				],
+				"administrator": "Administrator",
+				"deleteTitle": "Delete administrator",
+				"deleteAction": "Do you want to delete administrator {{ name }}?"
+			},
+			"page2": {
+				"title": "Page Visibility Settings",
+				"description": "Configure restrictions on how your page information is displayed in search engines and other services, as well as content visibility for non-subscribers."
+			},
+			"page3": {
+				"title": "Page Deactivation",
+				"description": "Delete your page here."
+			}
+		}
 	},
 	"notFound": {
 		"heading": "Oops! Not found",

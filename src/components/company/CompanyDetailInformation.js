@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next"
 import InformationIcon from "../../elements/icons/InformationIcon"
 import PuzzlesIcon from "../../elements/icons/PuzzlesIcon"
 
 const CompanyDetailInformation = ({ company, industry }) => {
+	const { t } = useTranslation()
+
 	return (
 		<section className='flex flex-col gap-5'>
 			<div className='w-full h-full rounded-lg overflow-hidden bg-white p-6'>
@@ -10,15 +13,14 @@ const CompanyDetailInformation = ({ company, industry }) => {
 						<InformationIcon className='h-5 fill-[#24459A]' />
 
 						<h1 className='font-jost font-medium text-[#2D2A33] text-lg md:text-2xl'>
-							General information
+							{t("company.generalInformation")}
 						</h1>
 					</div>
 
 					<div className='flex flex-col sm:flex-row'>
 						<div className='w-full sm:w-4/6'>
 							<h3 className='text-[#2D2A33] font-jost font-light text-sm'>
-								{company.description ||
-									"Company did not write their description"}
+								{company.description || t("company.noDescription")}
 							</h3>
 						</div>
 						<div className='w-full sm:w-2/6 sm:border-l-[#24459a50] sm:border-l-[1px] rounded-l-lg p-4'>
@@ -27,19 +29,19 @@ const CompanyDetailInformation = ({ company, industry }) => {
 									<PuzzlesIcon className='h-5 fill-[#24459A]' />
 
 									<h1 className='font-jost font-medium text-[#2D2A33] text-2xl'>
-										Preview
+										{t("company.preview")}
 									</h1>
 								</div>
 
 								<div className='flex flex-col gap-2'>
 									<div className='w-full border-b-[1px] border-b-[#24459a50] font-jost text-[#2D2A33] py-2'>
-										<h1 className='font-medium'>Industry</h1>
+										<h1 className='font-medium'>{t("company.industry")}</h1>
 
 										<h3 className='font-light text-sm'>{industry}</h3>
 									</div>
 
 									<div className='w-full border-b-[1px] border-b-[#24459a50] font-jost text-[#2D2A33] py-2'>
-										<h1 className='font-medium'>Company size</h1>
+										<h1 className='font-medium'>{t("company.companySize")}</h1>
 
 										<h3 className='font-light text-sm'>
 											{company.organizationSize}

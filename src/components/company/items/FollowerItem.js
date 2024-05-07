@@ -3,9 +3,11 @@ import defaultImage from "../../../assets/default-image.jpg"
 import React from "react"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
+import { useTranslation } from "react-i18next"
 
 const FollowerItem = ({ image, firstName, lastName, headline, profileUrl }) => {
 	const navigator = useNavigate()
+	const { t } = useTranslation()
 
 	return (
 		<div className='bg-white flex flex-col rounded-lg py-6 mx-auto md:mx-0'>
@@ -14,7 +16,7 @@ const FollowerItem = ({ image, firstName, lastName, headline, profileUrl }) => {
 					<img
 						className='object-contain'
 						src={image ? APP_ENV.UPLOADS_URL + "/" + image : defaultImage}
-						alt='image'
+						alt=''
 					/>
 				</div>
 
@@ -34,7 +36,7 @@ const FollowerItem = ({ image, firstName, lastName, headline, profileUrl }) => {
 					rounded='full'
 					onClick={() => navigator(`/j4y/${profileUrl}`)}
 				>
-					To profile
+					{t("main.viewProfile")}
 				</Button>
 			</div>
 		</div>

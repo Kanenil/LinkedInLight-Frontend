@@ -6,6 +6,7 @@ import ConditionalWrapper from "../../../elements/shared/ConditionalWrapper"
 import React from "react"
 import { Link } from "react-router-dom"
 import PostOptionButton from "../options/PostOptionButton"
+import { useTranslation } from "react-i18next"
 
 const PostItem = ({
 	isAdmin,
@@ -19,11 +20,13 @@ const PostItem = ({
 	onDelete,
 	isContentAdmin,
 }) => {
+	const { t } = useTranslation()
+
 	return (
 		<div className='w-full h-fit rounded-lg overflow-hidden bg-white p-6'>
 			<div className='flex flex-row pb-5 border-b-[1px] border-b-[#24459A]/50'>
 				<h1 className='font-jost text-sm text-[#7D7D7D] [&>a]:font-medium'>
-					Posted by
+					{t("company.post.postedBy")}
 					<Link
 						to={`/j4y/${postedBy.profileUrl}`}
 						className='text-[#2D2A33] ml-2 hover:underline'
@@ -77,7 +80,9 @@ const PostItem = ({
 							/>
 						</svg>
 
-						<h3 className='text-[#7D7D7D] text-sm'>{visibility}</h3>
+						<h3 className='text-[#7D7D7D] text-sm'>
+							{t(`company.post.${visibility}`)}
+						</h3>
 					</div>
 				</div>
 			</div>
