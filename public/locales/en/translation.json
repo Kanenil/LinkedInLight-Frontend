@@ -906,11 +906,49 @@
 			},
 			"page2": {
 				"title": "Page Visibility Settings",
-				"description": "Configure restrictions on how your page information is displayed in search engines and other services, as well as content visibility for non-subscribers."
+				"description": "Configure restrictions on how your page information is displayed in search engines and other services, as well as content visibility for non-subscribers.",
+				"visibility": "Company page visibility",
+				"visibilityDescription": "Permit users who are not subscribed to your page to view company content",
+				"text": "Visibility"
 			},
 			"page3": {
 				"title": "Page Deactivation",
-				"description": "Delete your page here."
+				"description": "Delete your page here.",
+				"deactivate": "It's unfortunate that you're leaving",
+				"deactivateDescription": "Deactivation will result in the complete deletion of the page from <strong>Job For You</strong>. After deactivation, you and other administrators will no longer have access to the page.",
+				"terms": "By clicking 'Deactivate', I confirm that I understand the consequences of deactivating the page.",
+				"button": "Deactivate"
+			}
+		},
+		"editPages": {
+			"title": "Edit page",
+			"header": {
+				"title": "Header"
+			},
+			"generalInformation": {
+				"title": "General information"
+			},
+			"workSetup": {
+				"title": "Work setup",
+				"visibility": "Work setup visibility",
+				"description": "Specify the type of employment in the workplace and attract the most suitable candidates",
+				"workSetups": [
+					{
+						"value": "Office",
+						"label": "All employees work from office"
+					},
+					{
+						"value": "Hybrid",
+						"label": "Employees work from office and from home"
+					},
+					{
+						"value": "Remote",
+						"label": "Employees work from home"
+					}
+				]
+			},
+			"location": {
+				"title": "Location"
 			}
 		}
 	},
@@ -919,5 +957,7 @@
 		"title": "Oops! Page not found",
 		"text": "Please check the specified URL or return to the <strong>J4Y</strong> Homepage",
 		"link": "Back to home"
-	}
+	},
+	"on": "On",
+	"off": "Off"
 }

@@ -8,6 +8,7 @@ import CompanyControlMenu from "../CompanyControlMenu"
 import Show from "../../../elements/shared/Show"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import { pages } from "./editPages"
+import { useTranslation } from "react-i18next"
 
 const CompanyEditIndex = () => {
 	const { companyId } = useParams()
@@ -21,6 +22,7 @@ const CompanyEditIndex = () => {
 		admins,
 		isContentAdmin,
 	} = useCompany(companyId)
+	const { t } = useTranslation()
 
 	if (isLoading) return <Loader />
 
@@ -45,12 +47,12 @@ const CompanyEditIndex = () => {
 								<div className='bg-white rounded-lg px-7 py-6'>
 									<div className='pb-4 border-b-[1px] border-b-[#24459A]/50'>
 										<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-											Edit page
+											{t("company.editPages.title")}
 										</h1>
 									</div>
 
 									<div className='mt-2 flex flex-col gap-1'>
-										{pages.map(({ title, description, to }) => (
+										{pages.map(({ title, to }) => (
 											<Link
 												to={`?section=${to}`}
 												key={`edit-${title}`}
@@ -58,7 +60,7 @@ const CompanyEditIndex = () => {
 											>
 												<div className='flex flex-col gap-1 font-jost max-w-[60%] text-start'>
 													<h1 className='text-[#2D2A33] font-medium text-lg'>
-														{title}
+														{t(title)}
 													</h1>
 												</div>
 
