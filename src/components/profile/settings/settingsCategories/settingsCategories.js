@@ -5,7 +5,6 @@ import settingsService from "../../../../services/settingsService";
 
 const profile = await profileService.getProfile()
 const accountPreference = await AccountPreferenceService.AccountPreference()
-console.log(accountPreference.data)
 const profileViewing = await settingsService.profileViewing()
 const connectionVisibility = await settingsService.connectionVisibility()
 const discoverByEmail = await settingsService.discoverByEmail()
