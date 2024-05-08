@@ -8,11 +8,20 @@ import {
   visibilitySettings,
 } from "../../components/profile/settings/settingsCategories/settingsCategories";
 import { useEffect, useState } from "react";
+import ProfileService from "../../services/profileService";
+import { APP_ENV } from "../../env";
+import defaultImage from "../../assets/default-image.jpg";
+import { useQuery } from "@tanstack/react-query";
 
 const Settings = () => {
   const { section, block } = useParams();
   const selectedSection = section || settingsRoutes.sections.params;
   const [currentSettings, setCurrentSettings] = useState(accountParams);
+  const {data: profile} = useQuery({
+      queryFn: () => ProfileService.getProfile(),
+      queryKey: ['profile'],
+      select: ({data}) => data,
+  });
 
   const getColor = (sectionName) => {
     if (sectionName === selectedSection) {
@@ -36,13 +45,19 @@ const Settings = () => {
         break;
     }
   }, [selectedSection, block]);
+
+
+
+  const profileImage = profile?.image
+        ? APP_ENV.UPLOADS_URL + "/" + profile?.image
+        : defaultImage
   return (
     <div className="bg-[#E7E7E7] w-full h-[1000px] py-24 px-5 sm:px-0 sm:flex sm:justify-center">
       <div className="w-full sm:w-1/4 bg-white h-[150px] sm:h-[900px] rounded-lg overflow-hidden py-8 px-6 sm:inline-block text-center sm:text-left">
         <div className="text-left flex sm:block justify-center items-center">
           <img
             className="w-[45px] h-[45px] rounded-full hover:opacity-45 transition duration-300 ease-in-out inline-block sm:block"
-            src="https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg"
+            src={profileImage}
             alt="noData"
           ></img>
           <div className="sm:mt-3 text-2xl font-semibold inline-block sm:block ml-3 sm:ml-0">

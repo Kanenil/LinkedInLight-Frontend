@@ -1,5 +1,6 @@
 import Block from "../Block/Block";
 import Contacts from "../Contacts/Contacts";
+import ContentLanguageBlock from "../ContentLanguage/ContentLanguageBlock";
 import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
 import FindByPhoneNumber from "../FindByPhoneNumber/FindByPhoneNumber";
 import LanguageBlock from "../Language/LanguageBlock";
@@ -14,6 +15,8 @@ const SettingBlockElement = (block) => {
   switch (block) {
     case "language":
       return <LanguageBlock />;
+      case "contentLanguage":
+        return <ContentLanguageBlock />;
     case "passwordChange":
       return <PasswordChange />;
     case "profilePhotos":

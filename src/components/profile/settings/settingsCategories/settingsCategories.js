@@ -1,4 +1,17 @@
 import { settingsRoutes } from "../../../../constants/routes";
+import AccountPreferenceService from "../../../../services/AccountPreferenceService";
+import profileService from "../../../../services/profileService";
+import settingsService from "../../../../services/settingsService";
+
+const profile = await profileService.getProfile()
+const accountPreference = await AccountPreferenceService.AccountPreference()
+console.log(accountPreference.data)
+const profileViewing = await settingsService.profileViewing()
+const connectionVisibility = await settingsService.connectionVisibility()
+const discoverByEmail = await settingsService.discoverByEmail()
+const discoverByPhone = await settingsService.discoverByPhone()
+const activeStatusVisibility = await settingsService.activeStatusVisibility()
+
 
 export const accountParams = [
   {
@@ -13,12 +26,12 @@ export const accountParams = [
     category: "General",
     items: [
       { name: "Language", link: `${settingsRoutes.sections.params}/language` },
-      { name: "Content language" },
-      { name: "Video autoplay", prescription: "enabled" },
-      { name: "Audio effects", prescription: "enabled" },
+      { name: "Content language", link: `${settingsRoutes.sections.params}/contentLanguage` },
+      { name: "Video autoplay", prescription: accountPreference.data.videoAutoplay ? 'enabled' : 'disabled' },
+      { name: "Audio effects", prescription: accountPreference.data.soundEffects ? 'enabled' : 'disabled' },
       {
         name: "Show profile photos",
-        prescription: "All members of jY4",
+        prescription: accountPreference.data.showProfilePhotos,
         link: `${settingsRoutes.sections.params}/profilePhotos`,
       },
       {
@@ -43,13 +56,13 @@ export const securitySettings = [
   {
     category: "Access to the account",
     items: [
-      { name: "Email", prescription: "test@gmail.com" },
+      { name: "Email", prescription: profile.data.email },
       { name: "Phone", link: `${settingsRoutes.sections.security}/phone` },
       {
         name: "Change password",
         link: `${settingsRoutes.sections.security}/passwordChange`,
       },
-      { name: "Two factory authentication", prescription: "disabled" },
+      { name: "Two factory authentication", prescription: profile.data.hasTwoStepVerification ? 'enabled' : 'disabled' },
     ],
   },
 ];
@@ -58,7 +71,7 @@ export const visibilitySettings = [
   {
     category: "Your profile and network visibility",
     items: [
-      { name: "Profile viewing options", prescription: "Your name and title" },
+      { name: "Profile viewing options", prescription: profileViewing.data },
       { name: "Edit public profile" },
       { name: "People able to see your email" },
       {
@@ -66,19 +79,19 @@ export const visibilitySettings = [
         prescription: "enabled",
         link: `${settingsRoutes.sections.visibility}/conactsVisibility`,
       },
-      { name: "People able to see your followings", prescription: "enabled" },
+      { name: "People able to see your followings", prescription: connectionVisibility.data },
       {
         name: "People able to see your surname",
         link: `${settingsRoutes.sections.visibility}/surname`,
       },
       {
         name: "Finding your profile by email",
-        prescription: "1st level contacts",
+        prescription: discoverByEmail.data,
         link: `${settingsRoutes.sections.visibility}/findByEmail`,
       },
       {
         name: "Finding your profile by phone number",
-        prescription: "Anybody",
+        prescription: discoverByPhone.data,
         link: `${settingsRoutes.sections.visibility}/findByPhoneNumber`,
       },
       {
@@ -89,6 +102,6 @@ export const visibilitySettings = [
   },
   {
     category: "j4Y activity visibility",
-    items: [{ name: "Manage activity status", prescription: "Contacts only" }],
+    items: [{ name: "Manage activity status", prescription: activeStatusVisibility.data }],
   },
 ];
