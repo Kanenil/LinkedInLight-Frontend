@@ -1,8 +1,19 @@
 import { useState } from "react";
+import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
+
+const accountPreference = await AccountPreferenceService.AccountPreference()
+console.log(accountPreference.data)
+const values = await AccountPreferenceService.hibernationReasonValues()
 
 const SleepMode = () => {
-  const [selectedOption, setSelectedOption] = useState("other");
-  const selectOption = (val) => {
+  const [textareaValue, setTextareaValue] = useState('');
+
+  const handleTextareaChange = (event) => {
+    setTextareaValue(event.target.value);
+  };
+
+  const [selectedOption, setSelectedOption] = useState(values.data[0]);
+  const selectOption = async (val) => {
     setSelectedOption(val);
   };
   return (
@@ -18,96 +29,28 @@ const SleepMode = () => {
         Tell us why have you decided to put your account into sleep mode
         {"(not required)"}
       </div>
-      <div className="mt-10 flex items-center">
+      {values.data.map(item => {
+        return (
+        <div key={'key-' + item} className="mt-10 flex items-center">
         <input
-          onClick={() => selectOption("break")}
-          checked={selectedOption === "break"}
+          onClick={() => selectOption(item)}
+          checked={selectedOption === item}
           type="radio"
-          className={`inline-block ${
-            selectedOption === "break" ? "border-gray-400" : "border-gray-300"
-          }`}
+          className="inline-block"
         />
         <div
           className={`inline-block mx-3 ${
-            selectedOption === "break" ? "text-black" : "text-gray-400"
+            selectedOption === item ? "text-black" : "text-gray-400"
           }`}
         >
-          I need a break
+          {item}
         </div>
       </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("notifications")}
-          checked={selectedOption === "notifications"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "notifications"
-              ? "border-gray-400"
-              : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "notifications" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I get too much email notifications
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("privacy")}
-          checked={selectedOption === "privacy"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "privacy" ? "border-gray-400" : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "privacy" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I have privacy issues
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("security")}
-          checked={selectedOption === "security"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "security"
-              ? "border-gray-400"
-              : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "security" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I have security issues
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("other")}
-          checked={selectedOption === "other"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "other" ? "border-gray-400" : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "other" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          Other
-        </div>
-      </div>
+        )
+      })
+      }
       <textarea
+      onChange={handleTextareaChange}
         rows="5"
         className="rounded-xl resize-none w-full mt-7"
         placeholder="Leave review"

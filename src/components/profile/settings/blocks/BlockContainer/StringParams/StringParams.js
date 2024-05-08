@@ -2,7 +2,6 @@ import { useState } from "react";
 import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
 
 const accountPreference = await AccountPreferenceService.AccountPreference()
-console.log(accountPreference.data.feedPreferences)
 const values = await AccountPreferenceService.feedPreferencesValues()
 
 const StringParams = () => {
