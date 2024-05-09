@@ -7,6 +7,7 @@ import LanguageBlock from "../Language/LanguageBlock";
 import PasswordChange from "../PasswordChange/PasswordChange";
 import PhoneBlock from "../Phone/Phone";
 import SurnameVisibility from "../SurnameVisibility/SurnameVisibility";
+import AutoPlayBlock from "./AutoPlay/AutoPlayBlock";
 import EnableAudioBlock from "./EnableAudio/EnableAudioBlock";
 import ShowProfilePhotos from "./ShowProfilePhotos/ShowProfilePhotos";
 import SleepMode from "./SleepMode/SleepMode";
@@ -40,6 +41,8 @@ const SettingBlockElement = (block) => {
       return <Contacts />;
       case "enableAudio":
         return <EnableAudioBlock />;
+        case "autoPlay":
+          return <AutoPlayBlock />;
     default:
       return <></>;
   }

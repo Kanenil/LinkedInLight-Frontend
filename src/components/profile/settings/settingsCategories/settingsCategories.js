@@ -26,8 +26,8 @@ export const accountParams = [
     items: [
       { name: "Language", link: `${settingsRoutes.sections.params}/language` },
       { name: "Content language", link: `${settingsRoutes.sections.params}/contentLanguage` },
-      { name: "Video autoplay", prescription: accountPreference.data.videoAutoplay ? 'enabled' : 'disabled' },
-      { name: "Audio effects", prescription: accountPreference.data.soundEffects ? 'enabled' : 'disabled' },
+      { name: "Video autoplay", prescription: accountPreference.data.videoAutoplay ? 'enabled' : 'disabled', link: `${settingsRoutes.sections.params}/autoPlay` },
+      { name: "Audio effects", prescription: accountPreference.data.soundEffects ? 'enabled' : 'disabled', link: `${settingsRoutes.sections.params}/enableAudio` },
       {
         name: "Show profile photos",
         prescription: accountPreference.data.showProfilePhotos,
