@@ -5,8 +5,10 @@ import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
 import FindByPhoneNumber from "../FindByPhoneNumber/FindByPhoneNumber";
 import FollowingsVisibility from "../FollowingsVisibiliy/FollowingsVisibility";
 import LanguageBlock from "../Language/LanguageBlock";
+import ManageActivityStatus from "../ManageActivityStatus/ManageActivityStatus";
 import PasswordChange from "../PasswordChange/PasswordChange";
 import PhoneBlock from "../Phone/Phone";
+import ProfileViewing from "../ProfileViewing/ProfileViewing";
 import SurnameVisibility from "../SurnameVisibility/SurnameVisibility";
 import AutoPlayBlock from "./AutoPlay/AutoPlayBlock";
 import EmailVisibility from "./EmailVisibility/EmailVisibility";
@@ -49,6 +51,10 @@ const SettingBlockElement = (block) => {
       return <FollowingsVisibility />;
     case "emailVisibility": 
       return <EmailVisibility />
+    case "profileView":
+      return <ProfileViewing />
+    case 'manageActivityStatus':
+      return <ManageActivityStatus />
     default:
       return <></>;
   }

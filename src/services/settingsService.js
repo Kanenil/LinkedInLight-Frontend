@@ -42,10 +42,10 @@ class SettingsService {
     profileViewing() {
         return axios.get(`${this.#URL}/profileViewing`);
     }
-    updateProfileViewing(profileViewing) {
+    updateProfileViewing(profileViewingValue) {
         axios.post(`${this.#URL}/updateProfileViewing`, null, {
             params: {
-                profileViewing: profileViewing
+                profileViewingValue: profileViewingValue
             }
         });
     }

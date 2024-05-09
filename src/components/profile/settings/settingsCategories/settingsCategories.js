@@ -70,7 +70,11 @@ export const visibilitySettings = [
   {
     category: "Your profile and network visibility",
     items: [
-      { name: "Profile viewing options", prescription: profileViewing.data },
+      { 
+        name: "Profile viewing options", 
+        prescription: profileViewing.data,
+        link: `${settingsRoutes.sections.visibility}/profileView`  
+      },
       { name: "Edit public profile" },
       {
         name: "People able to see your email",
@@ -106,6 +110,6 @@ export const visibilitySettings = [
   },
   {
     category: "j4Y activity visibility",
-    items: [{ name: "Manage activity status", prescription: activeStatusVisibility.data }],
+    items: [{ name: "Manage activity status", prescription: activeStatusVisibility.data, link: `${settingsRoutes.sections.visibility}/manageActivityStatus` }]
   },
 ];
