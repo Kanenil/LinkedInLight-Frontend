@@ -72,13 +72,18 @@ export const visibilitySettings = [
     items: [
       { name: "Profile viewing options", prescription: profileViewing.data },
       { name: "Edit public profile" },
-      { name: "People able to see your email" },
+      {
+        name: "People able to see your email",
+        link: `${settingsRoutes.sections.visibility}/emailVisibility` 
+      },
       {
         name: "Contacts",
         prescription: "enabled",
         link: `${settingsRoutes.sections.visibility}/conactsVisibility`,
       },
-      { name: "People able to see your followings", prescription: connectionVisibility.data },
+      { name: "People able to see your followings", prescription: connectionVisibility.data,
+        link: `${settingsRoutes.sections.visibility}/followings`
+       },
       {
         name: "People able to see your surname",
         link: `${settingsRoutes.sections.visibility}/surname`,
