@@ -51,7 +51,10 @@ export const getSettingsCategory = async (category) => {
             name: "Put your account into sleep mode",
             link: `${settingsRoutes.sections.params}/sleepMode`,
           },
-          { name: "Close your account" },
+          { 
+            name: "Close your account",
+            link: `${settingsRoutes.sections.params}/closeAccount` 
+          },
         ],
       },
     ];    

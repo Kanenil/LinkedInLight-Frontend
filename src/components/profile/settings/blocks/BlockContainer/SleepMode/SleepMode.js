@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
+import intoSleepMode from '../../../../../../assets/sleep-mode-image.png'
 
 const SleepMode = () => {
   const [textareaValue, setTextareaValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const [values, setValues] = useState([]);
+  const [isHibernatedAccount, setIsHibernatedAccount] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
+        setIsHibernatedAccount(accountPreferenceResponse.data.isHibernatedAccount)
+        console.log(accountPreferenceResponse)
         const valuesResponse = await AccountPreferenceService.hibernationReasonValues();
 
         setSelectedOption(valuesResponse.data[0]); // Set default selected option
@@ -44,7 +48,16 @@ const SleepMode = () => {
 
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
-      <div className="font-bold text-xl">Sleep mode</div>
+      {!isHibernatedAccount ? (
+        <div>
+          <img src={intoSleepMode} className="w-1/2 mx-auto" />
+          <h1 className="font-extrabold text-xl my-3 mx-auto text-center">Your j4Y account is into sleep mode</h1>
+          <div className="w-2/3 mx-auto text-lg">Everything is ready. Soon you will receive an email confirming that your account has been switched to sleep mode. If you wish to reactivate your account, log in as usual.</div>
+          <div className="w-2/3 mt-5 mx-auto text-lg">To obtain additional information, you can always contact the <span className="text-indigo-600">J4Y Help Center.</span></div>
+        </div>
+      ) : (
+        <>
+    <div className="font-bold text-xl">Sleep mode</div>
       <div className="my-3">Everyone needs a break sometimes</div>
       <div className="my-6">
         Putting your account into sleep mode is the best option if you want to
@@ -92,6 +105,9 @@ const SleepMode = () => {
       >
         Continue
       </div>
+        </>
+      )
+      }
     </div>
   );
 };

@@ -27,6 +27,17 @@ class AccountPreferenceService {
             }
         });
 	}
+	closingReasonValues() {
+		return axios.get(`${this.#URL}/closingReasonValues`)
+	}
+	close(data) {
+		return axios.post(`${this.#URL}/closeAccount`, null, {
+            params: {
+                reason: data.reason,
+                feedback: data.feedback
+            }
+        });
+	}
 }
 
 export default new AccountPreferenceService()

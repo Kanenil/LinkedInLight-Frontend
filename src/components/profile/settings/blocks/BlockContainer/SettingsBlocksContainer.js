@@ -1,5 +1,6 @@
 import Block from "../Block/Block";
 import EmailChange from "../Block/EmailChange/EmailChange";
+import CloseAccount from "../CloseAccount/CloseAccount";
 import Contacts from "../Contacts/Contacts";
 import ContentLanguageBlock from "../ContentLanguage/ContentLanguageBlock";
 import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
@@ -61,6 +62,8 @@ const SettingBlockElement = (block) => {
       return <TwoStepAuth />
     case 'emailChange': 
       return <EmailChange />
+    case 'closeAccount':
+      return <CloseAccount />
     default:
       return <></>;
   }
