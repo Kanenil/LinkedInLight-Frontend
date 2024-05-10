@@ -1,20 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
-
-const accountPreference = await AccountPreferenceService.AccountPreference()
-const values = await AccountPreferenceService.hibernationReasonValues()
 
 const SleepMode = () => {
   const [textareaValue, setTextareaValue] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
+        const valuesResponse = await AccountPreferenceService.hibernationReasonValues();
+
+        setSelectedOption(valuesResponse.data[0]); // Set default selected option
+        setTextareaValue(accountPreferenceResponse.data.hibernationReason || ''); // Set textarea value if it exists
+        setValues(valuesResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleTextareaChange = (event) => {
     setTextareaValue(event.target.value);
   };
 
-  const [selectedOption, setSelectedOption] = useState(values.data[0]);
-  const selectOption = async (val) => {
+  const selectOption = (val) => {
     setSelectedOption(val);
   };
+
+  // Handle submit button click
+  const handleSubmit = async () => {
+    try {
+      const current = { ...selectedOption }; // or accountPreference.data.hibernationReason
+      const vm = { ...current, hibernationReason: textareaValue };
+      await AccountPreferenceService.updateAccountPreference(vm);
+      // Handle continue logic here
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
       <div className="font-bold text-xl">Sleep mode</div>
@@ -28,28 +56,26 @@ const SleepMode = () => {
         Tell us why have you decided to put your account into sleep mode
         {"(not required)"}
       </div>
-      {values.data.map(item => {
-        return (
-        <div key={'key-' + item} className="mt-10 flex items-center">
-        <input
-          onClick={() => selectOption(item)}
-          checked={selectedOption === item}
-          type="radio"
-          className="inline-block"
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === item ? "text-black" : "text-gray-400"
-          }`}
-        >
-          {item}
+      {values.map((item) => (
+        <div key={"key-" + item} className="mt-10 flex items-center">
+          <input
+            onClick={() => selectOption(item)}
+            checked={selectedOption === item}
+            type="radio"
+            className="inline-block"
+          />
+          <div
+            className={`inline-block mx-3 ${
+              selectedOption === item ? "text-black" : "text-gray-400"
+            }`}
+          >
+            {item}
+          </div>
         </div>
-      </div>
-        )
-      })
-      }
+      ))}
       <textarea
-      onChange={handleTextareaChange}
+        value={textareaValue}
+        onChange={handleTextareaChange}
         rows="5"
         className="rounded-xl resize-none w-full mt-7"
         placeholder="Leave review"
@@ -61,7 +87,10 @@ const SleepMode = () => {
         attention, please contact us{" "}
         <span className="text-indigo-700">here</span>
       </div>
-      <div className="mb-8 text-lg w-[150px] rounded-full py-1 font-semibold text-white text-center bg-indigo-800 hover:bg-indigo-900 hover:text-gray-200">
+      <div
+        onClick={handleSubmit}
+        className="mb-8 text-lg w-[150px] rounded-full py-1 font-semibold text-white text-center bg-indigo-800 hover:bg-indigo-900 hover:text-gray-200 cursor-pointer"
+      >
         Continue
       </div>
     </div>
