@@ -1,4 +1,5 @@
 import Block from "../Block/Block";
+import EmailChange from "../Block/EmailChange/EmailChange";
 import Contacts from "../Contacts/Contacts";
 import ContentLanguageBlock from "../ContentLanguage/ContentLanguageBlock";
 import FindByEmailBlock from "../FindByEmail/FindByEmailBlock";
@@ -10,6 +11,7 @@ import PasswordChange from "../PasswordChange/PasswordChange";
 import PhoneBlock from "../Phone/Phone";
 import ProfileViewing from "../ProfileViewing/ProfileViewing";
 import SurnameVisibility from "../SurnameVisibility/SurnameVisibility";
+import TwoStepAuth from "../TwoStepAuth/TwoStepAuth";
 import AutoPlayBlock from "./AutoPlay/AutoPlayBlock";
 import EmailVisibility from "./EmailVisibility/EmailVisibility";
 import EnableAudioBlock from "./EnableAudio/EnableAudioBlock";
@@ -55,6 +57,10 @@ const SettingBlockElement = (block) => {
       return <ProfileViewing />
     case 'manageActivityStatus':
       return <ManageActivityStatus />
+    case 'twoStepAuth':
+      return <TwoStepAuth />
+    case 'emailChange': 
+      return <EmailChange />
     default:
       return <></>;
   }

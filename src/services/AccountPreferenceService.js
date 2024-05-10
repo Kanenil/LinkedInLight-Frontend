@@ -19,6 +19,14 @@ class AccountPreferenceService {
 	hibernationReasonValues() {
 		return axios.get(`${this.#URL}/hibernationReasonValues`)
 	}
+	hibernate(data) {
+		return axios.post(`${this.#URL}/hibernateAccount`, null, {
+            params: {
+                reason: data.reason,
+                feedback: data.feedback
+            }
+        });
+	}
 }
 
 export default new AccountPreferenceService()

@@ -61,13 +61,13 @@ export const getSettingsCategory = async (category) => {
       {
         category: "Access to the account",
         items: [
-          { name: "Email", prescription: profile.data.email },
+          { name: "Email", prescription: profile.data.email, link: `${settingsRoutes.sections.security}/emailChange` },
           { name: "Phone", link: `${settingsRoutes.sections.security}/phone` },
           {
             name: "Change password",
             link: `${settingsRoutes.sections.security}/passwordChange`,
           },
-          { name: "Two factory authentication", prescription: profile.data.hasTwoStepVerification ? 'enabled' : 'disabled' },
+          { name: "Two factory authentication", prescription: profile.data.hasTwoStepVerification ? 'enabled' : 'disabled', link: `${settingsRoutes.sections.security}/twoStepAuth` },
         ],
       },
     ];

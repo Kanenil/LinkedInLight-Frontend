@@ -34,9 +34,8 @@ const SleepMode = () => {
   // Handle submit button click
   const handleSubmit = async () => {
     try {
-      const current = { ...selectedOption }; // or accountPreference.data.hibernationReason
-      const vm = { ...current, hibernationReason: textareaValue };
-      await AccountPreferenceService.updateAccountPreference(vm);
+      const vm = { reason: selectedOption, feedback: textareaValue };
+      await AccountPreferenceService.hibernate(vm);
       // Handle continue logic here
     } catch (error) {
       console.error("Error updating data:", error);
