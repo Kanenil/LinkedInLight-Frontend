@@ -1,15 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import settingsService from "../../../../../services/settingsService";
 
-const currentValue = await settingsService.showLastName()
-console.log(currentValue)
-
 const SurnameVisibility = () => {
-  const [selectedOption, setSelectedOption] = useState(currentValue.data);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const currentValueResponse = await settingsService.showLastName();
+        setSelectedOption(currentValueResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const selectOption = async (val) => {
     setSelectedOption(val);
-    await settingsService.updateShowLastName(val)
+    await settingsService.updateShowLastName(val);
   };
+
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
       <div className="font-bold text-xl">Surname visibility</div>
@@ -25,7 +37,7 @@ const SurnameVisibility = () => {
         />
         <div
           className={`inline-block mx-3 ${
-            selectedOption? "text-black" : "text-gray-400"
+            selectedOption ? "text-black" : "text-gray-400"
           }`}
         >
           User Name
