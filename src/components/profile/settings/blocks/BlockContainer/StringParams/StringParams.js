@@ -4,12 +4,14 @@ import AccountPreferenceService from "../../../../../../services/AccountPreferen
 const StringParams = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [values, setValues] = useState([]);
+  const [prefs, setPrefs] = useState({})
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accountPrefResponse = await AccountPreferenceService.AccountPreference();
         setSelectedOption(accountPrefResponse.data.feedPreferences);
+        setPrefs(accountPrefResponse.data);
 
         const valuesResponse = await AccountPreferenceService.feedPreferencesValues();
         setValues(valuesResponse.data);
@@ -23,8 +25,7 @@ const StringParams = () => {
 
   const selectOption = async (val) => {
     setSelectedOption(val);
-    const current = { ...selectedOption }; // Be cautious here, make sure to use selectedOption instead of accountPreference
-    const vm = { ...current, feedPreferences: val };
+    const vm = { ...prefs, feedPreferences: val };
     await AccountPreferenceService.updateAccountPreference(vm);
   };
 

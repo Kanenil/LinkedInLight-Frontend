@@ -3,12 +3,13 @@ import ToggleSwitch from "../../../../../../elements/other/ToggleSwitch/ToggleSw
 import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
 
 const EnableAudioBlock = () => {
-  const [soundEffects, setSoundEffects] = useState(null);
-
+  const [soundEffects, setSoundEffects] = useState();
+  const [prefs, setPrefs] = useState({})
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
+        setPrefs(accountPreferenceResponse.data);
         setSoundEffects(accountPreferenceResponse.data.soundEffects);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -20,7 +21,7 @@ const EnableAudioBlock = () => {
 
   const onChange = async (val) => {
     try {
-      const current = { ...soundEffects };
+      const current = { ...prefs };
       const vm = { ...current, soundEffects: val };
       await AccountPreferenceService.updateAccountPreference(vm);
       setSoundEffects(val); 

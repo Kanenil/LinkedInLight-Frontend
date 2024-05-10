@@ -4,11 +4,12 @@ import AccountPreferenceService from "../../../../../../services/AccountPreferen
 const ShowProfilePhotos = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [values, setValues] = useState([]);
-
+  const [prefs, setPrefs] = useState({})
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
+        setPrefs(accountPreferenceResponse.data);
         setSelectedOption(accountPreferenceResponse.data.showProfilePhotos);
 
         const valuesResponse = await AccountPreferenceService.showProfilePhotosValues();
@@ -24,7 +25,7 @@ const ShowProfilePhotos = () => {
   const selectOption = async (val) => {
     setSelectedOption(val);
     try {
-      const current = { ...selectedOption }; 
+      const current = { ...prefs }; 
       const vm = { ...current, showProfilePhotos: val };
       await AccountPreferenceService.updateAccountPreference(vm);
     } catch (error) {
