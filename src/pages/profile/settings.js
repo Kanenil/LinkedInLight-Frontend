@@ -47,7 +47,7 @@ const Settings = () => {
     : defaultImage;
 
   return (
-    <div className="bg-[#E7E7E7] w-full h-[1000px] py-24 px-5 sm:px-0 sm:flex sm:justify-center">
+    <div className="bg-[#E7E7E7] w-full h-[1100px] py-24 px-5 sm:px-0 sm:flex sm:justify-center">
       <div className="w-full sm:w-1/4 bg-white h-[150px] sm:h-[900px] rounded-lg overflow-hidden py-8 px-6 sm:inline-block text-center sm:text-left">
         <div className="text-left flex sm:block justify-center items-center">
           <img

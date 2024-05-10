@@ -23,7 +23,7 @@ const AutoPlayBlock = () => {
   const onChange = async (val) => {
     try {
       const vm = { ...prefs, videoAutoplay: val };
-      console.log(vm)
+      setPrefs(vm)
       await AccountPreferenceService.updateAccountPreference(vm);
       setVideoAutoplay(val); 
     } catch (error) {
@@ -33,19 +33,15 @@ const AutoPlayBlock = () => {
 
   return (
     <>
-    { videoAutoplay ? (
       <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
         <div className="font-bold text-xl">Enable video autoplay</div>
         <div className="flex items-center py-7">
           <div className="inline-block text-gray-400">Video autoplay</div>
           <div className="inline-block ml-auto">
-            <ToggleSwitch size={4} onChange={onChange} checked={videoAutoplay} />
+            <ToggleSwitch size={4} onChange={onChange} checked={prefs.videoAutoplay} />
           </div>
         </div>
       </div>
-    ) :
-      <Loader />
-    }
     </>
 
   );
