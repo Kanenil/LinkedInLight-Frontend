@@ -927,10 +927,13 @@
 		"editPages": {
 			"title": "Edit page",
 			"header": {
-				"title": "Header"
+				"title": "Header",
+				"description": "Update information about your company",
+				"url": "General URL-address <strong>J4Y</strong>"
 			},
 			"generalInformation": {
-				"title": "General information"
+				"title": "General information",
+				"phoneNumber": "Phone number"
 			},
 			"workSetup": {
 				"title": "Work setup",
@@ -952,7 +955,14 @@
 				]
 			},
 			"location": {
-				"title": "Location"
+				"title": "Location",
+				"visibility": "Location visibility",
+				"description": "Update your region so members know where you are",
+				"country": "Country",
+				"city": "City",
+				"street": "Street",
+				"office": "Office",
+				"postalCode": "Postal code"
 			}
 		}
 	},
@@ -963,5 +973,7 @@
 		"link": "Back to home"
 	},
 	"on": "On",
-	"off": "Off"
+	"off": "Off",
+	"Information": "Information",
+	"Description": "Description"
 }
