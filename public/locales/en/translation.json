@@ -394,7 +394,8 @@
 				"description": "On <strong>Job for You</strong>, you can share your years of experience, choose your industry and specify your skills. Describe your accomplishments and previous work experience to create a complete picture of your career",
 				"skills": "Skills",
 				"skillsDescription": "Show your strengths - add up to 5 key skills that you would like to be recognized for. They will automatically appear in your \"Skills\" section on <strong>Job for You</strong>",
-				"maximum": "You reached maximum of 5 skills"
+				"maximum": "You reached maximum of 5 skills",
+				"skillPlaceholder": "ex: Project management"
 			},
 			"education": {
 				"title": "education",

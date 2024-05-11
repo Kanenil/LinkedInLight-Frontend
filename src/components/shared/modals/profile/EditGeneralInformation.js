@@ -177,7 +177,7 @@ const EditGeneralInformation = ({ onClose, onSave, onChange }) => {
 							<TextDown
 								className='mt-[5px]'
 								options={filtered}
-								placeHolder='Skill (ex: Project management)'
+								placeHolder={t("profile.modal.general.skillPlaceholder")}
 								error={errors.skills}
 								searchAble={true}
 								hasTools={false}
