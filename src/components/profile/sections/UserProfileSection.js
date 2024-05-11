@@ -199,7 +199,7 @@ const InformationSector = ({ user, isOwner, isPreview }) => {
 				<Show>
 					<Show.When isTrue={isOwner}>
 						<Link
-							to='/j4y/my-network/connections'
+							to='/j4y/my-network'
 							className='flex flex-row mt-1 font-jost text-[#24459A] text-sm hover:underline w-fit'
 						>
 							<h3 className='font-medium'>
