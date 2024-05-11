@@ -21,9 +21,9 @@ export const getSettingsCategory = async (category) => {
       {
         category: "Profile info",
         items: [
-          { name: "Name, region and field" },
-          { name: "Personal demographic information" },
-          { name: "Confirmation" },
+          { name: "Name, region and field", link: `${settingsRoutes.sections.params}/nameRegionField` },
+          // { name: "Personal demographic information" },
+          // { name: "Confirmation" },
         ],
       },
       {
@@ -193,7 +193,7 @@ export const visibilitySettings = [
         prescription: profileViewing.data,
         link: `${settingsRoutes.sections.visibility}/profileView`  
       },
-      { name: "Edit public profile" },
+      // { name: "Edit public profile" },
       {
         name: "People able to see your email",
         link: `${settingsRoutes.sections.visibility}/emailVisibility` 

@@ -40,7 +40,7 @@ const SleepMode = () => {
     try {
       const vm = { reason: selectedOption, feedback: textareaValue };
       await AccountPreferenceService.hibernate(vm);
-      // Handle continue logic here
+      window.location.reload()
     } catch (error) {
       console.error("Error updating data:", error);
     }
@@ -48,7 +48,7 @@ const SleepMode = () => {
 
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
-      {!isHibernatedAccount ? (
+      {isHibernatedAccount ? (
         <div>
           <img src={intoSleepMode} className="w-1/2 mx-auto" />
           <h1 className="font-extrabold text-xl my-3 mx-auto text-center">Your j4Y account is into sleep mode</h1>

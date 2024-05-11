@@ -11,6 +11,7 @@ import ManageActivityStatus from "../ManageActivityStatus/ManageActivityStatus";
 import PasswordChange from "../PasswordChange/PasswordChange";
 import PhoneBlock from "../Phone/Phone";
 import ProfileViewing from "../ProfileViewing/ProfileViewing";
+import RegionChange from "../RegionChange/RegionChange";
 import SurnameVisibility from "../SurnameVisibility/SurnameVisibility";
 import TwoStepAuth from "../TwoStepAuth/TwoStepAuth";
 import AutoPlayBlock from "./AutoPlay/AutoPlayBlock";
@@ -64,6 +65,8 @@ const SettingBlockElement = (block) => {
       return <EmailChange />
     case 'closeAccount':
       return <CloseAccount />
+    case 'nameRegionField': 
+      return <RegionChange />
     default:
       return <></>;
   }

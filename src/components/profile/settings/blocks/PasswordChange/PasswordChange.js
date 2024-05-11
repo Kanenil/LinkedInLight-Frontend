@@ -123,13 +123,13 @@ const PasswordChange = () => {
         )}
       </div>
       <div className="my-1 flex items-center">
-        <input type="checkbox" className="my-10" />
+        {/* <input type="checkbox" className="my-10" /> */}
         {/* <div className="inline-block mx-2">
           Require to sign in with new password in all devices
         </div> */}
       </div>
       <div onClick={onClick}
-        className={`mb-8 text-lg w-[200px] rounded-full py-2 font-semibold ${
+        className={`my-8 text-lg w-[200px] rounded-full py-2 font-semibold ${
           currentPassword.length > 0 &&
           newPassword.length > 0 &&
           confirmPassword.length > 0
