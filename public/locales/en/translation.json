@@ -919,7 +919,9 @@
 				"deactivate": "It's unfortunate that you're leaving",
 				"deactivateDescription": "Deactivation will result in the complete deletion of the page from <strong>Job For You</strong>. After deactivation, you and other administrators will no longer have access to the page.",
 				"terms": "By clicking 'Deactivate', I confirm that I understand the consequences of deactivating the page.",
-				"button": "Deactivate"
+				"button": "Deactivate",
+				"deactivated": "{{ name }} was successfully deactivated",
+				"error": "An error occurred while deactivating the page"
 			}
 		},
 		"editPages": {
