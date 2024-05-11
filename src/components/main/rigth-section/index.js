@@ -35,7 +35,7 @@ const RightSection = ({ profile }) => {
 	return (
 		<div
 			className={classNames(
-				"hidden md:block md:w-4/12 lg:w-5/12 relative mb-3 md:mb-0",
+				"hidden md:block md:w-4/12 ml-6 lg:w-5/12 relative mb-3 md:mb-0",
 				scrollPosition > 40 && "-top-20",
 			)}
 		>
