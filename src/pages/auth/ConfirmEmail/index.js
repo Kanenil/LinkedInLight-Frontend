@@ -9,12 +9,14 @@ import { useTranslation } from "react-i18next"
 import useMobileDetector from "../../../hooks/useMobileDetector"
 import Show from "../../../elements/shared/Show"
 import { XMarkIcon } from "@heroicons/react/24/solid"
+import { useAlertContext } from "../../../providers/AlertProvider"
 
 const ConfirmEmail = () => {
 	const { t } = useTranslation()
 	const [searchParams] = useSearchParams()
 	const location = useLocation()
 	const navigator = useNavigate()
+	const { success } = useAlertContext()
 
 	const parseParams = (params = "") => {
 		const rawParams = params.replace("?", "").split("&")
@@ -36,7 +38,10 @@ const ConfirmEmail = () => {
 				"123456",
 				parseParams(location.search).token,
 			)
-				.then(() => navigator(!isMobile ? routes.signIn : "/m/auth/sign-in"))
+				.then(() => {
+					success(t("auth.emailConfirmed"), 10)
+					navigator(routes.signIn)
+				})
 				.catch(err => {
 					console.log(err)
 				})
@@ -59,7 +64,10 @@ const ConfirmEmail = () => {
 		if (code.search(/_/g) !== -1) return
 
 		confirmEmail(searchParams.get("email"), code)
-			.then(() => navigator(routes.signIn))
+			.then(() => {
+				success(t("auth.emailConfirmed"), 10)
+				navigator(routes.signIn)
+			})
 			.catch(err => {
 				console.log(err)
 			})

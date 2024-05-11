@@ -339,7 +339,8 @@
 		"confirmAndContinue": "Підтвердити та продовжити",
 		"continueWithGoogle": "Продовжити через Google",
 		"joinTo": "Приєднатися до J4Y",
-		"backToAccount": "Повернутись у свій аккаунт"
+		"backToAccount": "Повернутись у свій аккаунт",
+		"emailConfirmed": "Ваша електронна пошта підтверджена. Тепер ви можете увійти в свій аккаунт."
 	},
 	"profile": {
 		"aboutMe": "Про мене",
