@@ -24,12 +24,12 @@ const suggestions = [
 			return data.filter(val => val.currentlyWorking).length === 0
 		},
 	},
-	{
-		id: "two",
-		to: "edit/intro",
-		width: 220,
-		condition: "industry",
-	},
+	// {
+	// 	id: "two",
+	// 	to: "edit/intro",
+	// 	width: 220,
+	// 	condition: "industry",
+	// },
 	{
 		id: "three",
 		to: "edit/image",

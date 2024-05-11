@@ -37,7 +37,10 @@ const getDateTime = (day = 1, month, year) => {
 		`${day.toString()} ${month} ${year.toString()}`,
 		"D MMMM YYYY",
 		i18next.language,
-	).format()
+	)
+		.utc()
+		.add(2, "days")
+		.format()
 
 	return date
 }
