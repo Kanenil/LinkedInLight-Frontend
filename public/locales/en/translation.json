@@ -345,6 +345,7 @@
 		"showAll": "Show all",
 		"courses": "Courses",
 		"modal": {
+			"url": "New url",
 			"remove": "Remove {{ removeTitle }}",
 			"edit": "Edit {{ title }}",
 			"add": "Add {{ title }}",

@@ -38,6 +38,8 @@ const PublicProfile = () => {
 		try {
 			await ProfileService.editUrl(values.profileUrl)
 
+			queryClient.removeQueries(["profileUrl", urlUser.profileUrl])
+
 			queryClient.invalidateQueries([
 				"profile",
 				["profileUrl", values.profileUrl],
@@ -48,7 +50,7 @@ const PublicProfile = () => {
 
 			setIsEditUrl(false)
 
-			success("New url successfully saved", 5)
+			success(t("alert.onSuccess", { name: t("profile.modal.url") }), 5)
 		} catch (err) {
 			setErrors({
 				profileUrl: err.response.data,

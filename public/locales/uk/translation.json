@@ -351,6 +351,7 @@
 		"showAll": "Показати всі",
 		"courses": "Курси",
 		"modal": {
+			"url": "URL-адреса",
 			"remove": "Видалити {{ removeTitle }}",
 			"edit": "Редагувати {{ title }}",
 			"add": "Додати {{ title }}",
