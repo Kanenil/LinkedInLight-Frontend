@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAlertContext } from '../../../../../providers/AlertProvider'
 import ProfileService from "../../../../../services/profileService";
+import additionalProfileService from "../../../../../services/additionalProfileService";
 
   
   const RegionChange = () => {
@@ -33,14 +34,14 @@ import ProfileService from "../../../../../services/profileService";
     useEffect(() => {
       const fetchData = async () => {
         try {
+          const intros = await additionalProfileService.getIntro()
           const currentValResponse = await ProfileService.getProfile();
-          setValues(currentValResponse.data);
+          setValues(intros.data);
           setName(currentValResponse.data.firstName)
           setSurname(currentValResponse.data.lastName)
           setRegion(currentValResponse.data.country)
           setCity(currentValResponse.data.city)
           setField(currentValResponse.data.currentPosition)
-          console.log(currentValResponse.data)
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -50,6 +51,21 @@ import ProfileService from "../../../../../services/profileService";
     }, []);
   
     const onClick = async () => {
+      await additionalProfileService.updateIntro({
+        "id": values.id,
+        "firstName": name,
+        "lastName": surname,
+        "additionalName": "",
+        "profileUrl": "",
+        "country": region,
+        "headline": "",
+        "city": city,
+        "image": "",
+        "address": "",
+        "lastPosition": "",
+        "isClosed": true,
+        "isHibernated": true
+      })
       success('Data successfully updated')
     }
   

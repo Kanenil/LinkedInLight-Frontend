@@ -12,7 +12,6 @@ const discoverByPhone = await settingsService.discoverByPhone()
 const activeStatusVisibility = await settingsService.activeStatusVisibility()
 
 export const getSettingsCategory = async (category) => {
-  console.log(category)
   const profile = await profileService.getProfile()
   const accountPreference = await AccountPreferenceService.AccountPreference()
 

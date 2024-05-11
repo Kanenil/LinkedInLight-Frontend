@@ -13,7 +13,6 @@ const SleepMode = () => {
       try {
         const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
         setIsHibernatedAccount(accountPreferenceResponse.data.isHibernatedAccount)
-        console.log(accountPreferenceResponse)
         const valuesResponse = await AccountPreferenceService.hibernationReasonValues();
 
         setSelectedOption(valuesResponse.data[0]); // Set default selected option
