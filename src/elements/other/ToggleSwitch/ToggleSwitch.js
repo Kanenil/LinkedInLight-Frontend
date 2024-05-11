@@ -6,11 +6,11 @@ const ToggleSwitch = ({
   onChange,
   textOnCheck = { on: "On", off: "Off" },
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(checked);
 
-  const toggleSwitch = () => {
+  const toggleSwitch = async () => {
     if (onChange) {
-      onChange();
+      onChange(!isChecked);
     }
     setIsChecked((prevState) => !prevState);
   };

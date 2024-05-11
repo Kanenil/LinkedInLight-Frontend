@@ -1,13 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AccountPreferenceService from "../../../../../../services/AccountPreferenceService";
+import intoSleepMode from '../../../../../../assets/sleep-mode-image.png'
 
 const SleepMode = () => {
-  const [selectedOption, setSelectedOption] = useState("other");
+  const [textareaValue, setTextareaValue] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [values, setValues] = useState([]);
+  const [isHibernatedAccount, setIsHibernatedAccount] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accountPreferenceResponse = await AccountPreferenceService.AccountPreference();
+        setIsHibernatedAccount(accountPreferenceResponse.data.isHibernatedAccount)
+        const valuesResponse = await AccountPreferenceService.hibernationReasonValues();
+
+        setSelectedOption(valuesResponse.data[0]); // Set default selected option
+        setTextareaValue(accountPreferenceResponse.data.hibernationReason || ''); // Set textarea value if it exists
+        setValues(valuesResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleTextareaChange = (event) => {
+    setTextareaValue(event.target.value);
+  };
+
   const selectOption = (val) => {
     setSelectedOption(val);
   };
+
+  // Handle submit button click
+  const handleSubmit = async () => {
+    try {
+      const vm = { reason: selectedOption, feedback: textareaValue };
+      await AccountPreferenceService.hibernate(vm);
+      window.location.reload()
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
-      <div className="font-bold text-xl">Sleep mode</div>
+      {isHibernatedAccount ? (
+        <div>
+          <img src={intoSleepMode} className="w-1/2 mx-auto" />
+          <h1 className="font-extrabold text-xl my-3 mx-auto text-center">Your j4Y account is into sleep mode</h1>
+          <div className="w-2/3 mx-auto text-lg">Everything is ready. Soon you will receive an email confirming that your account has been switched to sleep mode. If you wish to reactivate your account, log in as usual.</div>
+          <div className="w-2/3 mt-5 mx-auto text-lg">To obtain additional information, you can always contact the <span className="text-indigo-600">J4Y Help Center.</span></div>
+        </div>
+      ) : (
+        <>
+    <div className="font-bold text-xl">Sleep mode</div>
       <div className="my-3">Everyone needs a break sometimes</div>
       <div className="my-6">
         Putting your account into sleep mode is the best option if you want to
@@ -18,96 +67,26 @@ const SleepMode = () => {
         Tell us why have you decided to put your account into sleep mode
         {"(not required)"}
       </div>
-      <div className="mt-10 flex items-center">
-        <input
-          onClick={() => selectOption("break")}
-          checked={selectedOption === "break"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "break" ? "border-gray-400" : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "break" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I need a break
+      {values.map((item) => (
+        <div key={"key-" + item} className="mt-10 flex items-center">
+          <input
+            onClick={() => selectOption(item)}
+            checked={selectedOption === item}
+            type="radio"
+            className="inline-block"
+          />
+          <div
+            className={`inline-block mx-3 ${
+              selectedOption === item ? "text-black" : "text-gray-400"
+            }`}
+          >
+            {item}
+          </div>
         </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("notifications")}
-          checked={selectedOption === "notifications"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "notifications"
-              ? "border-gray-400"
-              : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "notifications" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I get too much email notifications
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("privacy")}
-          checked={selectedOption === "privacy"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "privacy" ? "border-gray-400" : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "privacy" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I have privacy issues
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("security")}
-          checked={selectedOption === "security"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "security"
-              ? "border-gray-400"
-              : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "security" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          I have security issues
-        </div>
-      </div>
-      <div className="mt-6 flex items-center">
-        <input
-          onClick={() => selectOption("other")}
-          checked={selectedOption === "other"}
-          type="radio"
-          className={`inline-block ${
-            selectedOption === "other" ? "border-gray-400" : "border-gray-300"
-          }`}
-        />
-        <div
-          className={`inline-block mx-3 ${
-            selectedOption === "other" ? "text-black" : "text-gray-400"
-          }`}
-        >
-          Other
-        </div>
-      </div>
+      ))}
       <textarea
+        value={textareaValue}
+        onChange={handleTextareaChange}
         rows="5"
         className="rounded-xl resize-none w-full mt-7"
         placeholder="Leave review"
@@ -119,9 +98,15 @@ const SleepMode = () => {
         attention, please contact us{" "}
         <span className="text-indigo-700">here</span>
       </div>
-      <div className="mb-8 text-lg w-[150px] rounded-full py-1 font-semibold text-white text-center bg-indigo-800 hover:bg-indigo-900 hover:text-gray-200">
+      <div
+        onClick={handleSubmit}
+        className="mb-8 text-lg w-[150px] rounded-full py-1 font-semibold text-white text-center bg-indigo-800 hover:bg-indigo-900 hover:text-gray-200 cursor-pointer"
+      >
         Continue
       </div>
+        </>
+      )
+      }
     </div>
   );
 };

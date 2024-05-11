@@ -4,8 +4,13 @@ import {
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { ProfileSecurityService } from "../../../../../services/ProfileSecurityService";
+import { useAlertContext } from '../../../../../providers/AlertProvider'
+import { Link } from "react-router-dom";
+import { routes } from "../../../../../constants/routes";
 
 const PasswordChange = () => {
+  const { success } = useAlertContext()
   const [visibility, setVisibility] = useState({
     current: false,
     new: false,
@@ -29,6 +34,18 @@ const PasswordChange = () => {
       [value]: !prevVisibility[value],
     }));
   };
+
+  const onClick = async () => {
+    if (newPassword.length > 0 &&
+      confirmPassword.length > 0 && 
+      newPassword === confirmPassword)
+    await ProfileSecurityService.changePassword(JSON.stringify({
+      oldPassword: currentPassword,
+      newPassword: newPassword
+    }))
+    success('Password successfully changed')
+  }
+
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden py-3 px-6 mb-6">
       <div className="font-bold text-xl">Password change</div>
@@ -106,13 +123,13 @@ const PasswordChange = () => {
         )}
       </div>
       <div className="my-1 flex items-center">
-        <input type="checkbox" className="my-10" />
-        <div className="inline-block mx-2">
+        {/* <input type="checkbox" className="my-10" /> */}
+        {/* <div className="inline-block mx-2">
           Require to sign in with new password in all devices
-        </div>
+        </div> */}
       </div>
-      <div
-        className={`mb-8 text-lg w-[200px] rounded-full py-2 font-semibold ${
+      <div onClick={onClick}
+        className={`my-8 text-lg w-[200px] rounded-full py-2 font-semibold ${
           currentPassword.length > 0 &&
           newPassword.length > 0 &&
           confirmPassword.length > 0
@@ -122,9 +139,9 @@ const PasswordChange = () => {
       >
         Save Password
       </div>
-      <div className="mb-5 mx-4 text-lg text-gray-500 font-semibold hover:text-gray-700 inline-block">
+      <Link to={routes.forgetPassword} className="mb-5 mx-4 text-lg text-gray-500 font-semibold hover:text-gray-700 inline-block">
         Forgot Password
-      </div>
+      </Link>
     </div>
   );
 };
