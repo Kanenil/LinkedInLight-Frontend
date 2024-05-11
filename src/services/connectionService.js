@@ -1,63 +1,67 @@
-import axios from "./axios";
+import axios from "./axios"
 
 class ConnectionService {
-    #URL = 'api/connection';
+	#URL = "api/connection"
 
-    getConnections() {
-        return axios.get(`${this.#URL}/connections`);
-    }
+	getConnections() {
+		return axios.get(`${this.#URL}/connections`, {
+			params: {
+				orderBy: "By Connection Date",
+			},
+		})
+	}
 
-    connectionsSearch(query, page = 1) {
-        return axios.get(`${this.#URL}/connection-search`, {
-            params: {
-                query,
-                page
-            }
-        });
-    }
+	connectionsSearch(query, page = 1) {
+		return axios.get(`${this.#URL}/connection-search`, {
+			params: {
+				query,
+				page,
+			},
+		})
+	}
 
-    getConnectionCountByProfileUrl(url) {
-        return axios.get(`${this.#URL}/connectionCount/${url}`);
-    }
+	getConnectionCountByProfileUrl(url) {
+		return axios.get(`${this.#URL}/connectionCount/${url}`)
+	}
 
-    getPendingRequests() {
-        return axios.get(`${this.#URL}/pendingRequests`);
-    }
+	getPendingRequests() {
+		return axios.get(`${this.#URL}/pendingRequests`)
+	}
 
-    sendRequest(receiverId) {
-        return axios.post(`${this.#URL}/sendRequest`, null, {
-            params: {
-                receiverId
-            }
-        });
-    }
+	sendRequest(receiverId) {
+		return axios.post(`${this.#URL}/sendRequest`, null, {
+			params: {
+				receiverId,
+			},
+		})
+	}
 
-    acceptRequest(requestId) {
-        return axios.post(`${this.#URL}/accept/${requestId}`, null);
-    }
+	acceptRequest(requestId) {
+		return axios.post(`${this.#URL}/accept/${requestId}`, null)
+	}
 
-    rejectRequest(requestId) {
-        return axios.post(`${this.#URL}/reject/${requestId}`, null);
-    }
+	rejectRequest(requestId) {
+		return axios.post(`${this.#URL}/reject/${requestId}`, null)
+	}
 
-    revokeRequest(requestId) {
-        return axios.delete(`${this.#URL}/revoke/${requestId}`, null);
-    }
+	revokeRequest(requestId) {
+		return axios.delete(`${this.#URL}/revoke/${requestId}`, null)
+	}
 
-    removeConnection(connectionId) {
-        return axios.delete(`${this.#URL}/remove/${connectionId}`, null);
-    }
+	removeConnection(connectionId) {
+		return axios.delete(`${this.#URL}/remove/${connectionId}`, null)
+	}
 
-    isConnected(user2Id) {
-        return axios.get(`${this.#URL}/isConnected/${user2Id}`);
-    }
+	isConnected(user2Id) {
+		return axios.get(`${this.#URL}/isConnected/${user2Id}`)
+	}
 
-    isConnectionRequested(user2Id) {
-        return axios.get(`${this.#URL}/isConnectionRequested/${user2Id}`);
-    }
+	isConnectionRequested(user2Id) {
+		return axios.get(`${this.#URL}/isConnectionRequested/${user2Id}`)
+	}
 
-    suggestions() {
-        return axios.get(`${this.#URL}/suggestions`)
-    }
+	suggestions() {
+		return axios.get(`${this.#URL}/suggestions`)
+	}
 }
-export default new ConnectionService();
+export default new ConnectionService()
