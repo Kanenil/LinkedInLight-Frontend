@@ -136,8 +136,8 @@ const SignIn = () => {
 
 									<div className='flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]'>
 										<GoogleButton googleLoginCallback={googleCallback} />
-										<AppleButton />
-										<FacebookButton />
+										{/* <AppleButton />
+										<FacebookButton /> */}
 									</div>
 
 									<div className='flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]'>
@@ -234,8 +234,8 @@ const SignIn = () => {
 
 							<div className='flex flex-row justify-center gap-[20px] pt-[10px] pb-[20px] py-[20px] mt-[12px]'>
 								<GoogleButton googleLoginCallback={googleCallback} />
-								<AppleButton />
-								<FacebookButton />
+								{/* <AppleButton />
+								<FacebookButton /> */}
 							</div>
 
 							<div className='flex flex-row justify-center gap-2 mt-[12px] text-[#7D7D7D] text-sm pb-[210px]'>
