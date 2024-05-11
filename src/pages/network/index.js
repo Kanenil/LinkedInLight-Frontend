@@ -61,7 +61,7 @@ const ConnectionItem = ({ sender, user, isPending, onConfirm, onReject }) => {
 								onClick={onConfirm}
 							>
 								<PlusIcon className='h-4 stroke-2' />
-								{t("connections.connect")}
+								{t("connections.add")}
 							</Button>
 						</div>
 
