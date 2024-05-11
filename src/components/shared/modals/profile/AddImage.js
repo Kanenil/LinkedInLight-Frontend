@@ -63,7 +63,7 @@ const AddImage = ({ onClose, onSave, onChange, isBackground = false }) => {
 				onSave()
 				success(
 					t("alert.onSuccess", {
-						value: t(
+						name: t(
 							`profile.modal.image.${isBackground ? "background1" : "image1"}`,
 						),
 					}),

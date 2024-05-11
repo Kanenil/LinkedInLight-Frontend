@@ -13,6 +13,7 @@ import ModalSelectFormGroup from "../../shared/forms/ModalSelectFormGroup"
 import Button from "../../../elements/buttons/Button"
 import Loader from "../../shared/Loader"
 import { companyPageQuery } from "../../../constants/combinedQueries"
+import { useTranslation } from "react-i18next"
 
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -48,6 +49,7 @@ const companyCommonDataQuery = [
 const EditGeneralInformationPage = ({ company }) => {
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
+	const { t } = useTranslation()
 
 	const { isLoading, industries, sizes, types } = useQueries({
 		queries: companyCommonDataQuery,
@@ -98,7 +100,7 @@ const EditGeneralInformationPage = ({ company }) => {
 			phoneNumber: values.phoneNumber,
 		})
 			.then(() => {
-				success("Information successfully saved", 5)
+				success(t("alert.onSuccess", { name: t("Information") }), 5)
 				queryClient.invalidateQueries(
 					...companyPageQuery(company.id).map(value => value.queryFn),
 				)
@@ -124,7 +126,7 @@ const EditGeneralInformationPage = ({ company }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Edit general information
+					{t("company.editPages.generalInformation.title")}
 				</h1>
 			</div>
 
@@ -136,7 +138,7 @@ const EditGeneralInformationPage = ({ company }) => {
 				<>
 					<div className='flex flex-col rounded-lg gap-5 p-2 mx-4 mt-4 md:mx-20'>
 						<ModalTextareaFormGroup
-							title='Description'
+							title={t("Description")}
 							name='description'
 							type='text'
 							value={values.description}
@@ -146,12 +148,12 @@ const EditGeneralInformationPage = ({ company }) => {
 
 						<ModalSelectFormGroup
 							className='gap-[5px]'
-							title='Industry'
+							title={t("company.newCompany.industry")}
 							value={values.industry}
 							options={values.allIndustries}
 							containerWidth={300}
 							containerHeightMax={200}
-							placeHolder='ex: Software Development'
+							placeHolder={t("company.newCompany.industryPlaceholder")}
 							error={errors.industry}
 							hasTools={false}
 							onEnterSelect={false}
@@ -166,19 +168,19 @@ const EditGeneralInformationPage = ({ company }) => {
 							}
 							errorChildren={
 								<h3 className='mt-2 text-[#9E0F20] text-xs'>
-									This field is required
+									{t("validation.required")}
 								</h3>
 							}
 						/>
 
 						<ModalSelectFormGroup
 							className='gap-[5px]'
-							title='Organization type'
+							title={t("company.newCompany.organizationType")}
 							value={values.organizationType}
 							options={values.allTypes}
 							containerWidth={300}
 							containerHeightMax={200}
-							placeHolder='Select from the list'
+							placeHolder={t("company.newCompany.selectFromList")}
 							hasTools={false}
 							onEnterSelect={false}
 							isAbsolute={true}
@@ -194,12 +196,12 @@ const EditGeneralInformationPage = ({ company }) => {
 
 						<ModalSelectFormGroup
 							className='gap-[5px]'
-							title='Organization size'
+							title={t("company.newCompany.organizationSize")}
 							value={values.organizationSize}
 							options={values.allSizes}
 							containerWidth={300}
 							containerHeightMax={200}
-							placeHolder='Select from the list'
+							placeHolder={t("company.newCompany.selectFromList")}
 							hasTools={false}
 							onEnterSelect={false}
 							isAbsolute={true}
@@ -214,17 +216,17 @@ const EditGeneralInformationPage = ({ company }) => {
 						/>
 
 						<ModalInputFormGroup
-							title='Website'
+							title={t("company.newCompany.website")}
 							name='websiteUrl'
 							type='url'
 							value={values.websiteUrl}
 							onChange={handleChange}
-							placeholder='Enter URL'
+							placeholder={t("company.newCompany.websitePlaceholder")}
 							className='gap-[5px]'
 						/>
 
 						<ModalInputFormGroup
-							title='Phone number'
+							title={t("company.editPages.generalInformation.phoneNumber")}
 							name='phoneNumber'
 							type='tel'
 							value={values.phoneNumber}
@@ -240,7 +242,9 @@ const EditGeneralInformationPage = ({ company }) => {
 							rounded='full'
 							className='mr-6 px-5'
 						>
-							Save changes
+							{t("profile.modal.save", {
+								title: t("Information").toLowerCase(),
+							})}
 						</Button>
 					</div>
 				</>

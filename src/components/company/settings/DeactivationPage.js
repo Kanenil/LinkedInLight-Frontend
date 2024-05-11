@@ -23,13 +23,15 @@ const DeactivationPage = ({ company, isOwner }) => {
 			.then(() => {
 				navigator("/j4y")
 				success(
-					`Company ${company.companyName} was successfully deactivated`,
+					t("company.settingsPage.page3.deactivated", {
+						name: company.companyName,
+					}),
 					5,
 				)
 			})
 			.catch(err => {
 				console.error(err)
-				error("Something went wrong during deactivating", 5)
+				error(t("company.settingsPage.page3.error"), 5)
 			})
 	}
 

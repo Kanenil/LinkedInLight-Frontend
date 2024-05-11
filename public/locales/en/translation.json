@@ -345,6 +345,7 @@
 		"showAll": "Show all",
 		"courses": "Courses",
 		"modal": {
+			"url": "New url",
 			"remove": "Remove {{ removeTitle }}",
 			"edit": "Edit {{ title }}",
 			"add": "Add {{ title }}",
@@ -393,7 +394,8 @@
 				"description": "On <strong>Job for You</strong>, you can share your years of experience, choose your industry and specify your skills. Describe your accomplishments and previous work experience to create a complete picture of your career",
 				"skills": "Skills",
 				"skillsDescription": "Show your strengths - add up to 5 key skills that you would like to be recognized for. They will automatically appear in your \"Skills\" section on <strong>Job for You</strong>",
-				"maximum": "You reached maximum of 5 skills"
+				"maximum": "You reached maximum of 5 skills",
+				"skillPlaceholder": "ex: Project management"
 			},
 			"education": {
 				"title": "education",
@@ -918,16 +920,21 @@
 				"deactivate": "It's unfortunate that you're leaving",
 				"deactivateDescription": "Deactivation will result in the complete deletion of the page from <strong>Job For You</strong>. After deactivation, you and other administrators will no longer have access to the page.",
 				"terms": "By clicking 'Deactivate', I confirm that I understand the consequences of deactivating the page.",
-				"button": "Deactivate"
+				"button": "Deactivate",
+				"deactivated": "{{ name }} was successfully deactivated",
+				"error": "An error occurred while deactivating the page"
 			}
 		},
 		"editPages": {
 			"title": "Edit page",
 			"header": {
-				"title": "Header"
+				"title": "Header",
+				"description": "Update information about your company",
+				"url": "General URL-address <strong>J4Y</strong>"
 			},
 			"generalInformation": {
-				"title": "General information"
+				"title": "General information",
+				"phoneNumber": "Phone number"
 			},
 			"workSetup": {
 				"title": "Work setup",
@@ -949,7 +956,14 @@
 				]
 			},
 			"location": {
-				"title": "Location"
+				"title": "Location",
+				"visibility": "Location visibility",
+				"description": "Update your region so members know where you are",
+				"country": "Country",
+				"city": "City",
+				"street": "Street",
+				"office": "Office",
+				"postalCode": "Postal code"
 			}
 		}
 	},
@@ -960,5 +974,7 @@
 		"link": "Back to home"
 	},
 	"on": "On",
-	"off": "Off"
+	"off": "Off",
+	"Information": "Information",
+	"Description": "Description"
 }

@@ -14,6 +14,7 @@ import Loader from "../../shared/Loader"
 import { authService } from "../../../services/authService"
 import ToggleInput from "../../shared/forms/ToggleInput"
 import { companyPageQuery } from "../../../constants/combinedQueries"
+import { useTranslation } from "react-i18next"
 
 const CompanyLocationSchema = yup.object({
 	country: yup.string(),
@@ -27,6 +28,7 @@ const CompanyLocationSchema = yup.object({
 const EditCompanyLocation = ({ company }) => {
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
+	const { t } = useTranslation()
 
 	const onSubmitFormik = async values => {
 		await CompanyService.editLocation(company.id, {
@@ -38,7 +40,7 @@ const EditCompanyLocation = ({ company }) => {
 		})
 		await CompanyService.editShowLocation(company.id, values.showLocation)
 
-		success("Information successfully saved", 5)
+		success(t("alert.onSuccess", { name: t("Information") }), 5)
 		queryClient.invalidateQueries(
 			...companyPageQuery(company.id).map(value => value.queryFn),
 		)
@@ -98,7 +100,7 @@ const EditCompanyLocation = ({ company }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Edit company location
+					{t("company.editPages.location.title")}
 				</h1>
 			</div>
 
@@ -112,11 +114,11 @@ const EditCompanyLocation = ({ company }) => {
 						<div className='flex flex-row rounded-lg my-4'>
 							<div className='flex flex-col gap-1 font-jost max-w-[60%] text-start'>
 								<h1 className='text-[#2D2A33] font-medium text-lg'>
-									Location visibility
+									{t("company.editPages.location.visibility")}
 								</h1>
 
 								<h3 className='text-[#A7A7A7] font-light'>
-									Update your region so members know where you are
+									{t("company.editPages.location.description")}
 								</h3>
 							</div>
 
@@ -130,12 +132,12 @@ const EditCompanyLocation = ({ company }) => {
 
 						<ModalSelectFormGroup
 							className='gap-[5px]'
-							title='Country'
+							title={t("company.editPages.location.country")}
 							value={values.country}
 							options={countries}
 							containerWidth={300}
 							containerHeightMax={200}
-							placeHolder='Select from the list'
+							placeHolder={t("company.newCompany.selectFromList")}
 							hasTools={false}
 							onEnterSelect={false}
 							isAbsolute={true}
@@ -154,12 +156,12 @@ const EditCompanyLocation = ({ company }) => {
 						) : (
 							<ModalSelectFormGroup
 								className='gap-[5px]'
-								title='City'
+								title={t("company.editPages.location.city")}
 								value={values.city}
 								options={cities ?? []}
 								containerWidth={300}
 								containerHeightMax={200}
-								placeHolder='Select from the list'
+								placeHolder={t("company.newCompany.selectFromList")}
 								hasTools={false}
 								onEnterSelect={false}
 								isAbsolute={true}
@@ -175,7 +177,7 @@ const EditCompanyLocation = ({ company }) => {
 						)}
 
 						<ModalInputFormGroup
-							title='Street'
+							title={t("company.editPages.location.street")}
 							name='street'
 							type='text'
 							value={values.street}
@@ -184,7 +186,7 @@ const EditCompanyLocation = ({ company }) => {
 						/>
 
 						<ModalInputFormGroup
-							title='Office'
+							title={t("company.editPages.location.office")}
 							name='office'
 							type='text'
 							value={values.office}
@@ -193,7 +195,7 @@ const EditCompanyLocation = ({ company }) => {
 						/>
 
 						<ModalInputFormGroup
-							title='Postal code'
+							title={t("company.editPages.location.postalCode")}
 							name='postalCode'
 							type='text'
 							value={values.postalCode}
@@ -208,7 +210,9 @@ const EditCompanyLocation = ({ company }) => {
 							rounded='full'
 							className='mr-6 px-5'
 						>
-							Save changes
+							{t("profile.modal.save", {
+								title: t("Information").toLowerCase(),
+							})}
 						</Button>
 					</div>
 				</>

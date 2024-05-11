@@ -37,7 +37,7 @@ const EditWorkSetupPage = ({ company }) => {
 
 		promise
 			.then(() => {
-				success("Information successfully saved", 5)
+				success(t("alert.onSuccess", { name: t("Information") }), 5)
 				queryClient.invalidateQueries(
 					...companyPageQuery(company.id).map(value => value.queryFn),
 				)

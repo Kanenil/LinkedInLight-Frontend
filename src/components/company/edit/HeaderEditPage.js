@@ -16,6 +16,7 @@ import { useAlertContext } from "../../../providers/AlertProvider"
 import Button from "../../../elements/buttons/Button"
 import { companyPageQuery } from "../../../constants/combinedQueries"
 import { useQueryClient } from "@tanstack/react-query"
+import { Trans, useTranslation } from "react-i18next"
 
 const HeaderEditSchema = yup.object({
 	companyName: yup.string().required("Content is required"),
@@ -34,6 +35,7 @@ const initValues = {
 const HeaderEditPage = ({ company }) => {
 	const { success } = useAlertContext()
 	const queryClient = useQueryClient()
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		setValues(prev => ({
@@ -62,7 +64,7 @@ const HeaderEditPage = ({ company }) => {
 			tagline: values.tagline,
 		})
 			.then(() => {
-				success("Information successfully saved", 5)
+				success(t("alert.onSuccess", { name: t("Information") }), 5)
 				queryClient.invalidateQueries(
 					...companyPageQuery(company.id).map(value => value.queryFn),
 				)
@@ -73,7 +75,7 @@ const HeaderEditPage = ({ company }) => {
 				if (data.includes("URL already exists"))
 					setErrors({
 						...errors,
-						linkedinUrl: data,
+						linkedinUrl: t("company.newCompany.urlExists"),
 					})
 				else console.log(err)
 			})
@@ -118,21 +120,23 @@ const HeaderEditPage = ({ company }) => {
 				</Link>
 
 				<h1 className='font-jost text-xl text-[#2D2A33] font-medium'>
-					Edit page header
+					{t("company.editPages.header.title")}
 				</h1>
 			</div>
 
 			<div className='flex flex-col rounded-lg gap-5 p-2 mx-4 mt-4 md:mx-20'>
 				<div className='flex flex-col gap-1 font-jost text-start mb-3'>
 					<h1 className='text-[#2D2A33] font-medium text-lg'>
-						Update information about your company
+						{t("company.editPages.header.description")}
 					</h1>
 				</div>
 
 				<Show>
 					<Show.When isTrue={!!values.logoImg}>
 						<div>
-							<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
+							<h1 className='font-jost text-[#2D2A33]'>
+								{t("company.newCompany.logo")}
+							</h1>
 
 							<div className='flex flex-row rounded-lg border-dashed border-[1px] border-[#24459A] bg-[#F0F1F3] py-5'>
 								<div className='flex items-center max-w-[150px] max-h-[150px]'>
@@ -152,7 +156,9 @@ const HeaderEditPage = ({ company }) => {
 
 					<Show.Else>
 						<label htmlFor='logo'>
-							<h1 className='font-jost text-[#2D2A33]'>Logo</h1>
+							<h1 className='font-jost text-[#2D2A33]'>
+								{t("company.newCompany.logo")}
+							</h1>
 							<input
 								id='logo'
 								onChange={onFileSelect}
@@ -169,12 +175,12 @@ const HeaderEditPage = ({ company }) => {
 									<ArrowDownTrayIcon className='w-6 h-6 text-[#24459A]' />
 
 									<span className='text-[#2D2A33] font-jost text-lg'>
-										Upload logo
+										{t("company.newCompany.uploadLogo")}
 									</span>
 								</div>
 
 								<h3 className='font-extralight font-jost mt-2.5'>
-									Upload the file to preview
+									{t("company.newCompany.uploadLogoDescription")}
 								</h3>
 							</Dropzone>
 							{errors.logo && (
@@ -187,7 +193,7 @@ const HeaderEditPage = ({ company }) => {
 				</Show>
 
 				<ModalInputFormGroup
-					title='Company name'
+					title={t("company.newCompany.companyName")}
 					name='companyName'
 					type='text'
 					value={values.companyName}
@@ -196,11 +202,11 @@ const HeaderEditPage = ({ company }) => {
 				/>
 
 				<div className='flex flex-col gap-1'>
-					<label
-						htmlFor='linkedinUrl'
-						className='font-jost text-[#2D2A33] [&>strong]:font-medium'
-					>
-						General URL-address <strong>J4Y</strong>
+					<label htmlFor='linkedinUrl' className='font-jost text-[#2D2A33]'>
+						<Trans
+							i18nKey='company.editPages.header.url'
+							components={{ strong: <strong className='font-medium' /> }}
+						/>
 					</label>
 
 					<div className='flex flex-row items-center gap-2'>
@@ -213,7 +219,7 @@ const HeaderEditPage = ({ company }) => {
 							type='text'
 							value={values.linkedinUrl}
 							onChange={handleChange}
-							placeholder='Add URL'
+							placeholder={t("company.newCompany.addUrl")}
 							className='w-full'
 						/>
 					</div>
@@ -226,7 +232,7 @@ const HeaderEditPage = ({ company }) => {
 				</div>
 
 				<ModalTextareaFormGroup
-					title='Tagline'
+					title={t("company.newCompany.tagline")}
 					name='tagline'
 					type='text'
 					value={values.tagline}
@@ -251,7 +257,7 @@ const HeaderEditPage = ({ company }) => {
 					rounded='full'
 					className='mr-6 px-5'
 				>
-					Save changes
+					{t("profile.modal.save", { title: t("Information").toLowerCase() })}
 				</Button>
 			</div>
 		</form>
