@@ -333,7 +333,8 @@
 		"confirmAndContinue": "Confirm and continue",
 		"continueWithGoogle": "Continue with Google",
 		"joinTo": "Join to J4Y",
-		"backToAccount": "Back to account"
+		"backToAccount": "Back to account",
+		"emailConfirmed": "Your email successfully confirmed. Now you can log in to your account."
 	},
 	"profile": {
 		"aboutMe": "About me",
