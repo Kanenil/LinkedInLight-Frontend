@@ -4,11 +4,13 @@ import useOverflow from "../../hooks/useOverflow"
 import Loader from "../../components/shared/Loader"
 import classNames from "classnames"
 import useAdministratedCompanies from "../../hooks/useAdministratedCompanies"
+import { useNavigate } from "react-router"
 
 const Content = () => {
 	const { t } = useTranslation()
 	const { companies, isLoading } = useAdministratedCompanies()
 	const { isOverflow, containerRef, contentRef } = useOverflow()
+	const navigator = useNavigate()
 
 	if (isLoading) return <Loader />
 
@@ -18,7 +20,13 @@ const Content = () => {
 				<h1 className='text-lg'>{t("jobs.jobsForYou")}</h1>
 
 				{companies.length > 0 && (
-					<Button variant='primaryText' className='text-lg ml-auto'>
+					<Button
+						variant='primaryText'
+						className='text-lg ml-auto'
+						onClick={() => {
+							navigator("?publish=true")
+						}}
+					>
 						{t("jobs.publishJob")}
 					</Button>
 				)}

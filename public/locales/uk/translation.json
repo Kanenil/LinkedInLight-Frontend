@@ -806,7 +806,40 @@
 		"jobs": "Вакансії",
 		"publishDate": "Дата публікації",
 		"experienceLevel": "Рівень досвіду",
-		"company": "Компанія"
+		"company": "Компанія",
+		"title": "Вакансії",
+		"publish": {
+			"stage": "Крок {{ stage }}",
+			"stages": [
+				"Яку вакансію хочете опублікувати?",
+				"Додаткові питання",
+				"Покращіть свою вакансію"
+			],
+			"save": "Зберегти",
+			"continue": "Продовжити",
+			"experienceLevels": [
+				{
+					"title": "Стажер",
+					"value": "intern"
+				},
+				{
+					"title": "Молодший спеціаліст",
+					"value": "junior"
+				},
+				{
+					"title": "Спеціаліст",
+					"value": "middle"
+				},
+				{
+					"title": "Старший спеціаліст",
+					"value": "senior"
+				},
+				{
+					"title": "Експерт",
+					"value": "expert"
+				}
+			]
+		}
 	},
 	"company": {
 		"startCompany": {

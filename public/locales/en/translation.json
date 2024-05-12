@@ -788,7 +788,36 @@
 		"jobs": "Jobs",
 		"publishDate": "Publish date",
 		"experienceLevel": "Experience level",
-		"company": "Company"
+		"company": "Company",
+		"title": "Jobs",
+		"publish": {
+			"stage": "Stage {{ stage }}",
+			"stages": ["Job details", "Additional questions", "Improve your job post"]
+		},
+		"save": "Save",
+		"continue": "Continue",
+		"experienceLevels": [
+			{
+				"title": "Intern",
+				"value": "intern"
+			},
+			{
+				"title": "Junior",
+				"value": "junior"
+			},
+			{
+				"title": "Middle",
+				"value": "middle"
+			},
+			{
+				"title": "Senior",
+				"value": "senior"
+			},
+			{
+				"title": "Expert",
+				"value": "expert"
+			}
+		]
 	},
 	"company": {
 		"startCompany": {
