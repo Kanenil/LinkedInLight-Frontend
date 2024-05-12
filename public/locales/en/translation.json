@@ -839,7 +839,8 @@
 			"tagline": "Tagline",
 			"terms": "I verify that I am an authorized representative of this organization and have the right to act on its behalf in the creation and management of this page.",
 			"create": "Create company",
-			"urlExists": "This URL already exists"
+			"urlExists": "This URL already exists",
+			"companyCreated": "Company was successfully created"
 		},
 		"follow": "Follow",
 		"unfollow": "Unfollow",
