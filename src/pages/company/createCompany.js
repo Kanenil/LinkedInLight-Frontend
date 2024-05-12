@@ -97,7 +97,7 @@ const CreateCompany = () => {
 		CompanyService.create(model)
 			.then(() => {
 				navigator(-1)
-				success("Company successfully created", 5)
+				success(t("company.newCompany.companyCreated"), 5)
 			})
 			.catch(err => {
 				if (err.response.data === "This URL already exists")
