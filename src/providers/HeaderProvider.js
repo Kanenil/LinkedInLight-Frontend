@@ -1,43 +1,53 @@
-import {createContext, useContext, useRef, useState} from "react";
-import useComponentVisible from "../hooks/useComponentVisible";
+import { createContext, useContext, useRef, useState } from "react"
+import useComponentVisible from "../hooks/useComponentVisible"
+import { useSearchParams } from "react-router-dom"
 
-export const HeaderContext = createContext({});
+export const HeaderContext = createContext({})
 
-const HeaderProvider = ({children}) => {
-    const modalRef = useRef();
-    const companyRef = useRef();
-    const {ref, isComponentVisible, setIsComponentVisible} = useComponentVisible(false, false, (target) => {
-        if(!modalRef.current?.contains(target) && !companyRef.current?.contains(target))
-            setIsComponentVisible(false);
-    });
-    const [search, setSearch] = useState('');
-    const [modal, setModal] = useState(null);
+const HeaderProvider = ({ children }) => {
+	const [searchParams, setSearchParams] = useSearchParams()
 
-    const onFocus = () => {
-        setModal('search');
-        setIsComponentVisible(true);
-    }
+	const modalRef = useRef()
+	const companyRef = useRef()
+	const { ref, isComponentVisible, setIsComponentVisible } =
+		useComponentVisible(false, false, target => {
+			if (
+				!modalRef.current?.contains(target) &&
+				!companyRef.current?.contains(target)
+			)
+				setIsComponentVisible(false)
+		})
+	const [search, setSearch] = useState(searchParams.get("search") ?? "")
+	const [modal, setModal] = useState(null)
 
-    return (
-        <HeaderContext.Provider
-            value={{
-                modalRef,
-                ref,
-                isComponentVisible,
-                setIsComponentVisible,
-                search,
-                setSearch,
-                onFocus,
-                setModal,
-                modal,
-                companyRef
-            }}
-        >
-            {children}
-        </HeaderContext.Provider>
-    );
+	const onFocus = () => {
+		setModal("search")
+		setIsComponentVisible(true)
+	}
+
+	return (
+		<HeaderContext.Provider
+			value={{
+				modalRef,
+				ref,
+				isComponentVisible,
+				setIsComponentVisible,
+				search,
+				setSearch: value => {
+					setSearch(value)
+					setSearchParams(prev => ({ ...prev, search: value }))
+				},
+				onFocus,
+				setModal,
+				modal,
+				companyRef,
+			}}
+		>
+			{children}
+		</HeaderContext.Provider>
+	)
 }
 
-export const useHeaderContext = () => useContext(HeaderContext);
+export const useHeaderContext = () => useContext(HeaderContext)
 
-export default HeaderProvider;
+export default HeaderProvider

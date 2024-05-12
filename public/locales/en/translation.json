@@ -978,5 +978,14 @@
 	"on": "On",
 	"off": "Off",
 	"Information": "Information",
-	"Description": "Description"
+	"Description": "Description",
+	"search": {
+		"forPeople": "Search for people",
+		"forCompany": "Search for companies",
+		"forJob": "Search for jobs",
+		"enterSomething": "Enter something to search...",
+		"users": "Users",
+		"companies": "Companies",
+		"jobs": "Jobs"
+	}
 }

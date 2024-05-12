@@ -995,5 +995,14 @@
 	"on": "Увімкнено",
 	"off": "Вимкнено",
 	"Information": "Інформацію",
-	"Description": "Опис"
+	"Description": "Опис",
+	"search": {
+		"forPeople": "Пошук по людях",
+		"forCompany": "Пошук по компаніях",
+		"forJob": "Пошук по вакансіях",
+		"enterSomething": "Введіть щось для пошуку",
+		"users": "Люди",
+		"companies": "Компанії",
+		"jobs": "Вакансії"
+	}
 }
