@@ -790,7 +790,7 @@
 		"experienceLevel": "Experience level",
 		"company": "Company",
 		"title": "Jobs",
-		"weHiring": "We are hiring {{ position }} in {{ region }}. Apply now or share with your connections!",
+		"weHiring": "We are <span>#hiring</span> {{ position }} in {{ region }}. Apply now or share with your connections!",
 		"publish": {
 			"stage": "Stage {{ stage }}",
 			"stages": [
@@ -843,7 +843,9 @@
 		"hiringTeam": "Hiring team",
 		"jobDescription": "Job description",
 		"send": "Send",
-		"easySend": "Easy send"
+		"easySend": "Easy send",
+		"checkDetails": "Check job",
+		"jobAt": "Job at {{ company }}"
 	},
 	"candidates_one": "{{count}} candidate",
 	"candidates_other": "{{count}} candidates",

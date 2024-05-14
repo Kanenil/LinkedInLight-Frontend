@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQueries, useQuery } from "@tanstack/react-query"
 import CompanyService from "../../../services/companyService"
+import jobPostingService from "../../../services/jobPostingService"
 import Loader from "../../shared/Loader"
 import Show from "../../../elements/shared/Show"
 import noPosts from "../../../assets/no-posts.png"
@@ -8,6 +9,8 @@ import PostItem from "../items/PostItem"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
 import { useTranslation } from "react-i18next"
+import useQueriesWithRefetch from "../../../hooks/useQueriesWithRefetch"
+import useCompanyPosts from "../../../hooks/useCompanyPosts"
 
 const CompanyPostsSection = ({
 	company,
@@ -17,15 +20,19 @@ const CompanyPostsSection = ({
 }) => {
 	const { t } = useTranslation()
 
-	const {
-		data: posts,
-		isLoading,
-		refetch,
-	} = useQuery({
-		queryFn: ({ queryKey }) => CompanyService.posts(queryKey[1]),
-		queryKey: ["posts", company.id],
-		select: ({ data }) => data,
-	})
+	const { posts, isLoading, refetch } = useCompanyPosts(company.id)
+
+	console.log(posts)
+
+	// const {
+	// 	data: posts,
+	// 	isLoading,
+	// 	refetch,
+	// } = useQuery({
+	// 	queryFn: ({ queryKey }) => CompanyService.posts(queryKey[1]),
+	// 	queryKey: ["posts", company.id],
+	// 	select: ({ data }) => data,
+	// })
 	const navigator = useNavigate()
 
 	if (isLoading) return <Loader />
@@ -45,8 +52,8 @@ const CompanyPostsSection = ({
 	return (
 		<section className='flex flex-col gap-5'>
 			<Show>
-				<Show.When isTrue={posts.length > 0}>
-					{posts.map(post => (
+				<Show.When isTrue={posts?.length > 0}>
+					{posts?.map(post => (
 						<PostItem
 							key={`post-${post.id}`}
 							company={company}

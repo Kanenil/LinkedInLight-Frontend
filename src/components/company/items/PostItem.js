@@ -7,6 +7,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import PostOptionButton from "../options/PostOptionButton"
 import { useTranslation } from "react-i18next"
+import MainPostItem from "../../main/content/MainPostItem"
 
 const PostItem = ({
 	isAdmin,
@@ -19,8 +20,25 @@ const PostItem = ({
 	onEdit,
 	onDelete,
 	isContentAdmin,
+	type,
+	...rest
 }) => {
 	const { t } = useTranslation()
+
+	console.log(rest)
+
+	if (type === "JobPosting")
+		return (
+			<MainPostItem
+				type='JobPosting'
+				companyName={company.companyName}
+				postedAt={postedAt}
+				content={rest.textForPost}
+				companyLogo={company.logoImg}
+				id={rest.id}
+				image={null}
+			/>
+		)
 
 	return (
 		<div className='w-full h-fit rounded-lg overflow-hidden bg-white p-6'>
@@ -28,10 +46,10 @@ const PostItem = ({
 				<h1 className='font-jost text-sm text-[#7D7D7D] [&>a]:font-medium'>
 					{t("company.post.postedBy")}
 					<Link
-						to={`/j4y/${postedBy.profileUrl}`}
+						to={`/j4y/${postedBy?.profileUrl}`}
 						className='text-[#2D2A33] ml-2 hover:underline'
 					>
-						{postedBy.firstName} {postedBy.lastName}
+						{postedBy?.firstName} {postedBy?.lastName}
 					</Link>
 				</h1>
 
