@@ -1,39 +1,43 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import * as yup from "yup"
 import { useFormik } from "formik"
-import MDEditor from "@uiw/react-md-editor"
 
 import Button from "../../elements/buttons/Button"
-import ModalSelectFormGroup from "../shared/forms/ModalSelectFormGroup"
-import ModalInputFormGroup from "../shared/forms/ModalInputFormGroup"
-import CompanyItem from "./CompanyItem"
 import ScrollWrapper from "../shared/ScrollWrapper"
+import jobPostingService from "../../services/jobPostingService"
+import companyService from "../../services/companyService"
+import { useSearchParams } from "react-router-dom"
+import { useAlertContext } from "../../providers/AlertProvider"
+import StageOne from "./stages/StageOne"
 
 const stages = Array.from({ length: 3 }, (_, i) => i + 1)
 
 const PublishJobSchema = yup.object({
 	id: yup.number().default(0),
 	textForPost: yup.string(),
-	title: yup.string(),
+	title: yup.string().required("validation.required"),
 	description: yup.string(),
 	postedAt: yup.string(),
 	companyId: yup.number().required("validation.required"),
 	company: yup.object(),
 	recruiterId: yup.string(),
-	location: yup.string(),
-	employmentType: yup.string(),
-	experienceLevel: yup.string(),
+	location: yup.string().required("validation.required"),
+	employmentType: yup.object().required("validation.required"),
+	experienceLevel: yup.object().required("validation.required"),
 	function: yup.string(),
 	sendEmailsToRecruiter: yup.bool(),
 	industryId: yup.number(),
 	companyImage: yup.string(),
+	skills: yup.array(),
 })
-
-const stringify = obj => obj?.companyName || ""
 
 const PublishJob = ({ companies, userId }) => {
 	const { t } = useTranslation()
+	const [searchParams, setSearchParams] = useSearchParams()
+	const { success } = useAlertContext()
+
+	const jobId = searchParams.get("jobId")
 
 	const [stage, setStage] = useState(1)
 
@@ -57,15 +61,115 @@ const PublishJob = ({ companies, userId }) => {
 		company: companies[0],
 		recruiterId: userId,
 		location: "", //
-		employmentType: "", //
-		experienceLevel: "", //
+		employmentType: {}, //
+		experienceLevel: {}, //
 		function: "",
 		sendEmailsToRecruiter: false,
 		industryId: 0,
 		companyImage: companies[0].logoImg,
+		skills: [],
 	})
 
-	const onSubmitFormik = values => {}
+	useEffect(() => {
+		if (jobId) {
+			;(async () => {
+				const { data: job } = await jobPostingService.getJobPostingById(jobId)
+				const { data: company } = await companyService.getCompany(job.companyId)
+
+				const companyData = {
+					...company,
+					companyName: company.name,
+					industryId: company.industryId,
+					logoImg: company.logoImg,
+				}
+
+				const employmentType = employmentTypes.find(
+					et => et.value === job.employmentType,
+				)
+				const experienceLevel = experienceLevels.find(
+					el => el.value === job.experienceLevel,
+				)
+
+				const jobSkillsList = job.jobSkills.map(js => ({
+					label: js.skill.name,
+					value: js.skill.id,
+				}))
+
+				const jobData = {
+					...job,
+					company: companyData,
+					employmentType,
+					experienceLevel,
+					skills: jobSkillsList,
+				}
+
+				setValues(jobData)
+			})()
+		}
+	}, [])
+
+	const onSubmitFormik = async values => {
+		const createModel = {
+			id: values.id,
+			textForPost: `${values.title};${values.location}`,
+			title: values.title,
+			description: values.description,
+			postedAt: new Date().toISOString(),
+			companyId: values.companyId,
+			recruiterId: values.recruiterId,
+			location: values.location,
+			employmentType: values.employmentType?.value,
+			experienceLevel: values.experienceLevel?.value,
+			function: "",
+			sendEmailsToRecruiter: values.sendEmailsToRecruiter,
+			industryId: values.company.industryId,
+			companyImage: values.companyImage,
+		}
+
+		if (jobId) {
+			await jobPostingService.updateJobPosting(createModel)
+
+			try {
+				const jobSkills = values.skills.map(skill => ({
+					skillId: skill.value,
+					skill: {
+						id: skill.value,
+						name: skill.label,
+					},
+					jobPostingId: values.id,
+				}))
+				await jobPostingService.newJobsSkills(jobSkills)
+			} catch (error) {
+				console.log(error)
+			}
+
+			success(t("jobs.publish.updateSuccess"), 10)
+			return
+		}
+
+		const { data: posting } = await jobPostingService.newJobPosting(createModel)
+
+		const { data: jobs } = await jobPostingService.getAllJobPostingByCompany(
+			values.companyId,
+		)
+		const jobPostingId = jobs.pop().id
+
+		const jobSkills = values.skills.map(skill => ({
+			skillId: skill.value,
+			skill: {
+				id: skill.value,
+				name: skill.label,
+			},
+			jobPostingId,
+		}))
+
+		await jobPostingService.newJobsSkills(jobSkills)
+
+		searchParams.set("jobId", posting.id)
+		setSearchParams(searchParams)
+
+		success(t("jobs.publish.success"), 10)
+	}
 
 	const formik = useFormik({
 		initialValues: initValues,
@@ -92,7 +196,12 @@ const PublishJob = ({ companies, userId }) => {
 				{stages.map(s => (
 					<div
 						key={s}
-						className={`flex flex-col items-center border-[#B4BFDD]  justify-center w-8 h-8  bg-white ${
+						onClick={() =>
+							setStage(prev =>
+								s === 1 || (s >= 1 && searchParams.get("jobId")) ? s : prev,
+							)
+						}
+						className={`cursor-pointer flex flex-col items-center border-[#B4BFDD]  justify-center w-8 h-8  bg-white ${
 							s === stage
 								? "border-[1px] border-b-transparent text-black"
 								: "border-[1px] text-[#7D88A4]"
@@ -102,7 +211,7 @@ const PublishJob = ({ companies, userId }) => {
 					</div>
 				))}
 			</div>
-			<ScrollWrapper className='flex-grow bg-white border-[#B4BFDD] border-[1px] rounded-lg'>
+			<div className='flex-grow bg-white border-[#B4BFDD] border-[1px] rounded-lg'>
 				<div className='flex flex-row gap-4 p-6 font-jost border-b-[#B4BFDD] border-b-[1px]'>
 					<h1 className='text-xl font-bold'>
 						{t("jobs.publish.stage", { stage })}
@@ -111,127 +220,19 @@ const PublishJob = ({ companies, userId }) => {
 					<h3 className='text-xl'>{stagesNames[stage - 1]}</h3>
 				</div>
 
-				<div className='grid grid-cols-2'>
-					<div className='flex flex-col gap-4 px-6 py-4'>
-						<ModalSelectFormGroup
-							className='w-[400px]'
-							title={t("jobs.publish.company")}
-							value={stringify(values.company)}
-							options={companies}
-							containerWidth={400}
-							placeHolder=''
-							error={errors.companyId && touched.companyId}
-							hasTools={false}
-							clearOnSelect={false}
-							onChange={e => {
-								setValues(prev => ({
-									...prev,
-									company: e,
-									companyId: e.id,
-									companyImage: e.logoImg,
-								}))
-							}}
-							item={<CompanyItem />}
-							searchFunc={search => el => {
-								return el.companyName.toLowerCase().indexOf(search) >= 0
-							}}
-							errorChildren={
-								<h3 className='mt-2 text-[#9E0F20] text-xs'>
-									{t("validation.required")}
-								</h3>
-							}
+				<ScrollWrapper maxHeight='65vh'>
+					{stage === 1 && (
+						<StageOne
+							values={values}
+							setValues={setValues}
+							companies={companies}
+							errors={errors}
+							touched={touched}
+							handleChange={handleChange}
 						/>
-					</div>
-
-					<div className='flex flex-col gap-4 px-6 py-4'>
-						<ModalInputFormGroup
-							title={t("jobs.publish.positionName")}
-							name='textForPost'
-							type='text'
-							value={values.textForPost}
-							onChange={handleChange}
-							className='w-[400px]'
-						/>
-					</div>
-
-					<div className='flex flex-col gap-4 px-6 py-4'>
-						<ModalInputFormGroup
-							title={t("jobs.publish.location")}
-							name='location'
-							type='text'
-							value={values.location}
-							onChange={handleChange}
-							className='w-[400px]'
-						/>
-					</div>
-
-					<div className='flex flex-col gap-4 px-6 py-4'>
-						<ModalSelectFormGroup
-							className='w-[400px]'
-							title={t("jobs.publish.employmentType")}
-							value={values.employmentType?.label}
-							options={employmentTypes}
-							containerWidth={400}
-							placeHolder=''
-							error={errors.employmentType && touched.employmentType}
-							hasTools={false}
-							clearOnSelect={false}
-							onChange={e =>
-								setValues(prev => ({
-									...prev,
-									employmentType: e,
-								}))
-							}
-							errorChildren={
-								<h3 className='mt-2 text-[#9E0F20] text-xs'>
-									{t("validation.required")}
-								</h3>
-							}
-						/>
-					</div>
-
-					<div className='flex flex-col gap-4 px-6 py-4'>
-						<ModalSelectFormGroup
-							className='w-[400px]'
-							title={t("jobs.publish.experienceLevel")}
-							value={values.experienceLevel?.label}
-							options={experienceLevels}
-							containerWidth={400}
-							placeHolder=''
-							error={errors.experienceLevel && touched.experienceLevel}
-							hasTools={false}
-							clearOnSelect={false}
-							onChange={e =>
-								setValues(prev => ({
-									...prev,
-									experienceLevel: e,
-								}))
-							}
-							errorChildren={
-								<h3 className='mt-2 text-[#9E0F20] text-xs'>
-									{t("validation.required")}
-								</h3>
-							}
-						/>
-					</div>
-				</div>
-
-				<div className='px-6 py-4'>
-					<h1 className='font-jost text-[#2D2A33]'>
-						{t("jobs.publish.description")}
-					</h1>
-
-					<MDEditor
-						height='250px'
-						data-color-mode='light'
-						preview='edit'
-						value={values.description}
-						onChange={value =>
-							setValues(prev => ({ ...prev, description: value }))
-						}
-					/>
-				</div>
-			</ScrollWrapper>
+					)}
+				</ScrollWrapper>
+			</div>
 			<div className='flex flex-row justify-center items-center'>
 				<Button
 					variant='primary'
@@ -240,7 +241,16 @@ const PublishJob = ({ companies, userId }) => {
 				>
 					{t("jobs.publish.save")}
 				</Button>
-				<Button variant='primary' className='rounded-br-lg min-w-[200px]'>
+				<Button
+					variant='primary'
+					className='rounded-br-lg min-w-[200px]'
+					disabled={stage === 3}
+					onClick={() => {
+						if (searchParams.get("jobId")) {
+							setStage(prev => prev + 1)
+						}
+					}}
+				>
 					{t("jobs.publish.continue")}
 				</Button>
 			</div>

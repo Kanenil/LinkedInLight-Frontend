@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 import React, { forwardRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import ToggleInput from "../../forms/ToggleInput"
+import { imageUrl } from "../../../../utils/converters"
 
 const Search = forwardRef(({ search, setIsComponentVisible }, ref) => {
 	const { t } = useTranslation()
@@ -33,7 +34,7 @@ const Search = forwardRef(({ search, setIsComponentVisible }, ref) => {
 	})
 	const { contentRef, containerRef, isOverflow } = useOverflow()
 
-	const { userList, companyList } = data ?? {}
+	const { userList, companyList, jobList } = data ?? {}
 
 	return (
 		<div
@@ -154,6 +155,35 @@ const Search = forwardRef(({ search, setIsComponentVisible }, ref) => {
 											<div className='flex flex-col gap-1'>
 												<h1 className='font-jost text-lg font-medium'>
 													{company.companyName}
+												</h1>
+											</div>
+										</Link>
+									))}
+								</div>
+							)}
+
+							{searchSettings.job && jobList?.length > 0 && (
+								<div className='flex flex-col gap-2'>
+									<h1 className='font-jost text-xl px-4'>{t("search.jobs")}</h1>
+
+									{jobList?.map(job => (
+										<Link
+											to={`/j4y/jobs?search=${job.title}&selected=${job.id}`}
+											onClick={() => setIsComponentVisible(false)}
+											className='flex flex-row gap-3 items-center hover:bg-gray-50 px-4'
+											key={`job-${job.id}`}
+										>
+											<div className='overflow-hidden mx-h-12 max-w-16 bg-white border-[3px] border-[#FFFFFF] bg-[#EAEAEA]'>
+												<img
+													className='object-contain'
+													src={imageUrl(job.companyImage, defaultImage)}
+													alt=''
+												/>
+											</div>
+
+											<div className='flex flex-col gap-1'>
+												<h1 className='font-jost text-lg font-medium'>
+													{job.title}
 												</h1>
 											</div>
 										</Link>

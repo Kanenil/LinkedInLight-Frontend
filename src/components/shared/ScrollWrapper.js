@@ -5,21 +5,25 @@ const ScrollWrapper = ({
 	children,
 	maxHeight = "70vh",
 	className,
+	containerClassName,
 	...props
 }) => {
-	const { isOverflow, containerRef, contentRef } = useOverflow()
+	const { containerRef, contentRef } = useOverflow()
 
 	return (
 		<div
 			ref={containerRef}
-			className={classNames(
-				"flex flex-col",
-				isOverflow && "overflow-y-auto",
-				maxHeight && `max-h-${maxHeight}`,
-			)}
+			className={classNames("flex flex-col", containerClassName)}
 			{...props}
 		>
-			<div ref={contentRef} className={classNames(className)}>
+			<div
+				ref={contentRef}
+				className={classNames(
+					className,
+					"overflow-y-auto",
+					maxHeight && `h-[${maxHeight}]`,
+				)}
+			>
 				{children}
 			</div>
 		</div>

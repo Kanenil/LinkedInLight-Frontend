@@ -790,35 +790,64 @@
 		"experienceLevel": "Experience level",
 		"company": "Company",
 		"title": "Jobs",
+		"weHiring": "We are hiring {{ position }} in {{ region }}. Apply now or share with your connections!",
 		"publish": {
 			"stage": "Stage {{ stage }}",
-			"stages": ["Job details", "Additional questions", "Improve your job post"]
+			"stages": [
+				"Job details",
+				"Additional questions",
+				"Improve your job post"
+			],
+			"company": "Company",
+			"positionName": "Position name",
+			"location": "Location",
+			"employmentType": "Employment type",
+			"experienceLevel": "Experience level",
+			"description": "Description",
+			"addSkills": "Add skills",
+			"addSkill": "Add skill",
+			"whereGetApplicants": "Where can applicants apply?",
+			"websiteToRecruiter": "Website to recruiter",
+			"sendEmailsToRecruiter": "Send emails to recruiter",
+			"success": "Job was successfully published",
+			"updateSuccess": "Job was successfully updated",
+			"experienceLevels": [
+				{
+					"label": "Intern",
+					"value": "intern"
+				},
+				{
+					"label": "Junior",
+					"value": "junior"
+				},
+				{
+					"label": "Middle",
+					"value": "middle"
+				},
+				{
+					"label": "Senior",
+					"value": "senior"
+				},
+				{
+					"label": "Expert",
+					"value": "expert"
+				}
+			]
 		},
 		"save": "Save",
 		"continue": "Continue",
-		"experienceLevels": [
-			{
-				"title": "Intern",
-				"value": "intern"
-			},
-			{
-				"title": "Junior",
-				"value": "junior"
-			},
-			{
-				"title": "Middle",
-				"value": "middle"
-			},
-			{
-				"title": "Senior",
-				"value": "senior"
-			},
-			{
-				"title": "Expert",
-				"value": "expert"
-			}
-		]
+		"skills": "Skills",
+		"easyApply": "Easy apply",
+		"published": "Published job",
+		"manager": "Manager",
+		"hiringTeam": "Hiring team",
+		"jobDescription": "Job description",
+		"send": "Send",
+		"easySend": "Easy send"
 	},
+	"candidates_one": "{{count}} candidate",
+	"candidates_other": "{{count}} candidates",
+	"candidates_zero ": "{{count}} candidates",
 	"company": {
 		"startCompany": {
 			"title": "For business",

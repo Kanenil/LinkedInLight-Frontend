@@ -34,9 +34,9 @@ const JobsPage = () => {
 						<PublishJob companies={companies} userId={profile.id} />
 					) : (
 						<div className='flex flex-col md:flex-row my-8 mx-auto w-full md:container lg:w-[1170px]'>
-							<div className='w-3/12 bg-white h-[300px] border-[#B4BFDD] border-[1px] rounded-l-lg'></div>
+							{/* <div className='w-3/12 bg-white h-[300px] border-[#B4BFDD] border-[1px] rounded-l-lg'></div> */}
 
-							<Content />
+							<Content companies={companies} />
 						</div>
 					)}
 				</main>
