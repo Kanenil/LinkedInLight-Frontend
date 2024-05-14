@@ -3,11 +3,13 @@ import { useDebounceCallback } from "usehooks-ts"
 import React, { useEffect } from "react"
 import LoopIcon from "../../../elements/icons/LoopIcon"
 import { useHeaderContext } from "../../../providers/HeaderProvider"
+import { useSearchParams } from "react-router-dom"
 
 const SearchInput = () => {
 	const { ref, onFocus, setIsComponentVisible, search, setSearch, setModal } =
 		useHeaderContext()
 	const { t } = useTranslation()
+	const [searchParams] = useSearchParams()
 
 	const debounced = useDebounceCallback(val => {
 		setIsComponentVisible(true)
@@ -17,9 +19,12 @@ const SearchInput = () => {
 
 	useEffect(() => {
 		if (ref.current) {
-			ref.current.value = search
+			ref.current.value =
+				search === searchParams.get("search")
+					? search
+					: searchParams.get("search")
 		}
-	}, [ref])
+	}, [ref, searchParams.get("search")])
 
 	return (
 		<React.Fragment>
