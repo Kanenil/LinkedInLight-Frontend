@@ -119,7 +119,7 @@ const JobSearch = ({ search, selected }) => {
 												+selected === job.id && "bg-[#EEF1FB]",
 											)}
 										>
-											<div className='my-auto'>
+											<div className='my-auto max-w-20'>
 												<img
 													src={imageUrl(job.companyImage)}
 													alt={job.companyId}

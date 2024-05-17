@@ -77,7 +77,7 @@ const Content = ({ companies, search }) => {
 								key={job.id}
 								className={classNames("flex flex-row gap-4")}
 							>
-								<div className='my-auto'>
+								<div className='my-auto max-w-20'>
 									<img
 										src={imageUrl(job.companyImage)}
 										alt={job.companyId}
