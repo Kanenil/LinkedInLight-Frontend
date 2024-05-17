@@ -54,11 +54,13 @@ const MainPostItem = ({
 								}}
 							/>
 							<div className='mt-4 flex flex-row gap-4 items-center p-4 border-[0.5px] border-[#7D88A4]/50 rounded-lg overflow-hidden my-auto w-full h-fit bg-white'>
-								<img
-									className='object-contain'
-									src={imageUrl(companyLogo, defaultCompanyLogo)}
-									alt='company-logo'
-								/>
+								<div className='max-w-20'>
+									<img
+										className='object-contain'
+										src={imageUrl(companyLogo, defaultCompanyLogo)}
+										alt='company-logo'
+									/>
+								</div>
 
 								<div className='flex flex-col flex-grow font-jost text-[#2D2A33]'>
 									<h1 className='font-semibold'>{content.split(";")[0]}</h1>
