@@ -33,9 +33,10 @@ const HeaderProvider = ({ children }) => {
 				isComponentVisible,
 				setIsComponentVisible,
 				search,
-				setSearch: value => {
+				setSearch: (value, newSearchParams) => {
 					setSearch(value)
-					setSearchParams(prev => ({ ...prev, search: value }))
+					searchParams.set("search", value)
+					setSearchParams(newSearchParams || searchParams)
 				},
 				onFocus,
 				setModal,

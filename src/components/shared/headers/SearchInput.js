@@ -19,11 +19,14 @@ const SearchInput = () => {
 
 	useEffect(() => {
 		if (ref.current) {
-			ref.current.value =
+			const searchValue =
 				search === searchParams.get("search")
 					? search
 					: searchParams.get("search")
+			ref.current.value = searchValue
+			setSearch(searchValue, searchParams)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ref, searchParams.get("search")])
 
 	return (

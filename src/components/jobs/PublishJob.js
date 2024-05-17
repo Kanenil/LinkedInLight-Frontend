@@ -76,13 +76,6 @@ const PublishJob = ({ companies, userId }) => {
 				const { data: job } = await jobPostingService.getJobPostingById(jobId)
 				const { data: company } = await companyService.getCompany(job.companyId)
 
-				const companyData = {
-					...company,
-					companyName: company.name,
-					industryId: company.industryId,
-					logoImg: company.logoImg,
-				}
-
 				const employmentType = employmentTypes.find(
 					et => et.value === job.employmentType,
 				)
@@ -97,7 +90,7 @@ const PublishJob = ({ companies, userId }) => {
 
 				const jobData = {
 					...job,
-					company: companyData,
+					company,
 					employmentType,
 					experienceLevel,
 					skills: jobSkillsList,

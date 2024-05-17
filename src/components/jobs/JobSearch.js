@@ -13,12 +13,18 @@ import jobPostingService from "../../services/jobPostingService"
 import { Link, useSearchParams } from "react-router-dom"
 import MDEditor from "@uiw/react-md-editor"
 import ScrollWrapper from "../shared/ScrollWrapper"
+import JobSearchFilter from "./JobSearchFilter"
 
 const JobSearch = ({ search, selected }) => {
 	const { t } = useTranslation()
 	const [selectedJob, setSelectedJob] = useState(null)
 	const [filteredData, setFilteredData] = useState([])
 	const [searchParams, setSearchParams] = useSearchParams()
+	const [filters, setFilters] = useState({
+		period: "Any Time",
+		companies: [],
+		experienceLevels: [],
+	})
 
 	const { isOverflow, containerRef, contentRef } = useOverflow()
 
@@ -35,8 +41,6 @@ const JobSearch = ({ search, selected }) => {
 				data.id,
 			)
 			const { data: applied } = await jobPostingService.ifApplied(data.id)
-
-			console.log(applied)
 
 			setSelectedJob({ ...data, applicants, applied: !applied })
 		})
@@ -83,23 +87,7 @@ const JobSearch = ({ search, selected }) => {
 	return (
 		<main className='flex flex-col gap-2 flex-grow bg-[#E7E7E7]'>
 			<div className='w-full bg-white'>
-				<div className='flex flex-row mx-auto gap-4 w-full md:container lg:w-[1170px] p-5'>
-					<Button variant='primary' rounded='full'>
-						{t("jobs.jobs")}
-					</Button>
-
-					<Button variant='tertiary' rounded='full'>
-						{t("jobs.publishDate")}
-					</Button>
-
-					<Button variant='tertiary' rounded='full'>
-						{t("jobs.experienceLevel")}
-					</Button>
-
-					<Button variant='tertiary' rounded='full'>
-						{t("jobs.company")}
-					</Button>
-				</div>
+				<JobSearchFilter filter={filters} setFilter={setFilters} />
 			</div>
 
 			<div className='flex flex-col flex-grow md:flex-row my-8 mx-auto w-full md:container lg:w-[1170px]'>

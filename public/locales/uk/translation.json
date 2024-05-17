@@ -1077,5 +1077,11 @@
 		"users": "Люди",
 		"companies": "Компанії",
 		"jobs": "Вакансії"
-	}
+	},
+	"periods": [
+		{ "id": "Any Time", "label": "Весь час" },
+		{ "id": "Past month", "label": "Останній місяць" },
+		{ "id": "Past week", "label": "Останній тиждень" },
+		{ "id": "Past 24 hours", "label": "Останні 24 години" }
+	]
 }

@@ -1047,5 +1047,11 @@
 		"users": "Users",
 		"companies": "Companies",
 		"jobs": "Jobs"
-	}
+	},
+	"periods": [
+		{ "id": "Any Time", "label": "Any Time" },
+		{ "id": "Past month", "label": "Past month" },
+		{ "id": "Past week", "label": "Past week" },
+		{ "id": "Past 24 hours", "label": "Past 24 hours" }
+	]
 }
