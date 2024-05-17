@@ -42,8 +42,6 @@ const JobSearch = ({ search, selected }) => {
 			)
 			const { data: applied } = await jobPostingService.ifApplied(data.id)
 
-			console.log(applied)
-
 			setSelectedJob({ ...data, applicants, applied: !applied })
 		})
 	}, [selected])
