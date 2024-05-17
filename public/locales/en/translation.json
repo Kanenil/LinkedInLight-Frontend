@@ -698,9 +698,9 @@
 				"button": "Add position"
 			},
 			"two": {
-				"title": "What is your field of work?",
-				"description": "By specifying your field of work, you have a chance to get 2.5 times more views of your profile",
-				"button": "Add field of work"
+				"title": "Add language skills",
+				"description": "Add languages you know and show your language proficiency to potential employers on <strong>Job for You!</strong>",
+				"button": "Add language"
 			},
 			"three": {
 				"title": "Add a profile picture",
@@ -716,6 +716,16 @@
 				"title": "Highlight your uniqueness",
 				"description": "Add a short description to highlight your personality or work experience",
 				"button": "Add description"
+			},
+			"six": {
+				"title": "Add a headline",
+				"description": "Add a headline to your profile to make it more visible to potential employers on <strong>Job for You!</strong>",
+				"button": "Add headline"
+			},
+			"seven": {
+				"title": "Edit URL address",
+				"description": "Create a unique URL address for your profile to make it easier to find on <strong>Job for You!</strong>",
+				"button": "Edit URL address"
 			}
 		}
 	},

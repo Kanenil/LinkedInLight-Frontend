@@ -9,6 +9,9 @@ import useMobileDetector from "../../../hooks/useMobileDetector"
 import Button from "../../../elements/buttons/Button"
 import { useNavigate } from "react-router"
 import { Trans, useTranslation } from "react-i18next"
+import additionalProfileService from "../../../services/additionalProfileService"
+
+const NUMBER = "NUMBER"
 
 const suggestions = [
 	{
@@ -24,12 +27,19 @@ const suggestions = [
 			return data.filter(val => val.currentlyWorking).length === 0
 		},
 	},
-	// {
-	// 	id: "two",
-	// 	to: "edit/intro",
-	// 	width: 220,
-	// 	condition: "industry",
-	// },
+	{
+		id: "two",
+		to: "edit/language",
+		width: 220,
+		condition: async function (queryClient, user) {
+			const { data } = await queryClient.fetchQuery({
+				queryFn: ({ queryKey }) =>
+					additionalProfileService.getLanguagesByProfileUrl(queryKey[1]),
+				queryKey: ["languages", user.profileUrl],
+			})
+			return data.length === 0
+		},
+	},
 	{
 		id: "three",
 		to: "edit/image",
@@ -54,6 +64,18 @@ const suggestions = [
 		to: "edit/general-information",
 		width: 220,
 		condition: "about",
+	},
+	{
+		id: "six",
+		to: "edit/intro",
+		width: 220,
+		condition: "headline",
+	},
+	{
+		id: "seven",
+		to: "public",
+		width: 220,
+		condition: ["profileUrl", "includes", NUMBER],
 	},
 ]
 
@@ -95,10 +117,21 @@ const ProfileStatus = ({ user, isOwner }) => {
 	const queryClient = useQueryClient()
 
 	useEffect(() => {
-		if (user) {
+		if (user && filteredSuggestions.length === 0) {
 			asyncFilter(suggestions, async suggestion => {
 				if (typeof suggestion.condition === "function")
 					return await suggestion.condition(queryClient, user)
+
+				if (Array.isArray(suggestion.condition)) {
+					const [key, operator, value] = suggestion.condition
+					return await new Promise(resolve => {
+						resolve(
+							operator === "includes"
+								? value === NUMBER && user[key]?.match(/\d+/)
+								: user[key] === value,
+						)
+					})
+				}
 
 				return await new Promise(resolve => {
 					const userValue = user[suggestion.condition]
@@ -110,7 +143,7 @@ const ProfileStatus = ({ user, isOwner }) => {
 				setFilteredSuggestions(resp)
 			})
 		}
-	}, [user])
+	}, [user, queryClient, filteredSuggestions])
 
 	const maxLevel = suggestions.length
 
