@@ -4,23 +4,42 @@ import useOverflow from "../../hooks/useOverflow"
 import classNames from "classnames"
 import { useNavigate } from "react-router"
 import { useQuery } from "@tanstack/react-query"
-import jobPostingService from "../../services/jobPostingService"
 import Loader from "../shared/Loader"
 import { imageUrl } from "../../utils/converters"
 import { useSearchParams } from "react-router-dom"
+import searchService from "../../services/searchService"
+import { getTimeDuration } from "../../utils/date"
+import { useEffect, useState } from "react"
+import jobPostingService from "../../services/jobPostingService"
 
 const Content = ({ companies, search }) => {
 	const { t } = useTranslation()
 	const { isOverflow, containerRef, contentRef } = useOverflow()
 	const navigator = useNavigate()
-	const [_, setSearchParams] = useSearchParams()
+	const [, setSearchParams] = useSearchParams()
+	const [filteredData, setFilteredData] = useState([])
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["allPostedJobs"],
-		queryFn: () => jobPostingService.allPostedJobs(),
-		select: ({ data }) => data,
+		queryFn: () => searchService.jobSearch(),
+		select: ({ data }) => data.jobs,
 		staleTime: 1000,
 	})
+
+	useEffect(() => {
+		;(async () => {
+			if (!data) return
+
+			const jobList = await Promise.all(
+				data.map(async job => {
+					const { data: applicants } =
+						await jobPostingService.getApplicantsCount(job.id)
+					return { ...job, applicants }
+				}),
+			)
+			setFilteredData(jobList)
+		})()
+	}, [data])
 
 	return (
 		<div className='flex flex-col w-full bg-white border-[#B4BFDD] border-[1px] rounded-lg'>
@@ -50,7 +69,7 @@ const Content = ({ companies, search }) => {
 					{isLoading ? (
 						<Loader />
 					) : (
-						data.map(job => (
+						filteredData.map(job => (
 							<button
 								onClick={() =>
 									setSearchParams({ search: job.title, selected: job.id })
@@ -60,16 +79,26 @@ const Content = ({ companies, search }) => {
 							>
 								<div className='my-auto'>
 									<img
-										src={imageUrl(job.company.logoImg)}
+										src={imageUrl(job.companyImage)}
 										alt={job.companyId}
 										className='object-contain rounded-lg'
 									/>
 								</div>
 
-								<div className='flex flex-col gap-1 justify-start text-start'>
+								<div className='flex flex-col w-full text-start'>
 									<h1 className='font-jost text-lg'>{job.title}</h1>
 									<p className='font-jost text-[#6E7191]'>{job.companyName}</p>
-									<p className='font-jost text-[#6E7191]'>{job.location}</p>
+									<p className='font-jost text-sm text-[#6E7191]'>
+										{job.location}
+										{" " + t("jobs.easyApply")}
+									</p>
+									<span className='mt-5 flex flex-row mr-2 font-jost text-xs text-[#6E7191]'>
+										{getTimeDuration(job.postedAt)}
+										{" " + t("jobs.easyApply")}
+										<p className='ml-auto text-[#556DA9]'>
+											{t("candidates", { count: job.applicants })}
+										</p>
+									</span>
 								</div>
 							</button>
 						))
